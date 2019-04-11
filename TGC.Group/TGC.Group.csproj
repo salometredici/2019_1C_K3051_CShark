@@ -94,6 +94,8 @@
       <DependentUpon>Game.settings</DependentUpon>
     </Compile>
     <Compile Include="Model\GameModel.cs" />
+    <Compile Include="Model\FpsCamera.cs" />
+    <Compile Include="Model\Pez.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form\GameForm.resx">
@@ -164,8 +166,29 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Media\cajaMadera4.jpg" />
-    <Content Include="Media\LogoTGC-TgcScene.xml" />
+    <Content Include="Media\Heightmaps\heightmap.JPG" />
+    <Content Include="Media\prueba-TgcScene.xml" />
+    <Content Include="Media\Textures\10010_Coral_v1_Diffuse.jpg" />
+    <Content Include="Media\Textures\12960_Shark_diff_v2.jpg" />
+    <Content Include="Media\Textures\20941_Brain_Coral_Diff_v1.jpg" />
+    <Content Include="Media\Textures\20943_Spiral_Wire_Coral_v1_diff.JPG" />
+    <Content Include="Media\Textures\arena.jpg" />
+    <Content Include="Media\Textures\blue.jpg" />
+    <Content Include="Media\Textures\blue_fish.jpg" />
+    <Content Include="Media\Textures\bodyColor_de_la_Superficie.png" />
+    <Content Include="Media\Textures\bodyOclusión_Ambiental.png" />
+    <Content Include="Media\Textures\body_normal.png" />
+    <Content Include="Media\Textures\Color_helice.png" />
+    <Content Include="Media\Textures\difuse_enganche.png" />
+    <Content Include="Media\Textures\fish.jpg" />
+    <Content Include="Media\Textures\float_texColor_de_la_Superficie.png" />
+    <Content Include="Media\Textures\LAMPOclusión_Ambiental.jpg" />
+    <Content Include="Media\Textures\LAMP_UVS.png" />
+    <Content Include="Media\Textures\normal_enganche.png" />
+    <Content Include="Media\Textures\normal_float.png" />
+    <Content Include="Media\Textures\red.jpg" />
+    <Content Include="Media\Textures\shell_basecolour.jpg" />
+    <Content Include="Media\Textures\shell_roughness.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
