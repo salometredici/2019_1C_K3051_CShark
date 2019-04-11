@@ -82,6 +82,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utils\AnimatedSprite.cs" />
+    <Compile Include="Utils\CustomBitmap.cs" />
+    <Compile Include="Utils\CustomSprite.cs" />
+    <Compile Include="Utils\Drawer2D.cs" />
     <Compile Include="Form\GameForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +97,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Game.settings</DependentUpon>
     </Compile>
+    <Compile Include="Menu\Boton.cs" />
+    <Compile Include="Menu\MenuPrincipal.cs" />
     <Compile Include="Model\GameModel.cs" />
     <Compile Include="Model\FpsCamera.cs" />
     <Compile Include="Model\Pez.cs" />
@@ -167,6 +173,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Media\Heightmaps\heightmap.JPG" />
+    <Content Include="Media\Menu\boton1.png" />
+    <Content Include="Media\Menu\boton2.png" />
+    <Content Include="Media\Menu\fondo-menu.png" />
     <Content Include="Media\prueba-TgcScene.xml" />
     <Content Include="Media\Textures\10010_Coral_v1_Diffuse.jpg" />
     <Content Include="Media\Textures\12960_Shark_diff_v2.jpg" />

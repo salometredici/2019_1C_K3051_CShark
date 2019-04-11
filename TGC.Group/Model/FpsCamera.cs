@@ -16,7 +16,6 @@ namespace TGC.Group.Model
 {
     public class TgcFpsCamera : TgcCamera
     {
-        private readonly Point mouseCenter;
         private TGCMatrix cameraRotation;
         private TGCVector3 directionView;
         private float leftrightRot;
@@ -26,12 +25,11 @@ namespace TGC.Group.Model
         private TgcD3dInput Input { get; }
         public float MovementSpeed { get; set; }
         public float RotationSpeed { get; set; }
-
+        private bool bloquear = false;
 
         public TgcFpsCamera(TGCVector3 positionEye, float moveSpeed, float rotationSpeed, TgcD3dInput input) {
             this.Input = input;
             this.positionEye = positionEye;
-            this.mouseCenter = new Point(D3DDevice.Instance.Device.Viewport.Width / 2, D3DDevice.Instance.Device.Viewport.Height / 2);
             this.RotationSpeed = rotationSpeed;
             this.MovementSpeed = moveSpeed;
             this.directionView = new TGCVector3(0, 0, -1);
@@ -42,9 +40,7 @@ namespace TGC.Group.Model
 
         public override void UpdateCamera(float elapsedTime) {
             var moveVector = TGCVector3.Empty;
-
-            Cursor.Position = mouseCenter;
-
+            
             if (Input.keyDown(Key.W))
                 moveVector += new TGCVector3(0, 0, -1) * MovementSpeed;
             if (Input.keyDown(Key.S))
@@ -54,24 +50,24 @@ namespace TGC.Group.Model
             if (Input.keyDown(Key.A))
                 moveVector += new TGCVector3(1, 0, 0) * MovementSpeed;
 
-            leftrightRot -= -Input.XposRelative * RotationSpeed;
-            updownRot -= Input.YposRelative * RotationSpeed;
-            //Se actualiza matrix de rotacion, para no hacer este calculo cada vez y solo cuando en verdad es necesario.
-            cameraRotation = TGCMatrix.RotationX(updownRot) * TGCMatrix.RotationY(leftrightRot);
+            if (!bloquear)
+            {
+                leftrightRot -= -Input.XposRelative * RotationSpeed;
+                updownRot -= Input.YposRelative * RotationSpeed;
+                cameraRotation = TGCMatrix.RotationX(updownRot) * TGCMatrix.RotationY(leftrightRot);
+                positionEye += TGCVector3.TransformNormal(moveVector * elapsedTime, cameraRotation);
+            }
 
-            //Calculamos la nueva posicion del ojo segun la rotacion actual de la camara.
-            var cameraRotatedPositionEye = TGCVector3.TransformNormal(moveVector * elapsedTime, cameraRotation);
-            positionEye += cameraRotatedPositionEye;
-
-            //Calculamos el target de la camara, segun su direccion inicial y las rotaciones en screen space x,y.
             var cameraRotatedTarget = TGCVector3.TransformNormal(directionView, cameraRotation);
             var cameraFinalTarget = positionEye + cameraRotatedTarget;
-
-            //Se calcula el nuevo vector de up producido por el movimiento del update.
             var cameraOriginalUpVector = DEFAULT_UP_VECTOR;
             var cameraRotatedUpVector = TGCVector3.TransformNormal(cameraOriginalUpVector, cameraRotation);
 
             base.SetCamera(positionEye, cameraFinalTarget, cameraRotatedUpVector);
+        }
+
+        public void Lock() {
+            bloquear = !bloquear;
         }
 
     }

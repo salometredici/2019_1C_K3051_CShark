@@ -11,6 +11,7 @@ using TGC.Core.SceneLoader;
 using TGC.Core.SkeletalAnimation;
 using TGC.Core.Terrain;
 using TGC.Core.Textures;
+using TGC.Group.Menu;
 
 namespace TGC.Group.Model
 {
@@ -22,14 +23,25 @@ namespace TGC.Group.Model
             Description = Game.Default.Description;
         }
 
+        private Point mouseCenter;
+
+        public bool MenuAbierto { get; set; }
+
         private TgcFpsCamera camaraInterna;
         private TgcSimpleTerrain terrain;
         private TgcScene scene;
         private Pez nemo;
 
+        private MenuPrincipal menu;
+
         public override void Init() {
-            Cursor.Hide();
             var d3dDevice = D3DDevice.Instance.Device;
+            mouseCenter = new Point(D3DDevice.Instance.Device.Viewport.Width / 2, D3DDevice.Instance.Device.Viewport.Height / 2);
+
+            menu = new MenuPrincipal();
+            menu.AgregarBoton("Opciones");
+            menu.AgregarBoton("ASDASDASD");
+
 
             var loader = new TgcSceneLoader();
             terrain = new TgcSimpleTerrain();
@@ -44,7 +56,23 @@ namespace TGC.Group.Model
         public override void Update() {
             PreUpdate();
 
-            nemo.Moverse(ElapsedTime);
+            if (Input.keyPressed(Key.Escape))
+            {
+                MenuAbierto = !MenuAbierto;
+                camaraInterna.Lock();
+            }
+
+            if (MenuAbierto)
+            {
+                menu.Update(Input);
+                Cursor.Show();
+            }
+            else
+            {
+                nemo.Moverse(ElapsedTime);
+                Cursor.Hide();
+                Cursor.Position = mouseCenter;
+            }
 
             PostUpdate();
         }
@@ -53,8 +81,12 @@ namespace TGC.Group.Model
             PreRender();
 
             DrawText.drawText("Camara: " + TGCVector3.PrintVector3(Camara.Position), 5, 20, Color.Red);
+            DrawText.drawText("Con ESC abris el intento de menu", 5, 40, Color.Red);
             terrain.Render();
             scene.RenderAll();
+
+            if (MenuAbierto)
+                menu.Render();
 
             PostRender();
         }
