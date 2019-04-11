@@ -41,6 +41,8 @@ namespace TGC.Group.Model
             menu = new MenuPrincipal();
             menu.AgregarBoton("Opciones");
             menu.AgregarBoton("ASDASDASD");
+            menu.AgregarBoton("ASDASDASD");
+            menu.AgregarBoton("ASDASDASD");
 
 
             var loader = new TgcSceneLoader();

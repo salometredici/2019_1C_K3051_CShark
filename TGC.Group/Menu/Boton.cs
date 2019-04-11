@@ -29,7 +29,7 @@ namespace TGC.Group.Menu
         public Boton(string texto, int x, int y) {
             CargarFondo();
             var centradoX = x - Ancho / 2;
-            var centradoY = y - Alto / 2;
+            var centradoY = y + Alto / 2;
             Posicion = new Point(centradoX, centradoY);
             Fondo.Position = new TGCVector2(centradoX, centradoY);
             Texto = new TgcText2D
@@ -55,10 +55,11 @@ namespace TGC.Group.Menu
         private void CargarFondo() {
             FondoNormal = new CustomBitmap(Game.Default.MediaDirectory + "\\Menu\\boton1.png", D3DDevice.Instance.Device);
             FondoSeleccionado = new CustomBitmap(Game.Default.MediaDirectory + "\\Menu\\boton2.png", D3DDevice.Instance.Device);
-            Ancho = FondoNormal.Width;
-            Alto = FondoNormal.Height;
+            Ancho = 400;
+            Alto = 75;
             Fondo = new CustomSprite();
             Fondo.Bitmap = FondoNormal;
+            Fondo.Scaling = new TGCVector2((float)Ancho / FondoNormal.Width, (float)Alto / FondoNormal.Height);
         }
 
         private bool MouseAdentro(TgcD3dInput input) {
