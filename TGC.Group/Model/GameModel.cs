@@ -11,12 +11,11 @@ using TGC.Core.SceneLoader;
 using TGC.Core.SkeletalAnimation;
 using TGC.Core.Terrain;
 using TGC.Core.Textures;
-using TGC.Group.Menu;
+using TGC.Group.UI;
 
 namespace TGC.Group.Model
 {
-    public class GameModel : TgcExample
-    {
+    public class GameModel : TgcExample {
         public GameModel(string mediaDir, string shadersDir) : base(mediaDir, shadersDir) {
             Category = Game.Default.Category;
             Name = Game.Default.Name;
@@ -33,7 +32,10 @@ namespace TGC.Group.Model
         private TgcScene scene;
         private Pez nemo;
 
-        private MenuPrincipal menu;
+        private MenuPrincipal menuPrincipal;
+        private MenuOpciones menuOpciones;
+
+        private UI.Menu MenuSeleccionado;
 
         public override void Init() {
 
@@ -44,11 +46,9 @@ namespace TGC.Group.Model
 
             puntero = new Puntero();
 
-            menu = new MenuPrincipal();
-            menu.AgregarBoton("Opciones");
-            menu.AgregarBoton("ASDASDASD");
-            menu.AgregarBoton("ASDASDASD");
-            menu.AgregarBoton("ASDASDASD");
+            menuPrincipal = new MenuPrincipal();
+            menuOpciones = new MenuOpciones();
+            MenuSeleccionado = menuPrincipal;
 
 
             var loader = new TgcSceneLoader();
@@ -66,13 +66,14 @@ namespace TGC.Group.Model
 
             if (Input.keyPressed(Key.Escape))
             {
+                CambiarMenu(TipoMenu.Principal);
                 MenuAbierto = !MenuAbierto;
                 camaraInterna.Lock();
             }
 
             if (MenuAbierto)
             {
-                menu.Update(puntero);
+                MenuSeleccionado.Update(this);
                 puntero.Update();
             }
             else
@@ -94,7 +95,7 @@ namespace TGC.Group.Model
 
             if (MenuAbierto)
             {
-                menu.Render();
+                MenuSeleccionado.Render();
                 puntero.Render();
             }
 
@@ -105,5 +106,21 @@ namespace TGC.Group.Model
             scene.DisposeAll();
             terrain.Dispose();
         }
+
+        public void CambiarMenu(TipoMenu tipoMenu) {
+            MenuSeleccionado = NuevoMenu(tipoMenu);
+        }
+
+        private UI.Menu NuevoMenu(TipoMenu tipo) {
+            switch(tipo)
+            {
+                case TipoMenu.Principal:
+                    return new MenuPrincipal();
+                case TipoMenu.Opciones:
+                    return new MenuOpciones();
+            }
+            return null;
+        }
+
     }
 }

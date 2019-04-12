@@ -13,12 +13,11 @@ using TGC.Core.Input;
 using Microsoft.DirectX.Direct3D;
 using TGC.Group.Model;
 
-namespace TGC.Group.Menu
+namespace TGC.Group.UI
 {
     public class Boton
     {
         private CustomSprite Fondo;
-        private bool Seleccionado = false;
         private Point Posicion;
         private TgcText2D Texto;
         private Drawer2D Drawer = new Drawer2D();
@@ -39,14 +38,20 @@ namespace TGC.Group.Menu
                 Align = TgcText2D.TextAlign.CENTER,
                 Color = Color.White,
                 Text = texto,
-                Size = new Size(400, 75),
-                Format = DrawTextFormat.Center,
+                Size = new Size(Ancho, Alto),
+                Format = DrawTextFormat.VerticalCenter,
                 Position = Posicion
             };
         }
 
-        public void Update(Puntero puntero) {
-            Fondo.Bitmap = MouseAdentro(puntero) ? FondoSeleccionado : FondoNormal;
+        public void Update(GameModel juego) {
+            Fondo.Bitmap = MouseAdentro() ? FondoSeleccionado : FondoNormal;
+            if (Presionado(juego.Input))
+                juego.CambiarMenu(TipoMenu.Opciones);
+        }
+
+        private bool Presionado(TgcD3dInput input) {
+            return input.buttonPressed(TgcD3dInput.MouseButtons.BUTTON_LEFT) && MouseAdentro();
         }
 
         public void Render() {
@@ -66,11 +71,11 @@ namespace TGC.Group.Menu
             Fondo.Scaling = new TGCVector2((float)Ancho / FondoNormal.Width, (float)Alto / FondoNormal.Height);
         }
 
-        private bool MouseAdentro(Puntero puntero) {
-            return puntero.Posicion.X > Posicion.X &&
-            puntero.Posicion.X < Posicion.X + Ancho &&
-            puntero.Posicion.Y > Posicion.Y &&
-            puntero.Posicion.Y < Posicion.Y + Alto;
+        private bool MouseAdentro() {
+            return Cursor.Position.X > Posicion.X &&
+            Cursor.Position.X < Posicion.X + Ancho &&
+            Cursor.Position.Y > Posicion.Y &&
+            Cursor.Position.Y < Posicion.Y + Alto;
         }
     }
 }

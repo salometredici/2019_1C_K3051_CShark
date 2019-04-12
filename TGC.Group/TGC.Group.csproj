@@ -82,7 +82,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UI\Menu.cs" />
+    <Compile Include="UI\MenuOpciones.cs" />
     <Compile Include="Model\Puntero.cs" />
+    <Compile Include="UI\Slider.cs" />
+    <Compile Include="UI\TipoMenu.cs" />
     <Compile Include="Utils\AnimatedSprite.cs" />
     <Compile Include="Utils\CustomBitmap.cs" />
     <Compile Include="Utils\CustomSprite.cs" />
@@ -98,8 +102,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Game.settings</DependentUpon>
     </Compile>
-    <Compile Include="Menu\Boton.cs" />
-    <Compile Include="Menu\MenuPrincipal.cs" />
+    <Compile Include="UI\Boton.cs" />
+    <Compile Include="UI\MenuPrincipal.cs" />
     <Compile Include="Model\GameModel.cs" />
     <Compile Include="Model\FpsCamera.cs" />
     <Compile Include="Model\Pez.cs" />
@@ -178,6 +182,9 @@
     <Content Include="Media\Menu\boton2.png" />
     <Content Include="Media\Menu\fondo-menu.png" />
     <Content Include="Media\Menu\puntero.png" />
+    <Content Include="Media\Menu\slider1.png" />
+    <Content Include="Media\Menu\slider2.png" />
+    <Content Include="Media\Menu\slider3.png" />
     <Content Include="Media\prueba-TgcScene.xml" />
     <Content Include="Media\Textures\10010_Coral_v1_Diffuse.jpg" />
     <Content Include="Media\Textures\12960_Shark_diff_v2.jpg" />

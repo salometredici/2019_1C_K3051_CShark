@@ -9,28 +9,24 @@ using TGC.Core.Mathematica;
 using TGC.Group.Model;
 using TGC.Group.Utils;
 
-namespace TGC.Group.Menu
+namespace TGC.Group.UI
 {
-    public class MenuPrincipal
+    public class MenuPrincipal : Menu
     {
-        private Drawer2D Drawer;
         private List<Boton> Botones;
         private int Separacion; //entre botones
         private int AlturaBotones;
-        private CustomSprite Fondo;
 
         public int CantidadBotones => Botones.Count();
 
-        public MenuPrincipal() {
-            Drawer = new Drawer2D();
+        public MenuPrincipal() : base() {
             Botones = new List<Boton>();
             Separacion = 50;
             AlturaBotones = 75;
-            var fondo = new CustomBitmap(Game.Default.MediaDirectory + "\\Menu\\fondo-menu.png", D3DDevice.Instance.Device);
-            Fondo = new CustomSprite();
-            Fondo.Bitmap = fondo;
-            Fondo.Position = TGCVector2.Zero;
-            Fondo.Scaling = new TGCVector2(100, 100);
+            AgregarBoton("Opciones");
+            AgregarBoton("Variables");
+            AgregarBoton("Cheats");
+            AgregarBoton("Salir");
         }
 
         public void AgregarBoton(string texto) {
@@ -39,14 +35,12 @@ namespace TGC.Group.Menu
             Botones.Add(new Boton(texto, posicionX, posicionY));
         }
 
-        public void Update(Puntero puntero) {
-            Botones.ForEach(b => b.Update(puntero));
+        public override void Update(GameModel juego) {
+            Botones.ForEach(b => b.Update(juego));
         }
 
-        public void Render() {
-            Drawer.BeginDrawSprite();
-            Drawer.DrawSprite(Fondo);
-            Drawer.EndDrawSprite();
+        public override void Render() {
+            base.Render();
             Botones.ForEach(b => b.Render());            
         }
 
