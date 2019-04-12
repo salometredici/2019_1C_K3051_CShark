@@ -24,11 +24,11 @@ namespace TGC.Group.Model
         private TGCVector3 PositionEye;
 
         private TgcD3dInput Input;
-        private readonly Variable VelocidadMovimiento;
-        private readonly Variable VelocidadRotacion;
+        private readonly Variable<float> VelocidadMovimiento;
+        private readonly Variable<float> VelocidadRotacion;
         private bool bloquear = false;
 
-        public TgcFpsCamera(TGCVector3 positionEye, Variable velocidadMovimiento, Variable velocidadRotacion, TgcD3dInput input) {
+        public TgcFpsCamera(TGCVector3 positionEye, Variable<float> velocidadMovimiento, Variable<float> velocidadRotacion, TgcD3dInput input) {
             Input = input;
             PositionEye = positionEye;
             VelocidadMovimiento = velocidadMovimiento;

@@ -1,4 +1,5 @@
 using Microsoft.DirectX.DirectInput;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -24,8 +25,12 @@ namespace TGC.Group.Model
         }
 
         //CONFIGURACION
-        private Variable VelocidadMovimiento;
-        private Variable VelocidadRotacion;
+        private Variable<float> VelocidadMovimiento;
+        private Variable<float> VelocidadRotacion;
+        private Variable<bool> ModoDios;
+        private Variable<bool> Niebla;
+        private Variable<bool> PostProcesadoCasco;
+        private Variable<bool> MotionBlur;
 
         private Point mouseCenter;
         private Point CentroPantalla;
@@ -40,6 +45,7 @@ namespace TGC.Group.Model
 
         private MenuPrincipal MenuPrincipal;
         private MenuOpciones MenuOpciones;
+        private MenuVariables MenuVariables;
 
         private UI.Menu MenuSeleccionado;
 
@@ -53,9 +59,6 @@ namespace TGC.Group.Model
             mouseCenter = new Point(D3DDevice.Instance.Device.Viewport.Width / 2, D3DDevice.Instance.Device.Viewport.Height / 2);
 
             puntero = new Puntero();
-
-
-
 
             var loader = new TgcSceneLoader();
             terrain = new TgcSimpleTerrain();
@@ -119,18 +122,28 @@ namespace TGC.Group.Model
             CentroPantalla = new Point(viewport.Width / 2, viewport.Height / 2);
             MenuPrincipal = new MenuPrincipal();
             MenuOpciones = new MenuOpciones();
+            MenuVariables = new MenuVariables();
             MenuSeleccionado = MenuPrincipal;
 
-            VelocidadMovimiento = new Variable("Velocidad de movimiento", 500f);
-            VelocidadRotacion = new Variable("Velocidad de rotación", 0.1f);
+            VelocidadMovimiento = new Variable<float>("Velocidad de movimiento", 500f);
+            VelocidadRotacion = new Variable<float>("Velocidad de rotación", 0.1f);
+            ModoDios = new Variable<bool>("Modo Dios", true);
+            Niebla = new Variable<bool>("Niebla", false);
+            PostProcesadoCasco = new Variable<bool>("Post Procesado (Casco)", false);
+            MotionBlur = new Variable<bool>("Motion Blur", false);
 
             MenuPrincipal.AgregarBoton("Opciones", j => j.CambiarMenu(TipoMenu.Opciones));
-            MenuPrincipal.AgregarBoton("Variables", j => j.CambiarMenu(TipoMenu.Principal));
+            MenuPrincipal.AgregarBoton("Variables", j => j.CambiarMenu(TipoMenu.Variables));
             MenuPrincipal.AgregarBoton("Cheats", j => j.CambiarMenu(TipoMenu.Principal));
-            MenuPrincipal.AgregarBoton("Salir", j => j.CambiarMenu(TipoMenu.Principal));
+            MenuPrincipal.AgregarBoton("Salir", j => j.Salir());
 
-            MenuOpciones.AgregarSlider(new Slider(VelocidadRotacion, 0.05f, 0.2f, CentroPantalla.X, 100));
-            MenuOpciones.AgregarSlider(new Slider(VelocidadMovimiento, 200, 1000, CentroPantalla.X, 200));
+            MenuOpciones.AgregarCheckbox(new Checkbox(ModoDios, CentroPantalla.X, 100));
+            MenuOpciones.AgregarCheckbox(new Checkbox(Niebla, CentroPantalla.X, 200));
+            MenuOpciones.AgregarCheckbox(new Checkbox(PostProcesadoCasco, CentroPantalla.X, 300));
+            MenuOpciones.AgregarCheckbox(new Checkbox(MotionBlur, CentroPantalla.X, 400));
+
+            MenuVariables.AgregarSlider(new Slider(VelocidadRotacion, 0.05f, 0.2f, CentroPantalla.X, 100));
+            MenuVariables.AgregarSlider(new Slider(VelocidadMovimiento, 200, 1000, CentroPantalla.X, 200));
         }
 
         public void CambiarMenu(TipoMenu tipoMenu) {
@@ -144,9 +157,14 @@ namespace TGC.Group.Model
                     return MenuPrincipal;
                 case TipoMenu.Opciones:
                     return MenuOpciones;
-                //case 
+                case TipoMenu.Variables:
+                    return MenuVariables;
             }
             return null;
+        }
+
+        public void Salir() {
+            Environment.Exit(0);
         }
 
     }

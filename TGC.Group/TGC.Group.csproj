@@ -82,9 +82,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UI\Checkbox.cs" />
     <Compile Include="UI\Menu.cs" />
     <Compile Include="UI\MenuOpciones.cs" />
     <Compile Include="Model\Puntero.cs" />
+    <Compile Include="UI\MenuVariables.cs" />
     <Compile Include="UI\Slider.cs" />
     <Compile Include="UI\TipoMenu.cs" />
     <Compile Include="Utils\AnimatedSprite.cs" />
@@ -181,6 +183,9 @@
     <Content Include="Media\Heightmaps\heightmap.JPG" />
     <Content Include="Media\Menu\boton1.png" />
     <Content Include="Media\Menu\boton2.png" />
+    <Content Include="Media\Menu\checkNormal.png" />
+    <Content Include="Media\Menu\checkHover.png" />
+    <Content Include="Media\Menu\checkTick.png" />
     <Content Include="Media\Menu\fondo-menu.png" />
     <Content Include="Media\Menu\puntero.png" />
     <Content Include="Media\Menu\slider1.png" />

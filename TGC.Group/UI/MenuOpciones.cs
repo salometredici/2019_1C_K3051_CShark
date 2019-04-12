@@ -11,23 +11,23 @@ namespace TGC.Group.UI
 {
     public class MenuOpciones : Menu
     {
-        private List<Slider> Sliders;
+        private List<Checkbox> Checkboxes;
 
         public MenuOpciones() : base() {
-            Sliders = new List<Slider>();
+            Checkboxes = new List<Checkbox>();
         }
 
         public override void Update(GameModel juego) {
-            Sliders.ForEach(s => s.Update(juego.Input));
+            Checkboxes.ForEach(c => c.Update(juego.Input));
         }
 
         public override void Render() {
             base.Render();
-            Sliders.ForEach(s => s.Render());
+            Checkboxes.ForEach(c => c.Render());
         }
 
-        public void AgregarSlider(Slider slider) {
-            Sliders.Add(slider);
+        public void AgregarCheckbox(Checkbox checkbox) {
+            Checkboxes.Add(checkbox);
         }
     }
 }

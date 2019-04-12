@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using TGC.Core.Input;
 using Microsoft.DirectX.Direct3D;
 using TGC.Group.Model;
+using Font = System.Drawing.Font;
 
 namespace TGC.Group.UI
 {
@@ -25,26 +26,15 @@ namespace TGC.Group.UI
 
         private CustomBitmap FondoNormal;
         private CustomBitmap FondoSeleccionado;
-        private int Ancho;
-        private int Alto;
+        private int Ancho = 400;
+        private int Alto = 75;
 
         public Boton(string texto, int x, int y, Action<GameModel> accion) {
             Accion = accion;
             Drawer = new Drawer2D();
+            Posicion = new Point(x - Ancho / 2, y + Alto / 2);
             CargarFondo();
-            var centradoX = x - Ancho / 2;
-            var centradoY = y + Alto / 2;
-            Posicion = new Point(centradoX, centradoY);
-            Fondo.Position = new TGCVector2(centradoX, centradoY);
-            Texto = new TgcText2D
-            {
-                Align = TgcText2D.TextAlign.CENTER,
-                Color = Color.White,
-                Text = texto,
-                Size = new Size(Ancho, Alto),
-                Format = DrawTextFormat.VerticalCenter,
-                Position = Posicion
-            };
+            CargarTexto(texto);
         }
 
         public void Update(GameModel juego) {
@@ -67,11 +57,23 @@ namespace TGC.Group.UI
         private void CargarFondo() {
             FondoNormal = new CustomBitmap(Game.Default.MediaDirectory + "\\Menu\\boton1.png", D3DDevice.Instance.Device);
             FondoSeleccionado = new CustomBitmap(Game.Default.MediaDirectory + "\\Menu\\boton2.png", D3DDevice.Instance.Device);
-            Ancho = 400;
-            Alto = 75;
             Fondo = new CustomSprite();
             Fondo.Bitmap = FondoNormal;
+            Fondo.Position = new TGCVector2(Posicion.X, Posicion.Y);
             Fondo.Scaling = new TGCVector2((float)Ancho / FondoNormal.Width, (float)Alto / FondoNormal.Height);
+        }
+
+        private void CargarTexto(string texto) {
+            Texto = new TgcText2D
+            {
+                Color = Color.White,
+                Text = texto,
+                Size = new Size(Ancho, Alto),
+                Format = DrawTextFormat.Center,
+                Position = Posicion
+            };
+            Texto.changeFont(new Font("Arial", 25, FontStyle.Bold, GraphicsUnit.Pixel));
+            Texto.Position = new Point(Texto.Position.X, Texto.Position.Y + (Alto - 38) / 2);
         }
 
         private bool MouseAdentro() {

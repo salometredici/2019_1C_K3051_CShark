@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace TGC.Group.Variables
 {
-    public class Variable
+    public class Variable<T>
     {
         public string Nombre { get; }
-        public float Valor { get; private set; }
+        public T Valor { get; private set; }
 
-        public Variable(string nombre, float valorInicial) {
+        public Variable(string nombre, T valorInicial) {
             Nombre = nombre;
             Valor = valorInicial;
         }
 
-        public void Actualizar(float valor) {
+        public void Actualizar(T valor) {
             Valor = valor;
         }
     }

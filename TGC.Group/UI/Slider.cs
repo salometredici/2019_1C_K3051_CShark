@@ -16,7 +16,7 @@ namespace TGC.Group.UI
 {
     public class Slider
     {
-        private Variable Variable;
+        private Variable<float> Variable;
         public float ValorMinimo { get; set; }
         public float ValorMaximo { get; set; }
         private Drawer2D Drawer;
@@ -34,7 +34,7 @@ namespace TGC.Group.UI
 
         public float ValPixel => (ValorMaximo - ValorMinimo) / Ancho;
 
-        public Slider(Variable variable, float minimo, float maximo, int x, int y) {
+        public Slider(Variable<float> variable, float minimo, float maximo, int x, int y) {
             Variable = variable;
             ValorMinimo = minimo;
             ValorMaximo = maximo;
