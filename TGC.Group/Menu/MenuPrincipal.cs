@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TGC.Core.Direct3D;
 using TGC.Core.Input;
 using TGC.Core.Mathematica;
+using TGC.Group.Model;
 using TGC.Group.Utils;
 
 namespace TGC.Group.Menu
@@ -38,17 +39,16 @@ namespace TGC.Group.Menu
             Botones.Add(new Boton(texto, posicionX, posicionY));
         }
 
-        public void Update(TgcD3dInput input) {
-            Botones.ForEach(b => b.Update(input));
+        public void Update(Puntero puntero) {
+            Botones.ForEach(b => b.Update(puntero));
         }
 
         public void Render() {
             Drawer.BeginDrawSprite();
             Drawer.DrawSprite(Fondo);
-            Botones.ForEach(b => b.Render(Drawer));
             Drawer.EndDrawSprite();
+            Botones.ForEach(b => b.Render());            
         }
-
 
     }
 }

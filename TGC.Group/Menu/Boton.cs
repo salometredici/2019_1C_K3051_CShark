@@ -11,6 +11,7 @@ using TGC.Core.Mathematica;
 using System.Windows.Forms;
 using TGC.Core.Input;
 using Microsoft.DirectX.Direct3D;
+using TGC.Group.Model;
 
 namespace TGC.Group.Menu
 {
@@ -20,6 +21,7 @@ namespace TGC.Group.Menu
         private bool Seleccionado = false;
         private Point Posicion;
         private TgcText2D Texto;
+        private Drawer2D Drawer = new Drawer2D();
 
         private CustomBitmap FondoNormal;
         private CustomBitmap FondoSeleccionado;
@@ -43,12 +45,14 @@ namespace TGC.Group.Menu
             };
         }
 
-        public void Update(TgcD3dInput input) {
-            Fondo.Bitmap = MouseAdentro(input) ? FondoSeleccionado : FondoNormal;
+        public void Update(Puntero puntero) {
+            Fondo.Bitmap = MouseAdentro(puntero) ? FondoSeleccionado : FondoNormal;
         }
 
-        public void Render(Drawer2D drawer) {
-            drawer.DrawSprite(Fondo);
+        public void Render() {
+            Drawer.BeginDrawSprite();
+            Drawer.DrawSprite(Fondo);
+            Drawer.EndDrawSprite();
             Texto.render();
         }
 
@@ -62,11 +66,11 @@ namespace TGC.Group.Menu
             Fondo.Scaling = new TGCVector2((float)Ancho / FondoNormal.Width, (float)Alto / FondoNormal.Height);
         }
 
-        private bool MouseAdentro(TgcD3dInput input) {
-            return input.Xpos > Posicion.X &&
-            input.Xpos < Posicion.X + Ancho &&
-            input.Ypos > Posicion.Y &&
-            input.Ypos < Posicion.Y + Alto;
+        private bool MouseAdentro(Puntero puntero) {
+            return puntero.Posicion.X > Posicion.X &&
+            puntero.Posicion.X < Posicion.X + Ancho &&
+            puntero.Posicion.Y > Posicion.Y &&
+            puntero.Posicion.Y < Posicion.Y + Alto;
         }
     }
 }

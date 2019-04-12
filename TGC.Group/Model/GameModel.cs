@@ -27,6 +27,7 @@ namespace TGC.Group.Model
 
         public bool MenuAbierto { get; set; }
 
+        private Puntero puntero;
         private TgcFpsCamera camaraInterna;
         private TgcSimpleTerrain terrain;
         private TgcScene scene;
@@ -35,8 +36,13 @@ namespace TGC.Group.Model
         private MenuPrincipal menu;
 
         public override void Init() {
+
+            Cursor.Hide();
+
             var d3dDevice = D3DDevice.Instance.Device;
             mouseCenter = new Point(D3DDevice.Instance.Device.Viewport.Width / 2, D3DDevice.Instance.Device.Viewport.Height / 2);
+
+            puntero = new Puntero();
 
             menu = new MenuPrincipal();
             menu.AgregarBoton("Opciones");
@@ -66,13 +72,12 @@ namespace TGC.Group.Model
 
             if (MenuAbierto)
             {
-                menu.Update(Input);
-                Cursor.Show();
+                menu.Update(puntero);
+                puntero.Update();
             }
             else
             {
                 nemo.Moverse(ElapsedTime);
-                Cursor.Hide();
                 Cursor.Position = mouseCenter;
             }
 
@@ -88,7 +93,10 @@ namespace TGC.Group.Model
             scene.RenderAll();
 
             if (MenuAbierto)
+            {
                 menu.Render();
+                puntero.Render();
+            }
 
             PostRender();
         }

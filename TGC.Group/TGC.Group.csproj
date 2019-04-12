@@ -82,6 +82,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Puntero.cs" />
     <Compile Include="Utils\AnimatedSprite.cs" />
     <Compile Include="Utils\CustomBitmap.cs" />
     <Compile Include="Utils\CustomSprite.cs" />
@@ -176,6 +177,7 @@
     <Content Include="Media\Menu\boton1.png" />
     <Content Include="Media\Menu\boton2.png" />
     <Content Include="Media\Menu\fondo-menu.png" />
+    <Content Include="Media\Menu\puntero.png" />
     <Content Include="Media\prueba-TgcScene.xml" />
     <Content Include="Media\Textures\10010_Coral_v1_Diffuse.jpg" />
     <Content Include="Media\Textures\12960_Shark_diff_v2.jpg" />
