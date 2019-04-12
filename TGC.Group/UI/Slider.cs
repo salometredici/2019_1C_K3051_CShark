@@ -10,13 +10,13 @@ using TGC.Core.Input;
 using TGC.Core.Mathematica;
 using TGC.Core.Text;
 using TGC.Group.Utils;
+using TGC.Group.Variables;
 
 namespace TGC.Group.UI
 {
     public class Slider
     {
-        public string Nombre { get; set; }
-        public float Valor { get; set; }
+        private Variable Variable;
         public float ValorMinimo { get; set; }
         public float ValorMaximo { get; set; }
         private Drawer2D Drawer;
@@ -30,18 +30,16 @@ namespace TGC.Group.UI
         private int AnchoMarcador = 30;
         private int AltoMarcador = 30;
         private TgcText2D TextoValor;
+        private TgcText2D TextoNombre;
+
         public float ValPixel => (ValorMaximo - ValorMinimo) / Ancho;
 
-        public Slider(string nombre, float minimo, float maximo, int x, int y) {
-            Valor = minimo;
+        public Slider(Variable variable, float minimo, float maximo, int x, int y) {
+            Variable = variable;
             ValorMinimo = minimo;
             ValorMaximo = maximo;
-            Nombre = nombre;
-            Posicion = new TGCVector2(x, y);
+            Posicion = new TGCVector2(x - Ancho / 2, y);
             CargarSprites();
-            TextoValor.Size = new Size(50, 15);
-            TextoValor.Format = Microsoft.DirectX.Direct3D.DrawTextFormat.Left;
-            TextoValor.Position = new Point(x, y + 50);
         }
 
         public void Update(TgcD3dInput input) {
@@ -51,8 +49,8 @@ namespace TGC.Group.UI
                 Marcador.Position = new TGCVector2(Cursor.Position.X - mitadMarcador, Marcador.Position.Y);
                 var distancia = Marcador.Position.X - Posicion.X;
                 BarraLlena.Scaling = new TGCVector2(distancia / BarraLlena.Bitmap.Width, 1);
-                Valor = ValorMinimo + ValPixel * (distancia + mitadMarcador);
-                TextoValor.Text = Valor.ToString();
+                Variable.Actualizar(ValorMinimo + ValPixel * (distancia + mitadMarcador));
+                TextoValor.Text = Variable.Valor.ToString();
             }
         }
 
@@ -63,6 +61,7 @@ namespace TGC.Group.UI
             Drawer.DrawSprite(Marcador);
             Drawer.EndDrawSprite();
             TextoValor.render();
+            TextoNombre.render();
         }
 
         private bool DentroDeLimite() {
@@ -84,15 +83,26 @@ namespace TGC.Group.UI
             Drawer = new Drawer2D();
             BarraVacia = new CustomSprite();
             BarraVacia.Bitmap = new CustomBitmap(Game.Default.MediaDirectory + "\\Menu\\slider1.png", D3DDevice.Instance.Device);
-            BarraVacia.Position = Posicion; //relativa 0 pero cambia
+            BarraVacia.Position = Posicion;
             BarraVacia.Scaling = new TGCVector2(Ancho / BarraVacia.Bitmap.Width, 1);
+            Marcador = new CustomSprite();
+            Marcador.Bitmap = new CustomBitmap(Game.Default.MediaDirectory + "\\Menu\\slider3.png", D3DDevice.Instance.Device);
+            Marcador.Position = new TGCVector2(Posicion.X + (Variable.Valor - ValorMinimo) / ValPixel, Posicion.Y);
             BarraLlena = new CustomSprite();
             BarraLlena.Bitmap = new CustomBitmap(Game.Default.MediaDirectory + "\\Menu\\slider2.png", D3DDevice.Instance.Device);
             BarraLlena.Position = Posicion; //relativa 0 
-            Marcador = new CustomSprite();
-            Marcador.Bitmap = new CustomBitmap(Game.Default.MediaDirectory + "\\Menu\\slider3.png", D3DDevice.Instance.Device);
-            Marcador.Position = Posicion; //relativa 0 pero cambia
+            var distancia = Marcador.Position.X - Posicion.X;
+            BarraLlena.Scaling = new TGCVector2(distancia / BarraLlena.Bitmap.Width, 1);
             TextoValor = new TgcText2D();
+            TextoValor.Size = new Size(Ancho, 15);
+            TextoValor.Format = Microsoft.DirectX.Direct3D.DrawTextFormat.Left;
+            TextoValor.Position = new Point((int)Posicion.X, (int)Posicion.Y + 35);
+            TextoValor.Text = Variable.Valor.ToString();
+            TextoNombre = new TgcText2D();
+            TextoNombre.Size = new Size(Ancho, 15);
+            TextoNombre.Format = Microsoft.DirectX.Direct3D.DrawTextFormat.Left;
+            TextoNombre.Position = new Point((int)Posicion.X, (int)Posicion.Y - 20);
+            TextoNombre.Text = Variable.Nombre;
         }
     }
 }

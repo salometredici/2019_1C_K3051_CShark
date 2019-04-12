@@ -12,6 +12,7 @@ using TGC.Core.SkeletalAnimation;
 using TGC.Core.Terrain;
 using TGC.Core.Textures;
 using TGC.Group.UI;
+using TGC.Group.Variables;
 
 namespace TGC.Group.Model
 {
@@ -22,18 +23,23 @@ namespace TGC.Group.Model
             Description = Game.Default.Description;
         }
 
+        //CONFIGURACION
+        private Variable VelocidadMovimiento;
+        private Variable VelocidadRotacion;
+
         private Point mouseCenter;
+        private Point CentroPantalla;
 
         public bool MenuAbierto { get; set; }
 
         private Puntero puntero;
-        private TgcFpsCamera camaraInterna;
+        public TgcFpsCamera camaraInterna;
         private TgcSimpleTerrain terrain;
         private TgcScene scene;
         private Pez nemo;
 
-        private MenuPrincipal menuPrincipal;
-        private MenuOpciones menuOpciones;
+        private MenuPrincipal MenuPrincipal;
+        private MenuOpciones MenuOpciones;
 
         private UI.Menu MenuSeleccionado;
 
@@ -41,14 +47,14 @@ namespace TGC.Group.Model
 
             Cursor.Hide();
 
+            CargarVariables();
+
             var d3dDevice = D3DDevice.Instance.Device;
             mouseCenter = new Point(D3DDevice.Instance.Device.Viewport.Width / 2, D3DDevice.Instance.Device.Viewport.Height / 2);
 
             puntero = new Puntero();
 
-            menuPrincipal = new MenuPrincipal();
-            menuOpciones = new MenuOpciones();
-            MenuSeleccionado = menuPrincipal;
+
 
 
             var loader = new TgcSceneLoader();
@@ -57,7 +63,8 @@ namespace TGC.Group.Model
             terrain.loadTexture(MediaDir + "Textures\\arena.jpg");
             scene = loader.loadSceneFromFile(MediaDir + "prueba-TgcScene.xml");
             nemo = new Pez(scene.Meshes[4], 2f, 50f);
-            camaraInterna = new TgcFpsCamera(new TGCVector3(-210, 218, -665), 500f, 0.1f, Input);
+            var posicionInicial = new TGCVector3(-210, 218, -665);
+            camaraInterna = new TgcFpsCamera(posicionInicial, VelocidadMovimiento, VelocidadRotacion, Input);
             Camara = camaraInterna;
         }
 
@@ -107,6 +114,25 @@ namespace TGC.Group.Model
             terrain.Dispose();
         }
 
+        private void CargarVariables() {
+            var viewport = D3DDevice.Instance.Device.Viewport;
+            CentroPantalla = new Point(viewport.Width / 2, viewport.Height / 2);
+            MenuPrincipal = new MenuPrincipal();
+            MenuOpciones = new MenuOpciones();
+            MenuSeleccionado = MenuPrincipal;
+
+            VelocidadMovimiento = new Variable("Velocidad de movimiento", 500f);
+            VelocidadRotacion = new Variable("Velocidad de rotación", 0.1f);
+
+            MenuPrincipal.AgregarBoton("Opciones", j => j.CambiarMenu(TipoMenu.Opciones));
+            MenuPrincipal.AgregarBoton("Variables", j => j.CambiarMenu(TipoMenu.Principal));
+            MenuPrincipal.AgregarBoton("Cheats", j => j.CambiarMenu(TipoMenu.Principal));
+            MenuPrincipal.AgregarBoton("Salir", j => j.CambiarMenu(TipoMenu.Principal));
+
+            MenuOpciones.AgregarSlider(new Slider(VelocidadRotacion, 0.05f, 0.2f, CentroPantalla.X, 100));
+            MenuOpciones.AgregarSlider(new Slider(VelocidadMovimiento, 200, 1000, CentroPantalla.X, 200));
+        }
+
         public void CambiarMenu(TipoMenu tipoMenu) {
             MenuSeleccionado = NuevoMenu(tipoMenu);
         }
@@ -115,9 +141,10 @@ namespace TGC.Group.Model
             switch(tipo)
             {
                 case TipoMenu.Principal:
-                    return new MenuPrincipal();
+                    return MenuPrincipal;
                 case TipoMenu.Opciones:
-                    return new MenuOpciones();
+                    return MenuOpciones;
+                //case 
             }
             return null;
         }

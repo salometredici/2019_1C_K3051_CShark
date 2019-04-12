@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TGC.Core.Direct3D;
 using TGC.Core.Input;
 using TGC.Group.Model;
 
@@ -14,7 +15,6 @@ namespace TGC.Group.UI
 
         public MenuOpciones() : base() {
             Sliders = new List<Slider>();
-            Sliders.Add(new Slider("asdasd", 50, 100, 500, 500));
         }
 
         public override void Update(GameModel juego) {
@@ -24,6 +24,10 @@ namespace TGC.Group.UI
         public override void Render() {
             base.Render();
             Sliders.ForEach(s => s.Render());
+        }
+
+        public void AgregarSlider(Slider slider) {
+            Sliders.Add(slider);
         }
     }
 }

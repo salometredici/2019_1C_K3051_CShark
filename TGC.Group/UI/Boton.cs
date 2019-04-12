@@ -20,14 +20,17 @@ namespace TGC.Group.UI
         private CustomSprite Fondo;
         private Point Posicion;
         private TgcText2D Texto;
-        private Drawer2D Drawer = new Drawer2D();
+        private Drawer2D Drawer;
+        private Action<GameModel> Accion;
 
         private CustomBitmap FondoNormal;
         private CustomBitmap FondoSeleccionado;
         private int Ancho;
         private int Alto;
 
-        public Boton(string texto, int x, int y) {
+        public Boton(string texto, int x, int y, Action<GameModel> accion) {
+            Accion = accion;
+            Drawer = new Drawer2D();
             CargarFondo();
             var centradoX = x - Ancho / 2;
             var centradoY = y + Alto / 2;
@@ -47,7 +50,7 @@ namespace TGC.Group.UI
         public void Update(GameModel juego) {
             Fondo.Bitmap = MouseAdentro() ? FondoSeleccionado : FondoNormal;
             if (Presionado(juego.Input))
-                juego.CambiarMenu(TipoMenu.Opciones);
+                Accion.Invoke(juego);
         }
 
         private bool Presionado(TgcD3dInput input) {

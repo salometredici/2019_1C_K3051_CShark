@@ -23,16 +23,12 @@ namespace TGC.Group.UI
             Botones = new List<Boton>();
             Separacion = 50;
             AlturaBotones = 75;
-            AgregarBoton("Opciones");
-            AgregarBoton("Variables");
-            AgregarBoton("Cheats");
-            AgregarBoton("Salir");
         }
 
-        public void AgregarBoton(string texto) {
+        public void AgregarBoton(string texto, Action<GameModel> accion) {
             var posicionX = D3DDevice.Instance.Device.Viewport.Width / 2;
             var posicionY = CantidadBotones * (Separacion + AlturaBotones);
-            Botones.Add(new Boton(texto, posicionX, posicionY));
+            Botones.Add(new Boton(texto, posicionX, posicionY, accion));
         }
 
         public override void Update(GameModel juego) {
