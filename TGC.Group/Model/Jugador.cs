@@ -17,6 +17,7 @@ namespace TGC.Group.Model
         public int Oxigeno;
         private List<IRecolectable> Recolectables;
         public TGCVector3 Posicion { get; private set; }
+        public bool EstaVivo => Vida > 0 && Oxigeno > 0;
 
         private Drawer2D Drawer;
         private BarraVida BarraVida;
@@ -37,17 +38,38 @@ namespace TGC.Group.Model
             BarraOxigeno = new BarraOxigeno(new TGCVector2(15, alturaTotal - 75), Oxigeno);
         }
         
-        public void Update(TgcCamera camara) {
+        public void Update(TgcFpsCamera camara) {
             Posicion = camara.Position;
             //Vida -= 1;
-            Oxigeno -= 7;
-            BarraVida.Update(Vida);
-            BarraOxigeno.Update(Oxigeno);
+            Oxigeno -= 20;
+            if (EstaVivo)
+            {
+                BarraVida.Update(Vida);
+                BarraOxigeno.Update(Oxigeno);
+            }
+            else
+            {
+                BloquearCamara(camara);
+                //if (!_murio)
+                  //  _murio = true; //para bloquear camara una sola vez
+            }
+        }
+
+        private bool _murio = false;
+        private void BloquearCamara(TgcFpsCamera camara) {
+            if (!_murio)
+            {
+                camara.Lock();
+                _murio = true;
+            }
         }
 
         public void Render() {
-            BarraVida.Render();
-            BarraOxigeno.Render();
+            if (EstaVivo)
+            {
+                BarraVida.Render();
+                BarraOxigeno.Render();
+            }
         }
 
     }

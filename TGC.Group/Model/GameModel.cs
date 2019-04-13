@@ -13,6 +13,7 @@ using TGC.Core.SkeletalAnimation;
 using TGC.Core.Terrain;
 using TGC.Core.Textures;
 using TGC.Group.UI;
+using TGC.Group.UI.HUD;
 using TGC.Group.Variables;
 
 namespace TGC.Group.Model
@@ -48,6 +49,7 @@ namespace TGC.Group.Model
         private MenuPrincipal MenuPrincipal;
         private MenuOpciones MenuOpciones;
         private MenuVariables MenuVariables;
+        private PantallaMuerte PantallaMuerte;
 
         private UI.Menu MenuSeleccionado;
 
@@ -56,6 +58,7 @@ namespace TGC.Group.Model
             Cursor.Hide();
 
             CargarVariables();
+            PantallaMuerte = new PantallaMuerte();
 
             var d3dDevice = D3DDevice.Instance.Device;
             mouseCenter = new Point(D3DDevice.Instance.Device.Viewport.Width / 2, D3DDevice.Instance.Device.Viewport.Height / 2);
@@ -73,24 +76,22 @@ namespace TGC.Group.Model
             tiburon.Position += new TGCVector3(2000, 500, 500);
             tiburon.Scale = new TGCVector3(200, 200, 200);
 
-            var posicionInicial = new TGCVector3(-210, 218, -665);
-            camaraInterna = new TgcFpsCamera(posicionInicial, VelocidadMovimiento, VelocidadRotacion, Input);
-            Camara = camaraInterna;
-            jugador = new Jugador(TGCVector3.Empty, 500, 100000);
+            Start();
         }
 
         public override void Update() {
             PreUpdate();
-
-            jugador.Update(Camara);
-
+            
             if (Input.keyPressed(Key.Escape))
             {
-                CambiarMenu(TipoMenu.Principal);
-                MenuAbierto = !MenuAbierto;
                 camaraInterna.Lock();
+                if (jugador.EstaVivo)
+                {
+                    CambiarMenu(TipoMenu.Principal);
+                    MenuAbierto = !MenuAbierto;
+                }
+                else Start();
             }
-
             if (MenuAbierto)
             {
                 MenuSeleccionado.Update(this);
@@ -98,11 +99,20 @@ namespace TGC.Group.Model
             }
             else
             {
+                jugador.Update(camaraInterna);
                 nemo.Moverse(ElapsedTime);
                 Cursor.Position = mouseCenter;
             }
 
+            
             PostUpdate();
+        }
+
+        private void Start() {
+            var posicionInicial = new TGCVector3(-210, 218, -665);
+            camaraInterna = new TgcFpsCamera(posicionInicial, VelocidadMovimiento, VelocidadRotacion, Input);
+            Camara = camaraInterna;
+            jugador = new Jugador(TGCVector3.Empty, 500, 100000);
         }
 
         public override void Render() {
@@ -114,13 +124,17 @@ namespace TGC.Group.Model
             scene.RenderAll();
             tiburon.Render();
 
+
+            if (jugador.EstaVivo)
+                jugador.Render();
+            else
+                PantallaMuerte.Render();
+
             if (MenuAbierto)
             {
                 MenuSeleccionado.Render();
                 puntero.Render();
-            }
-
-            jugador.Render();
+            }            
 
             PostRender();
         }

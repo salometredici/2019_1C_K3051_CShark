@@ -87,6 +87,7 @@
     <Compile Include="UI\HUD\BarraEstado.cs" />
     <Compile Include="UI\HUD\BarraOxigeno.cs" />
     <Compile Include="UI\HUD\BarraVida.cs" />
+    <Compile Include="UI\HUD\PantallaMuerte.cs" />
     <Compile Include="UI\Menu\Checkbox.cs" />
     <Compile Include="UI\Menu\Menu.cs" />
     <Compile Include="UI\Menu\MenuOpciones.cs" />
@@ -187,6 +188,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Media\Heightmaps\heightmap.JPG" />
+    <Content Include="Media\HUD\Muerte\fondo.png" />
+    <Content Include="Media\HUD\Muerte\franja.png" />
+    <Content Include="Media\HUD\Muerte\texto.png" />
     <Content Include="Media\HUD\oxigenoBarra.png" />
     <Content Include="Media\HUD\oxigenoFondo.png" />
     <Content Include="Media\HUD\vidaBarra.png" />
