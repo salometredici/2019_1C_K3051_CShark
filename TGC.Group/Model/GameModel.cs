@@ -42,6 +42,7 @@ namespace TGC.Group.Model
         private TgcSimpleTerrain terrain;
         private TgcScene scene;
         private Pez nemo;
+        private Jugador jugador;
 
         private MenuPrincipal MenuPrincipal;
         private MenuOpciones MenuOpciones;
@@ -69,10 +70,13 @@ namespace TGC.Group.Model
             var posicionInicial = new TGCVector3(-210, 218, -665);
             camaraInterna = new TgcFpsCamera(posicionInicial, VelocidadMovimiento, VelocidadRotacion, Input);
             Camara = camaraInterna;
+            jugador = new Jugador(TGCVector3.Empty, 500, 100000);
         }
 
         public override void Update() {
             PreUpdate();
+
+            jugador.Update(Camara);
 
             if (Input.keyPressed(Key.Escape))
             {
@@ -108,6 +112,8 @@ namespace TGC.Group.Model
                 MenuSeleccionado.Render();
                 puntero.Render();
             }
+
+            jugador.Render();
 
             PostRender();
         }

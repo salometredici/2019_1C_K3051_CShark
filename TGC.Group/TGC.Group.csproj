@@ -82,13 +82,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UI\Checkbox.cs" />
-    <Compile Include="UI\Menu.cs" />
-    <Compile Include="UI\MenuOpciones.cs" />
+    <Compile Include="Model\Jugador.cs" />
+    <Compile Include="Model\Recolectable.cs" />
+    <Compile Include="UI\HUD\BarraEstado.cs" />
+    <Compile Include="UI\HUD\BarraOxigeno.cs" />
+    <Compile Include="UI\HUD\BarraVida.cs" />
+    <Compile Include="UI\Menu\Checkbox.cs" />
+    <Compile Include="UI\Menu\Menu.cs" />
+    <Compile Include="UI\Menu\MenuOpciones.cs" />
     <Compile Include="Model\Puntero.cs" />
-    <Compile Include="UI\MenuVariables.cs" />
-    <Compile Include="UI\Slider.cs" />
-    <Compile Include="UI\TipoMenu.cs" />
+    <Compile Include="UI\Menu\MenuVariables.cs" />
+    <Compile Include="UI\Menu\Slider.cs" />
+    <Compile Include="UI\Menu\TipoMenu.cs" />
     <Compile Include="Utils\AnimatedSprite.cs" />
     <Compile Include="Utils\CustomBitmap.cs" />
     <Compile Include="Utils\CustomSprite.cs" />
@@ -104,8 +109,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Game.settings</DependentUpon>
     </Compile>
-    <Compile Include="UI\Boton.cs" />
-    <Compile Include="UI\MenuPrincipal.cs" />
+    <Compile Include="UI\Menu\Boton.cs" />
+    <Compile Include="UI\Menu\MenuPrincipal.cs" />
     <Compile Include="Model\GameModel.cs" />
     <Compile Include="Model\FpsCamera.cs" />
     <Compile Include="Model\Pez.cs" />
@@ -181,6 +186,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Media\Heightmaps\heightmap.JPG" />
+    <Content Include="Media\HUD\oxigenoBarra.png" />
+    <Content Include="Media\HUD\oxigenoFondo.png" />
+    <Content Include="Media\HUD\vidaBarra.png" />
+    <Content Include="Media\HUD\vidaFondo.png" />
     <Content Include="Media\Menu\boton1.png" />
     <Content Include="Media\Menu\boton2.png" />
     <Content Include="Media\Menu\checkNormal.png" />
