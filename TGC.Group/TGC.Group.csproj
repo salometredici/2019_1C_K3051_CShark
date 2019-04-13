@@ -134,6 +134,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Game.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Media\Textures\greatwhiteshark.tga" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -222,6 +223,7 @@
     <Content Include="Media\Textures\red.jpg" />
     <Content Include="Media\Textures\shell_basecolour.jpg" />
     <Content Include="Media\Textures\shell_roughness.png" />
+    <Content Include="Media\tiburoncin-TgcScene.xml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

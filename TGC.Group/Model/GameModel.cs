@@ -43,6 +43,7 @@ namespace TGC.Group.Model
         private TgcScene scene;
         private Pez nemo;
         private Jugador jugador;
+        private TgcMesh tiburon;
 
         private MenuPrincipal MenuPrincipal;
         private MenuOpciones MenuOpciones;
@@ -67,6 +68,11 @@ namespace TGC.Group.Model
             terrain.loadTexture(MediaDir + "Textures\\arena.jpg");
             scene = loader.loadSceneFromFile(MediaDir + "prueba-TgcScene.xml");
             nemo = new Pez(scene.Meshes[4], 2f, 50f);
+
+            tiburon = loader.loadSceneFromFile(MediaDir + "tiburoncin-TgcScene.xml").Meshes[0];
+            tiburon.Position += new TGCVector3(2000, 500, 500);
+            tiburon.Scale = new TGCVector3(200, 200, 200);
+
             var posicionInicial = new TGCVector3(-210, 218, -665);
             camaraInterna = new TgcFpsCamera(posicionInicial, VelocidadMovimiento, VelocidadRotacion, Input);
             Camara = camaraInterna;
@@ -106,6 +112,7 @@ namespace TGC.Group.Model
             DrawText.drawText("Con ESC abris el intento de menu", 5, 40, Color.Red);
             terrain.Render();
             scene.RenderAll();
+            tiburon.Render();
 
             if (MenuAbierto)
             {
@@ -121,6 +128,7 @@ namespace TGC.Group.Model
         public override void Dispose() {
             scene.DisposeAll();
             terrain.Dispose();
+            tiburon.Dispose();
         }
 
         private void CargarVariables() {
