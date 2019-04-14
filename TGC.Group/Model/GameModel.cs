@@ -55,10 +55,11 @@ namespace TGC.Group.Model
         private PantallaMuerte PantallaMuerte;
 
         private UI.Menu MenuSeleccionado;
-
+                                  
         public override void Init() {
 
             Cursor.Hide();
+
 
             CargarVariables();
             CargarModelos();
@@ -174,7 +175,7 @@ namespace TGC.Group.Model
             terrain.loadTexture(MediaDir + "Textures\\arena.jpg");
 
             scene = loader.loadSceneFromFile(MediaDir + "prueba-TgcScene.xml");
-            nemo = new Pez(scene.Meshes[4], 2f, 50f);
+            nemo = new Pez(scene.Meshes[4], 1f, 50f);
 
             superficie = new Superficie();
 

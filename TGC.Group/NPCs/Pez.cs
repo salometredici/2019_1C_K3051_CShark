@@ -13,14 +13,9 @@ namespace TGC.Group.Model
         private float VelocidadRotacion;
         private float VelocidadMovimiento;
         private TgcMesh Mesh;
-        private float Direccion = 1f;
-
-        public Pez(TgcMesh mesh) {
-            Mesh = mesh;
-            VelocidadRotacion = 1f;
-            VelocidadMovimiento = 5f;
-        }
-
+        private float DireccionX = 1f;
+        private float DireccionY = 1f;
+        
         public Pez(TgcMesh mesh, float velocidadRotacion, float velocidadMovimiento) {
             Mesh = mesh;
             VelocidadRotacion = velocidadRotacion;
@@ -28,11 +23,16 @@ namespace TGC.Group.Model
         }
 
         public void Moverse(float elapsed) {
-            Mesh.Rotation += new TGCVector3(0, VelocidadRotacion * elapsed, 0);
-            Mesh.Position += new TGCVector3(0, VelocidadMovimiento * Direccion * elapsed, 0);
+            //Mesh.Rotation += new TGCVector3(0, VelocidadRotacion * elapsed, 0);
+            var despX = VelocidadMovimiento * DireccionX * 0.025f; //num magico
+            var despY = VelocidadMovimiento * DireccionY * 0.025f;
 
-            if (FastMath.Abs(Mesh.Position.Y) > 200f) //si llega a cierta altura
-                Direccion *= -1;
+            Mesh.Position += new TGCVector3(despX, despY, 0);
+
+            if (FastMath.Abs(Mesh.Position.X) > 100f)
+                DireccionX *= -1;
+            if (FastMath.Abs(Mesh.Position.Y) > 400f) //si llega a cierta altura
+                DireccionY *= -1;
 
             Mesh.Transform = TGCMatrix.RotationYawPitchRoll(Mesh.Rotation.Y, Mesh.Rotation.X, Mesh.Rotation.Z) * TGCMatrix.Translation(Mesh.Position);
         }
