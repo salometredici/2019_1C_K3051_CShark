@@ -12,6 +12,7 @@ using TGC.Core.SceneLoader;
 using TGC.Core.SkeletalAnimation;
 using TGC.Core.Terrain;
 using TGC.Core.Textures;
+using TGC.Group.Terreno;
 using TGC.Group.UI;
 using TGC.Group.UI.HUD;
 using TGC.Group.Variables;
@@ -45,6 +46,8 @@ namespace TGC.Group.Model
         private Pez nemo;
         private Jugador jugador;
         private TgcMesh tiburon;
+        private Superficie superficie;
+
 
         private MenuPrincipal MenuPrincipal;
         private MenuOpciones MenuOpciones;
@@ -58,23 +61,11 @@ namespace TGC.Group.Model
             Cursor.Hide();
 
             CargarVariables();
+            CargarModelos();
             PantallaMuerte = new PantallaMuerte();
-
             var d3dDevice = D3DDevice.Instance.Device;
             mouseCenter = new Point(D3DDevice.Instance.Device.Viewport.Width / 2, D3DDevice.Instance.Device.Viewport.Height / 2);
-
             puntero = new Puntero();
-
-            var loader = new TgcSceneLoader();
-            terrain = new TgcSimpleTerrain();
-            terrain.loadHeightmap(MediaDir + "Heightmaps\\heightmap.jpg", 50, 1.3f, new TGCVector3(0, -200, 0));
-            terrain.loadTexture(MediaDir + "Textures\\arena.jpg");
-            scene = loader.loadSceneFromFile(MediaDir + "prueba-TgcScene.xml");
-            nemo = new Pez(scene.Meshes[4], 2f, 50f);
-
-            tiburon = loader.loadSceneFromFile(MediaDir + "tiburoncin-TgcScene.xml").Meshes[0];
-            tiburon.Position += new TGCVector3(2000, 500, 500);
-            tiburon.Scale = new TGCVector3(200, 200, 200);
 
             Start();
         }
@@ -99,6 +90,7 @@ namespace TGC.Group.Model
             }
             else
             {
+                superficie.Update();
                 jugador.Update(camaraInterna);
                 nemo.Moverse(ElapsedTime);
                 Cursor.Position = mouseCenter;
@@ -123,7 +115,7 @@ namespace TGC.Group.Model
             terrain.Render();
             scene.RenderAll();
             tiburon.Render();
-
+            superficie.Render();
 
             if (jugador.EstaVivo)
                 jugador.Render();
@@ -143,6 +135,7 @@ namespace TGC.Group.Model
             scene.DisposeAll();
             terrain.Dispose();
             tiburon.Dispose();
+            superficie.Dispose();
         }
 
         private void CargarVariables() {
@@ -172,6 +165,22 @@ namespace TGC.Group.Model
 
             MenuVariables.AgregarSlider(new Slider(VelocidadRotacion, 0.05f, 0.2f, CentroPantalla.X, 100));
             MenuVariables.AgregarSlider(new Slider(VelocidadMovimiento, 200, 1000, CentroPantalla.X, 200));
+        }
+
+        private void CargarModelos() {
+            var loader = new TgcSceneLoader();
+            terrain = new TgcSimpleTerrain();
+            terrain.loadHeightmap(MediaDir + "Heightmaps\\heightmap.jpg", 50, 1.3f, new TGCVector3(0, -200, 0));
+            terrain.loadTexture(MediaDir + "Textures\\arena.jpg");
+
+            scene = loader.loadSceneFromFile(MediaDir + "prueba-TgcScene.xml");
+            nemo = new Pez(scene.Meshes[4], 2f, 50f);
+
+            superficie = new Superficie();
+
+            tiburon = loader.loadSceneFromFile(MediaDir + "tiburoncin-TgcScene.xml").Meshes[0];
+            tiburon.Position += new TGCVector3(2000, 500, 500);
+            tiburon.Scale = new TGCVector3(200, 200, 200);
         }
 
         public void CambiarMenu(TipoMenu tipoMenu) {

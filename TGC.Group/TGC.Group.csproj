@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="Model\Jugador.cs" />
     <Compile Include="Model\Recolectable.cs" />
+    <Compile Include="Terreno\Superficie.cs" />
     <Compile Include="UI\HUD\BarraEstado.cs" />
     <Compile Include="UI\HUD\BarraOxigeno.cs" />
     <Compile Include="UI\HUD\BarraVida.cs" />
@@ -114,7 +115,7 @@
     <Compile Include="UI\Menu\MenuPrincipal.cs" />
     <Compile Include="Model\GameModel.cs" />
     <Compile Include="Model\FpsCamera.cs" />
-    <Compile Include="Model\Pez.cs" />
+    <Compile Include="NPCs\Pez.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Variables\Variable.cs" />
@@ -188,6 +189,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Media\Heightmaps\heightmap.JPG" />
+    <Content Include="Media\Heightmaps\superficie1.jpg" />
+    <Content Include="Media\Heightmaps\superficie2.jpg" />
+    <Content Include="Media\Heightmaps\superficie3.jpg" />
+    <Content Include="Media\Heightmaps\superficie4.jpg" />
+    <Content Include="Media\Heightmaps\superficie5.jpg" />
     <Content Include="Media\HUD\Muerte\fondo.png" />
     <Content Include="Media\HUD\Muerte\franja.png" />
     <Content Include="Media\HUD\Muerte\texto.png" />
@@ -195,6 +201,7 @@
     <Content Include="Media\HUD\oxigenoFondo.png" />
     <Content Include="Media\HUD\vidaBarra.png" />
     <Content Include="Media\HUD\vidaFondo.png" />
+    <Content Include="Media\intentoDeBrazo-TgcScene.xml" />
     <Content Include="Media\Menu\boton1.png" />
     <Content Include="Media\Menu\boton2.png" />
     <Content Include="Media\Menu\checkNormal.png" />
@@ -222,14 +229,18 @@
     <Content Include="Media\Textures\float_texColor_de_la_Superficie.png" />
     <Content Include="Media\Textures\LAMPOclusión_Ambiental.jpg" />
     <Content Include="Media\Textures\LAMP_UVS.png" />
+    <Content Include="Media\Textures\mar.jpg" />
     <Content Include="Media\Textures\normal_enganche.png" />
     <Content Include="Media\Textures\normal_float.png" />
     <Content Include="Media\Textures\red.jpg" />
     <Content Include="Media\Textures\shell_basecolour.jpg" />
     <Content Include="Media\Textures\shell_roughness.png" />
+    <Content Include="Media\Textures\superficie-TgcScene.xml" />
     <Content Include="Media\tiburoncin-TgcScene.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Items\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

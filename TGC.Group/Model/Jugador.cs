@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.DirectX.Direct3D;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using TGC.Core.Camara;
 using TGC.Core.Direct3D;
 using TGC.Core.Mathematica;
+using TGC.Core.SceneLoader;
 using TGC.Group.UI.HUD;
 using TGC.Group.Utils;
 
@@ -22,6 +24,7 @@ namespace TGC.Group.Model
         private Drawer2D Drawer;
         private BarraVida BarraVida;
         private BarraOxigeno BarraOxigeno;
+        private TgcMesh Brazo;
         
         public Jugador(TGCVector3 posicion, int vidaInicial, int oxigenoInicial) {
             Recolectables = new List<IRecolectable>();
@@ -30,6 +33,7 @@ namespace TGC.Group.Model
             Oxigeno = oxigenoInicial;
             Drawer = new Drawer2D();
             CargarHUD();
+            CargarMeshes();
         }
 
         private void CargarHUD() {
@@ -37,11 +41,20 @@ namespace TGC.Group.Model
             BarraVida = new BarraVida(new TGCVector2(15, alturaTotal - 140), Vida);
             BarraOxigeno = new BarraOxigeno(new TGCVector2(15, alturaTotal - 75), Oxigeno);
         }
+
+        private void CargarMeshes() {
+            var loader = new TgcSceneLoader();
+            Brazo = loader.loadSceneFromFile(Game.Default.MediaDirectory + "intentoDeBrazo-TgcScene.xml").Meshes[0];
+            Brazo.Position = Posicion;
+            float tamaño = 0.001f;
+            Brazo.Scale = new TGCVector3(tamaño, tamaño, tamaño);
+            Brazo.RotateX((float)Math.PI / 2);
+        }
         
         public void Update(TgcFpsCamera camara) {
             Posicion = camara.Position;
-            //Vida -= 1;
-            Oxigeno -= 20;
+            PosicionarBrazo();
+            Oxigeno -= 2;
             if (EstaVivo)
             {
                 BarraVida.Update(Vida);
@@ -50,9 +63,11 @@ namespace TGC.Group.Model
             else
             {
                 BloquearCamara(camara);
-                //if (!_murio)
-                  //  _murio = true; //para bloquear camara una sola vez
             }
+        }
+
+        private void PosicionarBrazo() {
+
         }
 
         private bool _murio = false;
@@ -69,6 +84,7 @@ namespace TGC.Group.Model
             {
                 BarraVida.Render();
                 BarraOxigeno.Render();
+                Brazo.Render();
             }
         }
 

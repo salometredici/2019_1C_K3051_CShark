@@ -17,7 +17,7 @@ namespace TGC.Group.Model
 {
     public class TgcFpsCamera : TgcCamera
     {
-        private TGCMatrix cameraRotation;
+        public TGCMatrix cameraRotation;
         private TGCVector3 directionView;
         private float leftrightRot;
         private float updownRot;
