@@ -12,6 +12,7 @@ using TGC.Core.SceneLoader;
 using TGC.Core.SkeletalAnimation;
 using TGC.Core.Terrain;
 using TGC.Core.Textures;
+using TGC.Group.NPCs.Peces;
 using TGC.Group.Terreno;
 using TGC.Group.UI;
 using TGC.Group.UI.HUD;
@@ -43,7 +44,7 @@ namespace TGC.Group.Model
         public TgcFpsCamera camaraInterna;
         private TgcSimpleTerrain terrain;
         private TgcScene scene;
-        private Pez nemo;
+        private PezPayaso nemo;
         private Jugador jugador;
         private TgcMesh tiburon;
         private Superficie superficie;
@@ -93,7 +94,7 @@ namespace TGC.Group.Model
             {
                 superficie.Update();
                 jugador.Update(camaraInterna);
-                nemo.Moverse(ElapsedTime);
+                nemo.Update();
                 Cursor.Position = mouseCenter;
             }
 
@@ -175,7 +176,7 @@ namespace TGC.Group.Model
             terrain.loadTexture(MediaDir + "Textures\\arena.jpg");
 
             scene = loader.loadSceneFromFile(MediaDir + "prueba-TgcScene.xml");
-            nemo = new Pez(scene.Meshes[4], 1f, 50f);
+            nemo = new PezPayaso(scene.Meshes[4]);
 
             superficie = new Superficie();
 
