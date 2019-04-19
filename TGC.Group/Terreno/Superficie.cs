@@ -1,64 +1,67 @@
-﻿using System;
+﻿using Microsoft.DirectX.Direct3D;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TGC.Core.Mathematica;
+using TGC.Core.SceneLoader;
 using TGC.Core.Terrain;
+using TGC.Core.Shaders;
 
 namespace TGC.Group.Terreno
 {
     public class Superficie
     {
-        private List<string> Heightmaps;
-        private List<TgcSimpleTerrain> Terrenos;
+        private List<TgcMesh> Olas;
+        private TgcMesh Mesh;
 
-        private readonly int AnchoGrilla = 3;
-        private readonly int AltoGrilla = 3;
-        private readonly int TamañoImagen = 64; //64 x 64 px imagen del heightmap
-        private readonly float EscalaXZ = 100;
+        private readonly int AnchoGrilla = 20;
+        private readonly int AltoGrilla = 20;
         private readonly int AlturaMar = 800; //fruta
+        private readonly TGCVector3 Tamaño;
+
+        private readonly float VelocidadOlas = 100f;
+
+        private readonly TGCVector3 Spawn;
         
         public Superficie() {
-            Terrenos = new List<TgcSimpleTerrain>();
-            CargarHeightmaps();
-            CargarTerrenos();
+            var loader = new TgcSceneLoader();
+            Spawn = new TGCVector3(-3200, AlturaMar, -3200);
+            Mesh = loader.loadSceneFromFile(Game.Default.MediaDirectory + "Olas-TgcScene.xml").Meshes[0];
+            Tamaño = Mesh.BoundingBox.calculateSize();
+            CargarOlas();
         }
 
-        public void Update() {
+        public void Update(float elapsedTime) {
+            foreach(var ola in Olas)
+            {
+                ola.Position += new TGCVector3(VelocidadOlas * elapsedTime, 0, 0);
+                if (ola.Position.X > Tamaño.X * AnchoGrilla)
+                    ola.Position = new TGCVector3(Spawn.X, Spawn.Y, ola.Position.Z);
+            }
         }
 
         public void Render() {
-            Terrenos.ForEach(t => t.Render());
+            Olas.ForEach(o => o.Render());
         }
 
         public void Dispose() {
-            Terrenos.ForEach(t => t.Dispose());
+            Olas.ForEach(o => o.Dispose());
         }
 
-        private void CargarHeightmaps() {
-            Heightmaps = new List<string>();
-            Heightmaps.Add("superficie1.jpg");
-            Heightmaps.Add("superficie2.jpg");
-            Heightmaps.Add("superficie3.jpg");
-            Heightmaps.Add("superficie4.jpg");
-            Heightmaps.Add("superficie5.jpg");
-        }
-
-        private void CargarTerrenos() {
-            Terrenos = new List<TgcSimpleTerrain>();
+        private void CargarOlas() {
+            Olas = new List<TgcMesh>();
             for (int i = 0; i < AnchoGrilla; i++)
             {
                 for (int j = 0; j < AltoGrilla; j++)
                 {
-                    var centro = new TGCVector3(i * (TamañoImagen - 1), AlturaMar, j * (TamañoImagen - 1));
-                    var terreno = new TgcSimpleTerrain();
-                    int indiceHeightmap = new Random().Next(Heightmaps.Count);
-                    string heightmap = Heightmaps.ElementAt(indiceHeightmap);
-                    terreno.loadHeightmap(Game.Default.MediaDirectory + "\\Heightmaps\\" + heightmap, EscalaXZ, 1, centro);
-                    terreno.loadTexture(Game.Default.MediaDirectory + "\\Textures\\mar.jpg");
-                    Terrenos.Add(terreno);
+                    var centro = new TGCVector3(Spawn.X + i * (Tamaño.X - 2), Spawn.Y, Spawn.Z + j * (Tamaño.Z - 1));
+                    var ola = Mesh.clone("ola");
+                    ola.Position = centro;
+                    Olas.Add(ola);
                 }
+                
             }
         }
     }

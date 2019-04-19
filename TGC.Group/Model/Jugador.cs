@@ -24,7 +24,6 @@ namespace TGC.Group.Model
         private Drawer2D Drawer;
         private BarraVida BarraVida;
         private BarraOxigeno BarraOxigeno;
-        private TgcMesh Brazo;
         
         public Jugador(TGCVector3 posicion, int vidaInicial, int oxigenoInicial) {
             Recolectables = new List<IRecolectable>();
@@ -43,12 +42,7 @@ namespace TGC.Group.Model
         }
 
         private void CargarMeshes() {
-            var loader = new TgcSceneLoader();
-            Brazo = loader.loadSceneFromFile(Game.Default.MediaDirectory + "intentoDeBrazo-TgcScene.xml").Meshes[0];
-            Brazo.Position = Posicion;
-            float tamaño = 0.001f;
-            Brazo.Scale = new TGCVector3(tamaño, tamaño, tamaño);
-            Brazo.RotateX((float)Math.PI / 2);
+
         }
         
         public void Update(TgcFpsCamera camara) {
@@ -84,7 +78,6 @@ namespace TGC.Group.Model
             {
                 BarraVida.Render();
                 BarraOxigeno.Render();
-                Brazo.Render();
             }
         }
 

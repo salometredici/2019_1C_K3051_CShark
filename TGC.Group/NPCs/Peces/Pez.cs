@@ -8,37 +8,38 @@ using TGC.Core.SceneLoader;
 
 namespace TGC.Group.NPCs.Peces
 {
-    public abstract class Pez
+    public abstract class Pez : IAnimal
     {
         protected float VelocidadRotacion;
         protected float VelocidadMovimiento;
-        protected float DistanciaMaxima;
         protected TgcMesh Mesh;
+        public TGCVector3 Tamaño { get; set; }
+
+        protected readonly float RotacionMaxima = 5f / 180 * (float)Math.PI; //5 grados
 
         protected float Direccion = 1f;
         protected float DireccionRot = 1f;
-        protected float Rotado = 0;
 
-        public Pez(TgcMesh mesh, float velocidadRotacion, float velocidadMovimiento, float distanciaMaxima) {
-            Mesh = mesh;
+        public Pez(string mesh, TGCVector3 posicion, float velocidadRotacion, float velocidadMovimiento) {
+            var ruta = Game.Default.MediaDirectory + "Animales\\" + mesh + "-TgcScene.xml";
+            Mesh = new TgcSceneLoader().loadSceneFromFile(ruta).Meshes[0];
+            Mesh.Position = posicion;
             VelocidadRotacion = velocidadRotacion;
             VelocidadMovimiento = velocidadMovimiento;
-            DistanciaMaxima = distanciaMaxima;
         }
-
-        public void Update() {
-            Moverse();
-            Aletear();
+        
+        public void Update(float elapsedTime) {
+            Moverse(elapsedTime);
+            Aletear(elapsedTime);
         }
 
         public void Render() {
             Mesh.Render();
         }
 
-        protected abstract void Moverse();
-        protected abstract void Aletear();
-
-        protected readonly float RotacionMaxima = 5f / 180 * (float)Math.PI; //5 grados
-
+        public abstract void Moverse(float elapsedTime);
+        public abstract void Aletear(float elapsedTime);
+        
+        
     }
 }

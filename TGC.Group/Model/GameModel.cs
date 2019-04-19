@@ -12,6 +12,7 @@ using TGC.Core.SceneLoader;
 using TGC.Core.SkeletalAnimation;
 using TGC.Core.Terrain;
 using TGC.Core.Textures;
+using TGC.Group.Managers;
 using TGC.Group.NPCs.Peces;
 using TGC.Group.Terreno;
 using TGC.Group.UI;
@@ -43,11 +44,11 @@ namespace TGC.Group.Model
         private Puntero puntero;
         public TgcFpsCamera camaraInterna;
         private TgcSimpleTerrain terrain;
-        private TgcScene scene;
-        private PezPayaso nemo;
         private Jugador jugador;
         private TgcMesh tiburon;
         private Superficie superficie;
+
+        private PezManager PezManager;
 
 
         private MenuPrincipal MenuPrincipal;
@@ -56,11 +57,11 @@ namespace TGC.Group.Model
         private PantallaMuerte PantallaMuerte;
 
         private UI.Menu MenuSeleccionado;
+
                                   
         public override void Init() {
 
             Cursor.Hide();
-
 
             CargarVariables();
             CargarModelos();
@@ -92,9 +93,9 @@ namespace TGC.Group.Model
             }
             else
             {
-                superficie.Update();
+                superficie.Update(ElapsedTime);
                 jugador.Update(camaraInterna);
-                nemo.Update();
+                PezManager.Update(ElapsedTime);
                 Cursor.Position = mouseCenter;
             }
 
@@ -115,7 +116,7 @@ namespace TGC.Group.Model
             DrawText.drawText("Camara: " + TGCVector3.PrintVector3(Camara.Position), 5, 20, Color.Red);
             DrawText.drawText("Con ESC abris el intento de menu", 5, 40, Color.Red);
             terrain.Render();
-            scene.RenderAll();
+            PezManager.Render();
             tiburon.Render();
             superficie.Render();
 
@@ -134,7 +135,6 @@ namespace TGC.Group.Model
         }
 
         public override void Dispose() {
-            scene.DisposeAll();
             terrain.Dispose();
             tiburon.Dispose();
             superficie.Dispose();
@@ -175,11 +175,20 @@ namespace TGC.Group.Model
             terrain.loadHeightmap(MediaDir + "Heightmaps\\heightmap.jpg", 50, 1.3f, new TGCVector3(0, -200, 0));
             terrain.loadTexture(MediaDir + "Textures\\arena.jpg");
 
-            scene = loader.loadSceneFromFile(MediaDir + "prueba-TgcScene.xml");
-            nemo = new PezPayaso(scene.Meshes[4]);
+            PezManager = new PezManager();
+            PezManager.CargarPez(new PezPayaso(0, 0, 0));
+            PezManager.CargarPez(new PezAzul(100, 0, 100));
+            PezManager.CargarPez(new PezBetta(0, 0, 300));
+            //PezManager.CargarPez(new PezCoral(200, 100, 0)); esta basura rompe :(
+            PezManager.CargarPez(new PezTropical(1, 0, 100, 0));
+            PezManager.CargarPez(new PezTropical(2, 0, 200, 0));
+            PezManager.CargarPez(new PezTropical(3, 0, 300, 0));
+            PezManager.CargarPez(new PezTropical(4, 0, 400, 0));
+            PezManager.CargarPez(new PezTropical(5, 0, 500, 0));
+            PezManager.CargarPez(new PezTropical(6, 0, 600, 0));
 
             superficie = new Superficie();
-
+                       
             tiburon = loader.loadSceneFromFile(MediaDir + "tiburoncin-TgcScene.xml").Meshes[0];
             tiburon.Position += new TGCVector3(2000, 500, 500);
             tiburon.Scale = new TGCVector3(200, 200, 200);

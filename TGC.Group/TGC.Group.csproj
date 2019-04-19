@@ -82,11 +82,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Managers\PezManager.cs" />
     <Compile Include="Model\Jugador.cs" />
     <Compile Include="Model\Recolectable.cs" />
+    <Compile Include="NPCs\Animal.cs" />
     <Compile Include="NPCs\Peces\Pez.cs" />
+    <Compile Include="NPCs\Peces\PezAzul.cs" />
+    <Compile Include="NPCs\Peces\PezBetta.cs" />
     <Compile Include="NPCs\Peces\PezCoral.cs" />
     <Compile Include="NPCs\Peces\PezPayaso.cs" />
+    <Compile Include="NPCs\Peces\PezTropical.cs" />
     <Compile Include="Terreno\Superficie.cs" />
     <Compile Include="UI\HUD\BarraEstado.cs" />
     <Compile Include="UI\HUD\BarraOxigeno.cs" />
@@ -139,6 +144,8 @@
       <LastGenOutput>Game.Designer.cs</LastGenOutput>
     </None>
     <None Include="Media\Textures\greatwhiteshark.tga" />
+    <None Include="Media\Textures\greatwhiteshark_Eye.tga" />
+    <None Include="Media\Textures\greatwhiteshark_teeth.tga" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -149,6 +156,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Shaders\OpacidadShader.fx" />
     <None Include="Shaders\TgcKeyFrameMeshShader.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -190,12 +198,28 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Media\Animales\Pez Azul-TgcScene.xml" />
+    <Content Include="Media\Animales\Pez Betta-TgcScene.xml" />
+    <Content Include="Media\Animales\Pez Coral-TgcScene.xml" />
+    <Content Include="Media\Animales\Pez Payaso-TgcScene.xml" />
+    <Content Include="Media\Animales\Pez Tropical 1-TgcScene.xml" />
+    <Content Include="Media\Animales\Pez Tropical 2-TgcScene.xml" />
+    <Content Include="Media\Animales\Pez Tropical 3-TgcScene.xml" />
+    <Content Include="Media\Animales\Pez Tropical 4-TgcScene.xml" />
+    <Content Include="Media\Animales\Pez Tropical 5-TgcScene.xml" />
+    <Content Include="Media\Animales\Pez Tropical 6-TgcScene.xml" />
+    <Content Include="Media\Animales\Textures\blue_fish.jpg" />
+    <Content Include="Media\Animales\Textures\coralfish_texture.png" />
+    <Content Include="Media\Animales\Textures\fish.jpg" />
+    <Content Include="Media\Animales\Textures\TropicalFish01.jpg" />
+    <Content Include="Media\Animales\Textures\TropicalFish02.jpg" />
+    <Content Include="Media\Animales\Textures\TropicalFish04.jpg" />
+    <Content Include="Media\Animales\Textures\TropicalFish05.jpg" />
+    <Content Include="Media\Animales\Textures\TropicalFish07.jpg" />
+    <Content Include="Media\Animales\Textures\TropicalFish12.jpg" />
+    <Content Include="Media\Animales\Textures\TropicalFish13.jpg" />
     <Content Include="Media\Heightmaps\heightmap.JPG" />
-    <Content Include="Media\Heightmaps\superficie1.jpg" />
-    <Content Include="Media\Heightmaps\superficie2.jpg" />
-    <Content Include="Media\Heightmaps\superficie3.jpg" />
-    <Content Include="Media\Heightmaps\superficie4.jpg" />
-    <Content Include="Media\Heightmaps\superficie5.jpg" />
+    <Content Include="Media\Heightmaps\wave bump.png" />
     <Content Include="Media\HUD\Muerte\fondo.png" />
     <Content Include="Media\HUD\Muerte\franja.png" />
     <Content Include="Media\HUD\Muerte\texto.png" />
@@ -203,7 +227,6 @@
     <Content Include="Media\HUD\oxigenoFondo.png" />
     <Content Include="Media\HUD\vidaBarra.png" />
     <Content Include="Media\HUD\vidaFondo.png" />
-    <Content Include="Media\intentoDeBrazo-TgcScene.xml" />
     <Content Include="Media\Menu\boton1.png" />
     <Content Include="Media\Menu\boton2.png" />
     <Content Include="Media\Menu\checkNormal.png" />
@@ -214,35 +237,12 @@
     <Content Include="Media\Menu\slider1.png" />
     <Content Include="Media\Menu\slider2.png" />
     <Content Include="Media\Menu\slider3.png" />
-    <Content Include="Media\prueba-TgcScene.xml" />
-    <Content Include="Media\Textures\10010_Coral_v1_Diffuse.jpg" />
-    <Content Include="Media\Textures\12960_Shark_diff_v2.jpg" />
-    <Content Include="Media\Textures\20941_Brain_Coral_Diff_v1.jpg" />
-    <Content Include="Media\Textures\20943_Spiral_Wire_Coral_v1_diff.JPG" />
     <Content Include="Media\Textures\arena.jpg" />
-    <Content Include="Media\Textures\blue.jpg" />
     <Content Include="Media\Textures\blue_fish.jpg" />
-    <Content Include="Media\Textures\bodyColor_de_la_Superficie.png" />
-    <Content Include="Media\Textures\bodyOclusión_Ambiental.png" />
-    <Content Include="Media\Textures\body_normal.png" />
-    <Content Include="Media\Textures\Color_helice.png" />
-    <Content Include="Media\Textures\difuse_enganche.png" />
     <Content Include="Media\Textures\fish.jpg" />
-    <Content Include="Media\Textures\float_texColor_de_la_Superficie.png" />
-    <Content Include="Media\Textures\LAMPOclusión_Ambiental.jpg" />
-    <Content Include="Media\Textures\LAMP_UVS.png" />
-    <Content Include="Media\Textures\mar.jpg" />
-    <Content Include="Media\Textures\normal_enganche.png" />
-    <Content Include="Media\Textures\normal_float.png" />
-    <Content Include="Media\Textures\red.jpg" />
-    <Content Include="Media\Textures\shell_basecolour.jpg" />
-    <Content Include="Media\Textures\shell_roughness.png" />
-    <Content Include="Media\Textures\superficie-TgcScene.xml" />
     <Content Include="Media\tiburoncin-TgcScene.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Items\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
