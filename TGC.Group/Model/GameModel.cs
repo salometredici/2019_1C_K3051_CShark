@@ -13,6 +13,7 @@ using TGC.Core.SkeletalAnimation;
 using TGC.Core.Terrain;
 using TGC.Core.Textures;
 using TGC.Group.Managers;
+using TGC.Group.NPCs.Enemigos;
 using TGC.Group.NPCs.Peces;
 using TGC.Group.Terreno;
 using TGC.Group.UI;
@@ -45,11 +46,10 @@ namespace TGC.Group.Model
         public TgcFpsCamera camaraInterna;
         private TgcSimpleTerrain terrain;
         private Jugador jugador;
-        private TgcMesh tiburon;
         private Superficie superficie;
 
         private PezManager PezManager;
-
+        private Tiburon Tiburon;
 
         private MenuPrincipal MenuPrincipal;
         private MenuOpciones MenuOpciones;
@@ -96,6 +96,7 @@ namespace TGC.Group.Model
                 superficie.Update(ElapsedTime);
                 jugador.Update(camaraInterna);
                 PezManager.Update(ElapsedTime);
+                Tiburon.Update(ElapsedTime);
                 Cursor.Position = mouseCenter;
             }
 
@@ -117,7 +118,7 @@ namespace TGC.Group.Model
             DrawText.drawText("Con ESC abris el intento de menu", 5, 40, Color.Red);
             terrain.Render();
             PezManager.Render();
-            tiburon.Render();
+            Tiburon.Render();
             superficie.Render();
 
             if (jugador.EstaVivo)
@@ -136,7 +137,7 @@ namespace TGC.Group.Model
 
         public override void Dispose() {
             terrain.Dispose();
-            tiburon.Dispose();
+            //tiburon.Dispose();
             superficie.Dispose();
         }
 
@@ -188,10 +189,12 @@ namespace TGC.Group.Model
             PezManager.CargarPez(new PezTropical(6, 0, 600, 0));
 
             superficie = new Superficie();
+            Tiburon = new Tiburon(1000, 100, 1000);
+
                        
-            tiburon = loader.loadSceneFromFile(MediaDir + "tiburoncin-TgcScene.xml").Meshes[0];
+            /*tiburon = loader.loadSceneFromFile(MediaDir + "tiburoncin-TgcScene.xml").Meshes[0];
             tiburon.Position += new TGCVector3(2000, 500, 500);
-            tiburon.Scale = new TGCVector3(200, 200, 200);
+            tiburon.Scale = new TGCVector3(200, 200, 200);*/
         }
 
         public void CambiarMenu(TipoMenu tipoMenu) {

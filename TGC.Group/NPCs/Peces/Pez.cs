@@ -15,8 +15,6 @@ namespace TGC.Group.NPCs.Peces
         protected TgcMesh Mesh;
         public TGCVector3 Tamaño { get; set; }
 
-        protected readonly float RotacionMaxima = 5f / 180 * (float)Math.PI; //5 grados
-
         protected float Direccion = 1f;
         protected float DireccionRot = 1f;
 

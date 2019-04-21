@@ -16,7 +16,9 @@ namespace TGC.Group.NPCs.Peces
         private bool Mover = false;
         private float Rotado = 0;
         private float Aleteado = 0;
+        private float Recorrido = 0;
         private readonly float DistanciaMaxima = 500f;
+        protected float AleteoMaximo = 5f / 180 * (float)Math.PI; //5 grados
 
         public override void Moverse(float elapsedTime) {
             if (Mover)
@@ -31,7 +33,7 @@ namespace TGC.Group.NPCs.Peces
                 var rotar = VelocidadRotacion * DireccionRot * elapsedTime;
                 Aleteado += rotar;
                 Mesh.Rotation += new TGCVector3(0, rotar, 0); //rota respecto a Y
-                if (FastMath.Abs(Aleteado) > RotacionMaxima)
+                if (FastMath.Abs(Aleteado) > AleteoMaximo)
                     DireccionRot *= -1;
             }
         }
@@ -39,10 +41,12 @@ namespace TGC.Group.NPCs.Peces
         private void Avanzar(float elapsedTime) {
             var desplazamiento = VelocidadMovimiento * Direccion * elapsedTime;
             Mesh.Position += new TGCVector3(0, 0, desplazamiento);
-            if (FastMath.Abs(Mesh.Position.Z) > DistanciaMaxima)
+            Recorrido += desplazamiento;
+            if (FastMath.Abs(Recorrido) > DistanciaMaxima)
             {
                 Mover = false;
                 Direccion *= -1;
+                Recorrido = 0;
             }
         }
         
@@ -57,7 +61,6 @@ namespace TGC.Group.NPCs.Peces
                 var rotar = VelocidadRotacion * elapsedTime;
                 Rotado += rotar;
                 Mesh.Rotation += new TGCVector3(0, rotar, 0);
-                Mesh.Transform = TGCMatrix.RotationYawPitchRoll(rotar, 0, 0);
             }            
         }
 
