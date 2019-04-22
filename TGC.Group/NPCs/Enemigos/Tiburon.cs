@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.DirectX;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace TGC.Group.NPCs.Enemigos
         private float Recorrido = 0;
         private float Distancia;
         private TGCVector3 PuntoDestino;
-        private float RotacionDestino;
+        private TGCVector2 RotacionDestino;
         float CosAng;
         float SinAng;
         TGCBox cajaPos = new TGCBox();
@@ -59,26 +60,31 @@ namespace TGC.Group.NPCs.Enemigos
 
         private TGCVector3 BuscarPunto() {
             var random = new Random();
-            var dirX = random.Next(1, 100) < 50 ? -1 : 1; //sidoso
+            var dirX = random.Next(1, 100) < 50 ? -1 : 1;
+            var dirY = random.Next(1, 100) < 50 ? -1 : 1;
             var dirZ = random.Next(1, 100) < 50 ? -1 : 1;
             var distX = random.Next((int)DistanciaMinima, (int)DistanciaMaxima) * dirX;
+            var distY = random.Next(50, 200) * dirY;
             var distZ = random.Next((int)DistanciaMinima, (int)DistanciaMaxima) * dirZ;
-            Distancia = (float)Math.Sqrt(Math.Pow(distX, 2) + Math.Pow(distZ, 2));
+            Distancia = new TGCVector3(distX, distY, distZ).Length();
             int x = (int)Posicion.X + distX;
+            int y = (int)Posicion.Y + distY;
             int z = (int)Posicion.Z + distZ;
-            int y = (int)Posicion.Y;
             return new TGCVector3(x, y, z);
         }
 
-        private float BuscarRotacion() {
+        private TGCVector2 BuscarRotacion() {
             var distanciaX = PuntoDestino.X - Posicion.X;
-            var distanciaZ = PuntoDestino.Z - Posicion.Z;
+            var distanciaY = PuntoDestino.Y - Posicion.Y;
+            var distanciaZ = PuntoDestino.Z - Posicion.Z;    
             float anguloHorizontal = (float)Math.Atan2(distanciaZ, distanciaX);
+            var distHori = new TGCVector2(distanciaX, distanciaY).Length();
+            float anguloVertical = (float)Math.Atan2(distanciaY, distHori);
             CosAng = (float)Math.Cos(anguloHorizontal);
             SinAng = (float)Math.Sin(anguloHorizontal);
             var anguloVisual = MismoSigno(distanciaX, distanciaZ)
                 ? - Math.PI / 2 : Math.PI / 2;
-            return anguloHorizontal + (float)anguloVisual;
+            return new TGCVector2(anguloHorizontal + (float)anguloVisual, anguloVertical);
         }
 
         private bool MismoSigno(float x, float z) {
@@ -87,10 +93,11 @@ namespace TGC.Group.NPCs.Enemigos
 
         private void Avanzar(float elapsedTime) {
             float desplazamientoX = VelocidadMovimiento * elapsedTime * CosAng;
+            float desplazamientoY = VelocidadMovimiento * elapsedTime * (float)Math.Sin(RotacionDestino.Y);
             float desplazamientoZ = VelocidadMovimiento * elapsedTime * SinAng;
-            var distancia = (float)Math.Sqrt(Math.Pow(desplazamientoX, 2) + Math.Pow(desplazamientoZ, 2));
-            Mesh.Position += new TGCVector3(desplazamientoX, 0, desplazamientoZ);
-            Recorrido += distancia;
+            var desp = new TGCVector3(desplazamientoX, desplazamientoY, desplazamientoZ);
+            Mesh.Position += desp;
+            Recorrido += desp.Length();
             if (Recorrido >= Distancia)
             {
                 Mover = false;
@@ -102,7 +109,7 @@ namespace TGC.Group.NPCs.Enemigos
         }
 
         private void DarseVuelta(float elapsedTime) {
-            Mesh.Rotation = new TGCVector3(0, RotacionDestino, 0);
+            Mesh.Rotation = new TGCVector3(0, RotacionDestino.X, RotacionDestino.Y);
             Mover = true;
         }
     }
