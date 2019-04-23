@@ -26,7 +26,8 @@ namespace TGC.Group.UI
         }
 
         public void AgregarBoton(string texto, Action<GameModel> accion) {
-            var posicionX = D3DDevice.Instance.Device.Viewport.Width / 2;
+            var deviceWidth = D3DDevice.Instance.Device.Viewport.Width;
+            var posicionX = deviceWidth/ 2 + deviceWidth/ 4;
             var posicionY = CantidadBotones * (Separacion + AlturaBotones);
             Botones.Add(new Boton(texto, posicionX, posicionY, accion));
         }
