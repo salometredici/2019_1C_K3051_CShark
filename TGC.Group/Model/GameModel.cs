@@ -10,6 +10,7 @@ using TGC.Core.Input;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 using TGC.Core.SkeletalAnimation;
+using TGC.Core.Sound;
 using TGC.Core.Terrain;
 using TGC.Core.Textures;
 using TGC.Group.Managers;
@@ -47,6 +48,7 @@ namespace TGC.Group.Model
         private TgcSimpleTerrain terrain;
         private TgcScene vegetation;
         private TgcSkyBox skybox;
+        private TgcMp3Player mp3Player;
         private Jugador jugador;
         private Superficie superficie;
 
@@ -111,6 +113,8 @@ namespace TGC.Group.Model
             camaraInterna = new TgcFpsCamera(posicionInicial, VelocidadMovimiento, VelocidadRotacion, Input);
             Camara = camaraInterna;
             jugador = new Jugador(TGCVector3.Empty, 500, 100000);
+            mp3Player.FileName = MediaDir + "Music\\Deep_Trouble.mp3";
+            mp3Player.play(true);
         }
 
         public override void Render() {
@@ -145,6 +149,7 @@ namespace TGC.Group.Model
             vegetation.DisposeAll();
             //tiburon.Dispose();
             superficie.Dispose();
+            mp3Player.closeFile();
         }
 
         private void CargarVariables() {
@@ -177,6 +182,7 @@ namespace TGC.Group.Model
         }
 
         private void CargarModelos() {
+
             var loader = new TgcSceneLoader();
             terrain = new TgcSimpleTerrain();
             terrain.loadHeightmap(MediaDir + "Heightmaps\\heightmap.jpg", 100, 1.8f, TGCVector3.Empty);
@@ -184,6 +190,8 @@ namespace TGC.Group.Model
             vegetation = loader.loadSceneFromFile(MediaDir + "vegetation-TgcScene.xml");
 
             CargarSkyBox();
+
+            mp3Player = new TgcMp3Player();
 
             PezManager = new PezManager();
             PezManager.CargarPez(new PezPayaso(0, 0, 0));
@@ -238,6 +246,7 @@ namespace TGC.Group.Model
             }
             return null;
         }
+
 
         public void Salir() {
             Environment.Exit(0);
