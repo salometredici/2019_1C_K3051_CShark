@@ -45,6 +45,8 @@ namespace TGC.Group.Model
         private Puntero puntero;
         public TgcFpsCamera camaraInterna;
         private TgcSimpleTerrain terrain;
+        private TgcScene vegetation;
+        private TgcSkyBox skybox;
         private Jugador jugador;
         private Superficie superficie;
 
@@ -57,7 +59,6 @@ namespace TGC.Group.Model
         private PantallaMuerte PantallaMuerte;
 
         private UI.Menu MenuSeleccionado;
-
                                   
         public override void Init() {
 
@@ -74,6 +75,7 @@ namespace TGC.Group.Model
         }
 
         public override void Update() {
+
             PreUpdate();
             
             if (Input.keyPressed(Key.Escape))
@@ -99,9 +101,9 @@ namespace TGC.Group.Model
                 Tiburon.Update(ElapsedTime);
                 Cursor.Position = mouseCenter;
             }
-
             
             PostUpdate();
+
         }
 
         private void Start() {
@@ -117,6 +119,8 @@ namespace TGC.Group.Model
             DrawText.drawText("Camara: " + TGCVector3.PrintVector3(Camara.Position), 5, 20, Color.Red);
             DrawText.drawText("Con ESC abris el intento de menu", 5, 40, Color.Red);
             terrain.Render();
+            skybox.Render();
+            vegetation.RenderAll();
             PezManager.Render();
             Tiburon.Render();
             superficie.Render();
@@ -137,6 +141,8 @@ namespace TGC.Group.Model
 
         public override void Dispose() {
             terrain.Dispose();
+            skybox.Dispose();
+            vegetation.DisposeAll();
             //tiburon.Dispose();
             superficie.Dispose();
         }
@@ -173,8 +179,11 @@ namespace TGC.Group.Model
         private void CargarModelos() {
             var loader = new TgcSceneLoader();
             terrain = new TgcSimpleTerrain();
-            terrain.loadHeightmap(MediaDir + "Heightmaps\\heightmap.jpg", 50, 1.3f, new TGCVector3(0, -200, 0));
-            terrain.loadTexture(MediaDir + "Textures\\arena.jpg");
+            terrain.loadHeightmap(MediaDir + "Heightmaps\\heightmap.jpg", 100, 1.8f, TGCVector3.Empty);
+            terrain.loadTexture(MediaDir + "Textures\\UnderwaterSkybox\\seafloor.jpg");
+            vegetation = loader.loadSceneFromFile(MediaDir + "vegetation-TgcScene.xml");
+
+            CargarSkyBox();
 
             PezManager = new PezManager();
             PezManager.CargarPez(new PezPayaso(0, 0, 0));
@@ -195,6 +204,22 @@ namespace TGC.Group.Model
             /*tiburon = loader.loadSceneFromFile(MediaDir + "tiburoncin-TgcScene.xml").Meshes[0];
             tiburon.Position += new TGCVector3(2000, 500, 500);
             tiburon.Scale = new TGCVector3(200, 200, 200);*/
+        }
+
+        private void CargarSkyBox()
+        {
+            skybox = new TgcSkyBox();
+            skybox.Center = terrain.Center;
+            skybox.Size = new TGCVector3(10000, 5000, 10000);
+            var texturesPath = MediaDir + "Textures\\UnderwaterSkybox\\";
+            skybox.setFaceTexture(TgcSkyBox.SkyFaces.Up, texturesPath + "blue-texture.png");
+            skybox.setFaceTexture(TgcSkyBox.SkyFaces.Down, texturesPath + "seafloor.jpg");
+            skybox.setFaceTexture(TgcSkyBox.SkyFaces.Left, texturesPath + "side.jpg");
+            skybox.setFaceTexture(TgcSkyBox.SkyFaces.Right, texturesPath + "side.jpg");
+            skybox.setFaceTexture(TgcSkyBox.SkyFaces.Front, texturesPath + "side.jpg");
+            skybox.setFaceTexture(TgcSkyBox.SkyFaces.Back, texturesPath + "side.jpg");
+            skybox.SkyEpsilon = 50f;
+            skybox.Init();
         }
 
         public void CambiarMenu(TipoMenu tipoMenu) {
