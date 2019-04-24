@@ -46,8 +46,11 @@ namespace CShark.Model
         private Puntero puntero;
         public TgcFpsCamera camaraInterna;
         private TgcSimpleTerrain terrain;
+
         private TgcScene vegetation;
         private TgcSkyBox skybox;
+        private Mapa Mapa;
+
         private TgcMp3Player mp3Player;
         private Jugador jugador;
         private Superficie superficie;
@@ -97,10 +100,10 @@ namespace CShark.Model
             }
             else
             {
-                superficie.Update(ElapsedTime);
+                //superficie.Update(ElapsedTime);
                 jugador.Update(camaraInterna);
                 PezManager.Update(ElapsedTime);
-                Tiburon.Update(ElapsedTime);
+                Tiburon.Update(ElapsedTime, Mapa);
                 Cursor.Position = mouseCenter;
             }
             
@@ -127,7 +130,7 @@ namespace CShark.Model
             vegetation.RenderAll();
             PezManager.Render();
             Tiburon.Render();
-            superficie.Render();
+            //superficie.Render();
 
             if (jugador.EstaVivo)
                 jugador.Render();
@@ -190,6 +193,7 @@ namespace CShark.Model
             vegetation = loader.loadSceneFromFile(MediaDir + "vegetation-TgcScene.xml");
 
             CargarSkyBox();
+            Mapa = new Mapa(skybox, terrain);
 
             mp3Player = new TgcMp3Player();
 
@@ -197,7 +201,6 @@ namespace CShark.Model
             PezManager.CargarPez(new PezPayaso(0, 0, 0));
             PezManager.CargarPez(new PezAzul(100, 0, 100));
             PezManager.CargarPez(new PezBetta(0, 0, 300));
-            //PezManager.CargarPez(new PezCoral(200, 100, 0)); esta basura rompe :(
             PezManager.CargarPez(new PezTropical(1, 0, 100, 0));
             PezManager.CargarPez(new PezTropical(2, 0, 200, 0));
             PezManager.CargarPez(new PezTropical(3, 0, 300, 0));
@@ -207,11 +210,6 @@ namespace CShark.Model
 
             superficie = new Superficie();
             Tiburon = new Tiburon(1000, 100, 1000);
-
-                       
-            /*tiburon = loader.loadSceneFromFile(MediaDir + "tiburoncin-TgcScene.xml").Meshes[0];
-            tiburon.Position += new TGCVector3(2000, 500, 500);
-            tiburon.Scale = new TGCVector3(200, 200, 200);*/
         }
 
         private void CargarSkyBox()

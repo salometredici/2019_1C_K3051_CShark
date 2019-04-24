@@ -1,4 +1,5 @@
-﻿using Microsoft.DirectX;
+﻿using CShark.Terreno;
+using Microsoft.DirectX;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -40,15 +41,15 @@ namespace CShark.NPCs.Enemigos
             Mesh.Position = new TGCVector3(x, y, z);
             VelocidadRotacion = 0.7f;
             VelocidadMovimiento = 300f;
-            PuntoDestino = BuscarPunto();
-            RotacionDestino = BuscarRotacion();
+            PuntoDestino = Posicion;
+            RotacionDestino = TGCVector2.Zero;
             cajaPos = TGCBox.fromSize(PuntoDestino, new TGCVector3(100, 100, 100), Color.Red);
             cajaPos.AutoTransform = true;
         }
 
-        public void Update(float elapsedTime) {
+        public void Update(float elapsedTime, Mapa mapa) {
             if (Mover)
-                Avanzar(elapsedTime);
+                Avanzar(elapsedTime, mapa);
             else
                 DarseVuelta(elapsedTime);
         }
@@ -58,7 +59,7 @@ namespace CShark.NPCs.Enemigos
             cajaPos.Render();
         }
 
-        private TGCVector3 BuscarPunto() {
+        private TGCVector3 BuscarPunto(Mapa mapa) {
             var random = new Random();
             var dirX = random.Next(1, 100) < 50 ? -1 : 1;
             var dirY = random.Next(1, 100) < 50 ? -1 : 1;
@@ -70,7 +71,12 @@ namespace CShark.NPCs.Enemigos
             int x = (int)Posicion.X + distX;
             int y = (int)Posicion.Y + distY;
             int z = (int)Posicion.Z + distZ;
-            return new TGCVector3(x, y, z);
+
+            var xReal = x < mapa.Centro.X ? Math.Max(mapa.XMin, x) : Math.Min(mapa.XMax, x);
+            var yReal = y < mapa.Centro.Y ? Math.Max(mapa.YMin, y) : Math.Min(mapa.XMax, y);
+            var zReal = z < mapa.Centro.Z ? Math.Max(mapa.ZMin, z) : Math.Min(mapa.XMax, z);
+
+            return new TGCVector3(xReal, yReal, zReal);
         }
 
         private TGCVector2 BuscarRotacion() {
@@ -91,7 +97,7 @@ namespace CShark.NPCs.Enemigos
             return x > 0 && z > 0 || x < 0 && z < 0;
         }
 
-        private void Avanzar(float elapsedTime) {
+        private void Avanzar(float elapsedTime, Mapa mapa) {
             float desplazamientoX = VelocidadMovimiento * elapsedTime * CosAng;
             float desplazamientoY = VelocidadMovimiento * elapsedTime * (float)Math.Sin(RotacionDestino.Y);
             float desplazamientoZ = VelocidadMovimiento * elapsedTime * SinAng;
@@ -102,7 +108,7 @@ namespace CShark.NPCs.Enemigos
             {
                 Mover = false;
                 Recorrido = 0;
-                PuntoDestino = BuscarPunto();
+                PuntoDestino = BuscarPunto(mapa);
                 RotacionDestino = BuscarRotacion();
                 cajaPos.Position = PuntoDestino;
             }

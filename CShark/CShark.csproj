@@ -93,6 +93,7 @@
     <Compile Include="NPCs\Peces\PezCoral.cs" />
     <Compile Include="NPCs\Peces\PezPayaso.cs" />
     <Compile Include="NPCs\Peces\PezTropical.cs" />
+    <Compile Include="Terreno\Mapa.cs" />
     <Compile Include="Terreno\Superficie.cs" />
     <Compile Include="UI\HUD\BarraEstado.cs" />
     <Compile Include="UI\HUD\BarraOxigeno.cs" />
