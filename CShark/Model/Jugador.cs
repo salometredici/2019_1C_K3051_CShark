@@ -15,8 +15,8 @@ namespace CShark.Model
 {
     public class Jugador
     {
-        public int Vida;
-        public int Oxigeno;
+        public float Vida;
+        public float Oxigeno;
         private List<IRecolectable> Recolectables;
         public TGCVector3 Posicion { get; private set; }
         public bool EstaVivo => Vida > 0 && Oxigeno > 0;
@@ -45,10 +45,10 @@ namespace CShark.Model
 
         }
         
-        public void Update(TgcFpsCamera camara) {
+        public void Update(TgcFpsCamera camara, float elapsedTime) {
             Posicion = camara.Position;
             PosicionarBrazo();
-            Oxigeno -= 2;
+            Oxigeno -= 200f * elapsedTime;
             if (EstaVivo)
             {
                 BarraVida.Update(Vida);

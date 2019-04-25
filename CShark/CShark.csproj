@@ -86,6 +86,8 @@
     <Compile Include="Model\Jugador.cs" />
     <Compile Include="Model\Recolectable.cs" />
     <Compile Include="NPCs\Animal.cs" />
+    <Compile Include="NPCs\Enemigos\IRotable.cs" />
+    <Compile Include="NPCs\Enemigos\Rotator.cs" />
     <Compile Include="NPCs\Enemigos\Tiburon.cs" />
     <Compile Include="NPCs\Peces\Pez.cs" />
     <Compile Include="NPCs\Peces\PezAzul.cs" />

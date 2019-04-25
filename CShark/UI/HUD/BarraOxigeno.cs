@@ -12,7 +12,7 @@ namespace CShark.UI.HUD
 {
     public class BarraOxigeno : BarraEstado
     {
-        public BarraOxigeno(TGCVector2 posicion, int valorMaximo)
+        public BarraOxigeno(TGCVector2 posicion, float valorMaximo)
             : base(posicion, valorMaximo, Color.FromArgb(36, 70, 94)) { }
 
         protected override void CargarBitmap() {

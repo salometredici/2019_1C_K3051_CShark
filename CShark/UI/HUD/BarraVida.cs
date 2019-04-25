@@ -12,7 +12,7 @@ namespace CShark.UI.HUD
 {
     public class BarraVida : BarraEstado
     {
-        public BarraVida(TGCVector2 posicion, int valorMaximo) 
+        public BarraVida(TGCVector2 posicion, float valorMaximo) 
             : base(posicion, valorMaximo, Color.FromArgb(63, 84, 12)) { }
 
         protected override void CargarBitmap() {

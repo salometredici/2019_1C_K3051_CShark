@@ -101,7 +101,7 @@ namespace CShark.Model
             else
             {
                 //superficie.Update(ElapsedTime);
-                jugador.Update(camaraInterna);
+                jugador.Update(camaraInterna, ElapsedTime);
                 PezManager.Update(ElapsedTime);
                 Tiburon.Update(ElapsedTime, Mapa);
                 Cursor.Position = mouseCenter;
@@ -117,7 +117,7 @@ namespace CShark.Model
             Camara = camaraInterna;
             jugador = new Jugador(TGCVector3.Empty, 500, 100000);
             mp3Player.FileName = MediaDir + "Music\\UnderPressure_DeepTrouble.mp3";
-            mp3Player.play(true);
+            //mp3Player.play(true);
         }
 
         public override void Render() {
@@ -209,7 +209,7 @@ namespace CShark.Model
             PezManager.CargarPez(new PezTropical(6, 0, 600, 0));
 
             superficie = new Superficie();
-            Tiburon = new Tiburon(1000, 100, 1000);
+            Tiburon = new Tiburon(1000, 100, 1000, Mapa);
         }
 
         private void CargarSkyBox()

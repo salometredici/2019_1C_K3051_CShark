@@ -20,12 +20,12 @@ namespace CShark.UI.HUD
         private TgcText2D SombraTexto;
         protected CustomSprite Fondo;
         protected CustomSprite Barra;
-        private int ValorMaximo;
+        private float ValorMaximo;
 
         private readonly int AnchoBarra = 626 / 2;
         private readonly int AltoBarra = 126 / 2;
 
-        public BarraEstado(TGCVector2 posicion, int valorMaximo, Color colorSombra) {
+        public BarraEstado(TGCVector2 posicion, float valorMaximo, Color colorSombra) {
             Posicion = posicion;
             ValorMaximo = valorMaximo;
             Drawer = new Drawer2D();
@@ -62,7 +62,7 @@ namespace CShark.UI.HUD
             SombraTexto.Text = Texto.Text;
         }
 
-        public void Update(int valor) {
+        public void Update(float valor) {
             int porcentaje = (int)Math.Round((double)valor / ValorMaximo * 100);
             Texto.Text = porcentaje + " %";
             SombraTexto.Text = Texto.Text;
