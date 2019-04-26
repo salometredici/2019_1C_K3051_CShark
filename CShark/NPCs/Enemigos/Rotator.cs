@@ -35,7 +35,7 @@ namespace CShark.NPCs.Enemigos
             DistanciaHorizontal = distanciaHorizontal;
             DistanciaVertical = distanciaVertical;
             Caja = TGCBox.fromSize(TGCVector3.Empty, new TGCVector3(100, 100, 100), Color.Red);
-            Caja.AutoTransform = true;
+            Caja.AutoTransformEnable = true;
         }
 
         public void Render() {

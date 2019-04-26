@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CShark.Model;
+using System;
 using System.Threading;
 using System.Windows.Forms;
 using TGC.Core.Direct3D;
@@ -7,7 +8,6 @@ using TGC.Core.Input;
 using TGC.Core.Shaders;
 using TGC.Core.Sound;
 using TGC.Core.Textures;
-using CShark.Model;
 
 namespace CShark.Form
 {
@@ -20,8 +20,7 @@ namespace CShark.Form
         /// <summary>
         ///     Constructor de la ventana.
         /// </summary>
-        public GameForm()
-        {
+        public GameForm() {
             InitializeComponent();
         }
 
@@ -45,8 +44,7 @@ namespace CShark.Form
         /// </summary>
         private TgcD3dInput Input { get; set; }
 
-        private void GameForm_Load(object sender, EventArgs e)
-        {
+        private void GameForm_Load(object sender, EventArgs e) {
             //FullScreen, van en este orden para que queda oculta la barra de Windows.
             this.WindowState = FormWindowState.Normal;
             this.FormBorderStyle = FormBorderStyle.None;
@@ -68,8 +66,7 @@ namespace CShark.Form
             InitRenderLoop();
         }
 
-        private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
+        private void GameForm_FormClosing(object sender, FormClosingEventArgs e) {
             if (ApplicationRunning)
             {
                 ShutDown();
@@ -79,8 +76,7 @@ namespace CShark.Form
         /// <summary>
         ///     Inicio todos los objetos necesarios para cargar el ejemplo y directx.
         /// </summary>
-        public void InitGraphics()
-        {
+        public void InitGraphics() {
             //Se inicio la aplicación
             ApplicationRunning = true;
 
@@ -99,7 +95,7 @@ namespace CShark.Form
             var currentDirectory = Environment.CurrentDirectory + "\\";
 
             //Cargar shaders del framework
-            TgcShaders.Instance.loadCommonShaders(currentDirectory + Game.Default.ShadersDirectory);
+            TGCShaders.Instance.LoadCommonShaders(currentDirectory + Game.Default.ShadersDirectory, D3DDevice.Instance);
 
             //Juego a ejecutar, si quisiéramos tener diferentes modelos aquí podemos cambiar la instancia e invocar a otra clase.
             Modelo = new GameModel(currentDirectory + Game.Default.MediaDirectory,
@@ -112,8 +108,7 @@ namespace CShark.Form
         /// <summary>
         ///     Comienzo el loop del juego.
         /// </summary>
-        public void InitRenderLoop()
-        {
+        public void InitRenderLoop() {
             while (ApplicationRunning)
             {
                 //Renderizo si es que hay un ejemplo activo.
@@ -140,8 +135,7 @@ namespace CShark.Form
         ///     Indica si la aplicacion esta activa.
         ///     Busca si la ventana principal tiene foco o si alguna de sus hijas tiene.
         /// </summary>
-        public bool ApplicationActive()
-        {
+        public bool ApplicationActive() {
             if (ContainsFocus)
             {
                 return true;
@@ -162,8 +156,7 @@ namespace CShark.Form
         ///     Arranca a ejecutar un ejemplo.
         ///     Para el ejemplo anterior, si hay alguno.
         /// </summary>
-        public void ExecuteModel()
-        {
+        public void ExecuteModel() {
             //Ejecutar Init
             try
             {
@@ -182,8 +175,7 @@ namespace CShark.Form
         /// <summary>
         ///     Deja de ejecutar el ejemplo actual
         /// </summary>
-        public void StopCurrentExample()
-        {
+        public void StopCurrentExample() {
             if (Modelo != null)
             {
                 Modelo.Dispose();
@@ -194,8 +186,7 @@ namespace CShark.Form
         /// <summary>
         ///     Finalizar aplicacion
         /// </summary>
-        public void ShutDown()
-        {
+        public void ShutDown() {
             ApplicationRunning = false;
 
             StopCurrentExample();
