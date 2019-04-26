@@ -102,19 +102,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Managers\PezManager.cs" />
-    <Compile Include="Model\Jugador.cs" />
-    <Compile Include="Model\Recolectable.cs" />
-    <Compile Include="NPCs\Animal.cs" />
-    <Compile Include="NPCs\Enemigos\IRotable.cs" />
-    <Compile Include="NPCs\Enemigos\Rotator.cs" />
-    <Compile Include="NPCs\Enemigos\Tiburon.cs" />
-    <Compile Include="NPCs\Peces\Pez.cs" />
-    <Compile Include="NPCs\Peces\PezAzul.cs" />
-    <Compile Include="NPCs\Peces\PezBetta.cs" />
-    <Compile Include="NPCs\Peces\PezCoral.cs" />
-    <Compile Include="NPCs\Peces\PezPayaso.cs" />
-    <Compile Include="NPCs\Peces\PezTropical.cs" />
+    <Compile Include="Geometria\IRotable.cs" />
+    <Compile Include="Items\IRecolectable.cs" />
+    <Compile Include="Items\Recolectable.cs" />
+    <Compile Include="Items\Recolectables\Bateria.cs" />
+    <Compile Include="Items\Recolectables\Chip.cs" />
+    <Compile Include="Items\Recolectables\Medkit.cs" />
+    <Compile Include="Items\Recolectables\Oxigeno.cs" />
+    <Compile Include="Jugador\HUD.cs" />
+    <Compile Include="Jugador\Inventario.cs" />
+    <Compile Include="Model\Configuracion.cs" />
+    <Compile Include="Managers\IManager.cs" />
+    <Compile Include="Managers\MenuManager.cs" />
+    <Compile Include="Managers\FaunaManager.cs" />
+    <Compile Include="Jugador\Player.cs" />
+    <Compile Include="Managers\GameManager.cs" />
+    <Compile Include="Animales\IAnimal.cs" />
+    <Compile Include="Geometria\Rotator.cs" />
+    <Compile Include="Animales\Enemigos\Tiburon.cs" />
+    <Compile Include="Animales\Peces\Pez.cs" />
+    <Compile Include="Animales\Peces\PezAzul.cs" />
+    <Compile Include="Animales\Peces\PezBetta.cs" />
+    <Compile Include="Animales\Peces\PezCoral.cs" />
+    <Compile Include="Animales\Peces\PezPayaso.cs" />
+    <Compile Include="Animales\Peces\PezTropical.cs" />
     <Compile Include="Terreno\Mapa.cs" />
     <Compile Include="Terreno\Superficie.cs" />
     <Compile Include="UI\HUD\BarraEstado.cs" />
@@ -149,7 +160,7 @@
     <Compile Include="Model\FpsCamera.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Variables\Variable.cs" />
+    <Compile Include="Model\Variable.cs" />
     <EmbeddedResource Include="Form\GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -167,9 +178,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Game.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Media\Animales\Textures\greatwhiteshark.tga" />
-    <None Include="Media\Animales\Textures\greatwhiteshark_Eye.tga" />
-    <None Include="Media\Animales\Textures\greatwhiteshark_teeth.tga" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -222,49 +230,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Media\Animales\Pez Azul-TgcScene.xml" />
-    <Content Include="Media\Animales\Pez Betta-TgcScene.xml" />
-    <Content Include="Media\Animales\Pez Coral-TgcScene.xml" />
-    <Content Include="Media\Animales\Pez Payaso-TgcScene.xml" />
-    <Content Include="Media\Animales\Pez Tropical 1-TgcScene.xml" />
-    <Content Include="Media\Animales\Pez Tropical 2-TgcScene.xml" />
-    <Content Include="Media\Animales\Pez Tropical 3-TgcScene.xml" />
-    <Content Include="Media\Animales\Pez Tropical 4-TgcScene.xml" />
-    <Content Include="Media\Animales\Pez Tropical 5-TgcScene.xml" />
-    <Content Include="Media\Animales\Pez Tropical 6-TgcScene.xml" />
-    <Content Include="Media\Animales\Textures\blue_fish.jpg" />
-    <Content Include="Media\Animales\Textures\coralfish_texture.png" />
-    <Content Include="Media\Animales\Textures\fish.jpg" />
-    <Content Include="Media\Animales\Textures\TropicalFish01.jpg" />
-    <Content Include="Media\Animales\Textures\TropicalFish02.jpg" />
-    <Content Include="Media\Animales\Textures\TropicalFish04.jpg" />
-    <Content Include="Media\Animales\Textures\TropicalFish05.jpg" />
-    <Content Include="Media\Animales\Textures\TropicalFish07.jpg" />
-    <Content Include="Media\Animales\Textures\TropicalFish12.jpg" />
-    <Content Include="Media\Animales\Textures\TropicalFish13.jpg" />
-    <Content Include="Media\Animales\Tiburon-TgcScene.xml" />
-    <Content Include="Media\Heightmaps\heightmap.JPG" />
-    <Content Include="Media\Heightmaps\wave bump.png" />
-    <Content Include="Media\HUD\Muerte\fondo.png" />
-    <Content Include="Media\HUD\Muerte\franja.png" />
-    <Content Include="Media\HUD\Muerte\texto.png" />
-    <Content Include="Media\HUD\oxigenoBarra.png" />
-    <Content Include="Media\HUD\oxigenoFondo.png" />
-    <Content Include="Media\HUD\vidaBarra.png" />
-    <Content Include="Media\HUD\vidaFondo.png" />
-    <Content Include="Media\Menu\boton1.png" />
-    <Content Include="Media\Menu\boton2.png" />
-    <Content Include="Media\Menu\checkNormal.png" />
-    <Content Include="Media\Menu\checkHover.png" />
-    <Content Include="Media\Menu\checkTick.png" />
-    <Content Include="Media\Menu\fondo-menu.png" />
-    <Content Include="Media\Menu\puntero.png" />
-    <Content Include="Media\Menu\slider1.png" />
-    <Content Include="Media\Menu\slider2.png" />
-    <Content Include="Media\Menu\slider3.png" />
-    <Content Include="Media\Textures\arena.jpg" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

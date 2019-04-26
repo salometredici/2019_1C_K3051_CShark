@@ -25,7 +25,7 @@ namespace CShark {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Alumnos")]
+        [global::System.Configuration.DefaultSettingValueAttribute("integrantes")]
         public string Category {
             get {
                 return ((string)(this["Category"]));
@@ -37,7 +37,7 @@ namespace CShark {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Grupo 99")]
+        [global::System.Configuration.DefaultSettingValueAttribute("CShark")]
         public string Name {
             get {
                 return ((string)(this["Name"]));
@@ -49,7 +49,7 @@ namespace CShark {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Mi idea - Descripción de la idea")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Undersea Survival Craft")]
         public string Description {
             get {
                 return ((string)(this["Description"]));
@@ -80,18 +80,6 @@ namespace CShark {
             }
             set {
                 this["MediaDirectory"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("cajaMadera4.jpg")]
-        public string TexturaCaja {
-            get {
-                return ((string)(this["TexturaCaja"]));
-            }
-            set {
-                this["TexturaCaja"] = value;
             }
         }
     }

@@ -12,6 +12,7 @@ using TGC.Core.Input;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 using CShark.Variables;
+using CShark.Managers;
 
 namespace CShark.Model
 {
@@ -24,15 +25,15 @@ namespace CShark.Model
         private TGCVector3 PositionEye;
 
         private TgcD3dInput Input;
-        private readonly Variable<float> VelocidadMovimiento;
-        private readonly Variable<float> VelocidadRotacion;
+        private Variable<float> VelocidadMovimiento;
+        private Variable<float> VelocidadRotacion;
         private bool bloquear = false;
 
-        public TgcFpsCamera(TGCVector3 positionEye, Variable<float> velocidadMovimiento, Variable<float> velocidadRotacion, TgcD3dInput input) {
+        public TgcFpsCamera(TGCVector3 positionEye, TgcD3dInput input) {
             Input = input;
             PositionEye = positionEye;
-            VelocidadMovimiento = velocidadMovimiento;
-            VelocidadRotacion = velocidadRotacion;
+            VelocidadMovimiento = Configuracion.Instancia.VelocidadMovimiento;
+            VelocidadRotacion = Configuracion.Instancia.VelocidadRotacion;
             directionView = new TGCVector3(0, 0, -1);
             leftrightRot = FastMath.PI_HALF;
             updownRot = -FastMath.PI / 10.0f;

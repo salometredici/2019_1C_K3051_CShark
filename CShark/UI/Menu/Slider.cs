@@ -22,7 +22,7 @@ namespace CShark.UI
         private Drawer2D Drawer;
         private TGCVector2 Posicion; //absoluta
         private int Ancho = 400;
-        private int Alto = 20;
+        //private int Alto = 20;
 
         private CustomSprite BarraVacia;
         private CustomSprite BarraLlena;
