@@ -1,12 +1,7 @@
 ﻿using CShark.Model;
 using CShark.UI;
 using CShark.UI.HUD;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TGC.Core.Direct3D;
 
 namespace CShark.Managers
@@ -81,6 +76,13 @@ namespace CShark.Managers
             {
                 MenuSeleccionado.Update(game);
                 Puntero.Update();
+            }
+            else
+            {
+                //para que no se salga el mouse del Form
+                var viewport = D3DDevice.Instance.Device.Viewport;
+                var centroPantalla = new Point(viewport.Width / 2, viewport.Height / 2);
+                System.Windows.Forms.Cursor.Position = centroPantalla;
             }
         }
     }

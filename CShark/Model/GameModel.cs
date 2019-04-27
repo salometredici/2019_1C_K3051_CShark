@@ -27,7 +27,6 @@ namespace CShark.Model
             Description = Game.Default.Description;
         }
         
-        private Point mouseCenter;  
         private TgcMp3Player mp3Player;
         private Player Player;      
         private GameManager GameManager;
@@ -41,9 +40,6 @@ namespace CShark.Model
             PantallaMuerte = new PantallaMuerte();
             GameManager = new GameManager();
             mp3Player = new TgcMp3Player();
-            
-            var d3dDevice = D3DDevice.Instance.Device;
-            mouseCenter = new Point(D3DDevice.Instance.Device.Viewport.Width / 2, D3DDevice.Instance.Device.Viewport.Height / 2);
 
             Start();
         }
@@ -68,7 +64,6 @@ namespace CShark.Model
                 Mapa.Update();
                 Player.Update(ElapsedTime);
                 GameManager.Update(this);
-                Cursor.Position = mouseCenter;
             }
             
             PostUpdate();
