@@ -28,7 +28,6 @@ namespace CShark.Model
         }
         
         private Point mouseCenter;  
-        public TgcFpsCamera camaraInterna;
         private TgcMp3Player mp3Player;
         private Player Player;      
         private GameManager GameManager;
@@ -55,7 +54,7 @@ namespace CShark.Model
 
             if (Input.keyPressed(Key.Escape))
             {
-                camaraInterna.Lock();
+                Player.Lock();
                 if (Player.EstaVivo)
                 {
                     CambiarMenu(TipoMenu.Principal);
@@ -67,7 +66,7 @@ namespace CShark.Model
             else
             {
                 Mapa.Update();
-                Player.Update(camaraInterna, ElapsedTime);
+                Player.Update(ElapsedTime);
                 GameManager.Update(this);
                 Cursor.Position = mouseCenter;
             }
@@ -77,11 +76,10 @@ namespace CShark.Model
         }
 
         private void Start() {
-            var posicionInicial = new TGCVector3(-210, 218, -665);
-            camaraInterna = new TgcFpsCamera(posicionInicial, Input);
-            Camara = camaraInterna;
-            Player = new Player(TGCVector3.Empty, 500, 100000);
-            mp3Player.FileName = MediaDir + "Music\\UnderPressure_DeepTrouble.mp3";
+            var posInicial = new TGCVector3(0, 500f, 1000f);
+            Player = new Player(posInicial, 500, 1000, Input);
+            Camara = Player.CamaraInterna;
+            //mp3Player.FileName = MediaDir + "Music\\UnderPressure_DeepTrouble.mp3";
             //mp3Player.play(true);
         }
 

@@ -102,6 +102,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fisica\RigidBodyBuilder.cs" />
+    <Compile Include="Fisica\Colisiones\ColisionesTerreno.cs" />
     <Compile Include="Geometria\IRotable.cs" />
     <Compile Include="Items\IRecolectable.cs" />
     <Compile Include="Items\Recolectable.cs" />
@@ -126,6 +128,7 @@
     <Compile Include="Animales\Peces\PezCoral.cs" />
     <Compile Include="Animales\Peces\PezPayaso.cs" />
     <Compile Include="Animales\Peces\PezTropical.cs" />
+    <Compile Include="Model\TriangleSpherePhysics.cs" />
     <Compile Include="Terreno\Mapa.cs" />
     <Compile Include="Terreno\Superficie.cs" />
     <Compile Include="UI\HUD\BarraEstado.cs" />

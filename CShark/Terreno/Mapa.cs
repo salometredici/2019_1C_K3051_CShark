@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BulletSharp;
+using CShark.Fisica.Colisiones;
+using CShark.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +20,10 @@ namespace CShark.Terreno
         public TGCVector3 Centro;
 
         private TgcSkyBox Skybox;
-        private Superficie Superficie;
+        //private Superficie Superficie;
         private TgcScene Vegetacion;
         private TgcSimpleTerrain Terreno;
+        private ColisionesTerreno Colisiones;
 
         private static Mapa instancia;
 
@@ -36,17 +40,26 @@ namespace CShark.Terreno
             CargarSkyBox();
             Box = TGCBox.fromSize(Skybox.Center, Skybox.Size);
             Centro = Skybox.Center;
+            Colisiones = new ColisionesTerreno();
+            Colisiones.Init(Terreno.getData());
         }
 
         public float XMin => Centro.X - Box.Size.X / 2f;
         public float XMax => Centro.X + Box.Size.X / 2f;
-        public float YMin => Terreno.Position.Y + 40f;
+
+        public float YMin => Terreno.Position.Y + 1000f; //ESTO VER DESPUES
+
         public float YMax => Centro.Y + Box.Size.Y / 2f;
         public float ZMin => Centro.Z - Box.Size.Z / 2f;
         public float ZMax => Centro.Z + Box.Size.Z / 2f;
 
         public void Update() {
             //Superficie.Update();
+            Colisiones.Update();
+        }
+
+        public void AgregarMuerto(RigidBody body) {
+            Colisiones.AgregarBody(body);
         }
 
         public void Render() {
@@ -60,7 +73,7 @@ namespace CShark.Terreno
             Terreno.Dispose();
             Skybox.Dispose();
             Vegetacion.DisposeAll();
-            Superficie.Dispose();
+            //Superficie.Dispose();
         }
 
         private void CargarTerreno() {

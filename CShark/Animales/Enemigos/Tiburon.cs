@@ -1,4 +1,7 @@
-﻿using CShark.Geometria;
+﻿using BulletSharp;
+using CShark.Fisica;
+using CShark.Fisica.Colisiones;
+using CShark.Geometria;
 using CShark.Terreno;
 using Microsoft.DirectX;
 using System;
@@ -7,6 +10,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TGC.Core.BulletPhysics;
 using TGC.Core.Geometry;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
@@ -23,6 +27,8 @@ namespace CShark.NPCs.Enemigos
         
         private bool Mover = false;
         private float Recorrido = 0;
+        private bool Vivo = true;
+        private RigidBody Body;
 
         private Rotator Rotador;
 
@@ -38,14 +44,49 @@ namespace CShark.NPCs.Enemigos
             Rotador.GenerarRotacion();
         }
 
+        private float tiempo = 0;
+
         public void Update(float elapsedTime) {
-            if (Mover) Avanzar(elapsedTime);
-            else DarseVuelta(elapsedTime);
+            tiempo += elapsedTime;
+            if (tiempo > 10 && Vivo) //a los 10 segundos muere y cae
+            {
+                Morir();
+            }
+            if (Vivo)
+            {
+                if (Mover)
+                    Avanzar(elapsedTime);
+                else
+                    DarseVuelta(elapsedTime);
+            }
+            else
+            {
+                var x = Body.Orientation.Axis.X;
+                var y = Body.Orientation.Axis.Y;
+                var z = Body.Orientation.Axis.Z;                
+                Mesh.Rotation = new TGCVector3(x, y, z);
+                var centro = Body.CenterOfMassPosition;
+                Mesh.Position = new TGCVector3(centro.X, centro.Y, centro.Z);
+            }
         }
 
         public void Render() {
             Mesh.Render();
             Rotador.Render();
+        }
+
+        public void Morir() {
+            Vivo = false;
+            var builder = new RigidBodyBuilder(Mesh);
+            Body = builder
+                .ConDamping(1f)
+                .ConMasa(5000f) //pesadito el tibu
+                .ConRotacion(Rotacion)
+                .ConPosicion(Posicion)
+                .ConRebote(10f)
+                .ConRozamiento(1f)
+                .Build();
+            Mapa.Instancia.AgregarMuerto(Body);
         }
 
         private void Avanzar(float elapsedTime) {

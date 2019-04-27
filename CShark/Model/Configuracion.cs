@@ -15,6 +15,7 @@ namespace CShark.Managers
         public Variable<bool> Niebla;
         public Variable<bool> PostProcesadoCasco;
         public Variable<bool> MotionBlur;
+        public Variable<float> FPS;
 
         private static Configuracion instancia;
 
@@ -33,6 +34,7 @@ namespace CShark.Managers
             Niebla = new Variable<bool>("Niebla", false);
             PostProcesadoCasco = new Variable<bool>("Post Procesado (Casco)", false);
             MotionBlur = new Variable<bool>("Motion Blur", false);
+            FPS = new Variable<float>("Cuadros por segundo", 60f);
         }
     }
 }
