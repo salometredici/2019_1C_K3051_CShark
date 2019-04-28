@@ -19,7 +19,7 @@ namespace CShark.Items.Recolectables
             Body = RigidBodyUtils.CrearEsfera(Mesh, 10f);
             Body.Friction = 1f;
             Body.RollingFriction = 100f;
-            Mapa.Instancia.AgregarMuerto(Body);
+            Mapa.Instancia.AgregarBody(Body);
         }
 
         public override void Update(Player player) {

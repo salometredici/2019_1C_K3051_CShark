@@ -86,7 +86,7 @@ namespace CShark.NPCs.Enemigos
                 .ConRebote(10f)
                 .ConRozamiento(1f)
                 .Build();
-            Mapa.Instancia.AgregarMuerto(Body);
+            Mapa.Instancia.AgregarBody(Body);
         }
 
         private void Avanzar(float elapsedTime) {
