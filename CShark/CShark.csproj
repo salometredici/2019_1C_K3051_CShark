@@ -265,6 +265,8 @@
     <Content Include="Media\Animales\Textures\TropicalFish12.jpg" />
     <Content Include="Media\Animales\Textures\TropicalFish13.jpg" />
     <Content Include="Media\Animales\Tiburon-TgcScene.xml" />
+    <Content Include="Media\Boxes Colision\Textures\empty.png" />
+    <Content Include="Media\Boxes Colision\Tiburon-TgcScene.xml" />
     <Content Include="Media\Heightmaps\heightmap.JPG" />
     <Content Include="Media\Heightmaps\wave bump.png" />
     <Content Include="Media\HUD\Muerte\fondo.png" />
@@ -324,6 +326,7 @@
     <Content Include="Media\Textures\Water_Texture.jpg" />
     <Content Include="Media\vegetation-TgcScene.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

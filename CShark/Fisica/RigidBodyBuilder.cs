@@ -19,8 +19,9 @@ namespace CShark.Fisica
         private float Damping = 1f;
         private float Rozamiento = 1f;
 
-        public RigidBodyBuilder(TgcMesh mesh) {
-            Mesh = mesh;
+        public RigidBodyBuilder(string box) {
+            var loader = new TgcSceneLoader();
+            Mesh = loader.loadSceneFromFile(Game.Default.MediaDirectory + @"Boxes Colision\" + box + "-TgcScene.xml").Meshes[0];
         }
 
         public RigidBodyBuilder ConRotacion(TGCVector3 rotacion) {

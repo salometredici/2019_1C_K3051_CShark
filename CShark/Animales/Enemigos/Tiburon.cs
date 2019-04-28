@@ -77,7 +77,7 @@ namespace CShark.NPCs.Enemigos
 
         public void Morir() {
             Vivo = false;
-            var builder = new RigidBodyBuilder(Mesh);
+            var builder = new RigidBodyBuilder("Tiburon");
             Body = builder
                 .ConDamping(1f)
                 .ConMasa(5000f) //pesadito el tibu
