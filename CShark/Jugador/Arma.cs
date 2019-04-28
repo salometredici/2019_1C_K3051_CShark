@@ -23,13 +23,10 @@ namespace CShark.Jugador
         protected TGCVector3 Offset;
         protected float Oscilacion;
 
-        public Arma(string mesh) {
-            Mesh = new TgcSceneLoader().loadSceneFromFile(Game.Default.MediaDirectory + @"Otros\"+mesh+"-TgcScene.xml").Meshes[0];
-            Mesh.Scale = new TGCVector3(0.5f, 0.5f, 0.5f);      
-            Offset = new TGCVector3(50f, 0, 100f);
-            RotacionY = 0.1f;
+        public Arma() {   
+            Offset = new TGCVector3(10f, -10f, 30f);
+            RotacionY = 0f;
             Oscilacion = 0;
-            Mesh.AutoTransformEnable = false;
         }
 
         public abstract void Atacar(Player player);

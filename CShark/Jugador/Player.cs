@@ -40,7 +40,7 @@ namespace CShark.Jugador
             HUD = new HUD(Vida, Oxigeno);
             Input = input;
             CamaraInterna = new TgcFpsCamera(posicion, input);
-            Arma = new Cañon();
+            Arma = new Crossbow();
         }
         
         public void Update(GameModel game) {

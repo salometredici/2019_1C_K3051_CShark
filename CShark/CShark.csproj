@@ -114,7 +114,7 @@
     <Compile Include="Items\Recolectables\Oxigeno.cs" />
     <Compile Include="Items\Recolectables\Wumpa.cs" />
     <Compile Include="Jugador\Arma.cs" />
-    <Compile Include="Jugador\Cañon.cs" />
+    <Compile Include="Jugador\Crossbow.cs" />
     <Compile Include="Jugador\HUD.cs" />
     <Compile Include="Jugador\Inventario.cs" />
     <Compile Include="Managers\RecolectablesManager.cs" />
@@ -189,6 +189,8 @@
     <None Include="Media\Animales\Textures\greatwhiteshark.tga" />
     <None Include="Media\Animales\Textures\greatwhiteshark_Eye.tga" />
     <None Include="Media\Animales\Textures\greatwhiteshark_teeth.tga" />
+    <None Include="Media\Otros\Textures\Crossbow_01_D.tga" />
+    <None Include="Media\Otros\Textures\Crossbow_02_D.tga" />
     <None Include="Media\Recolectables\Textures\diff_.tga" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -292,6 +294,9 @@
     <Content Include="Media\Music\Warp_Room.mp3" />
     <Content Include="Media\Olas-TgcScene.xml" />
     <Content Include="Media\Otros\Cañon-TgcScene.xml" />
+    <Content Include="Media\Otros\Crossbow-TgcScene.xml" />
+    <Content Include="Media\Otros\Harpoon-TgcScene.xml" />
+    <Content Include="Media\Otros\Textures\harpoon.jpg" />
     <Content Include="Media\Otros\Textures\LaserGun1.jpg" />
     <Content Include="Media\Otros\Textures\LaserGun2.jpg" />
     <Content Include="Media\Recolectables\Bateria-TgcScene.xml" />
