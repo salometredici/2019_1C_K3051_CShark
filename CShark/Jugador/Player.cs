@@ -12,6 +12,9 @@ using CShark.UI.HUD;
 using CShark.Utils;
 using CShark.Model;
 using TGC.Core.Input;
+using TGC.Core.Geometry;
+using System.Drawing;
+using TGC.Core.BoundingVolumes;
 
 namespace CShark.Jugador
 {
@@ -26,6 +29,7 @@ namespace CShark.Jugador
 
         public TgcFpsCamera CamaraInterna { get; private set; }
         private TgcD3dInput Input;
+
 
         public Player(TGCVector3 posicion, int vidaInicial, int oxigenoInicial, TgcD3dInput input) {
             Inventario = new Inventario();
@@ -43,14 +47,9 @@ namespace CShark.Jugador
             if (EstaVivo)
             {
                 HUD.Update(Vida, Oxigeno);
-                VerificarColisiones();
             }
             else
                 BloquearCamara(CamaraInterna);
-        }
-
-        private void VerificarColisiones() {
-
         }
 
         private bool _murio = false;
@@ -68,7 +67,9 @@ namespace CShark.Jugador
 
         public void Render() {
             if (EstaVivo)
+            {
                 HUD.Render();
+            }
         }
 
     }

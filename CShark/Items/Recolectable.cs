@@ -14,54 +14,62 @@ namespace CShark.Items
 {
     public abstract class Recolectable : IRecolectable
     {
-        private TgcMesh Mesh;
+        protected TgcMesh Mesh;
 
-        public Recolectable(string mesh) {
+        public TgcBoundingSphere EsferaCercania;
+
+        protected TGCVector3 Posicion {
+            get {
+                return Mesh.Position;
+            }
+            set {
+                Mesh.Position = value;
+            }
+        }
+
+        protected TGCVector3 Rotacion {
+            get {
+                return Mesh.Rotation;
+            }
+            set {
+                Mesh.Rotation = value;
+            }
+        }
+
+        public Recolectable(string mesh, TGCVector3 posicion) {
             var ruta = Game.Default.MediaDirectory + "Recolectables\\" + mesh + "-TgcScene.xml";
             Mesh = new TgcSceneLoader().loadSceneFromFile(ruta).Meshes[0];
-            Init();
+            Mesh.Position = posicion;
+            EsferaCercania = new TgcBoundingSphere(Posicion, 100f);
+            EsferaCercania.setRenderColor(Color.Red);
         }
 
         public void Desaparecer() {
             Mesh.Dispose();
         }
 
-        public void Render() {
+        public virtual void Update(Player player) {
+            MoverEsferaCercania();
+            if (EstaCerca(player))
+                EsferaCercania.setRenderColor(Color.Yellow);
+            else
+                EsferaCercania.setRenderColor(Color.Red);
+        }
+
+        public virtual void Render() {
             Mesh.Render();
-            collisionableSphere.Render();
-            collisionableMeshAABB.BoundingBox.Render();
-            collisionableCylinder.Render();
+            EsferaCercania.Render();
         }
 
         public bool EstaCerca(Player player) {
-            throw new NotImplementedException();
+            return TgcCollisionUtils.testPointSphere(EsferaCercania, player.Posicion);
         }
 
-        private const float PICKING_TIME = 0.5f;
-        private readonly Color collisionColor = Color.Red;
-
-        private readonly Color noCollisionColor = Color.Yellow;
-        private TgcBoundingCylinder colliderCylinder;
-        private TgcBoundingCylinderFixedY colliderCylinderFixedY;
-        private TgcBoundingSphere collisionableSphere;
-        private TgcMesh collisionableMeshAABB;
-        private TgcBoundingCylinderFixedY collisionableCylinder;
-
-        public void Init() {
-            colliderCylinder = new TgcBoundingCylinder(TGCVector3.Empty, 2, 4);
-            colliderCylinder.setRenderColor(Color.LimeGreen);
-            colliderCylinderFixedY = new TgcBoundingCylinderFixedY(TGCVector3.Empty, 2, 4);
-            colliderCylinderFixedY.setRenderColor(Color.LimeGreen);
-
-            collisionableMeshAABB = Mesh;
-            collisionableMeshAABB.Scale = new TGCVector3(0.1f, 0.1f, 0.1f);
-            collisionableMeshAABB.Position = new TGCVector3(6, 0, -2);
-            collisionableCylinder = new TgcBoundingCylinderFixedY(new TGCVector3(-6, 0, 0), 2, 2);
-            collisionableSphere = new TgcBoundingSphere(new TGCVector3(-3, 0, 10), 3);
-            colliderCylinder.Center = Mesh.Position;
-            colliderCylinderFixedY.Center = Mesh.Position;
+        private void MoverEsferaCercania() {
+            var x = EsferaCercania.Position.X - Posicion.X;
+            var y = EsferaCercania.Position.Y - Posicion.Y;
+            var z = EsferaCercania.Position.Z - Posicion.Z;
+            EsferaCercania.moveCenter(new TGCVector3(x, y, z));
         }
-
-
     }
 }

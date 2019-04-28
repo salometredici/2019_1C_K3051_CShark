@@ -37,6 +37,7 @@ namespace CShark.Fisica.Colisiones
 
             //Creamos el terreno
             var bodyTerreno = BulletRigidBodyFactory.Instance.CreateSurfaceFromHeighMap(DataTriangulos);
+            World.StepSimulation(1 / Configuracion.Instancia.FPS.Valor, 100);
 
             World.AddRigidBody(bodyTerreno);
         }
@@ -46,8 +47,7 @@ namespace CShark.Fisica.Colisiones
         }
 
         public void Update() {
-            var steps = 1 / Configuracion.Instancia.FPS.Valor;
-            World.StepSimulation(steps, 100);
+            World.StepSimulation(1 / Configuracion.Instancia.FPS.Valor, 100);
         }
 
         public void Dispose() {
@@ -58,13 +58,6 @@ namespace CShark.Fisica.Colisiones
             OverlappingPairCache.Dispose();
         }
 
-        /*public static RigidBody CrearEsfera(float radio, float masa, TGCVector3 posicion) {
-            var esfera = BulletRigidBodyFactory.Instance.CreateBall(radio, masa, posicion);
-            esfera.SetDamping(0.1f, 0.5f);
-            esfera.Restitution = 1f;
-            esfera.Friction = 0.1f;
-            esfera.AngularVelocity = new Vector3(1, 0, 0);
-            return esfera;
-        }*/
+
     }
 }

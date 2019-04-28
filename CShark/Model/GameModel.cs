@@ -28,7 +28,7 @@ namespace CShark.Model
         }
         
         private TgcMp3Player mp3Player;
-        private Player Player;      
+        public Player Player;      
         private GameManager GameManager;
         private PantallaMuerte PantallaMuerte;
 

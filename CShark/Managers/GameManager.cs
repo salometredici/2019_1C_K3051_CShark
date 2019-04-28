@@ -15,6 +15,7 @@ namespace CShark.Model
 
         private MenuManager MenuManager;
         private FaunaManager PezManager;
+        private RecolectablesManager RecolectablesManager;
 
         public GameManager() {
             Initialize();
@@ -32,8 +33,10 @@ namespace CShark.Model
             Managers = new List<IManager>();
             MenuManager = new MenuManager();
             PezManager = new FaunaManager();
+            RecolectablesManager = new RecolectablesManager();
             Managers.Add(PezManager);
             Managers.Add(MenuManager);
+            Managers.Add(RecolectablesManager);
             Managers.ForEach(m => m.Initialize());
         }
 

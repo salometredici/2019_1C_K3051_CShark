@@ -10,6 +10,7 @@ namespace CShark.Items
     public interface IRecolectable
     {
         void Desaparecer();
+        void Update(Player player);
         void Render();
         bool EstaCerca(Player player);
     }

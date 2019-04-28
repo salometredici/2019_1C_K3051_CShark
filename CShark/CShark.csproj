@@ -104,6 +104,7 @@
   <ItemGroup>
     <Compile Include="Fisica\RigidBodyBuilder.cs" />
     <Compile Include="Fisica\Colisiones\ColisionesTerreno.cs" />
+    <Compile Include="Fisica\RigidBodyUtils.cs" />
     <Compile Include="Geometria\IRotable.cs" />
     <Compile Include="Items\IRecolectable.cs" />
     <Compile Include="Items\Recolectable.cs" />
@@ -111,8 +112,10 @@
     <Compile Include="Items\Recolectables\Chip.cs" />
     <Compile Include="Items\Recolectables\Medkit.cs" />
     <Compile Include="Items\Recolectables\Oxigeno.cs" />
+    <Compile Include="Items\Recolectables\Wumpa.cs" />
     <Compile Include="Jugador\HUD.cs" />
     <Compile Include="Jugador\Inventario.cs" />
+    <Compile Include="Managers\RecolectablesManager.cs" />
     <Compile Include="Model\Configuracion.cs" />
     <Compile Include="Managers\IManager.cs" />
     <Compile Include="Managers\MenuManager.cs" />
