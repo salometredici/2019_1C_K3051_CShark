@@ -58,7 +58,7 @@ namespace CShark.Terreno
             Colisiones.Update();
         }
 
-        public void AgregarMuerto(RigidBody body) {
+        public void AgregarBody(RigidBody body) {
             Colisiones.AgregarBody(body);
         }
 

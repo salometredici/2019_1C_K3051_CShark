@@ -114,6 +114,7 @@
     <Compile Include="Items\Recolectables\Oxigeno.cs" />
     <Compile Include="Items\Recolectables\Wumpa.cs" />
     <Compile Include="Jugador\Arma.cs" />
+    <Compile Include="Jugador\Cañon.cs" />
     <Compile Include="Jugador\HUD.cs" />
     <Compile Include="Jugador\Inventario.cs" />
     <Compile Include="Managers\RecolectablesManager.cs" />
@@ -185,6 +186,10 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Game.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Media\Animales\Textures\greatwhiteshark.tga" />
+    <None Include="Media\Animales\Textures\greatwhiteshark_Eye.tga" />
+    <None Include="Media\Animales\Textures\greatwhiteshark_teeth.tga" />
+    <None Include="Media\Recolectables\Textures\diff_.tga" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -238,7 +243,87 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Media\Animales\Pez Azul-TgcScene.xml" />
+    <Content Include="Media\Animales\Pez Betta-TgcScene.xml" />
+    <Content Include="Media\Animales\Pez Coral-TgcScene.xml" />
+    <Content Include="Media\Animales\Pez Payaso-TgcScene.xml" />
+    <Content Include="Media\Animales\Pez Tropical 1-TgcScene.xml" />
+    <Content Include="Media\Animales\Pez Tropical 2-TgcScene.xml" />
+    <Content Include="Media\Animales\Pez Tropical 3-TgcScene.xml" />
+    <Content Include="Media\Animales\Pez Tropical 4-TgcScene.xml" />
+    <Content Include="Media\Animales\Pez Tropical 5-TgcScene.xml" />
+    <Content Include="Media\Animales\Pez Tropical 6-TgcScene.xml" />
+    <Content Include="Media\Animales\Textures\blue_fish.jpg" />
+    <Content Include="Media\Animales\Textures\coralfish_texture.png" />
+    <Content Include="Media\Animales\Textures\fish.jpg" />
+    <Content Include="Media\Animales\Textures\TropicalFish01.jpg" />
+    <Content Include="Media\Animales\Textures\TropicalFish02.jpg" />
+    <Content Include="Media\Animales\Textures\TropicalFish04.jpg" />
+    <Content Include="Media\Animales\Textures\TropicalFish05.jpg" />
+    <Content Include="Media\Animales\Textures\TropicalFish07.jpg" />
+    <Content Include="Media\Animales\Textures\TropicalFish12.jpg" />
+    <Content Include="Media\Animales\Textures\TropicalFish13.jpg" />
+    <Content Include="Media\Animales\Tiburon-TgcScene.xml" />
+    <Content Include="Media\Heightmaps\heightmap.JPG" />
+    <Content Include="Media\Heightmaps\wave bump.png" />
+    <Content Include="Media\HUD\Muerte\fondo.png" />
+    <Content Include="Media\HUD\Muerte\franja.png" />
+    <Content Include="Media\HUD\Muerte\texto.png" />
+    <Content Include="Media\HUD\oxigenoBarra.png" />
+    <Content Include="Media\HUD\oxigenoFondo.png" />
+    <Content Include="Media\HUD\vidaBarra.png" />
+    <Content Include="Media\HUD\vidaFondo.png" />
+    <Content Include="Media\Menu\boton1.png" />
+    <Content Include="Media\Menu\boton2.png" />
+    <Content Include="Media\Menu\checkHover.png" />
+    <Content Include="Media\Menu\checkNormal.png" />
+    <Content Include="Media\Menu\checkTick.png" />
+    <Content Include="Media\Menu\fondo-menu.png" />
+    <Content Include="Media\Menu\logo.png" />
+    <Content Include="Media\Menu\puntero.png" />
+    <Content Include="Media\Menu\slider1.png" />
+    <Content Include="Media\Menu\slider2.png" />
+    <Content Include="Media\Menu\slider3.png" />
+    <Content Include="Media\Music\Deep_Trouble.mp3" />
+    <Content Include="Media\Music\UnderPressure_DeepTrouble.mp3" />
+    <Content Include="Media\Music\Warp_Room.mp3" />
+    <Content Include="Media\Olas-TgcScene.xml" />
+    <Content Include="Media\Otros\Cañon-TgcScene.xml" />
+    <Content Include="Media\Otros\Textures\LaserGun1.jpg" />
+    <Content Include="Media\Otros\Textures\LaserGun2.jpg" />
+    <Content Include="Media\Recolectables\Bateria-TgcScene.xml" />
+    <Content Include="Media\Recolectables\Chip-TgcScene.xml" />
+    <Content Include="Media\Recolectables\Medkit-TgcScene.xml" />
+    <Content Include="Media\Recolectables\Oxigeno-TgcScene.xml" />
+    <Content Include="Media\Recolectables\Textures\49710.jpg" />
+    <Content Include="Media\Recolectables\Textures\Blender Square Battery Diffuse.png" />
+    <Content Include="Media\Recolectables\Textures\mtl0.png" />
+    <Content Include="Media\Recolectables\Textures\oxycan.jpg" />
+    <Content Include="Media\Recolectables\Wumpa-TgcScene.xml" />
+    <Content Include="Media\Textures\0029-old-wood-board-texture-seamless-hr.jpg" />
+    <Content Include="Media\Textures\10010_Coral_v1_Diffuse.jpg" />
+    <Content Include="Media\Textures\20941_Brain_Coral_Diff_v1.jpg" />
+    <Content Include="Media\Textures\20943_Spiral_Wire_Coral_v1_diff.JPG" />
+    <Content Include="Media\Textures\32604.jpg" />
+    <Content Include="Media\Textures\Arbusto.png" />
+    <Content Include="Media\Textures\arena.jpg" />
+    <Content Include="Media\Textures\blue.jpg" />
+    <Content Include="Media\Textures\blue_fish.jpg" />
+    <Content Include="Media\Textures\darkersea.jpg" />
+    <Content Include="Media\Textures\dragonball.jpg" />
+    <Content Include="Media\Textures\fish.jpg" />
+    <Content Include="Media\Textures\Piedra3.jpg" />
+    <Content Include="Media\Textures\red.jpg" />
+    <Content Include="Media\Textures\tierra.jpg" />
+    <Content Include="Media\Textures\txt_001_diff.png" />
+    <Content Include="Media\Textures\UnderwaterSkybox\blue-texture.png" />
+    <Content Include="Media\Textures\UnderwaterSkybox\seafloor.jpg" />
+    <Content Include="Media\Textures\UnderwaterSkybox\side.jpg" />
+    <Content Include="Media\Textures\water.jpg" />
+    <Content Include="Media\Textures\Water_Texture.jpg" />
+    <Content Include="Media\vegetation-TgcScene.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
