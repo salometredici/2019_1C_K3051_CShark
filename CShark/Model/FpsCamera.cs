@@ -20,8 +20,8 @@ namespace CShark.Model
     {
         public TGCMatrix cameraRotation;
         private TGCVector3 directionView;
-        private float leftrightRot;
-        private float updownRot;
+        public float leftrightRot;
+        public float updownRot;
         private TGCVector3 PositionEye;
 
         private TgcD3dInput Input;

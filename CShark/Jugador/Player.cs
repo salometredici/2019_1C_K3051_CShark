@@ -24,6 +24,7 @@ namespace CShark.Jugador
         public float Oxigeno;
         private Inventario Inventario;
         private HUD HUD;
+        private Arma Arma;
         public TGCVector3 Posicion { get; private set; }
         public bool EstaVivo => Vida > 0 && Oxigeno > 0;
 
@@ -39,13 +40,15 @@ namespace CShark.Jugador
             HUD = new HUD(Vida, Oxigeno);
             Input = input;
             CamaraInterna = new TgcFpsCamera(posicion, input);
+            Arma = new Arma();
         }
         
-        public void Update(float elapsedTime) {
+        public void Update(GameModel game) {
             Posicion = CamaraInterna.Position;
-            Oxigeno -= 7f * elapsedTime;
+            Oxigeno -= 7f * game.ElapsedTime;
             if (EstaVivo)
             {
+                Arma.Update(game);
                 HUD.Update(Vida, Oxigeno);
             }
             else
@@ -68,6 +71,7 @@ namespace CShark.Jugador
         public void Render() {
             if (EstaVivo)
             {
+                Arma.Render();
                 HUD.Render();
             }
         }

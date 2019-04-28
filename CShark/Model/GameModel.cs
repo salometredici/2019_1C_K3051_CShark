@@ -62,7 +62,7 @@ namespace CShark.Model
             else
             {
                 Mapa.Update();
-                Player.Update(ElapsedTime);
+                Player.Update(this);
                 GameManager.Update(this);
             }
             
