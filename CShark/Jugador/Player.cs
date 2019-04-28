@@ -27,6 +27,7 @@ namespace CShark.Jugador
         private Arma Arma;
         public TGCVector3 Posicion { get; private set; }
         public bool EstaVivo => Vida > 0 && Oxigeno > 0;
+        public bool onPause;
 
         public TgcFpsCamera CamaraInterna { get; private set; }
         private TgcD3dInput Input;
@@ -41,18 +42,25 @@ namespace CShark.Jugador
             Input = input;
             CamaraInterna = new TgcFpsCamera(posicion, input);
             Arma = new Arma();
+            onPause = false;
         }
         
         public void Update(GameModel game) {
-            Posicion = CamaraInterna.Position;
-            Oxigeno -= 7f * game.ElapsedTime;
-            if (EstaVivo)
+            if (!onPause)
             {
-                Arma.Update(game);
-                HUD.Update(Vida, Oxigeno);
-            }
-            else
-                BloquearCamara(CamaraInterna);
+                Posicion = CamaraInterna.Position;
+                Oxigeno -= 7f * game.ElapsedTime;
+                if (EstaVivo)
+                {
+                    Arma.Update(game);
+                    HUD.Update(Vida, Oxigeno);
+                }
+                else
+                {
+                    _murio = true;
+                    BloquearCamara(CamaraInterna);
+                }
+            }          
         }
 
         private bool _murio = false;
@@ -60,14 +68,14 @@ namespace CShark.Jugador
             if (!_murio)
             {
                 camara.Lock();
-                _murio = true;
+                //_murio = true;
             }
         }
 
         public void Lock() {
             BloquearCamara(CamaraInterna);
         }
-
+        
         public void Render() {
             if (EstaVivo)
             {
