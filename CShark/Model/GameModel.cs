@@ -16,6 +16,7 @@ using CShark.UI;
 using CShark.UI.HUD;
 using CShark.Variables;
 using CShark.Jugador;
+using CShark.Utils;
 
 namespace CShark.Model
 {
@@ -27,7 +28,6 @@ namespace CShark.Model
             Description = Game.Default.Description;
         }
         
-        private TgcMp3Player mp3Player;
         public Player Player;      
         private GameManager GameManager;
         private PantallaMuerte PantallaMuerte;
@@ -39,7 +39,6 @@ namespace CShark.Model
             Cursor.Hide();
             PantallaMuerte = new PantallaMuerte();
             GameManager = new GameManager();
-            mp3Player = new TgcMp3Player();
 
             Start();
         }
@@ -53,10 +52,14 @@ namespace CShark.Model
                 Player.Lock();
                 if (Player.EstaVivo)
                 {
+                    Player.onPause = !Player.onPause;
                     CambiarMenu(TipoMenu.Principal);
                     GameManager.SwitchMenu();
                 }
-                else Start();
+                else
+                {
+                    Start();
+                }
             }
 
             else
@@ -74,8 +77,6 @@ namespace CShark.Model
             var posInicial = new TGCVector3(0, 500f, 1000f);
             Player = new Player(posInicial, 500, 1000, Input);
             Camara = Player.CamaraInterna;
-            //mp3Player.FileName = MediaDir + "Music\\UnderPressure_DeepTrouble.mp3";
-            //mp3Player.play(true);
         }
 
         public override void Render() {
@@ -93,7 +94,7 @@ namespace CShark.Model
         }
 
         public override void Dispose() {
-            mp3Player.closeFile();
+            GameManager.Dispose();
         }
 
         public void CambiarMenu(TipoMenu tipoMenu) {

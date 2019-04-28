@@ -1,6 +1,7 @@
 ﻿using CShark.Managers;
 using CShark.NPCs.Peces;
 using CShark.UI;
+using CShark.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace CShark.Model
         private List<IManager> Managers;
 
         private MenuManager MenuManager;
+        private MusicPlayer MusicPlayer;
         private FaunaManager PezManager;
         private RecolectablesManager RecolectablesManager;
 
@@ -32,6 +34,7 @@ namespace CShark.Model
         public void Initialize() {
             Managers = new List<IManager>();
             MenuManager = new MenuManager();
+            MusicPlayer = new MusicPlayer();
             PezManager = new FaunaManager();
             RecolectablesManager = new RecolectablesManager();
             Managers.Add(PezManager);
@@ -46,8 +49,13 @@ namespace CShark.Model
 
         public void SwitchMenu() {
             MenuManager.SwitchMenu();
+            MusicPlayer.SwitchMusic(MenuManager.MenuAbierto);
         }
 
+        public void Dispose()
+        {
+            MusicPlayer.Dispose();
+        }
 
     }
 }
