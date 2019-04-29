@@ -134,6 +134,7 @@
     <Compile Include="Animales\Peces\PezPayaso.cs" />
     <Compile Include="Animales\Peces\PezTropical.cs" />
     <Compile Include="Model\TriangleSpherePhysics.cs" />
+    <Compile Include="Terreno\Isla.cs" />
     <Compile Include="Terreno\Mapa.cs" />
     <Compile Include="Terreno\SkyBox.cs" />
     <Compile Include="Terreno\Superficie.cs" />
@@ -171,6 +172,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Variable.cs" />
     <Compile Include="Utils\MusicPlayer.cs" />
+    <Compile Include="Utils\Octree.cs" />
+    <Compile Include="Utils\OctreeBuilder.cs" />
+    <Compile Include="Utils\OctreeNode.cs" />
     <EmbeddedResource Include="Form\GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
     </EmbeddedResource>

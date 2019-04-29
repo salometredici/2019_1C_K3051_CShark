@@ -80,6 +80,7 @@ namespace CShark.Model
         }
 
         public override void Render() {
+
             PreRender();
 
             GameManager.Render(this);

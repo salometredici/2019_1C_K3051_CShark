@@ -49,7 +49,7 @@ namespace CShark.Jugador
             if (!onPause)
             {
                 Posicion = CamaraInterna.Position;
-                Oxigeno -= 7f * game.ElapsedTime;
+                Oxigeno = Posicion.Y >= 4000f ? Oxigeno : Oxigeno - 7f * game.ElapsedTime;
                 if (EstaVivo)
                 {
                     Arma.Update(game);

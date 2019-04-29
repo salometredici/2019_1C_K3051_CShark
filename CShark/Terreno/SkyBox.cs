@@ -23,7 +23,7 @@ namespace CShark.Terreno
             Skybox = new TgcSkyBox
             {
                 Center = centro + new TGCVector3(0,200,0),
-                Size = new TGCVector3(10000, 5000, 10000)
+                Size = new TGCVector3(10000,5000,10000)
             };
             var texturesPath = Game.Default.MediaDirectory + "Textures\\UnderwaterSkybox\\";
             Skybox.setFaceTexture(SkyFaces.Up, texturesPath + "blue-texture.png");

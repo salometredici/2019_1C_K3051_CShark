@@ -20,6 +20,7 @@ namespace CShark.Terreno
         public TGCVector3 Centro;
 
         private SkyBox Skybox;
+        //private Isla Isla; // Ignorar esta por ahora, es la misma del TGC.Viewer
 
         //private Superficie Superficie;
         private TgcScene Vegetacion;
@@ -41,6 +42,7 @@ namespace CShark.Terreno
             Skybox = new SkyBox(Terreno.Center);
             Box = TGCBox.fromSize(Skybox.Center, Skybox.Size);
             Centro = Skybox.Center;
+            //Isla = new Isla();
             Colisiones = new ColisionesTerreno();
             Colisiones.Init(Terreno.getData());
         }
@@ -66,6 +68,7 @@ namespace CShark.Terreno
         public void Render(TGCVector3 playerPosition) {
             Terreno.Render();
             Skybox.Render(playerPosition);
+            //Isla.Render();
             Vegetacion.RenderAll();
             //Superficie.Render();
         }
@@ -73,6 +76,7 @@ namespace CShark.Terreno
         public void Dispose() {
             Terreno.Dispose();
             Skybox.Dispose();
+            //Isla.Dispose();
             Vegetacion.DisposeAll();
             //Superficie.Dispose();
         }
