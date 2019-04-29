@@ -62,6 +62,15 @@ namespace CShark.Terreno
             Colisiones.AgregarBody(body);
         }
 
+        public void SacarBody(RigidBody body) {
+            Colisiones.SacarBody(body);
+        }
+
+
+        public bool Colisionan(CollisionObject ob1, CollisionObject ob2) {
+            return Colisiones.Colisionan(ob1, ob2);
+        }
+
         public void Render() {
             Terreno.Render();
             Skybox.Render();

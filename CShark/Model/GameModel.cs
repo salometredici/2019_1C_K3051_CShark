@@ -28,10 +28,10 @@ namespace CShark.Model
             Description = Game.Default.Description;
         }
         
-        public Player Player;      
+        public Player Player;
+        public Tiburon Tiburon;
         private GameManager GameManager;
         private PantallaMuerte PantallaMuerte;
-
         private Mapa Mapa => Mapa.Instancia;
 
         public override void Init() {
