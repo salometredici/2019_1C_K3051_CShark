@@ -136,6 +136,7 @@
     <Compile Include="Animales\Peces\PezTropical.cs" />
     <Compile Include="Model\TriangleSpherePhysics.cs" />
     <Compile Include="Terreno\Mapa.cs" />
+    <Compile Include="Terreno\SkyBox.cs" />
     <Compile Include="Terreno\Superficie.cs" />
     <Compile Include="UI\HUD\BarraEstado.cs" />
     <Compile Include="UI\HUD\BarraOxigeno.cs" />
