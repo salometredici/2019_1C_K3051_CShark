@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TGC.Core.BoundingVolumes;
+using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 
 namespace CShark.Terreno
@@ -32,6 +33,12 @@ namespace CShark.Terreno
             var list1 = new List<TgcMesh>();
             scene.separeteMeshList(new[] { "Terreno" }, out list1, out objetosIsla);
             terreno = list1[0];
+
+            //Reposicionar toda la escena al nivel del mar
+            foreach(var item in scene.Meshes)
+            {
+                item.Position += new TGCVector3(0,4000f,0);
+            }
 
             //Crear Octree
             octree = new Octree();
