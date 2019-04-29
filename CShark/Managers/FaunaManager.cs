@@ -15,7 +15,7 @@ namespace CShark.Managers
     public class FaunaManager : IManager
     {
         private List<Pez> Peces;
-        private Tiburon Tiburon;
+        public static Tiburon Tiburon;
 
         public FaunaManager() {
             Initialize();

@@ -1,9 +1,10 @@
 ﻿using BulletSharp;
+using BulletSharp.Math;
+using CShark.Animales.Enemigos;
 using CShark.Fisica;
 using CShark.Fisica.Colisiones;
 using CShark.Geometria;
 using CShark.Terreno;
-using Microsoft.DirectX;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -28,10 +29,14 @@ namespace CShark.NPCs.Enemigos
         private bool Mover = false;
         private float Recorrido = 0;
         private bool Vivo = true;
-        private RigidBody Body;
-
+        private float Vida;
+        public RigidBody Body;
         private Rotator Rotador;
 
+        private HealthBar BarraVida;
+
+        private float TiempoInvencibilidad; //segundos
+        
         public Tiburon(float x, float y, float z) {
             var ruta = Game.Default.MediaDirectory + "Animales\\Tiburon-TgcScene.xml";
             Mesh = new TgcSceneLoader().loadSceneFromFile(ruta).Meshes[0];
@@ -42,50 +47,60 @@ namespace CShark.NPCs.Enemigos
             Rotador.MostrarCaja = true;
             Rotador.GenerarDestino();
             Rotador.GenerarRotacion();
+            Vida = 300f;
+            TiempoInvencibilidad = 1f;
+            BarraVida = new HealthBar(Vida);
+            var builder = new RigidBodyBuilder("Tiburon");
+            Body = builder.ConDamping(1f)
+                .ConRotacion(Rotacion).ConPosicion(Posicion)
+                .ConRebote(10f).ConRozamiento(1f)
+                .ConMasa(0f)//para que sea estatico
+                .Build();
+            Mapa.Instancia.AgregarBody(Body);
         }
 
-        private float tiempo = 0;
-
         public void Update(float elapsedTime) {
-            tiempo += elapsedTime;
-            if (tiempo > 10 && Vivo) //a los 10 segundos muere y cae
-            {
-                Morir();
-            }
+            TiempoInvencibilidad -= elapsedTime;
             if (Vivo)
             {
+                Body.WorldTransform = TGCMatrix.Translation(Posicion).ToBsMatrix;
+                BarraVida.Update(Vida, Posicion, Rotacion);
                 if (Mover)
                     Avanzar(elapsedTime);
                 else
                     DarseVuelta(elapsedTime);
             }
-            else
-            {
-                var x = Body.Orientation.Axis.X;
-                var y = Body.Orientation.Axis.Y;
-                var z = Body.Orientation.Axis.Z;                
-                Mesh.Rotation = new TGCVector3(x, y, z);
-                var centro = Body.CenterOfMassPosition;
-                Mesh.Position = new TGCVector3(centro.X, centro.Y, centro.Z);
+        }
+
+        public void RecibirDaño(float daño) {
+            if (TiempoInvencibilidad <= 0) {
+                Vida -= daño;
+                TiempoInvencibilidad = 1f;
+                if (Vida <= 0)
+                    Morir();
             }
         }
 
         public void Render() {
+            if (!Vivo)
+            {
+                //gracias al auto enable en morir, pero probablemente cambiar :)
+                Mesh.Transform = new TGCMatrix(Body.InterpolationWorldTransform);
+            }
             Mesh.Render();
             Rotador.Render();
+            if (Vivo) 
+                BarraVida.Render(Vida);
         }
 
         public void Morir() {
             Vivo = false;
-            var builder = new RigidBodyBuilder("Tiburon");
-            Body = builder
-                .ConDamping(1f)
-                .ConMasa(5000f) //pesadito el tibu
-                .ConRotacion(Rotacion)
-                .ConPosicion(Posicion)
-                .ConRebote(10f)
-                .ConRozamiento(1f)
-                .Build();
+            Mesh.AutoTransformEnable = false; //ESTO ME VA A ARRUINAR LA VIDA EN EL FUTURO PROBABLEMENTE
+            Mapa.Instancia.SacarBody(Body);
+            Body.SetMassProps(500f, Vector3.Zero);
+            var x = VelocidadMovimiento * Rotador.CosenoXZ;
+            var z = VelocidadMovimiento * Rotador.SenoXZ;
+            Body.LinearVelocity = new Vector3(x, 0, z);
             Mapa.Instancia.AgregarBody(Body);
         }
 

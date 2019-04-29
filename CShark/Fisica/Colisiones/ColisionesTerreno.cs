@@ -1,6 +1,7 @@
 ﻿using BulletSharp;
 using BulletSharp.Math;
 using CShark.Managers;
+using CShark.NPCs.Enemigos;
 using Microsoft.DirectX.Direct3D;
 using System;
 using System.Collections.Generic;
@@ -42,8 +43,28 @@ namespace CShark.Fisica.Colisiones
             World.AddRigidBody(bodyTerreno);
         }
 
+        //OPTIMIZAR ESTA BASURA
+        public bool Colisionan(CollisionObject o1, CollisionObject o2) {
+            int numManifolds = World.Dispatcher.NumManifolds;
+            for (int i = 0; i < numManifolds; i++)
+            {
+                PersistentManifold contactManifold = World.Dispatcher.GetManifoldByIndexInternal(i);
+                
+                CollisionObject obA = contactManifold.Body0 as CollisionObject;
+                CollisionObject obB = contactManifold.Body1 as CollisionObject;
+
+                if (o1.Equals(obA) && o2.Equals(obB) || o2.Equals(obA) && o1.Equals(obB))
+                    return true;
+            }
+            return false;
+        }
+
         public void AgregarBody(RigidBody body) {
             World.AddRigidBody(body);
+        }
+
+        public void SacarBody(RigidBody body) {
+            World.RemoveRigidBody(body);
         }
 
         public void Update() {

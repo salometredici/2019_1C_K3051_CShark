@@ -1,4 +1,5 @@
 ﻿using BulletSharp;
+using CShark.Managers;
 using CShark.Model;
 using CShark.Terreno;
 using System;
@@ -40,6 +41,12 @@ namespace CShark.Jugador
 
         public override void Update(GameModel game) {
             base.Update(game);
+            foreach (var bala in Municiones)
+            {
+                if (Mapa.Instancia.Colisionan(bala, FaunaManager.Tiburon.Body)) { 
+                    FaunaManager.Tiburon.RecibirDaño(50f);
+                }
+            }
         }
 
         public override void Render() {
