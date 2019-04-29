@@ -19,7 +19,8 @@ namespace CShark.Terreno
         private TGCBox Box;
         public TGCVector3 Centro;
 
-        private TgcSkyBox Skybox;
+        private SkyBox Skybox;
+
         //private Superficie Superficie;
         private TgcScene Vegetacion;
         private TgcSimpleTerrain Terreno;
@@ -37,7 +38,7 @@ namespace CShark.Terreno
 
         private Mapa() {
             CargarTerreno();
-            CargarSkyBox();
+            Skybox = new SkyBox(Terreno.Center);
             Box = TGCBox.fromSize(Skybox.Center, Skybox.Size);
             Centro = Skybox.Center;
             Colisiones = new ColisionesTerreno();
@@ -62,9 +63,9 @@ namespace CShark.Terreno
             Colisiones.AgregarBody(body);
         }
 
-        public void Render() {
+        public void Render(TGCVector3 playerPosition) {
             Terreno.Render();
-            Skybox.Render();
+            Skybox.Render(playerPosition);
             Vegetacion.RenderAll();
             //Superficie.Render();
         }
@@ -85,19 +86,5 @@ namespace CShark.Terreno
             Vegetacion = loader.loadSceneFromFile(media + "vegetation-TgcScene.xml");
         }
 
-        private void CargarSkyBox() {
-            Skybox = new TgcSkyBox();
-            Skybox.Center = Terreno.Center;
-            Skybox.Size = new TGCVector3(10000, 5000, 10000);
-            var texturesPath = Game.Default.MediaDirectory + "Textures\\UnderwaterSkybox\\";
-            Skybox.setFaceTexture(SkyFaces.Up, texturesPath + "blue-texture.png");
-            Skybox.setFaceTexture(SkyFaces.Down, texturesPath + "seafloor.jpg");
-            Skybox.setFaceTexture(SkyFaces.Left, texturesPath + "side.jpg");
-            Skybox.setFaceTexture(SkyFaces.Right, texturesPath + "side.jpg");
-            Skybox.setFaceTexture(SkyFaces.Front, texturesPath + "side.jpg");
-            Skybox.setFaceTexture(SkyFaces.Back, texturesPath + "side.jpg");
-            Skybox.SkyEpsilon = 50f;
-            Skybox.Init();
-        }
     }
 }

@@ -83,7 +83,7 @@ namespace CShark.Model
             PreRender();
 
             GameManager.Render(this);
-            Mapa.Render();
+            Mapa.Render(Player.Posicion);
 
             if (Player.EstaVivo)
                 Player.Render();
