@@ -44,11 +44,11 @@ namespace CShark.NPCs.Enemigos
             VelocidadRotacion = 1f;
             VelocidadMovimiento = 300f;
             Rotador = new Rotator(this, Math.PI / 2, 300, 100);
-            Rotador.MostrarCaja = true;
+            Rotador.MostrarCaja = false;
             Rotador.GenerarDestino();
             Rotador.GenerarRotacion();
             Vida = 300f;
-            TiempoInvencibilidad = 1f;
+            TiempoInvencibilidad = 0f;
             BarraVida = new HealthBar(Vida);
             var builder = new RigidBodyBuilder("Tiburon");
             Body = builder.ConDamping(1f)
@@ -75,7 +75,7 @@ namespace CShark.NPCs.Enemigos
         public void RecibirDaño(float daño) {
             if (TiempoInvencibilidad <= 0) {
                 Vida -= daño;
-                TiempoInvencibilidad = 1f;
+                TiempoInvencibilidad = 0f;
                 if (Vida <= 0)
                     Morir();
             }
