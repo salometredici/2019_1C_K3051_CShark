@@ -1,12 +1,16 @@
 ﻿using CShark.Managers;
 using CShark.NPCs.Peces;
+using CShark.Terreno;
 using CShark.UI;
 using CShark.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using TGC.Core.Mathematica;
+using TGC.Core.SceneLoader;
 
 namespace CShark.Model
 {
@@ -14,12 +18,16 @@ namespace CShark.Model
 
         private List<IManager> Managers;
 
+        private LoadingScreen PantallaCarga;
         private MenuManager MenuManager;
         private MusicPlayer MusicPlayer;
         private FaunaManager PezManager;
         private RecolectablesManager RecolectablesManager;
 
+        public TGCVector3 SpawnPlayer;
+
         public GameManager() {
+            PantallaCarga = new LoadingScreen(9);
             Initialize();
         }
 
@@ -31,16 +39,38 @@ namespace CShark.Model
             Managers.ForEach(m => m.Update(game));
         }
         
-        public void Initialize() {
+        public async void Initialize() {
+            PantallaCarga = new LoadingScreen(9);
+            Task task = Task.Run(() => PantallaCarga.Render());
+            var loader = new TgcSceneLoader();
+            var media = Game.Default.MediaDirectory;
+            PantallaCarga.Progresar("Cargando rocas...");
+            var rocas = loader.loadSceneFromFile(media + @"Mapa\Rocas-TgcScene.xml");
+            PantallaCarga.Progresar("Cargando extras...");
+            var extras = loader.loadSceneFromFile(media + @"Mapa\Extras-TgcScene.xml");
+            PantallaCarga.Progresar("Cargando spawns...");
+            var spawns = loader.loadSceneFromFile(media + @"Mapa\Spawns-TgcScene.xml");
+            SpawnPlayer = spawns.getMeshByName("SpawnPlayer").BoundingBox.Position;
+            PantallaCarga.Progresar("Posicionando rocas...");
+            Mapa.Instancia.CargarRocas(rocas);
+            PantallaCarga.Progresar("Posicionando extras...");
+            Mapa.Instancia.CargarExtras(extras);
             Managers = new List<IManager>();
             MenuManager = new MenuManager();
-            MusicPlayer = new MusicPlayer();
-            PezManager = new FaunaManager();
+            PezManager = new FaunaManager(spawns);
             RecolectablesManager = new RecolectablesManager();
+            PantallaCarga.Progresar("Cargando peces...");
             Managers.Add(PezManager);
+            PezManager.Initialize();
+            PantallaCarga.Progresar("Cargando menúes...");
             Managers.Add(MenuManager);
+            MenuManager.Initialize();
+            PantallaCarga.Progresar("Cargando items...");
             Managers.Add(RecolectablesManager);
-            Managers.ForEach(m => m.Initialize());
+            RecolectablesManager.Initialize();
+            PantallaCarga.Progresar("Cargando audio...");
+            MusicPlayer = new MusicPlayer();
+            await task;
         }
 
         public void CambiarMenu(TipoMenu tipoMenu) {

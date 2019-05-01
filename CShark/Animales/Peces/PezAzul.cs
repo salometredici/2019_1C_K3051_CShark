@@ -13,6 +13,8 @@ namespace CShark.NPCs.Peces
         private float RadioRotacion;
         private TGCVector3 CentroRotacion;
 
+        public PezAzul(TGCVector3 posicion) : this(posicion.X, posicion.Y, posicion.Z) { }
+        
         public PezAzul(float x, float y, float z) 
             : base("Pez Azul", new TGCVector3(x, y, z), 1f, 250f) {
             Mesh.Rotation = new TGCVector3(0, -(float)Math.PI / 2, 0); //-90 grados, arreglo villero por ahora

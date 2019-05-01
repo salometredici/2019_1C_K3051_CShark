@@ -17,6 +17,8 @@ using CShark.UI.HUD;
 using CShark.Variables;
 using CShark.Jugador;
 using CShark.Utils;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace CShark.Model
 {
@@ -27,7 +29,7 @@ namespace CShark.Model
             Name = Game.Default.Name;
             Description = Game.Default.Description;
         }
-        
+
         public Player Player;
         public Tiburon Tiburon;
         private GameManager GameManager;
@@ -35,18 +37,16 @@ namespace CShark.Model
         private Mapa Mapa => Mapa.Instancia;
 
         public override void Init() {
-
             Cursor.Hide();
-            PantallaMuerte = new PantallaMuerte();
-            GameManager = new GameManager();
-
+            PantallaMuerte = new PantallaMuerte();            
+            GameManager = new GameManager(); 
             Start();
         }
 
         public override void Update() {
 
             PreUpdate();
-
+            
             if (Input.keyPressed(Key.Escape))
             {
                 Player.Lock();
@@ -74,7 +74,7 @@ namespace CShark.Model
         }
 
         private void Start() {
-            var posInicial = new TGCVector3(0, 500f, 1000f);
+            var posInicial = GameManager.SpawnPlayer;
             Player = new Player(posInicial, 500, 1000, Input);
             Camara = Player.CamaraInterna;
         }
@@ -82,7 +82,7 @@ namespace CShark.Model
         public override void Render() {
 
             PreRender();
-
+            
             GameManager.Render(this);
             Mapa.Render(Player.Posicion);
 

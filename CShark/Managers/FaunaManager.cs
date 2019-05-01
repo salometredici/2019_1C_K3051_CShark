@@ -9,6 +9,7 @@ using TGC.Core.SceneLoader;
 using CShark.NPCs.Peces;
 using CShark.Model;
 using CShark.NPCs.Enemigos;
+using TGC.Core.Mathematica;
 
 namespace CShark.Managers
 {
@@ -16,23 +17,30 @@ namespace CShark.Managers
     {
         private List<Pez> Peces;
         public static Tiburon Tiburon;
+        private TgcScene Spawns;
 
-        public FaunaManager() {
-            Initialize();
+        public FaunaManager(TgcScene spawns) {
+            Spawns = spawns;
         }
 
         public void Initialize() {
             Peces = new List<Pez>();
-            Tiburon = new Tiburon(100, 500, 100);
-            CargarPez(new PezPayaso(0, 0, 0));
-            CargarPez(new PezAzul(100, 0, 100));
-            CargarPez(new PezBetta(0, 0, 300));
-            CargarPez(new PezTropical(1, 0, 100, 0));
-            CargarPez(new PezTropical(2, 0, 200, 0));
-            CargarPez(new PezTropical(3, 0, 300, 0));
-            CargarPez(new PezTropical(4, 0, 400, 0));
-            CargarPez(new PezTropical(5, 0, 500, 0));
-            CargarPez(new PezTropical(6, 0, 600, 0));
+            foreach (var mesh in Spawns.Meshes)
+                Spawnear(mesh.Name, mesh.BoundingBox.Position);
+            Spawns = null;
+        }
+
+        private void Spawnear(string tipo, TGCVector3 posicion) {
+            if (tipo.Contains("Tiburon"))
+                Tiburon = new Tiburon(posicion);
+            else if (tipo.Contains("Payaso"))
+                Peces.Add(new PezPayaso(posicion));
+            else if (tipo.Contains("Azul"))
+                Peces.Add(new PezAzul(posicion));
+            else if (tipo.Contains("Betta"))
+                Peces.Add(new PezBetta(posicion));
+            else if (tipo.Contains("Tropical"))
+                Peces.Add(new PezTropical(tipo.Last(), posicion));
         }
 
         public void Update(GameModel game) {
@@ -43,10 +51,6 @@ namespace CShark.Managers
         public void Render(GameModel game) {
             Peces.ForEach(pez => pez.Render());
             Tiburon.Render();
-        }
-
-        private void CargarPez(Pez pez) {
-            Peces.Add(pez);
-        }        
+        }   
     }
 }

@@ -14,6 +14,9 @@ namespace CShark.NPCs.Peces
 
         }
 
+        public PezBetta(TGCVector3 posicion) : this(posicion.X, posicion.Y, posicion.Z) { }
+
+
         private float Recorrido = 0;
         private float Aleteado = 0;
         private readonly float DistanciaMaxima = 100f;

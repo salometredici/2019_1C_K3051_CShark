@@ -22,7 +22,7 @@ namespace CShark.Terreno
         {
             Skybox = new TgcSkyBox
             {
-                Center = centro + new TGCVector3(0,200,0),
+                Center = centro,
                 Size = new TGCVector3(10000,5000,10000)
             };
             var texturesPath = Game.Default.MediaDirectory + "Textures\\UnderwaterSkybox\\";
@@ -38,11 +38,11 @@ namespace CShark.Terreno
 
         public void Render(TGCVector3 playerPosition)
         {
-            center = Skybox.Center + playerPosition;
-            var traslationMatrix = TGCMatrix.Translation(center);
+            /*center = Skybox.Center + playerPosition;
+            var traslationMatrix = TGCMatrix.Translation(center);*/
             foreach (var face in Skybox.Faces)
             {
-                face.Transform = TGCMatrix.Identity * traslationMatrix;
+               // face.Transform = TGCMatrix.Identity * traslationMatrix;
                 face.Render();
             }
         }
