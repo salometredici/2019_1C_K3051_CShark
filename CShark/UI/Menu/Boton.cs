@@ -18,16 +18,16 @@ namespace CShark.UI
 {
     public class Boton
     {
-        private CustomSprite Fondo;
+        protected CustomSprite Fondo;
         public Point Posicion;
-        private TgcText2D Texto;
-        private Drawer2D Drawer;
-        private Action<GameModel> Accion;
+        protected TgcText2D Texto;
+        protected Drawer2D Drawer;
+        protected Action<GameModel> Accion;
 
-        private CustomBitmap FondoNormal;
-        private CustomBitmap FondoSeleccionado;
-        private int Ancho = 400;
-        private int Alto = 75;
+        protected CustomBitmap FondoNormal;
+        protected CustomBitmap FondoSeleccionado;
+        protected int Ancho = 400;
+        protected int Alto = 75;
 
         public Boton(string texto, int x, int y, Action<GameModel> accion) {
             Accion = accion;
@@ -35,6 +35,16 @@ namespace CShark.UI
             Posicion = new Point(x - Ancho / 2, y + Alto / 2);
             CargarFondo();
             CargarTexto(texto);
+        }
+
+        public Boton(CustomSprite sprite, string texto, int x, int y, Action<GameModel> accion)
+        {
+            Accion = accion;
+            Drawer = new Drawer2D();
+            Posicion = new Point(x, y);
+            Fondo = sprite;
+            FondoNormal = sprite.Bitmap;
+            FondoSeleccionado = sprite.Bitmap;
         }
 
         public void Update(GameModel juego) {
@@ -63,7 +73,7 @@ namespace CShark.UI
             Fondo.Scaling = new TGCVector2((float)Ancho / FondoNormal.Width, (float)Alto / FondoNormal.Height);
         }
 
-        private void CargarTexto(string texto) {
+        public virtual void CargarTexto(string texto) {
             Texto = new TgcText2D
             {
                 Color = Color.White,

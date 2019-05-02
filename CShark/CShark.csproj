@@ -143,6 +143,7 @@
     <Compile Include="UI\HUD\BarraOxigeno.cs" />
     <Compile Include="UI\HUD\BarraVida.cs" />
     <Compile Include="UI\HUD\PantallaMuerte.cs" />
+    <Compile Include="UI\Inventario\BotonInventario.cs" />
     <Compile Include="UI\Inventario\MenuInventario.cs" />
     <Compile Include="UI\Menu\Checkbox.cs" />
     <Compile Include="UI\Menu\LoadingScreen.cs" />

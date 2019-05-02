@@ -18,11 +18,10 @@ namespace CShark.UI.Inventario
         private List<Boton> Botones;
         private int Separacion;
         private int AlturaBotones;
-        private List<Boton> BotonesItems;
-        private List<CustomSprite> SpritesItems;
+        private List<BotonInventario> BotonesItems;
         private static string InventoryDir = Game.Default.InventoryDir;
 
-        private string[,] GrillaRutas = new string[,]
+        private readonly string[,] GrillaRutas = new string[,]
         {
            { InventoryDir + "wumpa-fruit-inventory.png", InventoryDir + "coral-inventory.png" },
            { InventoryDir + "batteries-inventory.png", InventoryDir + "medkit-inventory.png" },
@@ -37,8 +36,7 @@ namespace CShark.UI.Inventario
         {
             Drawer = new Drawer2D();
             Botones = new List<Boton>();
-            BotonesItems = new List<Boton>();
-            SpritesItems = new List<CustomSprite>();
+            BotonesItems = new List<BotonInventario>();
             SetGrillaItems();
             Separacion = 50;
             AlturaBotones = 75;
@@ -63,20 +61,21 @@ namespace CShark.UI.Inventario
         {
             AgregarBoton("Craft", j => j.CambiarMenu(TipoMenu.Principal));
             AgregarBoton("Volver", j => j.CambiarMenu(TipoMenu.Principal));
-            AgregarItems();
+            AgregarBotonesInventario();
         }
 
-        public void AgregarItems()
+
+        public void AgregarBotonesInventario()
         {
-            for (int i = 0;i<3;i++)
+            for (int i = 0; i < 3; i++)
             {
-                for(int j = 0; j<2;j++)
+                for (int j = 0; j < 2; j++)
                 {
                     var item = new CustomSprite();
-                    var posicionX = GrillaItems[i, j].X;
-                    var posicionY = GrillaItems[i, j].Y;
-                    SetItem(item, GrillaRutas[i, j], new TGCVector2(posicionX, posicionY), new TGCVector2(0.625f,0.625f));
-                    SpritesItems.Add(item);
+                    var posicionX = (int)GrillaItems[i, j].X;
+                    var posicionY = (int)GrillaItems[i, j].Y;
+                    SetItem(item, GrillaRutas[i, j], new TGCVector2(posicionX, posicionY), new TGCVector2(0.625f, 0.625f));
+                    BotonesItems.Add(new BotonInventario(item, "--", posicionX, posicionY, k => k.CambiarMenu(TipoMenu.Principal)));
                 }
             }
         }
@@ -90,6 +89,7 @@ namespace CShark.UI.Inventario
 
         public override void Update(GameModel juego)
         {
+            BotonesItems.ForEach(b => b.Update(juego));
             Botones.ForEach(b => b.Update(juego));
         }
 
@@ -98,11 +98,8 @@ namespace CShark.UI.Inventario
             base.Render();
             Drawer.BeginDrawSprite();
             Drawer.DrawSprite(Title);
-            for(int i = 0; i<SpritesItems.Count();i++)
-            {
-                Drawer.DrawSprite(SpritesItems[i]);
-            }
             Drawer.EndDrawSprite();
+            BotonesItems.ForEach(b => b.Render());
             Botones.ForEach(b => b.Render());
         }
     }
