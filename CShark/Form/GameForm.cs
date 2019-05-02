@@ -1,4 +1,5 @@
 ﻿using CShark.Model;
+using CShark.UI;
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -45,24 +46,13 @@ namespace CShark.Form
         private TgcD3dInput Input { get; set; }
 
         private void GameForm_Load(object sender, EventArgs e) {
-            //FullScreen, van en este orden para que queda oculta la barra de Windows.
             this.WindowState = FormWindowState.Normal;
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
-
-            //OriginalBorderStyle
-            //this.FormBorderStyle = FormBorderStyle.Sizable;
-
-            //Iniciar graficos.
+            
             InitGraphics();
-
-            //Titulo de la ventana principal.
             Text = Modelo.Name + @" - " + Modelo.Description;
-
-            //Focus panel3D.
             panel3D.Focus();
-
-            //Inicio el ciclo de Render.
             InitRenderLoop();
         }
 

@@ -36,6 +36,8 @@ namespace CShark.NPCs.Enemigos
         private HealthBar BarraVida;
 
         private float TiempoInvencibilidad; //segundos
+
+        public Tiburon(TGCVector3 posicion) : this(posicion.X, posicion.Y, posicion.Z) { }
         
         public Tiburon(float x, float y, float z) {
             var ruta = Game.Default.MediaDirectory + "Animales\\Tiburon-TgcScene.xml";

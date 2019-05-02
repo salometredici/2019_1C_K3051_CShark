@@ -14,6 +14,9 @@ namespace CShark.NPCs.Peces
 
         }
 
+        public PezTropical(int tipo, TGCVector3 posicion) : this(tipo, posicion.X, posicion.Y, posicion.Z) { }
+
+
         public override void Aletear(float elapsedTime) {
 
         }

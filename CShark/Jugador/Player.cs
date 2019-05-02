@@ -67,7 +67,7 @@ namespace CShark.Jugador
         private void ActualizarOxigeno(GameModel game)
         {
             Oxigeno = Posicion.Y >= 4000f && Oxigeno < HUD.BarraOxigeno.ValorMaximo ?
-                Oxigeno += 7f * game.ElapsedTime :
+                Oxigeno += 14f * game.ElapsedTime :
                 Oxigeno -= 7f * game.ElapsedTime;
         }
 

@@ -43,13 +43,13 @@ namespace CShark.UI.Inventario
             Separacion = 50;
             AlturaBotones = 75;
             SetItem(Title, InventoryDir + "inventory-title-menu.png", new TGCVector2(Title.Position.X, Title.Position.Y + DeviceHeight / 12), Title.Scaling);
-            SetItem(Logo, InventoryDir + "woodboard1.png", new TGCVector2(DeviceWidth / 12 - 40, DeviceHeight / 12 + 30), new TGCVector2(0.68f, 0.575f));
+            SetItem(Logo, InventoryDir + "woodboard1.png", new TGCVector2(DeviceWidth / 12 - 30, DeviceHeight / 12 + 30), new TGCVector2(0.68f, 0.575f));
             CrearInventario();
         }
 
         private void SetGrillaItems()
         {
-            var Columna0PosX = Logo.Position.X - 40;
+            var Columna0PosX = Logo.Position.X - 70;
             var Columna1PosX = Columna0PosX + 275 + 70;
             var Fila0PosY = Logo.Position.Y + 25;
             GrillaItems = new TGCVector2[,] {

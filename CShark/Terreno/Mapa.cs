@@ -27,6 +27,9 @@ namespace CShark.Terreno
         private TgcSimpleTerrain Terreno;
         private ColisionesTerreno Colisiones;
 
+        private TgcScene Rocas;
+        private TgcScene Extras;
+
         private static Mapa instancia;
 
         public static Mapa Instancia {
@@ -41,17 +44,23 @@ namespace CShark.Terreno
             CargarTerreno();
             Skybox = new SkyBox(Terreno.Center);
             Box = TGCBox.fromSize(Skybox.Center, Skybox.Size);
-            Centro = Skybox.Center;
+            Centro = Terreno.Center;
             Isla = new Isla();
             Colisiones = new ColisionesTerreno();
             Colisiones.Init(Terreno.getData());
         }
 
+        public void CargarRocas(TgcScene rocas) {
+            Rocas = rocas;
+        }
+
+        public void CargarExtras(TgcScene extras) {
+            Extras = extras;
+        }
+
         public float XMin => Centro.X - Box.Size.X / 2f;
         public float XMax => Centro.X + Box.Size.X / 2f;
-
-        public float YMin => Terreno.Position.Y + 1000f; //ESTO VER DESPUES
-
+        public float YMin => Centro.Y;
         public float YMax => Centro.Y + Box.Size.Y / 2f;
         public float ZMin => Centro.Z - Box.Size.Z / 2f;
         public float ZMax => Centro.Z + Box.Size.Z / 2f;
@@ -78,7 +87,9 @@ namespace CShark.Terreno
             Terreno.Render();
             Skybox.Render(playerPosition);
             Isla.Render();
-            Vegetacion.RenderAll();
+            //Vegetacion.RenderAll();
+            Rocas.RenderAll();
+            Extras.RenderAll();
             //Superficie.Render();
         }
 
@@ -86,8 +97,9 @@ namespace CShark.Terreno
             Terreno.Dispose();
             Skybox.Dispose();
             Isla.Dispose();
-            Vegetacion.DisposeAll();
-            Colisiones.Dispose();
+            //Vegetacion.DisposeAll();
+            Rocas.DisposeAll();
+            Extras.DisposeAll();
             //Superficie.Dispose();
         }
 
@@ -95,9 +107,13 @@ namespace CShark.Terreno
             var loader = new TgcSceneLoader();
             Terreno = new TgcSimpleTerrain();
             var media = Game.Default.MediaDirectory;
-            Terreno.loadHeightmap(media + "Heightmaps\\heightmap.jpg", 100, 1.8f, TGCVector3.Empty);
-            Terreno.loadTexture(media + "Textures\\UnderwaterSkybox\\seafloor.jpg");
-            Vegetacion = loader.loadSceneFromFile(media + "vegetation-TgcScene.xml");
+            var tamañoHM = 512f;
+            var tamañoTerreno = 10000;
+            var xz = tamañoTerreno / tamañoHM;
+            var y = 1f;
+            Terreno.loadHeightmap(media + @"Mapa\Textures\hm.jpg", xz, y, TGCVector3.Empty);
+            Terreno.loadTexture(media + @"Mapa\Textures\arena.png");
+            //Vegetacion = loader.loadSceneFromFile(media + "vegetation-TgcScene.xml");
         }
 
     }

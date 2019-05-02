@@ -13,6 +13,8 @@ namespace CShark.NPCs.Peces
         public PezPayaso(float x, float y, float z) 
             : base("Pez Payaso", new TGCVector3(x, y, z), 1f, 250f) { }
 
+        public PezPayaso(TGCVector3 posicion) : this(posicion.X, posicion.Y, posicion.Z) { }
+        
         private bool Mover = false;
         private float Rotado = 0;
         private float Aleteado = 0;

@@ -15,6 +15,9 @@ namespace CShark.NPCs.Peces
 
         }
 
+        public PezCoral(TGCVector3 posicion) : this(posicion.X, posicion.Y, posicion.Z) { }
+
+
         public override void Aletear(float elapsedTime) {
 
         }

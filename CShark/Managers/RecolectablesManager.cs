@@ -18,13 +18,13 @@ namespace CShark.Managers
         }
 
         public void Initialize() {
-            Recolectables.Add(new Wumpa(100, 500, 100));
+            /*Recolectables.Add(new Wumpa(100, 500, 100));
             Recolectables.Add(new Wumpa(0, 1000, 0));
             Recolectables.Add(new Oxigeno(250, 100, 0));
             Recolectables.Add(new Oxigeno(350, 100, 100));
             Recolectables.Add(new Oxigeno(-100, 100, -50));
             Recolectables.Add(new Medkit(500, 50, -300));
-            Recolectables.Add(new Medkit(-400, 50, -100));
+            Recolectables.Add(new Medkit(-400, 50, -100));*/
         }
 
         public void Render(GameModel game) {
