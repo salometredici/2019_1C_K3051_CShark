@@ -7,8 +7,8 @@ namespace CShark.Jugador
 {
     public class HUD
     {
-        private BarraVida BarraVida;
-        private BarraOxigeno BarraOxigeno;
+        public BarraVida BarraVida;
+        public BarraOxigeno BarraOxigeno;
 
         public HUD(float vida, float oxigeno) {
             int alturaTotal = D3DDevice.Instance.Device.Viewport.Height;

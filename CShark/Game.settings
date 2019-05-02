@@ -20,5 +20,8 @@
     <Setting Name="MusicDirectory" Type="System.String" Scope="User">
       <Value Profile="(Default)">..\..\..\Media\Music\</Value>
     </Setting>
+    <Setting Name="InventoryDir" Type="System.String" Scope="User">
+      <Value Profile="(Default)">..\..\..\Media\Menu\Inventario\</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

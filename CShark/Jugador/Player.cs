@@ -15,6 +15,7 @@ using TGC.Core.Input;
 using TGC.Core.Geometry;
 using System.Drawing;
 using TGC.Core.BoundingVolumes;
+using CShark.Utils;
 
 namespace CShark.Jugador
 {
@@ -49,7 +50,7 @@ namespace CShark.Jugador
             if (!onPause)
             {
                 Posicion = CamaraInterna.Position;
-                Oxigeno = Posicion.Y >= 4000f ? Oxigeno : Oxigeno - 7f * game.ElapsedTime;
+                ActualizarOxigeno(game);
                 if (EstaVivo)
                 {
                     Arma.Update(game);
@@ -61,6 +62,13 @@ namespace CShark.Jugador
                     BloquearCamara(CamaraInterna);
                 }
             }          
+        }
+
+        private void ActualizarOxigeno(GameModel game)
+        {
+            Oxigeno = Posicion.Y >= 4000f && Oxigeno < HUD.BarraOxigeno.ValorMaximo ?
+                Oxigeno += 7f * game.ElapsedTime :
+                Oxigeno -= 7f * game.ElapsedTime;
         }
 
         private bool _murio = false;

@@ -94,5 +94,17 @@ namespace CShark {
                 this["MusicDirectory"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\Media\\Menu\\Inventario\\")]
+        public string InventoryDir {
+            get {
+                return ((string)(this["InventoryDir"]));
+            }
+            set {
+                this["InventoryDir"] = value;
+            }
+        }
     }
 }

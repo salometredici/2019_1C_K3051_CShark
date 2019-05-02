@@ -28,14 +28,14 @@ namespace CShark.UI
             Fondo = new CustomSprite();
             Title = new CustomSprite();
             Logo = new CustomSprite();
-            SetItem(Fondo, "\\Menu\\fondo-menu.png", TGCVector2.Zero, new TGCVector2(100, 100));
-            SetItem(Title, "\\Menu\\menu-title.png", new TGCVector2(RightMenuXPos_X - 180, RightMenuPos_Y - DeviceHeight/12), new TGCVector2(0.7f, 0.5f));
-            SetItem(Logo, "\\Menu\\logo.png", new TGCVector2(DeviceWidth / 8, DeviceHeight / 8), new TGCVector2(1.25f, 1.25f));
+            SetItem(Fondo, Game.Default.MediaDirectory + "\\Menu\\fondo-menu.png", TGCVector2.Zero, new TGCVector2(100, 100));
+            SetItem(Title, Game.Default.MediaDirectory +"\\Menu\\menu-title.png", new TGCVector2(RightMenuXPos_X - 180, RightMenuPos_Y - DeviceHeight/12), new TGCVector2(0.7f, 0.5f));
+            SetItem(Logo, Game.Default.MediaDirectory + "\\Menu\\logo.png", new TGCVector2(DeviceWidth / 8, DeviceHeight / 8), new TGCVector2(1.25f, 1.25f));
         }
 
         public void SetItem(CustomSprite item, string route, TGCVector2 position, TGCVector2 scaling)
         {
-            item.Bitmap = new CustomBitmap(Game.Default.MediaDirectory + route, D3DDevice.Instance.Device);
+            item.Bitmap = new CustomBitmap(route, D3DDevice.Instance.Device);
             item.Position = position;
             item.Scaling = scaling;
         }

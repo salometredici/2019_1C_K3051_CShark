@@ -43,9 +43,6 @@ namespace CShark.Managers
 
             MenuVariables.AgregarSlider(new Slider(config.VelocidadRotacion, 0.05f, 0.2f, ScreenCenter.X, 100));
             MenuVariables.AgregarSlider(new Slider(config.VelocidadMovimiento, 200, 1000, ScreenCenter.X, 200));
-
-            MenuInventario.AgregarBoton("Craft", j => j.CambiarMenu(TipoMenu.Principal));
-            MenuInventario.AgregarBoton("Volver", j => j.CambiarMenu(TipoMenu.Principal));
         }
 
         public void CambiarMenu(TipoMenu tipoMenu) {

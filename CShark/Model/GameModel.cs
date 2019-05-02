@@ -50,28 +50,14 @@ namespace CShark.Model
 
             PreUpdate();
 
-            if (Input.keyPressed(Key.Escape))
+            if (Input.keyPressed(Key.Escape) || Input.keyPressed(Key.I))
             {
                 Player.Lock();
                 if (Player.EstaVivo)
                 {
                     Player.onPause = !Player.onPause;
-                    CambiarMenu(TipoMenu.Principal);
-                    GameManager.SwitchMenu();
-                }
-                else
-                {
-                    Start();
-                }
-            }
-
-            if (Input.keyPressed(Key.I))
-            {
-                Player.Lock();
-                if (Player.EstaVivo)
-                {
-                    Player.onPause = !Player.onPause;
-                    CambiarMenu(TipoMenu.Inventario);
+                    var tipomenu = Input.keyPressed(Key.Escape) ? TipoMenu.Principal : TipoMenu.Inventario;
+                    CambiarMenu(tipomenu);
                     GameManager.SwitchMenu();
                 }
                 else
