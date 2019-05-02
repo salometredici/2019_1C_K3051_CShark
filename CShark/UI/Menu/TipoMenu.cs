@@ -11,6 +11,7 @@ namespace CShark.UI
         Principal,
         Opciones,
         Variables,
-        Cheats
+        Cheats,
+        Inventario
     }
 }

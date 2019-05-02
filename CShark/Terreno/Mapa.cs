@@ -87,6 +87,7 @@ namespace CShark.Terreno
             Skybox.Dispose();
             Isla.Dispose();
             Vegetacion.DisposeAll();
+            Colisiones.Dispose();
             //Superficie.Dispose();
         }
 

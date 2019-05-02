@@ -19,7 +19,7 @@ namespace CShark.UI
     public class Boton
     {
         private CustomSprite Fondo;
-        private Point Posicion;
+        public Point Posicion;
         private TgcText2D Texto;
         private Drawer2D Drawer;
         private Action<GameModel> Accion;

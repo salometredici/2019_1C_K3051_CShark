@@ -7,6 +7,7 @@ using TGC.Core.Direct3D;
 using TGC.Core.Input;
 using TGC.Core.Mathematica;
 using CShark.Model;
+using static CShark.Model.GameModel;
 using CShark.Utils;
 
 namespace CShark.UI
@@ -26,9 +27,8 @@ namespace CShark.UI
         }
 
         public void AgregarBoton(string texto, Action<GameModel> accion) {
-            var deviceWidth = D3DDevice.Instance.Device.Viewport.Width;
-            var posicionX = deviceWidth/ 2 + deviceWidth/ 4;
-            var posicionY = CantidadBotones * (Separacion + AlturaBotones);
+            var posicionX = DeviceWidth/ 2 + DeviceWidth/ 4;
+            var posicionY = CantidadBotones > 0 ? Botones.Last().Posicion.Y + Separacion : (int)RightMenuPos_Y + Separacion;
             Botones.Add(new Boton(texto, posicionX, posicionY, accion));
         }
 

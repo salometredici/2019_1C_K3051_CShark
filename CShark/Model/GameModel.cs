@@ -28,6 +28,9 @@ namespace CShark.Model
             Description = Game.Default.Description;
         }
         
+        public static int DeviceWidth = D3DDevice.Instance.Device.Viewport.Width;
+        public static int DeviceHeight = D3DDevice.Instance.Device.Viewport.Height;
+        public static Point ScreenCenter = new Point(DeviceWidth / 2, DeviceHeight / 2);
         public Player Player;
         public Tiburon Tiburon;
         private GameManager GameManager;
@@ -54,6 +57,21 @@ namespace CShark.Model
                 {
                     Player.onPause = !Player.onPause;
                     CambiarMenu(TipoMenu.Principal);
+                    GameManager.SwitchMenu();
+                }
+                else
+                {
+                    Start();
+                }
+            }
+
+            if (Input.keyPressed(Key.I))
+            {
+                Player.Lock();
+                if (Player.EstaVivo)
+                {
+                    Player.onPause = !Player.onPause;
+                    CambiarMenu(TipoMenu.Inventario);
                     GameManager.SwitchMenu();
                 }
                 else
