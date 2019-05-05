@@ -134,6 +134,7 @@
     <Compile Include="Animales\Peces\PezCoral.cs" />
     <Compile Include="Animales\Peces\PezPayaso.cs" />
     <Compile Include="Animales\Peces\PezTropical.cs" />
+    <Compile Include="Model\Terrain.cs" />
     <Compile Include="Model\TriangleSpherePhysics.cs" />
     <Compile Include="Terreno\Isla.cs" />
     <Compile Include="Terreno\Mapa.cs" />

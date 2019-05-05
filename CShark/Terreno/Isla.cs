@@ -37,7 +37,7 @@ namespace CShark.Terreno
             //Reposicionar toda la escena al nivel del mar
             foreach(var item in scene.Meshes)
             {
-                item.Position += new TGCVector3(0,4000f,0);
+                item.Position += new TGCVector3(0,2900f,0);
             }
 
             //Crear Octree

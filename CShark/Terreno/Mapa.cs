@@ -9,24 +9,29 @@ using System.Threading.Tasks;
 using TGC.Core.Geometry;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
-using TGC.Core.Terrain;
+//using TGC.Core.Terrain;
 using static TGC.Core.Terrain.TgcSkyBox;
 
 namespace CShark.Terreno
 {
     public class Mapa
     {
+        private readonly string mediaDir = Game.Default.MediaDirectory;
+
         private TGCBox Box;
         public TGCVector3 Centro;
 
         private SkyBox Skybox;
-        private Isla Isla; //Es la misma del TGC.Viewer
 
-        //private Superficie Superficie;
-        private TgcScene Vegetacion;
-        private TgcSimpleTerrain Terreno;
+        // Areas del mapa
+        private Terrain FondoDelMar;
+        private Terrain NivelDelMar;
+
         private ColisionesTerreno Colisiones;
 
+        // Elementos
+        //private TgcScene Vegetacion;
+        private Isla Isla;
         private TgcScene Rocas;
         private TgcScene Extras;
 
@@ -41,13 +46,16 @@ namespace CShark.Terreno
         }
 
         private Mapa() {
-            CargarTerreno();
-            Skybox = new SkyBox(Terreno.Center);
+            FondoDelMar = new Terrain();
+            NivelDelMar = new Terrain();
+            CargarTerreno(FondoDelMar, @"Mapa\Textures\hm.jpg", @"Mapa\Textures\seafloor.jpg", 10000 / 512f, 1f, TGCVector3.Empty);
+            CargarTerreno(NivelDelMar, @"Mapa\Textures\hm.jpg", @"Mapa\Textures\skybox-island-water.png", 10000 / 512f, 1f, new TGCVector3(0,2800f,0));
+            Centro = FondoDelMar.Center;
+            Skybox = new SkyBox(Centro);
             Box = TGCBox.fromSize(Skybox.Center, Skybox.Size);
-            Centro = Terreno.Center;
             Isla = new Isla();
             Colisiones = new ColisionesTerreno();
-            Colisiones.Init(Terreno.getData());
+            Colisiones.Init(FondoDelMar.getData());
         }
 
         public void CargarRocas(TgcScene rocas) {
@@ -78,13 +86,13 @@ namespace CShark.Terreno
             Colisiones.SacarBody(body);
         }
 
-
         public bool Colisionan(CollisionObject ob1, CollisionObject ob2) {
             return Colisiones.Colisionan(ob1, ob2);
         }
 
         public void Render(TGCVector3 playerPosition) {
-            Terreno.Render();
+            FondoDelMar.Render();
+            NivelDelMar.Render();
             Skybox.Render(playerPosition);
             Isla.Render();
             //Vegetacion.RenderAll();
@@ -94,7 +102,8 @@ namespace CShark.Terreno
         }
 
         public void Dispose() {
-            Terreno.Dispose();
+            FondoDelMar.Dispose();
+            NivelDelMar.Dispose();
             Skybox.Dispose();
             Isla.Dispose();
             //Vegetacion.DisposeAll();
@@ -103,18 +112,12 @@ namespace CShark.Terreno
             //Superficie.Dispose();
         }
 
-        private void CargarTerreno() {
-            var loader = new TgcSceneLoader();
-            Terreno = new TgcSimpleTerrain();
-            var media = Game.Default.MediaDirectory;
-            var tamañoHM = 512f;
-            var tamañoTerreno = 10000;
-            var xz = tamañoTerreno / tamañoHM;
-            var y = 1f;
-            Terreno.loadHeightmap(media + @"Mapa\Textures\hm.jpg", xz, y, TGCVector3.Empty);
-            Terreno.loadTexture(media + @"Mapa\Textures\arena.png");
+        private void CargarTerreno(Terrain terrain, string heightMapDir, string textureDir, float xz, float y, TGCVector3 position) {
+            var loader = new TgcSceneLoader(); // No lo estamos usando ahora
+            terrain.AlphaBlendEnable = true;
+            terrain.loadHeightmap(mediaDir + heightMapDir, xz, y, position);
+            terrain.loadTexture(mediaDir + textureDir);
             //Vegetacion = loader.loadSceneFromFile(media + "vegetation-TgcScene.xml");
         }
-
     }
 }
