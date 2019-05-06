@@ -33,7 +33,6 @@ namespace CShark.Jugador
         public TgcFpsCamera CamaraInterna { get; private set; }
         private TgcD3dInput Input;
 
-
         public Player(TGCVector3 posicion, int vidaInicial, int oxigenoInicial, TgcD3dInput input) {
             Inventario = new Inventario();
             Posicion = posicion;
@@ -66,7 +65,7 @@ namespace CShark.Jugador
 
         private void ActualizarOxigeno(GameModel game)
         {
-            Oxigeno = Posicion.Y >= 3000f && Oxigeno < HUD.BarraOxigeno.ValorMaximo ?
+            Oxigeno = Posicion.Y >= 2800f && Oxigeno < HUD.BarraOxigeno.ValorMaximo ?
                 Oxigeno += 14f * game.ElapsedTime :
                 Oxigeno -= 7f * game.ElapsedTime;
         }

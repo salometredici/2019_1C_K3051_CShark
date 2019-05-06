@@ -35,7 +35,7 @@ namespace CShark.Terreno
                 Center = centro,
                 Size = new TGCVector3(10000, 5000, 10000)
             };
-            SkyboxUnderwater.setFaceTexture(SkyFaces.Up, texturesPath + "UnderwaterSkybox\\up.png");
+            SkyboxUnderwater.setFaceTexture(SkyFaces.Up, texturesPath + "UnderwaterSkybox\\up1.png");
             SkyboxUnderwater.setFaceTexture(SkyFaces.Down, texturesPath + "UnderwaterSkybox\\seafloor.jpg");
             SkyboxUnderwater.setFaceTexture(SkyFaces.Left, texturesPath + "UnderwaterSkybox\\side.jpg");
             SkyboxUnderwater.setFaceTexture(SkyFaces.Right, texturesPath + "UnderwaterSkybox\\side.jpg");
