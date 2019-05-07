@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TGC.Core.Mathematica;
 
 namespace CShark.Managers
 {
@@ -18,13 +19,13 @@ namespace CShark.Managers
         }
 
         public void Initialize() {
-            /*Recolectables.Add(new Wumpa(100, 500, 100));
-            Recolectables.Add(new Wumpa(0, 1000, 0));
-            Recolectables.Add(new Oxigeno(250, 100, 0));
-            Recolectables.Add(new Oxigeno(350, 100, 100));
-            Recolectables.Add(new Oxigeno(-100, 100, -50));
-            Recolectables.Add(new Medkit(500, 50, -300));
-            Recolectables.Add(new Medkit(-400, 50, -100));*/
+            Recolectables.Add(new Wumpa(new TGCVector3(100, 500, 100)));
+            Recolectables.Add(new Wumpa(new TGCVector3(0, 1000, 0)));
+            Recolectables.Add(new Oxigeno(new TGCVector3(250, 400, 0)));
+            Recolectables.Add(new Oxigeno(new TGCVector3(350, 400, 100)));
+            Recolectables.Add(new Oxigeno(new TGCVector3(-100, 400, -50)));
+            Recolectables.Add(new Medkit(new TGCVector3(500, 400, -300)));
+            Recolectables.Add(new Medkit(new TGCVector3(-400, 400, -100)));
         }
 
         public void Render(GameModel game) {

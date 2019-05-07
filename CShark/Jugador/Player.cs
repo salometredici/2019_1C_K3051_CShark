@@ -15,7 +15,10 @@ using TGC.Core.Input;
 using TGC.Core.Geometry;
 using System.Drawing;
 using TGC.Core.BoundingVolumes;
-using CShark.Utils;
+using Microsoft.DirectX.DirectInput;
+using CShark.Variables;
+using CShark.Managers;
+using CShark.Items;
 
 namespace CShark.Jugador
 {
@@ -30,8 +33,11 @@ namespace CShark.Jugador
         public bool EstaVivo => Vida > 0 && Oxigeno > 0;
         public bool onPause;
 
+        private Variable<float> VelocidadMovimiento;
+        
         public TgcFpsCamera CamaraInterna { get; private set; }
-        private TgcD3dInput Input;
+        public TgcD3dInput Input;
+        public TGCVector3 MoveVector;
 
         public Player(TGCVector3 posicion, int vidaInicial, int oxigenoInicial, TgcD3dInput input) {
             Inventario = new Inventario();
@@ -40,15 +46,28 @@ namespace CShark.Jugador
             Oxigeno = oxigenoInicial;
             HUD = new HUD(Vida, Oxigeno);
             Input = input;
-            CamaraInterna = new TgcFpsCamera(posicion, input);
+            CamaraInterna = new TgcFpsCamera(input, this);
             Arma = new Crossbow();
             onPause = false;
+            VelocidadMovimiento = Configuracion.Instancia.VelocidadMovimiento;
         }
         
         public void Update(GameModel game) {
             if (!onPause)
             {
                 Posicion = CamaraInterna.Position;
+
+                MoveVector = TGCVector3.Empty;
+
+                if (Input.keyDown(Key.W))
+                    MoveVector += new TGCVector3(0, 0, -1) * VelocidadMovimiento.Valor;
+                if (Input.keyDown(Key.S))
+                    MoveVector += new TGCVector3(0, 0, 1) * VelocidadMovimiento.Valor;
+                if (Input.keyDown(Key.D))
+                    MoveVector += new TGCVector3(-1, 0, 0) * VelocidadMovimiento.Valor;
+                if (Input.keyDown(Key.A))
+                    MoveVector += new TGCVector3(1, 0, 0) * VelocidadMovimiento.Valor;
+                                
                 ActualizarOxigeno(game);
                 if (EstaVivo)
                 {
@@ -61,6 +80,10 @@ namespace CShark.Jugador
                     BloquearCamara(CamaraInterna);
                 }
             }          
+        }
+
+        public void Recoger(Recolectable item) {
+            Inventario.Agregar(item);
         }
 
         private void ActualizarOxigeno(GameModel game)

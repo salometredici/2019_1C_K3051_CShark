@@ -15,7 +15,7 @@ namespace CShark.Items.Recolectables
     {
         RigidBody Body;
 
-        public Wumpa(float x, float y, float z) : base("Wumpa", new TGCVector3(x, y, z)) {
+        public Wumpa(TGCVector3 posicion) : base("Wumpa", posicion) {
             Body = RigidBodyUtils.CrearEsfera(Mesh, 10f);
             Body.Friction = 1f;
             Body.RollingFriction = 100f;

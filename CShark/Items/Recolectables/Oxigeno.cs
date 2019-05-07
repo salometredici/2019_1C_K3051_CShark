@@ -9,8 +9,6 @@ namespace CShark.Items.Recolectables
 {
     public class Oxigeno : Recolectable
     {
-        public Oxigeno(float x, float y, float z)
-            : base("Oxigeno", new TGCVector3(x, y, z)) { }
-
+        public Oxigeno(TGCVector3 posicion) : base("Oxigeno", posicion) { }
     }
 }

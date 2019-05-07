@@ -10,8 +10,6 @@ namespace CShark.Items.Recolectables
 {
     public class Medkit : Recolectable
     {
-        public Medkit(float x, float y, float z)
-            : base("Medkit", new TGCVector3(x, y, z)) { }
-
+        public Medkit(TGCVector3 posicion) : base("Medkit", posicion) { }
     }
 }
