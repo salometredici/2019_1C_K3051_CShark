@@ -10,12 +10,13 @@ using CShark.NPCs.Peces;
 using CShark.Model;
 using CShark.NPCs.Enemigos;
 using TGC.Core.Mathematica;
+using CShark.Animales;
 
 namespace CShark.Managers
 {
     public class FaunaManager : IManager
     {
-        private List<Pez> Peces;
+        private List<Animal> Animales;
         public static Tiburon Tiburon;
         private TgcScene Spawns;
 
@@ -24,33 +25,33 @@ namespace CShark.Managers
         }
 
         public void Initialize() {
-            Peces = new List<Pez>();
+            Animales = new List<Animal>();
             foreach (var mesh in Spawns.Meshes)
                 Spawnear(mesh.Name, mesh.BoundingBox.Position);
             Spawns = null;
         }
 
         private void Spawnear(string tipo, TGCVector3 posicion) {
-            if (tipo.Contains("Tiburon"))
+            if (tipo.Contains("Tiburon")) {
                 Tiburon = new Tiburon(posicion);
+                Animales.Add(Tiburon);
+            }
             else if (tipo.Contains("Payaso"))
-                Peces.Add(new PezPayaso(posicion));
+                Animales.Add(new PezPayaso(posicion));
             else if (tipo.Contains("Azul"))
-                Peces.Add(new PezAzul(posicion));
+                Animales.Add(new PezAzul(posicion));
             else if (tipo.Contains("Betta"))
-                Peces.Add(new PezBetta(posicion));
+                Animales.Add(new PezBetta(posicion));
             else if (tipo.Contains("Tropical"))
-                Peces.Add(new PezTropical(tipo.Last(), posicion));
+                Animales.Add(new PezTropical(tipo.Last(), posicion));
         }
 
         public void Update(GameModel game) {
-            Peces.ForEach(pez => pez.Update(game.ElapsedTime));
-            Tiburon.Update(game.ElapsedTime);
+            Animales.ForEach(animal => animal.Update(game.ElapsedTime));
         }
 
         public void Render(GameModel game) {
-            Peces.ForEach(pez => pez.Render());
-            Tiburon.Render();
+            Animales.ForEach(animal => animal.Render());
         }   
     }
 }

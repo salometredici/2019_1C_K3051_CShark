@@ -1,28 +1,18 @@
-﻿using System;
+﻿using CShark.Animales;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TGC.Core.BulletPhysics;
 using TGC.Core.Mathematica;
 
 namespace CShark.NPCs.Peces
 {
-    public class PezTropical : Pez //esta si requiere especificar el tipo de pez tropical
+    public class PezTropical : Animal
     {
-        public PezTropical(int tipo, float x, float y, float z) 
-            : base("Pez Tropical " + tipo, new TGCVector3(x, y, z), 1f, 200f) {
-
-        }
-
-        public PezTropical(int tipo, TGCVector3 posicion) : this(tipo, posicion.X, posicion.Y, posicion.Z) { }
-
-
-        public override void Aletear(float elapsedTime) {
-
-        }
-
-        public override void Moverse(float elapsedTime) {
-
+        public PezTropical(int tipo, TGCVector3 posicion) : base("Pez Tropical " + tipo, posicion) {
+            Body = BulletRigidBodyFactory.Instance.CreateBall(10f, 50f, posicion);
         }
     }
 }

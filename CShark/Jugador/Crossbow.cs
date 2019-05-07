@@ -34,8 +34,12 @@ namespace CShark.Jugador
             var meshHarpoon =  loader.loadSceneFromFile(path + "Harpoon-TgcScene.xml").Meshes[0];
             Mesh = meshCrossbow;
             MeshHarpoon = meshHarpoon;
+#pragma warning disable CS0618 // Type or member is obsolete
             Mesh.AutoTransformEnable = false;
+#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
             MeshHarpoon.AutoTransformEnable = false;
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         public override void Update(GameModel game) {

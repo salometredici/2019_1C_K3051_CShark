@@ -102,6 +102,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animales\Comportamiento\Aleatorio.cs" />
+    <Compile Include="Animales\Comportamiento\Flotador.cs" />
+    <Compile Include="Animales\Comportamiento\Giratorio.cs" />
+    <Compile Include="Animales\IComportamiento.cs" />
+    <Compile Include="Animales\Comportamiento\Lineal.cs" />
     <Compile Include="Animales\Enemigos\HealthBar.cs" />
     <Compile Include="Fisica\RigidBodyBuilder.cs" />
     <Compile Include="Fisica\Colisiones\ColisionesTerreno.cs" />
@@ -125,10 +130,8 @@
     <Compile Include="Managers\FaunaManager.cs" />
     <Compile Include="Jugador\Player.cs" />
     <Compile Include="Managers\GameManager.cs" />
-    <Compile Include="Animales\IAnimal.cs" />
     <Compile Include="Geometria\Rotator.cs" />
     <Compile Include="Animales\Enemigos\Tiburon.cs" />
-    <Compile Include="Animales\Peces\Pez.cs" />
     <Compile Include="Animales\Peces\PezAzul.cs" />
     <Compile Include="Animales\Peces\PezBetta.cs" />
     <Compile Include="Animales\Peces\PezCoral.cs" />
@@ -136,6 +139,8 @@
     <Compile Include="Animales\Peces\PezTropical.cs" />
     <Compile Include="Model\Terrain.cs" />
     <Compile Include="Model\TriangleSpherePhysics.cs" />
+    <Compile Include="Animales\IAnimal.cs" />
+    <Compile Include="Animales\Animal.cs" />
     <Compile Include="Terreno\Isla.cs" />
     <Compile Include="Terreno\Mapa.cs" />
     <Compile Include="Terreno\SkyBox.cs" />
