@@ -78,7 +78,7 @@ namespace CShark.Model
         }
 
         private void Start() {
-            var posInicial = GameManager.SpawnPlayer;
+            var posInicial = new TGCVector3(1500f, 3050f, 0);
             Player = new Player(posInicial, 500, 1000, Input);
             Camara = Player.CamaraInterna;
         }

@@ -29,6 +29,7 @@ namespace CShark.Managers
 
             MenuSeleccionado = MenuPrincipal;
 
+            MenuPrincipal.AgregarBoton("Inventario", j => j.CambiarMenu(TipoMenu.Inventario));
             MenuPrincipal.AgregarBoton("Opciones", j => j.CambiarMenu(TipoMenu.Opciones));
             MenuPrincipal.AgregarBoton("Variables", j => j.CambiarMenu(TipoMenu.Variables));
             MenuPrincipal.AgregarBoton("Cheats", j => j.CambiarMenu(TipoMenu.Principal));
