@@ -222,7 +222,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Shaders\OpacidadShader.fx" />
     <None Include="Shaders\TgcKeyFrameMeshShader.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -242,6 +241,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Shaders\TgcSkeletalMeshShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Shaders\WaveShader.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Shaders\Varios.fx">
@@ -314,7 +316,10 @@
     <Content Include="Media\Mapa\Textures\side.jpg" />
     <Content Include="Media\Mapa\Textures\stone_01.jpg" />
     <Content Include="Media\Mapa\Textures\stone_01_albedo.jpg" />
+    <Content Include="Media\Mapa\Textures\texturaAgua.png" />
+    <Content Include="Media\Mapa\Textures\texturita2.jpg" />
     <Content Include="Media\Mapa\Textures\water.png" />
+    <Content Include="Media\Mapa\Textures\waveHeightmap.png" />
     <Content Include="Media\Menu\boton1.png" />
     <Content Include="Media\Menu\boton2.png" />
     <Content Include="Media\Menu\checkHover.png" />

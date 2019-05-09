@@ -68,7 +68,7 @@ namespace CShark.Model
 
             else
             {
-                Mapa.Update();
+                Mapa.Update(ElapsedTime, Player);
                 Player.Update(this);
                 GameManager.Update(this);
             }
@@ -88,7 +88,7 @@ namespace CShark.Model
             PreRender();
             
             GameManager.Render(this);
-            Mapa.Render(Player.Posicion);
+            Mapa.Render(Player);
 
             if (Player.EstaVivo)
                 Player.Render();

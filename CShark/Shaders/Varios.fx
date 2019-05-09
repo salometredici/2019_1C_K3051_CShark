@@ -8,10 +8,6 @@
 *	- PositionColoredAlpha
 */
 
-/**************************************************************************************/
-/* Variables comunes */
-/**************************************************************************************/
-
 //Matrices de transformacion
 float4x4 matWorld; //Matriz de transformacion World
 float4x4 matWorldView; //Matriz World * View
@@ -31,11 +27,7 @@ sampler2D diffuseMap = sampler_state
 };
 
 //Factor de translucidez
-float alphaValue = 1;
-
-/**************************************************************************************/
-/* PositionColoredTextured */
-/**************************************************************************************/
+float alphaValue = 0.2;
 
 //Input del Vertex Shader
 struct VS_INPUT_PositionColoredTextured
@@ -83,9 +75,6 @@ float4 ps_PositionColoredTextured(PS_INPUT_PositionColoredTextured input) : COLO
 	return input.Color * tex2D(diffuseMap, input.Texcoord);
 }
 
-/*
-* Technique PositionColoredTextured
-*/
 technique PositionColoredTextured
 {
 	pass Pass_0
@@ -94,10 +83,6 @@ technique PositionColoredTextured
 		PixelShader = compile ps_3_0 ps_PositionColoredTextured();
 	}
 }
-
-/**************************************************************************************/
-/* PositionTextured */
-/**************************************************************************************/
 
 //Input del Vertex Shader
 struct VS_INPUT_PositionTextured
@@ -139,9 +124,6 @@ float4 ps_PositionTextured(PS_INPUT_PositionTextured input) : COLOR0
 	return tex2D(diffuseMap, input.Texcoord);
 }
 
-/*
-* Technique PositionTextured
-*/
 technique PositionTextured
 {
 	pass Pass_0
@@ -150,10 +132,6 @@ technique PositionTextured
 		PixelShader = compile ps_3_0 ps_PositionTextured();
 	}
 }
-
-/**************************************************************************************/
-/* PositionColored */
-/**************************************************************************************/
 
 //Input del Vertex Shader
 struct VS_INPUT_PositionColored
@@ -195,9 +173,7 @@ float4 ps_PositionColored(PS_INPUT_PositionColored input) : COLOR0
 	return input.Color;
 }
 
-/*
-* Technique PositionColored
-*/
+
 technique PositionColored
 {
 	pass Pass_0
@@ -206,10 +182,6 @@ technique PositionColored
 		PixelShader = compile ps_3_0 ps_PositionColored();
 	}
 }
-
-/**************************************************************************************/
-/* PositionColoredAlpha */
-/**************************************************************************************/
 
 //Input del Vertex Shader
 struct VS_INPUT_PositionColoredAlpha
@@ -251,9 +223,6 @@ float4 ps_PositionColoredAlpha(PS_INPUT_PositionColoredAlpha input) : COLOR0
 	return float4(input.Color.rgb, alphaValue);
 }
 
-/*
-* Technique PositionColoredAlpha
-*/
 technique PositionColoredAlpha
 {
 	pass Pass_0

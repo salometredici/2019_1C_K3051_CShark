@@ -8,61 +8,54 @@ using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 using TGC.Core.Terrain;
 using TGC.Core.Shaders;
+using CShark.Model;
+using System.Drawing;
+using TGC.Core.Direct3D;
 
 namespace CShark.Terreno
 {
-    public class Superficie
-    {
-        private List<TgcMesh> Olas;
-        private TgcMesh Mesh;
+    public class Superficie {
+        private TgcSimpleTerrain Terrain;
+        private float Time = 0;
+        private Effect Effect;
 
-        private readonly int AnchoGrilla = 20;
-        private readonly int AltoGrilla = 20;
-        private readonly int AlturaMar = 800; //fruta
-        private readonly TGCVector3 Tamaño;
-
-        private readonly float VelocidadOlas = 100f;
-
-        private readonly TGCVector3 Spawn;
-        
         public Superficie() {
-            var loader = new TgcSceneLoader();
-            Spawn = new TGCVector3(-3200, AlturaMar, -3200);
-            Mesh = loader.loadSceneFromFile(Game.Default.MediaDirectory + "Olas-TgcScene.xml").Meshes[0];
-            Tamaño = Mesh.BoundingBox.calculateSize();
-            CargarOlas();
+            Effect = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "WaveShader.fx");
+        }
+
+        private float Altura() {
+            int[,] data = Terrain.HeightmapData;
+            float suma = 0f;
+            for (int i = 0; i < 512; i++)
+                suma += data[i, i];
+            return suma / 512f;
+        }
+
+        public void CargarTerrains() {
+            //var textura = Game.Default.MediaDirectory + @"Mapa\Textures\texturaAgua.png";
+            var textura = Game.Default.MediaDirectory + @"Mapa\Textures\texturita2.jpg";
+            var heightmap = Game.Default.MediaDirectory + @"Mapa\Textures\waveHeightmap.png";
+            Terrain = new TgcSimpleTerrain();
+            Terrain.loadTexture(textura);
+            Terrain.loadHeightmap(heightmap, 10000 / 512f, 2, new TGCVector3(0, 0, 0));
+            Terrain.loadHeightmap(heightmap, 10000 / 512f, 2, new TGCVector3(0, -Altura() / 2, 0));
+            Terrain.AlphaBlendEnable = true;
+            Terrain.Effect = Effect;
+            Terrain.Technique = "WaveEffect";
         }
 
         public void Update(float elapsedTime) {
-            foreach(var ola in Olas)
-            {
-                ola.Position += new TGCVector3(VelocidadOlas * elapsedTime, 0, 0);
-                if (ola.Position.X > Tamaño.X * AnchoGrilla)
-                    ola.Position = new TGCVector3(Spawn.X, Spawn.Y, ola.Position.Z);
-            }
+            Time += elapsedTime;
+            Effect.SetValue("time", Time);
         }
 
         public void Render() {
-            Olas.ForEach(o => o.Render());
+            Terrain.Render();
         }
 
         public void Dispose() {
-            Olas.ForEach(o => o.Dispose());
+            Terrain.Dispose();
         }
 
-        private void CargarOlas() {
-            Olas = new List<TgcMesh>();
-            for (int i = 0; i < AnchoGrilla; i++)
-            {
-                for (int j = 0; j < AltoGrilla; j++)
-                {
-                    var centro = new TGCVector3(Spawn.X + i * (Tamaño.X - 2), Spawn.Y, Spawn.Z + j * (Tamaño.Z - 1));
-                    var ola = Mesh.clone("ola");
-                    ola.Position = centro;
-                    Olas.Add(ola);
-                }
-                
-            }
-        }
     }
 }

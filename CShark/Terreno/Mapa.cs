@@ -1,5 +1,6 @@
 ﻿using BulletSharp;
 using CShark.Fisica.Colisiones;
+using CShark.Jugador;
 using CShark.Model;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,7 @@ namespace CShark.Terreno
         private Isla Isla;
         private TgcScene Rocas;
         private TgcScene Extras;
+        private Superficie Superficie;
 
         private static Mapa instancia;
 
@@ -47,15 +49,17 @@ namespace CShark.Terreno
 
         private Mapa() {
             FondoDelMar = new Terrain();
-            NivelDelMar = new Terrain();
+            NivelDelMar = new Terrain();            
             CargarTerreno(FondoDelMar, @"Mapa\Textures\hm.jpg", @"Mapa\Textures\seafloor.jpg", 10000 / 512f, 1f, TGCVector3.Empty);
-            CargarTerreno(NivelDelMar, @"Mapa\Textures\hm.jpg", @"Mapa\Textures\skybox-island-water.png", 10000 / 512f, 1f, new TGCVector3(0,2800f,0));
+            CargarTerreno(NivelDelMar, @"Mapa\Textures\hm.jpg", @"Mapa\Textures\skybox-island-water.png", 10000 / 512f, 1f, new TGCVector3(0, AlturaMar,0));
             Centro = FondoDelMar.Center;
             Skybox = new SkyBox(Centro);
             Box = TGCBox.fromSize(Skybox.Center, Skybox.Size);
             Isla = new Isla();
             Colisiones = new ColisionesTerreno();
             Colisiones.Init(FondoDelMar.getData());
+            Superficie = new Superficie();
+            Superficie.CargarTerrains();
         }
 
         public void CargarRocas(TgcScene rocas) {
@@ -72,9 +76,11 @@ namespace CShark.Terreno
         public float YMax => Centro.Y + Box.Size.Y / 2f;
         public float ZMin => Centro.Z - Box.Size.Z / 2f;
         public float ZMax => Centro.Z + Box.Size.Z / 2f;
+        public float AlturaMar => 2800f;
 
-        public void Update() {
-            //Superficie.Update();
+        public void Update(float elapsedTime, Player player) {
+            Superficie.Update(elapsedTime);
+            Skybox.Update(player);
             Colisiones.Update();
         }
 
@@ -90,15 +96,15 @@ namespace CShark.Terreno
             return Colisiones.Colisionan(ob1, ob2);
         }
 
-        public void Render(TGCVector3 playerPosition) {
+        public void Render(Player player) {
             FondoDelMar.Render();
-            NivelDelMar.Render();
-            Skybox.Render(playerPosition);
+            //NivelDelMar.Render();
+            Skybox.Render();
             Isla.Render();
             //Vegetacion.RenderAll();
             Rocas.RenderAll();
             Extras.RenderAll();
-            //Superficie.Render();
+            Superficie.Render();
         }
 
         public void Dispose() {
@@ -109,7 +115,7 @@ namespace CShark.Terreno
             //Vegetacion.DisposeAll();
             Rocas.DisposeAll();
             Extras.DisposeAll();
-            //Superficie.Dispose();
+            Superficie.Dispose();
         }
 
         private void CargarTerreno(Terrain terrain, string heightMapDir, string textureDir, float xz, float y, TGCVector3 position) {
