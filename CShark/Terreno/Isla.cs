@@ -1,4 +1,6 @@
 ﻿using BulletSharp;
+using CShark.Jugador;
+using CShark.Model;
 using CShark.Utils;
 using System;
 using System.Collections.Generic;
@@ -16,7 +18,7 @@ namespace CShark.Terreno
         private List<TgcMesh> objetosIsla;
         private Octree octree;
         private TgcMesh terreno;
-        private TgcMesh barco;
+        private Barco Barco;
         private TgcFrustum frustum;
 
         public Isla() {
@@ -30,8 +32,9 @@ namespace CShark.Terreno
             //Cargar escenario de Isla y barco
             var loader = new TgcSceneLoader();
             var scene = loader.loadSceneFromFile(Game.Default.MediaDirectory + "Isla-TgcScene.xml");
-            var boat = loader.loadSceneFromFile(Game.Default.MediaDirectory + "bot-TgcScene.xml");
-            
+
+            Barco = new Barco();
+
             //Separar el Terreno del resto de los objetos
             var list1 = new List<TgcMesh>();
             scene.separeteMeshList(new[] { "Terreno" }, out list1, out objetosIsla);
@@ -43,10 +46,6 @@ namespace CShark.Terreno
                 item.Position += new TGCVector3(0,2900f,0);
             }
 
-            barco = boat.Meshes[0];
-            barco.Position = new TGCVector3(1500f,2950f,0);
-            barco.Scale = new TGCVector3(0.05f, 0.05f, 0.05f);
-
             //Crear Octree
             octree = new Octree();
             octree.create(objetosIsla, scene.BoundingBox);
@@ -54,9 +53,13 @@ namespace CShark.Terreno
 
         }
 
+        public void Update(GameModel game) {
+            Barco.Update(game);
+        }
+
         public void Render()
         {
-            barco.Render();
+            Barco.Render();
             terreno.Render();
             octree.render(frustum, false);
         }
@@ -68,7 +71,7 @@ namespace CShark.Terreno
             {
                 mesh.Dispose();
             }
-            barco.Dispose();
+            Barco.Dispose();
         }
 
     }

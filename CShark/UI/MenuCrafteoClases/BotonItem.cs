@@ -6,13 +6,7 @@ using System.Threading.Tasks;
 
 namespace CShark.UI
 {
-    public enum TipoMenu
+    public class BotonItem
     {
-        Principal,
-        Opciones,
-        Variables,
-        Cheats,
-        Inventario,
-        Crafteo
     }
 }

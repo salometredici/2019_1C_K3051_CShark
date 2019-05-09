@@ -141,8 +141,11 @@
     <Compile Include="Model\TriangleSpherePhysics.cs" />
     <Compile Include="Animales\IAnimal.cs" />
     <Compile Include="Animales\Animal.cs" />
+    <Compile Include="Terreno\Barco.cs" />
     <Compile Include="Terreno\Isla.cs" />
     <Compile Include="Terreno\Mapa.cs" />
+    <Compile Include="UI\Menu\MenuCrafteo.cs" />
+    <Compile Include="Terreno\MesaCrafteo.cs" />
     <Compile Include="Terreno\SkyBox.cs" />
     <Compile Include="Terreno\Superficie.cs" />
     <Compile Include="UI\HUD\BarraEstado.cs" />
@@ -151,6 +154,9 @@
     <Compile Include="UI\HUD\PantallaMuerte.cs" />
     <Compile Include="UI\Inventario\BotonInventario.cs" />
     <Compile Include="UI\Inventario\MenuInventario.cs" />
+    <Compile Include="UI\MenuCrafteoClases\BotonCerrar.cs" />
+    <Compile Include="UI\MenuCrafteoClases\BotonCraftear.cs" />
+    <Compile Include="UI\MenuCrafteoClases\BotonItem.cs" />
     <Compile Include="UI\Menu\Checkbox.cs" />
     <Compile Include="UI\Menu\LoadingScreen.cs" />
     <Compile Include="UI\Menu\Menu.cs" />
@@ -320,6 +326,13 @@
     <Content Include="Media\Mapa\Textures\texturita2.jpg" />
     <Content Include="Media\Mapa\Textures\water.png" />
     <Content Include="Media\Mapa\Textures\waveHeightmap.png" />
+    <Content Include="Media\MenuCrafteo\cerrar.png" />
+    <Content Include="Media\MenuCrafteo\craft.png" />
+    <Content Include="Media\MenuCrafteo\craftHover.png" />
+    <Content Include="Media\MenuCrafteo\fondo.png" />
+    <Content Include="Media\MenuCrafteo\Items\harpoon.png" />
+    <Content Include="Media\MenuCrafteo\Items\medkit.png" />
+    <Content Include="Media\MenuCrafteo\Items\oxygen.png" />
     <Content Include="Media\Menu\boton1.png" />
     <Content Include="Media\Menu\boton2.png" />
     <Content Include="Media\Menu\checkHover.png" />
@@ -336,6 +349,7 @@
     <Content Include="Media\Menu\slider1.png" />
     <Content Include="Media\Menu\slider2.png" />
     <Content Include="Media\Menu\slider3.png" />
+    <Content Include="Media\Textures\mesa.png" />
     <Content Include="Media\Music\Deep_Trouble.mp3" />
     <Content Include="Media\Music\UnderPressure_DeepTrouble.mp3" />
     <Content Include="Media\Music\Warp_Room.mp3" />

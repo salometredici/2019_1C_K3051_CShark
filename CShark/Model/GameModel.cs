@@ -35,7 +35,7 @@ namespace CShark.Model
         public static Point ScreenCenter = new Point(DeviceWidth / 2, DeviceHeight / 2);
         public Player Player;
         public Tiburon Tiburon;
-        private GameManager GameManager;
+        public GameManager GameManager;
         private PantallaMuerte PantallaMuerte;
         private Mapa Mapa => Mapa.Instancia;
 
@@ -68,7 +68,7 @@ namespace CShark.Model
 
             else
             {
-                Mapa.Update(ElapsedTime, Player);
+                Mapa.Update(ElapsedTime, this);
                 Player.Update(this);
                 GameManager.Update(this);
             }

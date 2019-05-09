@@ -78,8 +78,9 @@ namespace CShark.Terreno
         public float ZMax => Centro.Z + Box.Size.Z / 2f;
         public float AlturaMar => 2800f;
 
-        public void Update(float elapsedTime, Player player) {
+        public void Update(float elapsedTime, GameModel game) {
             Superficie.Update(elapsedTime);
+            Isla.Update(game);
             Colisiones.Update();
         }
 

@@ -1,4 +1,5 @@
 ﻿using CShark.Model;
+using CShark.Terreno;
 using CShark.UI;
 using CShark.UI.HUD;
 using CShark.UI.Inventario;
@@ -14,6 +15,7 @@ namespace CShark.Managers
         private MenuOpciones MenuOpciones;
         private MenuVariables MenuVariables;
         private MenuInventario MenuInventario;
+        private MenuCrafteo MenuCrafteo;
         public Menu MenuSeleccionado;
         private Puntero Puntero;
 
@@ -25,6 +27,7 @@ namespace CShark.Managers
             MenuOpciones = new MenuOpciones();
             MenuVariables = new MenuVariables();
             MenuInventario = new MenuInventario();
+            MenuCrafteo = new MenuCrafteo();
             Puntero = new Puntero();
 
             MenuSeleccionado = MenuPrincipal;
@@ -65,6 +68,8 @@ namespace CShark.Managers
                     return MenuVariables;
                 case TipoMenu.Inventario:
                     return MenuInventario;
+                case TipoMenu.Crafteo:
+                    return MenuCrafteo;
                 default:
                     return null;
             }
