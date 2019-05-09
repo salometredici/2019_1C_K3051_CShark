@@ -20,26 +20,22 @@ sampler2D diffuseMap = sampler_state
 struct VS_INPUT
 {
     float4 Position : POSITION0;
-    float4 Color : COLOR0;
+    float3 Normal : NORMAL0;
+    float4 Color : COLOR;
     float2 Texcoord : TEXCOORD0;
 };
 
-//Output del Vertex Shader
 struct VS_OUTPUT
 {
     float4 Position : POSITION0;
     float2 Texcoord : TEXCOORD0;
-    float2 RealPos : TEXCOORD1;
-    float4 Color : COLOR0;
 };
 
 
 VS_OUTPUT vs_main(VS_INPUT Input)
 {
     VS_OUTPUT Output;
-
-    Output.RealPos = Input.Position;
-
+    
     float altura = 2800;
    
     Input.Position.x += sin(time) * 30;
@@ -50,14 +46,18 @@ VS_OUTPUT vs_main(VS_INPUT Input)
 
     Output.Position = mul(Input.Position, matWorldViewProj);
     Output.Texcoord = Input.Texcoord;
-    Output.Color = Input.Color;
+
     return (Output);
 }
 
-float4 ps_main(VS_OUTPUT Input) : COLOR0
+//Pixel Shader
+float4 ps_main(float3 Texcoord : TEXCOORD0) : COLOR0
 {
-    return tex2D(diffuseMap, Input.Texcoord);
+    float4 color = tex2D(diffuseMap, Texcoord);
+    color.a = 0.7;
+    return color;
 }
+
 
 technique WaveEffect
 {

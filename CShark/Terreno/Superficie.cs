@@ -11,6 +11,7 @@ using TGC.Core.Shaders;
 using CShark.Model;
 using System.Drawing;
 using TGC.Core.Direct3D;
+using TGC.Core.Geometry;
 
 namespace CShark.Terreno
 {
@@ -47,14 +48,28 @@ namespace CShark.Terreno
         public void Update(float elapsedTime) {
             Time += elapsedTime;
             Effect.SetValue("time", Time);
-        }
+        }        
 
         public void Render() {
+            ActivarAlphaBlend();
             Terrain.Render();
+            DesactivarAlphaBlend();
         }
 
         public void Dispose() {
             Terrain.Dispose();
+        }
+
+        private void ActivarAlphaBlend() {
+            if (Terrain.AlphaBlendEnable) {
+                D3DDevice.Instance.Device.RenderState.AlphaTestEnable = true;
+                D3DDevice.Instance.Device.RenderState.AlphaBlendEnable = true;
+            }
+        }
+
+        private void DesactivarAlphaBlend() {
+            D3DDevice.Instance.Device.RenderState.AlphaTestEnable = false;
+            D3DDevice.Instance.Device.RenderState.AlphaBlendEnable = false;
         }
 
     }

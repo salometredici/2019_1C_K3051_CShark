@@ -80,7 +80,6 @@ namespace CShark.Terreno
 
         public void Update(float elapsedTime, Player player) {
             Superficie.Update(elapsedTime);
-            Skybox.Update(player);
             Colisiones.Update();
         }
 

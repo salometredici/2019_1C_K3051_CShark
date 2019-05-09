@@ -16,11 +16,7 @@ namespace CShark.Terreno
         private TgcSkyBox SkyboxUnderwater;
         private TgcSkyBox SkyboxIsland;
         private List<TgcMesh> FacesToRender;
-        private TgcSkyBox SkyboxToRender;
         private string texturesPath;
-
-        public TGCVector3 Center => SkyboxToRender.Center;
-        public TGCVector3 Size => SkyboxToRender.Size;        
 
         public SkyBox(TGCVector3 centro)
         {
@@ -35,7 +31,7 @@ namespace CShark.Terreno
             SetIslandSkybox(centro + new TGCVector3(0, 4000f, 0));
             SkyboxUnderwater.Init();
             SkyboxIsland.Init();
-            SetSkybox(new TGCVector3(1500f, 3050f, 0)); //esto cambiar despues..
+            CargarCaras();
         }
 
         private void SetUnderWaterSkybox(TGCVector3 centro)
@@ -70,26 +66,14 @@ namespace CShark.Terreno
             SkyboxIsland.setFaceTexture(SkyFaces.Down, texturesPath + @"SkyBox-LostAtSeaDay\skybox-island-water.png");
             SkyboxIsland.SkyEpsilon = 50f;
         }
-
-        private bool CambiarSkybox(TGCVector3 playerPosition) {
-            return SkyboxToRender.Equals(SkyboxUnderwater) && playerPosition.Y >= 2875
-                || SkyboxToRender.Equals(SkyboxIsland) && playerPosition.Y < 2875;
-        }
-
-        private void SetSkybox(TGCVector3 playerPosition) {
-            bool aboveWater = playerPosition.Y >= 2875;
-            SkyboxToRender =  aboveWater ? SkyboxIsland : SkyboxUnderwater;
-            var faces = SkyboxToRender.Faces.ToList();
-            var caraNoRenderear = aboveWater
-                ? faces.First(f => f.Name.Equals("SkyBox-Down"))
-                : faces.First(f => f.Name.Equals("SkyBox-Up"));
-            faces.Remove(caraNoRenderear);
+        
+        private void CargarCaras() {
+            var faces = SkyboxUnderwater.Faces.Concat(SkyboxIsland.Faces).ToList();
+            var marIsla = SkyboxIsland.Faces.FirstOrDefault(f => f.Name.Equals("SkyBox-Down"));
+            var marTerreno = SkyboxUnderwater.Faces.FirstOrDefault(f => f.Name.Equals("SkyBox-Up"));
+            faces.Remove(marIsla); //parte de abajo de skybox superficial
+            faces.Remove(marTerreno); //parte de arriba de skybox agua
             FacesToRender = faces;
-        }
-
-        public void Update(Player player) {
-            if (CambiarSkybox(player.Posicion)) //para no recrear la lista siempre, + performance
-                SetSkybox(player.Posicion);
         }
 
         public void Render()
@@ -100,6 +84,18 @@ namespace CShark.Terreno
         public void Dispose() {
             SkyboxIsland.Dispose();
             SkyboxUnderwater.Dispose();
+        }
+
+        public TGCVector3 Center {
+            get {
+                return (SkyboxIsland.Center + SkyboxUnderwater.Center) * 0.5f;
+            }
+        }
+
+        public TGCVector3 Size {
+            get {
+                return new TGCVector3(SkyboxUnderwater.Size.X, SkyboxUnderwater.Size.Y + SkyboxIsland.Size.Y, SkyboxUnderwater.Size.Z);
+            }
         }
     }
 }
