@@ -26,13 +26,13 @@ namespace CShark.Terreno
         private TgcBoundingSphere EsferaCercania;
         private TgcText2D TextoPresione;
         private bool MostrarTexto = false;
-        private bool MostrarMenu = false;
 
         public MesaCrafteo(TGCVector3 posicion) {
             var textura = TgcTexture.createTexture(Game.Default.MediaDirectory + @"Textures\mesa.png");
-            Box = TGCBox.fromSize(posicion, new TGCVector3(100, 100, 100), textura);
-            Box.Transform = TGCMatrix.Translation(posicion);
-            EsferaCercania = new TgcBoundingSphere(posicion, 300f);
+            var p = posicion + new TGCVector3(250, 165, 0);
+            Box = TGCBox.fromSize(p, new TGCVector3(200, 200, 200), textura);
+            Box.Transform = TGCMatrix.Translation(p);
+            EsferaCercania = new TgcBoundingSphere(posicion, 750f);
             EsferaCercania.setRenderColor(Color.Red);
             InicializarTexto();
         }

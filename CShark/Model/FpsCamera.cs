@@ -23,7 +23,7 @@ namespace CShark.Model
         private TGCVector3 directionView;
         public float leftrightRot;
         public float updownRot;
-        private TGCVector3 PositionEye;
+        public TGCVector3 PositionEye;
         private Variable<float> VelocidadRotacion;
         private TgcD3dInput Input;
         private bool bloquear = false;

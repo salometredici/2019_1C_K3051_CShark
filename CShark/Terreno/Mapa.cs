@@ -34,7 +34,6 @@ namespace CShark.Terreno
         private TgcScene Rocas;
         private TgcScene Extras;
         private Superficie Superficie;
-        public List<TgcBoundingAxisAlignBox> ParedesBoundaries;
 
         private static Mapa instancia;
 
@@ -53,19 +52,21 @@ namespace CShark.Terreno
             CargarTerreno(NivelDelMar, @"Mapa\Textures\hm.jpg", @"Mapa\Textures\skybox-island-water.png", 10000 / 512f, 1f, new TGCVector3(0, AlturaMar, 0));
             Centro = FondoDelMar.Center;
             Skybox = new SkyBox(Centro);
-            Box = TGCBox.fromSize(Skybox.Center, Skybox.Size);
-            Isla = new Isla();
+            Box = TGCBox.fromSize(Skybox.Center, Skybox.Size);            
             Colisiones = new ColisionesTerreno();
             Colisiones.Init(FondoDelMar.getData());
+            Isla = new Isla(this);
             Superficie = new Superficie();
             Superficie.CargarTerrains();
             CargarParedes();
         }
 
         private void CargarParedes() {
-            ParedesBoundaries = new List<TgcBoundingAxisAlignBox>();
             foreach (var face in Skybox.FacesToRender) {
-                ParedesBoundaries.Add(face.BoundingBox);
+                var size = face.BoundingBox.calculateSize();
+                var position = face.BoundingBox.Position;
+                var body = BulletRigidBodyFactory.Instance.CreateBox(size, 0, position, 0, 0, 0, 1, false);
+                AgregarBody(body);
             }
         }
 

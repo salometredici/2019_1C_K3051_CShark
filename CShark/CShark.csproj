@@ -188,6 +188,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Variable.cs" />
+    <Compile Include="Utils\ExtensionMethods.cs" />
     <Compile Include="Utils\MusicPlayer.cs" />
     <Compile Include="Utils\Octree.cs" />
     <Compile Include="Utils\OctreeBuilder.cs" />

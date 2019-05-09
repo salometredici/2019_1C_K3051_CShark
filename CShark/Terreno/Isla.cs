@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TGC.Core.BoundingVolumes;
+using TGC.Core.BulletPhysics;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 
@@ -21,19 +22,14 @@ namespace CShark.Terreno
         private Barco Barco;
         private TgcFrustum frustum;
 
-        public Isla() {
-            Init();
-        }
-
-        public void Init()
-        {
+        public Isla(Mapa mapa) {
             frustum = new TgcFrustum();
 
             //Cargar escenario de Isla y barco
             var loader = new TgcSceneLoader();
             var scene = loader.loadSceneFromFile(Game.Default.MediaDirectory + "Isla-TgcScene.xml");
 
-            Barco = new Barco();
+            Barco = new Barco(mapa);
 
             //Separar el Terreno del resto de los objetos
             var list1 = new List<TgcMesh>();
@@ -41,16 +37,14 @@ namespace CShark.Terreno
             terreno = list1[0];
 
             //Reposicionar toda la escena al nivel del mar
-            foreach(var item in scene.Meshes)
-            {
-                item.Position += new TGCVector3(0,2900f,0);
+            foreach (var item in scene.Meshes) {
+                item.Position += new TGCVector3(0, 2900f, 0);
             }
 
             //Crear Octree
             octree = new Octree();
             octree.create(objetosIsla, scene.BoundingBox);
             octree.createDebugOctreeMeshes();
-
         }
 
         public void Update(GameModel game) {
