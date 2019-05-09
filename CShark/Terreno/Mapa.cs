@@ -1,17 +1,15 @@
 ﻿using BulletSharp;
+using CShark.Fisica;
 using CShark.Fisica.Colisiones;
 using CShark.Jugador;
 using CShark.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TGC.Core.BoundingVolumes;
+using TGC.Core.BulletPhysics;
 using TGC.Core.Geometry;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 //using TGC.Core.Terrain;
-using static TGC.Core.Terrain.TgcSkyBox;
 
 namespace CShark.Terreno
 {
@@ -36,6 +34,7 @@ namespace CShark.Terreno
         private TgcScene Rocas;
         private TgcScene Extras;
         private Superficie Superficie;
+        public List<TgcBoundingAxisAlignBox> ParedesBoundaries;
 
         private static Mapa instancia;
 
@@ -49,9 +48,9 @@ namespace CShark.Terreno
 
         private Mapa() {
             FondoDelMar = new Terrain();
-            NivelDelMar = new Terrain();            
+            NivelDelMar = new Terrain();
             CargarTerreno(FondoDelMar, @"Mapa\Textures\hm.jpg", @"Mapa\Textures\seafloor.jpg", 10000 / 512f, 1f, TGCVector3.Empty);
-            CargarTerreno(NivelDelMar, @"Mapa\Textures\hm.jpg", @"Mapa\Textures\skybox-island-water.png", 10000 / 512f, 1f, new TGCVector3(0, AlturaMar,0));
+            CargarTerreno(NivelDelMar, @"Mapa\Textures\hm.jpg", @"Mapa\Textures\skybox-island-water.png", 10000 / 512f, 1f, new TGCVector3(0, AlturaMar, 0));
             Centro = FondoDelMar.Center;
             Skybox = new SkyBox(Centro);
             Box = TGCBox.fromSize(Skybox.Center, Skybox.Size);
@@ -60,6 +59,14 @@ namespace CShark.Terreno
             Colisiones.Init(FondoDelMar.getData());
             Superficie = new Superficie();
             Superficie.CargarTerrains();
+            CargarParedes();
+        }
+
+        private void CargarParedes() {
+            ParedesBoundaries = new List<TgcBoundingAxisAlignBox>();
+            foreach (var face in Skybox.FacesToRender) {
+                ParedesBoundaries.Add(face.BoundingBox);
+            }
         }
 
         public void CargarRocas(TgcScene rocas) {

@@ -1,24 +1,17 @@
-﻿using Microsoft.DirectX.Direct3D;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TGC.Core.Camara;
-using TGC.Core.Direct3D;
-using TGC.Core.Mathematica;
-using TGC.Core.SceneLoader;
-using CShark.UI.HUD;
-using CShark.Utils;
+﻿using TGC.Core.Mathematica;
 using CShark.Model;
 using TGC.Core.Input;
-using TGC.Core.Geometry;
-using System.Drawing;
-using TGC.Core.BoundingVolumes;
 using Microsoft.DirectX.DirectInput;
 using CShark.Variables;
 using CShark.Managers;
 using CShark.Items;
+using BulletSharp;
+using TGC.Core.Geometry;
+using System.Drawing;
+using TGC.Core.Collision;
+using CShark.Terreno;
+using TGC.Core.BoundingVolumes;
+using TGC.Core.BulletPhysics;
 
 namespace CShark.Jugador
 {
@@ -38,6 +31,8 @@ namespace CShark.Jugador
         public TgcFpsCamera CamaraInterna { get; private set; }
         public TgcD3dInput Input;
         public TGCVector3 MoveVector;
+        private TgcBoundingSphere Esfera;
+        private TGCVector3 _posAnterior;
 
         public Player(TGCVector3 posicion, int vidaInicial, int oxigenoInicial, TgcD3dInput input) {
             Inventario = new Inventario();
@@ -50,6 +45,24 @@ namespace CShark.Jugador
             Arma = new Crossbow();
             onPause = false;
             VelocidadMovimiento = Configuracion.Instancia.VelocidadMovimiento;
+            Esfera = new TgcBoundingSphere(posicion, 500f);
+            Esfera.setRenderColor(Color.Purple);
+        }
+
+        private void CheckCollisions() {
+            Esfera.setCenter(Posicion);
+            var arregloX = new TGCVector3(50, 0, 0);
+            var arregloY = new TGCVector3(0, 50, 0);
+            var arregloZ = new TGCVector3(0, 0, 50);
+            foreach (var pared in Mapa.Instancia.ParedesBoundaries) {
+                if (TgcCollisionUtils.testSphereAABB(Esfera, pared)) {
+                    MoveVector = Posicion - _posAnterior;
+                    MoveVector += pared.Position.X < _posAnterior.X ? arregloX : -arregloX;
+                    MoveVector += pared.Position.Y < _posAnterior.Y ? arregloY : -arregloY;
+                    MoveVector += pared.Position.Z < _posAnterior.Z ? arregloZ : -arregloZ;
+                    //esto es una basura, hacerlo bien despues ::::)))
+                }
+            }
         }
         
         public void Update(GameModel game) {
@@ -59,15 +72,24 @@ namespace CShark.Jugador
 
                 MoveVector = TGCVector3.Empty;
 
-                if (Input.keyDown(Key.W))
+                if (Input.keyDown(Key.W)) {
                     MoveVector += new TGCVector3(0, 0, -1) * VelocidadMovimiento.Valor;
-                if (Input.keyDown(Key.S))
+                }
+                    
+                if (Input.keyDown(Key.S)) {
                     MoveVector += new TGCVector3(0, 0, 1) * VelocidadMovimiento.Valor;
-                if (Input.keyDown(Key.D))
+                }
+                    
+                if (Input.keyDown(Key.D)) {
                     MoveVector += new TGCVector3(-1, 0, 0) * VelocidadMovimiento.Valor;
-                if (Input.keyDown(Key.A))
+                }
+                    
+                if (Input.keyDown(Key.A)) {
                     MoveVector += new TGCVector3(1, 0, 0) * VelocidadMovimiento.Valor;
-                                
+                }
+                    
+                CheckCollisions();
+
                 ActualizarOxigeno(game);
                 if (EstaVivo)
                 {
@@ -79,6 +101,8 @@ namespace CShark.Jugador
                     _murio = true;
                     BloquearCamara(CamaraInterna);
                 }
+
+                _posAnterior = new TGCVector3(Posicion.X, Posicion.Y, Posicion.Z);
             }          
         }
 
@@ -109,6 +133,7 @@ namespace CShark.Jugador
         public void Render() {
             if (EstaVivo)
             {
+                Esfera.Render();
                 Arma.Render();
                 HUD.Render();
             }

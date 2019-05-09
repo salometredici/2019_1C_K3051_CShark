@@ -24,6 +24,10 @@ namespace CShark.Fisica
             Mesh = loader.loadSceneFromFile(Game.Default.MediaDirectory + @"Boxes Colision\" + box + "-TgcScene.xml").Meshes[0];
         }
 
+        public RigidBodyBuilder(TgcMesh mesh) {
+            Mesh = mesh;
+        }
+
         public RigidBodyBuilder ConRotacion(TGCVector3 rotacion) {
             float x = rotacion.X, y = rotacion.Y, z = rotacion.Z;
             Transformation = TGCMatrix.Identity * TGCMatrix.RotationYawPitchRoll(y, x, z);

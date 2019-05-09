@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TGC.Core.BoundingVolumes;
+using TGC.Core.Geometry;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 using TGC.Core.Terrain;
@@ -15,7 +17,7 @@ namespace CShark.Terreno
     {
         private TgcSkyBox SkyboxUnderwater;
         private TgcSkyBox SkyboxIsland;
-        private List<TgcMesh> FacesToRender;
+        public List<TgcMesh> FacesToRender;
         private string texturesPath;
 
         public SkyBox(TGCVector3 centro)
