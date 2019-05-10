@@ -10,6 +10,7 @@ using CShark.Terreno;
 using TGC.Core.BulletPhysics;
 using CShark.Utils;
 using BulletSharp.Math;
+using CShark.Items.Crafteables;
 
 namespace CShark.Jugador
 {
@@ -138,8 +139,20 @@ namespace CShark.Jugador
             Inventario.Agregar(item);
         }
 
-        public void AgregarItem(Crafteable tipo) {
+        public void AgregarItem(ECrafteable tipo) {
             Inventario.AgregarItem(tipo);
+        }
+
+        public void GastarItem(ERecolectable tipo) {
+            Inventario.Sacar(tipo);
+        }
+
+        public void CraftearItem(ICrafteable item) {
+            AgregarItem(item.Tipo);
+            foreach(var m in item.Materiales) {
+                for (int i = 0; i < m.Value; i++)
+                    GastarItem(m.Key);
+            }
         }
 
         private void ActualizarOxigeno(GameModel game)
@@ -161,6 +174,9 @@ namespace CShark.Jugador
             BloquearCamara(CamaraInterna);
         }
 
+        public int CuantosTiene(ERecolectable material) {
+            return Inventario.CuantosTiene(material);
+        }
         
         public void Render() {
             if (EstaVivo)

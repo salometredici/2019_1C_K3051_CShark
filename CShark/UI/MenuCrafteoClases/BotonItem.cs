@@ -1,6 +1,7 @@
 ﻿using CShark.Items;
 using CShark.Model;
 using CShark.Utils;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using TGC.Core.Direct3D;
@@ -10,24 +11,26 @@ using TGC.Core.Text;
 
 namespace CShark.UI
 {
-    public class BotonItem
+    public class BotonItem : IDisposable
     {
         private CustomBitmap FondoNormal;
         private CustomBitmap FondoHover;
         private CustomBitmap FondoClick;       
-        private Crafteable Item;
+        public ICrafteable Item;
         private CustomSprite Fondo;
         public bool Seleccionado = false;
         public TGCVector2 Posicion => Fondo.Position;
         public string Titulo;
 
-        public BotonItem(Crafteable item, TGCVector2 posicion, MenuCrafteo menu) {
-            var tipo = item.ToString();
+        public int Ancho => Fondo.Bitmap.ImageInformation.Width;
+        public int Alto => Fondo.Bitmap.ImageInformation.Height;
+
+        public BotonItem(ICrafteable item, TGCVector2 posicion, MenuCrafteo menu) {
             Item = item;
-            Titulo = tipo;
-            FondoNormal = CargarBitmap(tipo);
-            FondoHover = CargarBitmap(tipo + "Hover");
-            FondoClick = CargarBitmap(tipo + "Click");
+            Titulo = item.Tipo.ToString();
+            FondoNormal = CargarBitmap(Titulo);
+            FondoHover = CargarBitmap(Titulo + "Hover");
+            FondoClick = CargarBitmap(Titulo + "Click");
             Fondo = CargarSprite(posicion);
         }
 
@@ -48,8 +51,6 @@ namespace CShark.UI
 
         public void Update(GameModel juego, MenuCrafteo menu) {
             Fondo.Bitmap = MouseAdentro() ? FondoHover : FondoNormal;
-            if (MouseAdentro())
-                menu.MostrarTituloHover(Titulo);
             if (Seleccionado)
                 Fondo.Bitmap = FondoClick;
             if (Presionado(juego.Input))
@@ -64,18 +65,6 @@ namespace CShark.UI
             Drawer.DrawSprite(Fondo);
         }
 
-        /*public virtual void CargarTexto(string texto) {
-            Texto = new TgcText2D {
-                Color = Color.White,
-                Text = texto,
-                Size = new Size(Ancho, Alto),
-                Format = DrawTextFormat.Center,
-                Position = Posicion
-            };
-            Texto.changeFont(new Font("Arial", 25, FontStyle.Bold, GraphicsUnit.Pixel));
-            Texto.Position = new Point(Texto.Position.X, Texto.Position.Y + (Alto - 38) / 2);
-        }*/
-
         private bool MouseAdentro() {
             return Cursor.Position.X > Posicion.X &&
             Cursor.Position.X < Posicion.X + Ancho &&
@@ -83,7 +72,11 @@ namespace CShark.UI
             Cursor.Position.Y < Posicion.Y + Alto;
         }
 
-        public int Ancho => Fondo.Bitmap.ImageInformation.Width;
-        public int Alto => Fondo.Bitmap.ImageInformation.Height;
+        public void Dispose() {
+            FondoNormal.Dispose();
+            FondoHover.Dispose();
+            FondoClick.Dispose();
+            Fondo.Dispose();
+        }
     }
 }

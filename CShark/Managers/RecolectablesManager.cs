@@ -21,11 +21,11 @@ namespace CShark.Managers
         public void Initialize() {
             Recolectables.Add(new Wumpa(new TGCVector3(100, 500, 100)));
             Recolectables.Add(new Wumpa(new TGCVector3(0, 1000, 0)));
-            Recolectables.Add(new Oxigeno(new TGCVector3(250, 400, 0)));
-            Recolectables.Add(new Oxigeno(new TGCVector3(350, 400, 100)));
-            Recolectables.Add(new Oxigeno(new TGCVector3(-100, 400, -50)));
-            Recolectables.Add(new Medkit(new TGCVector3(500, 400, -300)));
-            Recolectables.Add(new Medkit(new TGCVector3(-400, 400, -100)));
+            Recolectables.Add(new Burbuja(new TGCVector3(250, 400, 0)));
+            Recolectables.Add(new Burbuja(new TGCVector3(350, 400, 100)));
+            Recolectables.Add(new Burbuja(new TGCVector3(-100, 400, -50)));
+            Recolectables.Add(new Chip(new TGCVector3(500, 400, -300)));
+            Recolectables.Add(new Bateria(new TGCVector3(-400, 400, -100)));
         }
 
         public void Render(GameModel game) {
@@ -33,7 +33,7 @@ namespace CShark.Managers
         }
 
         public void Update(GameModel game) {
-            Recolectables.ForEach(r => r.Update(game.Player));
+            Recolectables.ForEach(r => r.Update(game));
         }
     }
 }

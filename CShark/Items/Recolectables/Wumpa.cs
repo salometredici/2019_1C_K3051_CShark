@@ -8,28 +8,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TGC.Core.Mathematica;
+using TGC.Core.SceneLoader;
 
 namespace CShark.Items.Recolectables
 {
     public class Wumpa : Recolectable
     {
-        RigidBody Body;
+        public TgcMesh Mesh;
+        public override TGCVector3 Posicion => Mesh.Position;
+        public override TGCVector3 Rotacion => Mesh.Rotation;
+        public override ERecolectable Tipo => ERecolectable.Wumpa;
 
-        public Wumpa(TGCVector3 posicion) : base("Wumpa", posicion) {
-            Body = RigidBodyUtils.CrearEsfera(Mesh, 10f);
-            Body.Friction = 1f;
-            Body.RollingFriction = 100f;
-            Mapa.Instancia.AgregarBody(Body);
+        public Wumpa(TGCVector3 posicion) : base(posicion) {
+            Mesh = new TgcSceneLoader()
+                .loadSceneFromFile(Game.Default.MediaDirectory + @"Recolectables\Wumpa-TgcScene.xml")
+                .Meshes[0];
+            Mesh.AutoTransformEnable = false;
+            Mesh.Transform = TGCMatrix.Scaling(2, 2, 2) * TGCMatrix.Translation(posicion);
         }
 
-        public override void Update(Player player) {
-            var x = Body.Orientation.Axis.X;
-            var y = Body.Orientation.Axis.Y;
-            var z = Body.Orientation.Axis.Z;
-            Rotacion = new TGCVector3(x, y, z);
-            var centro = Body.CenterOfMassPosition;
-            Posicion = new TGCVector3(centro.X, centro.Y, centro.Z);
-            base.Update(player);
+        public override void Render() {
+            if (!Recogido) {
+                Mesh.Render();
+                EsferaCercania.Render();
+            }
+        }
+
+        public override void Dispose() {
+            Mesh.Dispose();
         }
     }
 }

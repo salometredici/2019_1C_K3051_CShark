@@ -112,13 +112,15 @@
     <Compile Include="Fisica\Colisiones\ColisionesTerreno.cs" />
     <Compile Include="Fisica\RigidBodyUtils.cs" />
     <Compile Include="Geometria\IRotable.cs" />
-    <Compile Include="Items\Crafteables.cs" />
+    <Compile Include="Items\Crafteables\Arpon.cs" />
+    <Compile Include="Items\Crafteables\Medkit.cs" />
+    <Compile Include="Items\ICrafteable.cs" />
+    <Compile Include="Items\Crafteables\Oxigeno.cs" />
     <Compile Include="Items\IRecolectable.cs" />
     <Compile Include="Items\Recolectable.cs" />
     <Compile Include="Items\Recolectables\Bateria.cs" />
+    <Compile Include="Items\Recolectables\Burbuja.cs" />
     <Compile Include="Items\Recolectables\Chip.cs" />
-    <Compile Include="Items\Recolectables\Medkit.cs" />
-    <Compile Include="Items\Recolectables\Oxigeno.cs" />
     <Compile Include="Items\Recolectables\Wumpa.cs" />
     <Compile Include="Jugador\Arma.cs" />
     <Compile Include="Jugador\Crossbow.cs" />
@@ -252,6 +254,9 @@
     <None Include="Shaders\TgcSkeletalMeshShader.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Shaders\Burbuja.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Shaders\WaveShader.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -298,6 +303,7 @@
     <Content Include="Media\Animales\Tiburon-TgcScene.xml" />
     <Content Include="Media\Boxes Colision\Textures\empty.png" />
     <Content Include="Media\Boxes Colision\Tiburon-TgcScene.xml" />
+    <Content Include="Media\MenuCrafteo\craftFocus.png" />
     <Content Include="Media\Heightmaps\heightmap.JPG" />
     <Content Include="Media\Heightmaps\wave bump.png" />
     <Content Include="Media\Mapa\Textures\hm.jpg" />
@@ -331,17 +337,16 @@
     <Content Include="Media\Mapa\Textures\waveHeightmap.png" />
     <Content Include="Media\MenuCrafteo\cerrar.png" />
     <Content Include="Media\MenuCrafteo\craft.png" />
-    <Content Include="Media\MenuCrafteo\craftHover.png" />
     <Content Include="Media\MenuCrafteo\fondo.png" />
     <Content Include="Media\MenuCrafteo\Items\arpon.png" />
     <Content Include="Media\MenuCrafteo\Items\arponClick.png" />
     <Content Include="Media\MenuCrafteo\Items\arponHover.png" />
-    <Content Include="Media\MenuCrafteo\Items\tanque.png" />
-    <Content Include="Media\MenuCrafteo\Items\tanqueClick.png" />
-    <Content Include="Media\MenuCrafteo\Items\tanqueHover.png" />
-    <Content Include="Media\MenuCrafteo\Items\vida.png" />
-    <Content Include="Media\MenuCrafteo\Items\vidaClick.png" />
-    <Content Include="Media\MenuCrafteo\Items\vidaHover.png" />
+    <Content Include="Media\MenuCrafteo\Items\oxigeno.png" />
+    <Content Include="Media\MenuCrafteo\Items\oxigenoClick.png" />
+    <Content Include="Media\MenuCrafteo\Items\oxigenoHover.png" />
+    <Content Include="Media\MenuCrafteo\Items\medkit.png" />
+    <Content Include="Media\MenuCrafteo\Items\medkitClick.png" />
+    <Content Include="Media\MenuCrafteo\Items\medkitHover.png" />
     <Content Include="Media\Menu\boton1.png" />
     <Content Include="Media\Menu\boton2.png" />
     <Content Include="Media\Menu\checkHover.png" />

@@ -1,4 +1,5 @@
 ﻿using CShark.Items;
+using CShark.Items.Crafteables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,8 @@ namespace CShark.Jugador
     public class Inventario
     {
         public int Arpones = 0;
-        public int Tanques = 0;
-        public int Vidas = 0;
+        public int Oxigenos = 0;
+        public int Medkits = 0;
 
         private List<IRecolectable> Items;
 
@@ -23,40 +24,46 @@ namespace CShark.Jugador
             Items.Add(item);
         }
 
-        public void Sacar(IRecolectable item) {
-            Items.Remove(item);
+        public void Sacar(ERecolectable tipo) {
+            var item = Items.FirstOrDefault(i => i.Tipo == tipo);
+            if (item != null)
+                Items.Remove(item);
         }
 
         public bool Tiene(IRecolectable item) {
             return Items.Contains(item);
         }
 
-        public void AgregarItem(Crafteable tipo) {
+        public void AgregarItem(ECrafteable tipo) {
             switch (tipo) {
-                case Crafteable.Arpon:
+                case ECrafteable.Arpon:
                     Arpones++;
                     break;
-                case Crafteable.Tanque:
-                    Tanques++;
+                case ECrafteable.Oxigeno:
+                    Oxigenos++;
                     break;
-                case Crafteable.Vida:
-                    Vidas++;
+                case ECrafteable.Medkit:
+                    Medkits++;
                     break;
             }            
         }
 
-        public void GastarItem(Crafteable tipo) {
+        public void GastarItem(ECrafteable tipo) {
             switch (tipo) {
-                case Crafteable.Arpon:
+                case ECrafteable.Arpon:
                     Arpones--;
                     break;
-                case Crafteable.Tanque:
-                    Tanques--;
+                case ECrafteable.Oxigeno:
+                    Oxigenos--;
                     break;
-                case Crafteable.Vida:
-                    Vidas--;
+                case ECrafteable.Medkit:
+                    Medkits--;
                     break;
             }
+        }
+
+        public int CuantosTiene(ERecolectable material) {
+            return Items.Where(i => i.Tipo.Equals(material)).Count();
         }
     }
 }

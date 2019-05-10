@@ -14,7 +14,7 @@ using TGC.Core.Mathematica;
 
 namespace CShark.UI
 {
-    public class BotonCerrar
+    public class BotonCerrar : IDisposable
     {
         private CustomSprite Sprite;
         public TGCVector2 Posicion => Sprite.Position;
@@ -52,6 +52,10 @@ namespace CShark.UI
             Cursor.Position.X < Posicion.X + Ancho &&
             Cursor.Position.Y > Posicion.Y &&
             Cursor.Position.Y < Posicion.Y + Alto;
+        }
+
+        public void Dispose() {
+            Sprite.Dispose();
         }
     }
 }

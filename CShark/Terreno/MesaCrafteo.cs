@@ -56,6 +56,7 @@ namespace CShark.Terreno
                 if (game.Input.keyPressed(Key.E) && game.Player.EstaVivo) {
                     game.CambiarMenu(UI.TipoMenu.Crafteo);
                     game.GameManager.SwitchMenu(game); //mira ese acoplamiento
+                    MostrarTexto = false;
                 }
             }
             else {

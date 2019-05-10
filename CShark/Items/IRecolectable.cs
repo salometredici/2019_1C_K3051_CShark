@@ -1,4 +1,5 @@
 ﻿using CShark.Jugador;
+using CShark.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,19 @@ using System.Threading.Tasks;
 
 namespace CShark.Items
 {
-    public interface IRecolectable
+    public interface IRecolectable : IDisposable
     {
-        void Desaparecer();
-        void Update(Player player);
+        ERecolectable Tipo { get; }
+        void Update(GameModel game);
         void Render();
-        bool EstaCerca(Player player);
+        bool PuedeRecoger(Player player);
+    }
+
+    public enum ERecolectable
+    {
+        Bateria,
+        Burbuja,
+        Chip,
+        Wumpa
     }
 }
