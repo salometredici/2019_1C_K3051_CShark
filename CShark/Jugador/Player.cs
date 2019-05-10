@@ -6,15 +6,10 @@ using CShark.Variables;
 using CShark.Managers;
 using CShark.Items;
 using BulletSharp;
-using TGC.Core.Geometry;
-using System.Drawing;
-using TGC.Core.Collision;
 using CShark.Terreno;
-using TGC.Core.BoundingVolumes;
 using TGC.Core.BulletPhysics;
 using CShark.Utils;
 using BulletSharp.Math;
-using TGC.Core.Text;
 
 namespace CShark.Jugador
 {
@@ -55,7 +50,7 @@ namespace CShark.Jugador
             Mapa.Instancia.AgregarBody(Capsula);
         }
         
-        private void MoverCapsula(TgcD3dInput input) {
+        private void MoverCapsula(float elapsedTime, TgcD3dInput input) {
             var strength = 10.30f;
 
             if (input.keyDown(Key.W)) {
@@ -90,16 +85,38 @@ namespace CShark.Jugador
                 Capsula.ApplyCentralImpulse(strength * new Vector3(sin, 0, cos));
             }
 
-            if (input.keyPressed(Key.Space)) {
+
+            if (input.keyPressed(Key.Space) && !jumping) {
+                if (RozandoSuperficie || !Sumergido) {
+                    jumping = true;
+                    Capsula.ActivationState = ActivationState.ActiveTag;
+                    Capsula.ApplyCentralImpulse(new TGCVector3(0, 500 * strength, 0).ToBulletVector3());
+                }
+            }
+
+            //nadar lentamente hacia arriba
+            if (input.keyDown(Key.Space) && Sumergido) {
                 Capsula.ActivationState = ActivationState.ActiveTag;
-                Capsula.ApplyCentralImpulse(new TGCVector3(0, 200 * strength, 0).ToBulletVector3());
+                Capsula.AngularVelocity = TGCVector3.Empty.ToBulletVector3();
+                Capsula.ApplyCentralImpulse(new TGCVector3(0, 2f, 0).ToBulletVector3());
+            }
+
+            if (TocandoPiso()) {
+                jumping = false;
             }
         }
+
+        private bool TocandoPiso() {
+            var vel = FastMath.Abs(Capsula.LinearVelocity.Y);
+            return vel < 0.01f;
+        }
+
+        private bool jumping = false;
 
         public void Update(GameModel game) {
             if (!onPause)
             {
-                MoverCapsula(game.Input);
+                MoverCapsula(game.ElapsedTime, game.Input);
                 Posicion = Capsula.CenterOfMassPosition.ToTGCVector3();
                 CamaraInterna.PositionEye = Posicion;
 
@@ -123,7 +140,7 @@ namespace CShark.Jugador
 
         private void ActualizarOxigeno(GameModel game)
         {
-            Oxigeno = Posicion.Y >= 2800f && Oxigeno < HUD.BarraOxigeno.ValorMaximo ?
+            Oxigeno = !Sumergido && Oxigeno < HUD.BarraOxigeno.ValorMaximo ?
                 Oxigeno += 14f * game.ElapsedTime :
                 Oxigeno -= 7f * game.ElapsedTime;
         }
@@ -148,6 +165,9 @@ namespace CShark.Jugador
                 HUD.Render();
             }
         }
+
+        public bool Sumergido => Posicion.Y < 2800f;
+        public bool RozandoSuperficie => Posicion.Y <= 2900f && Posicion.Y >= 2700f;
 
     }
 }

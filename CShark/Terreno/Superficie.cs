@@ -16,15 +16,17 @@ using TGC.Core.Geometry;
 namespace CShark.Terreno
 {
     public class Superficie {
+
         private TgcSimpleTerrain Terrain;
         private float Time = 0;
         private Effect Effect;
+        public float Altura = 2800f;
 
         public Superficie() {
             Effect = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "WaveShader.fx");
         }
 
-        private float Altura() {
+        private float AlturaTerrain() {
             int[,] data = Terrain.HeightmapData;
             float suma = 0f;
             for (int i = 0; i < 512; i++)
@@ -39,7 +41,7 @@ namespace CShark.Terreno
             Terrain = new TgcSimpleTerrain();
             Terrain.loadTexture(textura);
             Terrain.loadHeightmap(heightmap, 10000 / 512f, 2, new TGCVector3(0, 0, 0));
-            Terrain.loadHeightmap(heightmap, 10000 / 512f, 2, new TGCVector3(0, -Altura() / 2, 0));
+            Terrain.loadHeightmap(heightmap, 10000 / 512f, 2, new TGCVector3(0, -AlturaTerrain() / 2, 0));
             Terrain.AlphaBlendEnable = true;
             Terrain.Effect = Effect;
             Terrain.Technique = "WaveEffect";

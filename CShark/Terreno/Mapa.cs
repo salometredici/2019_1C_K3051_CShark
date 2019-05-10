@@ -33,7 +33,7 @@ namespace CShark.Terreno
         private Isla Isla;
         private TgcScene Rocas;
         private TgcScene Extras;
-        private Superficie Superficie;
+        public Superficie Superficie;
 
         private static Mapa instancia;
 
@@ -87,6 +87,11 @@ namespace CShark.Terreno
         public float AlturaMar => 2800f;
 
         public void Update(float elapsedTime, GameModel game) {
+            if (game.Player.Posicion.Y > Superficie.Altura) {
+                Colisiones.CambiarGravedad(-100);
+            } else {
+                Colisiones.CambiarGravedad(-5);
+            }
             Superficie.Update(elapsedTime);
             Isla.Update(game);
             Colisiones.Update();

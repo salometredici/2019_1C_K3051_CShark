@@ -24,6 +24,10 @@ namespace CShark.Fisica.Colisiones
         private SequentialImpulseConstraintSolver ConstraintSolver;
         private BroadphaseInterface OverlappingPairCache;
         private CustomVertex.PositionTextured[] DataTriangulos;
+
+        public void CambiarGravedad(float gravedad) {
+            World.Gravity = new Vector3(0, gravedad, 0);
+        }
         
         public void Init(CustomVertex.PositionTextured[] dataTriangulos) {
             DataTriangulos = dataTriangulos;
