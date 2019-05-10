@@ -9,6 +9,10 @@ namespace CShark.Jugador
 {
     public class Inventario
     {
+        public int Arpones = 0;
+        public int Tanques = 0;
+        public int Vidas = 0;
+
         private List<IRecolectable> Items;
 
         public Inventario() {
@@ -25,6 +29,34 @@ namespace CShark.Jugador
 
         public bool Tiene(IRecolectable item) {
             return Items.Contains(item);
+        }
+
+        public void AgregarItem(Crafteable tipo) {
+            switch (tipo) {
+                case Crafteable.Arpon:
+                    Arpones++;
+                    break;
+                case Crafteable.Tanque:
+                    Tanques++;
+                    break;
+                case Crafteable.Vida:
+                    Vidas++;
+                    break;
+            }            
+        }
+
+        public void GastarItem(Crafteable tipo) {
+            switch (tipo) {
+                case Crafteable.Arpon:
+                    Arpones--;
+                    break;
+                case Crafteable.Tanque:
+                    Tanques--;
+                    break;
+                case Crafteable.Vida:
+                    Vidas--;
+                    break;
+            }
         }
     }
 }

@@ -112,6 +112,7 @@
     <Compile Include="Fisica\Colisiones\ColisionesTerreno.cs" />
     <Compile Include="Fisica\RigidBodyUtils.cs" />
     <Compile Include="Geometria\IRotable.cs" />
+    <Compile Include="Items\Crafteables.cs" />
     <Compile Include="Items\IRecolectable.cs" />
     <Compile Include="Items\Recolectable.cs" />
     <Compile Include="Items\Recolectables\Bateria.cs" />
@@ -332,9 +333,15 @@
     <Content Include="Media\MenuCrafteo\craft.png" />
     <Content Include="Media\MenuCrafteo\craftHover.png" />
     <Content Include="Media\MenuCrafteo\fondo.png" />
-    <Content Include="Media\MenuCrafteo\Items\harpoon.png" />
-    <Content Include="Media\MenuCrafteo\Items\medkit.png" />
-    <Content Include="Media\MenuCrafteo\Items\oxygen.png" />
+    <Content Include="Media\MenuCrafteo\Items\arpon.png" />
+    <Content Include="Media\MenuCrafteo\Items\arponClick.png" />
+    <Content Include="Media\MenuCrafteo\Items\arponHover.png" />
+    <Content Include="Media\MenuCrafteo\Items\tanque.png" />
+    <Content Include="Media\MenuCrafteo\Items\tanqueClick.png" />
+    <Content Include="Media\MenuCrafteo\Items\tanqueHover.png" />
+    <Content Include="Media\MenuCrafteo\Items\vida.png" />
+    <Content Include="Media\MenuCrafteo\Items\vidaClick.png" />
+    <Content Include="Media\MenuCrafteo\Items\vidaHover.png" />
     <Content Include="Media\Menu\boton1.png" />
     <Content Include="Media\Menu\boton2.png" />
     <Content Include="Media\Menu\checkHover.png" />

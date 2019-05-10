@@ -5,20 +5,11 @@ using System.Windows.Forms;
 using TGC.Core.Direct3D;
 using TGC.Core.Example;
 using TGC.Core.Mathematica;
-using TGC.Core.SceneLoader;
-using TGC.Core.Sound;
-using TGC.Core.Terrain;
-using CShark.Managers;
 using CShark.NPCs.Enemigos;
-using CShark.NPCs.Peces;
 using CShark.Terreno;
 using CShark.UI;
 using CShark.UI.HUD;
-using CShark.Variables;
 using CShark.Jugador;
-using CShark.Utils;
-using System.Threading.Tasks;
-using System.Threading;
 
 namespace CShark.Model
 {
@@ -52,13 +43,11 @@ namespace CShark.Model
 
             if (Input.keyPressed(Key.Escape) || Input.keyPressed(Key.I))
             {
-                Player.Lock();
                 if (Player.EstaVivo)
                 {
-                    Player.onPause = !Player.onPause;
                     var tipomenu = Input.keyPressed(Key.Escape) ? TipoMenu.Principal : TipoMenu.Inventario;
                     CambiarMenu(tipomenu);
-                    GameManager.SwitchMenu();
+                    GameManager.SwitchMenu(this);
                 }
                 else
                 {

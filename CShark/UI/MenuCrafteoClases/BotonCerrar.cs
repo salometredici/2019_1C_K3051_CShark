@@ -27,15 +27,16 @@ namespace CShark.UI
             Sprite.Bitmap = new CustomBitmap(Game.Default.MediaDirectory + @"MenuCrafteo\cerrar.png", D3DDevice.Instance.Device);
             float anchoReal = Sprite.Bitmap.ImageInformation.Width;
             float altoReal = Sprite.Bitmap.ImageInformation.Height;
-            Sprite.Scaling = new TGCVector2(anchoReal / Sprite.Bitmap.Width, altoReal / Sprite.Bitmap.Height);
-            Sprite.Position = posicionMenu + new TGCVector2(ancho - 20, -20);
             Ancho = anchoReal;
             Alto = altoReal;
+            Sprite.Scaling = new TGCVector2(anchoReal / Sprite.Bitmap.Width, altoReal / Sprite.Bitmap.Height);
+            Sprite.Position = posicionMenu + new TGCVector2(ancho - Ancho/2f, -Alto/2f);
         }
 
         public void Update(GameModel game) {
-            if (Presionado(game.Input))
-                game.GameManager.SwitchMenu();
+            if (Presionado(game.Input)) {
+                game.GameManager.SwitchMenu(game);
+            }
         }
 
         public void Render(Drawer2D drawer) {

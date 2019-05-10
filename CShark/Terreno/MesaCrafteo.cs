@@ -53,16 +53,15 @@ namespace CShark.Terreno
             if (EstaCerca(game.Player)) {
                 EsferaCercania.setRenderColor(Color.Yellow);
                 MostrarTexto = true;
-                if (game.Input.keyPressed(Key.E)) {
+                if (game.Input.keyPressed(Key.E) && game.Player.EstaVivo) {
                     game.CambiarMenu(UI.TipoMenu.Crafteo);
-                    game.GameManager.SwitchMenu(); //mira ese acoplamiento
+                    game.GameManager.SwitchMenu(game); //mira ese acoplamiento
                 }
             }
             else {
                 MostrarTexto = false;
                 EsferaCercania.setRenderColor(Color.Red);
             }
-            
         }
 
         public void Render() {

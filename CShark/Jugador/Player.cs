@@ -138,6 +138,10 @@ namespace CShark.Jugador
             Inventario.Agregar(item);
         }
 
+        public void AgregarItem(Crafteable tipo) {
+            Inventario.AgregarItem(tipo);
+        }
+
         private void ActualizarOxigeno(GameModel game)
         {
             Oxigeno = !Sumergido && Oxigeno < HUD.BarraOxigeno.ValorMaximo ?
@@ -150,13 +154,13 @@ namespace CShark.Jugador
             if (!_murio)
             {
                 camara.Lock();
-                //_murio = true;
             }
         }
 
         public void Lock() {
             BloquearCamara(CamaraInterna);
         }
+
         
         public void Render() {
             if (EstaVivo)

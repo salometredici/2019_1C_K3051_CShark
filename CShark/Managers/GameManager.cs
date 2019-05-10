@@ -77,9 +77,11 @@ namespace CShark.Model
             MenuManager.CambiarMenu(tipoMenu);
         }
 
-        public void SwitchMenu() {
+        public void SwitchMenu(GameModel game) {
             MenuManager.SwitchMenu();
             MusicPlayer.SwitchMusic(MenuManager.MenuAbierto);
+            game.Player.onPause = !game.Player.onPause;
+            game.Player.Lock(); //o unlock
         }
 
         public void Dispose()
