@@ -1,15 +1,18 @@
 ﻿using BulletSharp;
 using CShark.Fisica;
 using CShark.Fisica.Colisiones;
+using CShark.Items;
 using CShark.Jugador;
 using CShark.Model;
+using Microsoft.DirectX.Direct3D;
 using System.Collections.Generic;
+using System.Drawing;
 using TGC.Core.BoundingVolumes;
 using TGC.Core.BulletPhysics;
 using TGC.Core.Geometry;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
-//using TGC.Core.Terrain;
+using TGC.Core.Shaders;
 
 namespace CShark.Terreno
 {
@@ -22,18 +25,13 @@ namespace CShark.Terreno
 
         private SkyBox Skybox;
 
-        // Areas del mapa
         private Terrain FondoDelMar;
-        private Terrain NivelDelMar;
-
         private ColisionesTerreno Colisiones;
-
-        // Elementos
-        //private TgcScene Vegetacion;
         private Isla Isla;
         private TgcScene Rocas;
         private TgcScene Extras;
         public Superficie Superficie;
+
 
         private static Mapa instancia;
 
@@ -47,9 +45,7 @@ namespace CShark.Terreno
 
         private Mapa() {
             FondoDelMar = new Terrain();
-            NivelDelMar = new Terrain();
             CargarTerreno(FondoDelMar, @"Mapa\Textures\hm.jpg", @"Mapa\Textures\seafloor.jpg", 10000 / 512f, 1f, TGCVector3.Empty);
-            CargarTerreno(NivelDelMar, @"Mapa\Textures\hm.jpg", @"Mapa\Textures\skybox-island-water.png", 10000 / 512f, 1f, new TGCVector3(0, AlturaMar, 0));
             Centro = FondoDelMar.Center;
             Skybox = new SkyBox(Centro);
             Box = TGCBox.fromSize(Skybox.Center, Skybox.Size);            
@@ -111,10 +107,8 @@ namespace CShark.Terreno
 
         public void Render(Player player) {
             FondoDelMar.Render();
-            //NivelDelMar.Render();
             Skybox.Render();
             Isla.Render();
-            //Vegetacion.RenderAll();
             Rocas.RenderAll();
             Extras.RenderAll();
             Superficie.Render();
@@ -122,10 +116,8 @@ namespace CShark.Terreno
 
         public void Dispose() {
             FondoDelMar.Dispose();
-            NivelDelMar.Dispose();
             Skybox.Dispose();
             Isla.Dispose();
-            //Vegetacion.DisposeAll();
             Rocas.DisposeAll();
             Extras.DisposeAll();
             Superficie.Dispose();
@@ -136,7 +128,6 @@ namespace CShark.Terreno
             terrain.AlphaBlendEnable = true;
             terrain.loadHeightmap(mediaDir + heightMapDir, xz, y, position);
             terrain.loadTexture(mediaDir + textureDir);
-            //Vegetacion = loader.loadSceneFromFile(media + "vegetation-TgcScene.xml");
         }
     }
 }

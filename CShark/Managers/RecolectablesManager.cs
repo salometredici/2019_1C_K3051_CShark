@@ -19,17 +19,18 @@ namespace CShark.Managers
         }
 
         public void Initialize() {
-            Recolectables.Add(new Wumpa(new TGCVector3(100, 500, 100)));
-            Recolectables.Add(new Wumpa(new TGCVector3(0, 1000, 0)));
-            Recolectables.Add(new Burbuja(new TGCVector3(250, 400, 0)));
-            Recolectables.Add(new Burbuja(new TGCVector3(350, 400, 100)));
-            Recolectables.Add(new Burbuja(new TGCVector3(-100, 400, -50)));
-            Recolectables.Add(new Chip(new TGCVector3(500, 400, -300)));
-            Recolectables.Add(new Bateria(new TGCVector3(-400, 400, -100)));
+            for (int i = 0; i < 5; i++)
+                Recolectables.Add(new Wumpa(new TGCVector3(i * 300, 300, 500)));
+            for (int i = 0; i < 5; i++)
+                Recolectables.Add(new Chip(new TGCVector3(i * 400, 800, 0)));
+            for (int i = 0; i < 5; i++)
+                Recolectables.Add(new Burbuja(new TGCVector3(600, 1000, i * 600)));
+            for (int i = 0; i < 5; i++)
+                Recolectables.Add(new Bateria(new TGCVector3(400, 400, i * 400)));
         }
 
         public void Render(GameModel game) {
-            Recolectables.ForEach(r => r.Render());
+            Recolectables.ForEach(r => r.Render(game));
         }
 
         public void Update(GameModel game) {

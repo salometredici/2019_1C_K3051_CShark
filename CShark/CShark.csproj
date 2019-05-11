@@ -117,7 +117,9 @@
     <Compile Include="Items\ICrafteable.cs" />
     <Compile Include="Items\Crafteables\Oxigeno.cs" />
     <Compile Include="Items\IRecolectable.cs" />
+    <Compile Include="Items\LuzItem.cs" />
     <Compile Include="Items\Recolectable.cs" />
+    <Compile Include="Items\RecolectableAnimado.cs" />
     <Compile Include="Items\Recolectables\Bateria.cs" />
     <Compile Include="Items\Recolectables\Burbuja.cs" />
     <Compile Include="Items\Recolectables\Chip.cs" />
@@ -233,6 +235,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Shaders\LuzItem.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Shaders\Recolectable.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Shaders\TgcKeyFrameMeshShader.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -363,6 +371,8 @@
     <Content Include="Media\Menu\slider1.png" />
     <Content Include="Media\Menu\slider2.png" />
     <Content Include="Media\Menu\slider3.png" />
+    <Content Include="Media\Recolectables\LetraE-TgcScene.xml" />
+    <Content Include="Media\Recolectables\Textures\Breccia-Marble-Floor-Tile.jpg" />
     <Content Include="Media\Textures\mesa.png" />
     <Content Include="Media\Music\Deep_Trouble.mp3" />
     <Content Include="Media\Music\UnderPressure_DeepTrouble.mp3" />

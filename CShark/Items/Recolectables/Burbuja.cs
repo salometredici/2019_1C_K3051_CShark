@@ -37,11 +37,11 @@ namespace CShark.Items.Recolectables
             time += game.ElapsedTime;
         }
 
-        public override void Render() {            
+        public override void Render(GameModel game) {
             if (!Recogido) {
                 Esfera.Effect.SetValue("time", time);
                 Esfera.Render();
-                EsferaCercania.Render();
+                //EsferaCercania.Render();
             }
         }
 

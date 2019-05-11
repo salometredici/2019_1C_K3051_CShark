@@ -12,7 +12,7 @@ namespace CShark.Items
     {
         ERecolectable Tipo { get; }
         void Update(GameModel game);
-        void Render();
+        void Render(GameModel game);
         bool PuedeRecoger(Player player);
     }
 
