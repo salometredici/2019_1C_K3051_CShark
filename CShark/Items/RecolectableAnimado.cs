@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TGC.Core.BoundingVolumes;
 using TGC.Core.Interpolation;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
@@ -22,7 +23,9 @@ namespace CShark.Items
         private InterpoladorVaiven Interpolador;
         private TgcMesh LetraE1;
         private TgcMesh LetraE2;
+        private TGCVector3 escalaBox; //un poco mas grande para agarre
 
+        public override TgcBoundingAxisAlignBox Box => Mesh.BoundingBox;
         public override TGCVector3 Posicion => Mesh.Position;
         public override TGCVector3 Rotacion => Mesh.Rotation;
 
@@ -38,6 +41,7 @@ namespace CShark.Items
             rotacion = 0f;
             posicion = _posicion;
             offsetLetra = _offsetLetra;
+            escalaBox = new TGCVector3(1.3f, 1.3f, 1.3f);
             Interpolador = new InterpoladorVaiven {
                 Min = -30f,
                 Max = 30f,
@@ -46,8 +50,8 @@ namespace CShark.Items
             };
         }
 
-        private TGCMatrix GetLetraTransform(float offsetX) {
-            var yRot = TGCMatrix.RotationY(FastMath.PI / 2);
+        private TGCMatrix GetLetraTransform(float offsetX, float rot) {
+            var yRot = TGCMatrix.RotationY(FastMath.PI / 2 + rot);
             var offset = TGCMatrix.Translation(new TGCVector3(offsetX, 0, 0));
             var orbita = TGCMatrix.RotationY(rotacion);
             var reposicion = TGCMatrix.Translation(posicion);
@@ -65,8 +69,9 @@ namespace CShark.Items
             if (!Recogido) {
                 rotacion += game.ElapsedTime * 2f;
                 Mesh.Transform = GetMeshTransform(game.ElapsedTime);
-                LetraE1.Transform = GetLetraTransform(offsetLetra);
-                LetraE2.Transform = GetLetraTransform(-offsetLetra);
+                Box.transform(TGCMatrix.Scaling(escalaBox) * Mesh.Transform);
+                LetraE1.Transform = GetLetraTransform(offsetLetra, 0);
+                LetraE2.Transform = GetLetraTransform(-offsetLetra, FastMath.PI);
                 Mesh.Render();
                 if (PuedeRecoger(game.Player)) {
                     LetraE1.Render();

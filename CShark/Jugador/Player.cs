@@ -11,6 +11,12 @@ using TGC.Core.BulletPhysics;
 using CShark.Utils;
 using BulletSharp.Math;
 using CShark.Items.Crafteables;
+using TGC.Core.Collision;
+using TGC.Core.Geometry;
+using System.Drawing;
+using TGC.Core.Text;
+using TGC.Core.Direct3D;
+using CShark.Jugador.Camara;
 
 namespace CShark.Jugador
 {
@@ -21,17 +27,19 @@ namespace CShark.Jugador
         private Inventario Inventario;
         private HUD HUD;
         private Arma Arma;
-        public TGCVector3 Posicion { get; private set; }
+        public TGCVector3 Posicion;
         public bool EstaVivo => Vida > 0 && Oxigeno > 0;
         public bool onPause;
+        private bool jumping = false;
 
-        private Variable<float> VelocidadMovimiento;
-        
-        public TgcFpsCamera CamaraInterna { get; private set; }
+        public TgcFpsCamera CamaraInterna;
         public TgcD3dInput Input;
         public TGCVector3 MoveVector;
-
         private RigidBody Capsula;
+        private RayoProximidad RayoProximidad;
+
+        public bool Sumergido => Posicion.Y < 2800f;
+        public bool RozandoSuperficie => Posicion.Y <= 2900f && Posicion.Y >= 2700f;
 
         public Player(TGCVector3 posicion, int vidaInicial, int oxigenoInicial, TgcD3dInput input) {
             Inventario = new Inventario();
@@ -43,14 +51,14 @@ namespace CShark.Jugador
             CamaraInterna = new TgcFpsCamera(input, this);
             Arma = new Crossbow();
             onPause = false;
-            VelocidadMovimiento = Configuracion.Instancia.VelocidadMovimiento;
             Capsula = BulletRigidBodyFactory.Instance.CreateCapsule(300, 500, posicion, 5, false);
             Capsula.SetDamping(0.1f, 0f);
             Capsula.Restitution = 0.1f;
             Capsula.Friction = 0.3f;
+            RayoProximidad = new RayoProximidad();
             Mapa.Instancia.AgregarBody(Capsula);
         }
-        
+
         private void MoverCapsula(float elapsedTime, TgcD3dInput input) {
             var strength = 10.30f;
 
@@ -111,16 +119,15 @@ namespace CShark.Jugador
             var vel = FastMath.Abs(Capsula.LinearVelocity.Y);
             return vel < 0.01f;
         }
-
-        private bool jumping = false;
-
+        
         public void Update(GameModel game) {
+            time += game.ElapsedTime;
             if (!onPause)
             {
                 MoverCapsula(game.ElapsedTime, game.Input);
                 Posicion = Capsula.CenterOfMassPosition.ToTGCVector3();
                 CamaraInterna.PositionEye = Posicion;
-
+                RayoProximidad.Update(CamaraInterna, Posicion);
                 ActualizarOxigeno(game);
                 if (EstaVivo)
                 {
@@ -174,20 +181,34 @@ namespace CShark.Jugador
             BloquearCamara(CamaraInterna);
         }
 
+        public bool PuedeRecoger(IRecolectable recolectable) {
+            return EstaMirando(recolectable) && EstaCerca(recolectable);
+        }
+
+        private bool EstaCerca(IRecolectable recolectable) {
+            return TgcCollisionUtils.testPointSphere(recolectable.EsferaCercania, Posicion);
+        }
+        
+        private bool EstaMirando(IRecolectable recolectable) {
+            return RayoProximidad.Intersecta(recolectable.Box);
+        }
+
         public int CuantosTiene(ERecolectable material) {
             return Inventario.CuantosTiene(material);
         }
-        
+
+        private float time = 0;
+
         public void Render() {
             if (EstaVivo)
             {
+                RayoProximidad.Render();
                 Arma.Render();
                 HUD.Render();
             }
         }
 
-        public bool Sumergido => Posicion.Y < 2800f;
-        public bool RozandoSuperficie => Posicion.Y <= 2900f && Posicion.Y >= 2700f;
+
 
     }
 }

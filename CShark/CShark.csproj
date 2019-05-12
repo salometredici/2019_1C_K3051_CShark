@@ -117,7 +117,6 @@
     <Compile Include="Items\ICrafteable.cs" />
     <Compile Include="Items\Crafteables\Oxigeno.cs" />
     <Compile Include="Items\IRecolectable.cs" />
-    <Compile Include="Items\LuzItem.cs" />
     <Compile Include="Items\Recolectable.cs" />
     <Compile Include="Items\RecolectableAnimado.cs" />
     <Compile Include="Items\Recolectables\Bateria.cs" />
@@ -125,6 +124,7 @@
     <Compile Include="Items\Recolectables\Chip.cs" />
     <Compile Include="Items\Recolectables\Wumpa.cs" />
     <Compile Include="Jugador\Arma.cs" />
+    <Compile Include="Jugador\Camara\RayoProximidad.cs" />
     <Compile Include="Jugador\Crossbow.cs" />
     <Compile Include="Jugador\HUD.cs" />
     <Compile Include="Jugador\Inventario.cs" />
@@ -189,7 +189,7 @@
     <Compile Include="UI\Menu\Boton.cs" />
     <Compile Include="UI\Menu\MenuPrincipal.cs" />
     <Compile Include="Model\GameModel.cs" />
-    <Compile Include="Model\FpsCamera.cs" />
+    <Compile Include="Jugador\Camara\TgcFpsCamera.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Variable.cs" />
@@ -373,6 +373,7 @@
     <Content Include="Media\Menu\slider3.png" />
     <Content Include="Media\Recolectables\LetraE-TgcScene.xml" />
     <Content Include="Media\Recolectables\Textures\Breccia-Marble-Floor-Tile.jpg" />
+    <Content Include="Media\Textures\crosshair.png" />
     <Content Include="Media\Textures\mesa.png" />
     <Content Include="Media\Music\Deep_Trouble.mp3" />
     <Content Include="Media\Music\UnderPressure_DeepTrouble.mp3" />
