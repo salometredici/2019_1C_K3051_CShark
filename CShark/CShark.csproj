@@ -117,6 +117,8 @@
     <Compile Include="Items\ICrafteable.cs" />
     <Compile Include="Items\Crafteables\Oxigeno.cs" />
     <Compile Include="Items\IRecolectable.cs" />
+    <Compile Include="UI\HUD\MensajePlus.cs" />
+    <Compile Include="UI\HUD\MensajesContainer.cs" />
     <Compile Include="Items\Recolectable.cs" />
     <Compile Include="Items\RecolectableAnimado.cs" />
     <Compile Include="Items\Recolectables\Bateria.cs" />
@@ -311,6 +313,10 @@
     <Content Include="Media\Animales\Tiburon-TgcScene.xml" />
     <Content Include="Media\Boxes Colision\Textures\empty.png" />
     <Content Include="Media\Boxes Colision\Tiburon-TgcScene.xml" />
+    <Content Include="Media\Items\bateria.png" />
+    <Content Include="Media\Items\burbuja.png" />
+    <Content Include="Media\Items\chip.png" />
+    <Content Include="Media\Items\wumpa.png" />
     <Content Include="Media\MenuCrafteo\craftFocus.png" />
     <Content Include="Media\Heightmaps\heightmap.JPG" />
     <Content Include="Media\Heightmaps\wave bump.png" />

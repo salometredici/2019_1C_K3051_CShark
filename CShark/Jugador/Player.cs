@@ -132,7 +132,7 @@ namespace CShark.Jugador
                 if (EstaVivo)
                 {
                     Arma.Update(game);
-                    HUD.Update(Vida, Oxigeno);
+                    HUD.Update(Vida, Oxigeno, game.ElapsedTime);
                 }
                 else
                 {
@@ -144,6 +144,7 @@ namespace CShark.Jugador
 
         public void Recoger(Recolectable item) {
             Inventario.Agregar(item);
+            HUD.PopMensaje(item.Tipo);
         }
 
         public void AgregarItem(ECrafteable tipo) {
