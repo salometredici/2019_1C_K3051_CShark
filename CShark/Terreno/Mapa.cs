@@ -13,6 +13,7 @@ using TGC.Core.Geometry;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 using TGC.Core.Shaders;
+using TGC.Core.Terrain;
 
 namespace CShark.Terreno
 {
@@ -25,45 +26,45 @@ namespace CShark.Terreno
 
         private SkyBox Skybox;
 
-        private Terrain FondoDelMar;
+        private TgcSimpleTerrain Terreno;
         private ColisionesTerreno Colisiones;
         private Isla Isla;
         private TgcScene Rocas;
         private TgcScene Extras;
         public Superficie Superficie;
 
+        public static Mapa Instancia { get; } = new Mapa();
 
-        private static Mapa instancia;
+        private Mapa() { }
 
-        public static Mapa Instancia {
-            get {
-                if (instancia == null)
-                    instancia = new Mapa();
-                return instancia;
-            }
+        public void CargarSkybox() {
+            Centro = Terreno.Center;
+            Skybox = new SkyBox(Centro);
+            Box = TGCBox.fromSize(Skybox.Center, Skybox.Size);
+            Isla = new Isla(this);
         }
 
-        private Mapa() {
-            FondoDelMar = new Terrain();
-            CargarTerreno(FondoDelMar, @"Mapa\Textures\hm.jpg", @"Mapa\Textures\seafloor.jpg", 10000 / 512f, 1f, TGCVector3.Empty);
-            Centro = FondoDelMar.Center;
-            Skybox = new SkyBox(Centro);
-            Box = TGCBox.fromSize(Skybox.Center, Skybox.Size);            
+        public void CargarTerreno() {
+            var tamañoHM = 100f;
+            Terreno = new TgcSimpleTerrain();
+            CargarTerreno(Terreno, @"Mapa\Textures\fondo.png", @"Mapa\Textures\seafloor.jpg", 60000 / tamañoHM, 1f, TGCVector3.Empty);
             Colisiones = new ColisionesTerreno();
-            Colisiones.Init(FondoDelMar.getData());
-            Isla = new Isla(this);
+            Colisiones.Init(Terreno.getData());
+        }
+
+        public void CargarSuperficie() {
             Superficie = new Superficie();
             Superficie.CargarTerrains();
-            CargarParedes();
         }
-
-        private void CargarParedes() {
-            foreach (var face in Skybox.FacesToRender) {
+        
+        public void CargarParedes(TgcScene paredes) {
+            foreach (var face in paredes.Meshes) {
                 var size = face.BoundingBox.calculateSize();
                 var position = face.BoundingBox.Position;
                 var body = BulletRigidBodyFactory.Instance.CreateBox(size, 0, position, 0, 0, 0, 1, false);
                 AgregarBody(body);
             }
+            paredes.DisposeAll();
         }
 
         public void CargarRocas(TgcScene rocas) {
@@ -106,7 +107,7 @@ namespace CShark.Terreno
         }
 
         public void Render(Player player) {
-            FondoDelMar.Render();
+            Terreno.Render();
             Skybox.Render();
             Isla.Render();
             Rocas.RenderAll();
@@ -115,7 +116,7 @@ namespace CShark.Terreno
         }
 
         public void Dispose() {
-            FondoDelMar.Dispose();
+            Terreno.Dispose();
             Skybox.Dispose();
             Isla.Dispose();
             Rocas.DisposeAll();
@@ -123,11 +124,10 @@ namespace CShark.Terreno
             Superficie.Dispose();
         }
 
-        private void CargarTerreno(Terrain terrain, string heightMapDir, string textureDir, float xz, float y, TGCVector3 position) {
-            var loader = new TgcSceneLoader(); // No lo estamos usando ahora
-            terrain.AlphaBlendEnable = true;
-            terrain.loadHeightmap(mediaDir + heightMapDir, xz, y, position);
-            terrain.loadTexture(mediaDir + textureDir);
+        private void CargarTerreno(TgcSimpleTerrain terreno, string heightMapDir, string textureDir, float xz, float y, TGCVector3 position) {
+            terreno.AlphaBlendEnable = true;
+            terreno.loadHeightmap(mediaDir + heightMapDir, xz, y, position);
+            terreno.loadTexture(mediaDir + textureDir);
         }
     }
 }

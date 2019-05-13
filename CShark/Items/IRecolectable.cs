@@ -24,6 +24,7 @@ namespace CShark.Items
         Bateria,
         Burbuja,
         Chip,
-        Wumpa
+        Wumpa,
+        Coral
     }
 }

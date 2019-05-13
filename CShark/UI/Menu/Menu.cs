@@ -12,7 +12,7 @@ using CShark.Utils;
 
 namespace CShark.UI
 {
-    public abstract class Menu
+    public abstract class Menu : IDisposable
     {
         private readonly CustomSprite Fondo;
         protected CustomSprite Logo; // porque se va a poder modificar desde el inventario
@@ -48,6 +48,12 @@ namespace CShark.UI
             Drawer.DrawSprite(Title);
             Drawer.DrawSprite(Logo);
             Drawer.EndDrawSprite();
+        }
+
+        public void Dispose() {
+            Fondo.Dispose();
+            Logo.Dispose();
+            Title.Dispose();
         }
     }
 }

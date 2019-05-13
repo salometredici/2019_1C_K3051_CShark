@@ -92,11 +92,20 @@ namespace CShark.Managers
             }
             else
             {
-                //para que no se salga el mouse del Form
                 var viewport = D3DDevice.Instance.Device.Viewport;
                 var centroPantalla = new Point(DeviceWidth / 2, DeviceHeight / 2);
                 System.Windows.Forms.Cursor.Position = centroPantalla;
             }
         }
+
+        public void Dispose() {
+            MenuPrincipal.Dispose();
+            MenuOpciones.Dispose();
+            MenuVariables.Dispose();
+            MenuInventario.Dispose();
+            MenuCrafteo.Dispose();
+            Puntero.Dispose();
+        }
+
     }
 }

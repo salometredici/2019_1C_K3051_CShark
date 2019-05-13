@@ -7,7 +7,7 @@ using TGC.Core.Mathematica;
 
 namespace CShark.Animales
 {
-    public interface IAnimal
+    public interface IAnimal : IDisposable
     {
         void Update(float elapsedTime);
         void Render();

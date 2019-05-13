@@ -28,7 +28,7 @@ namespace CShark.Managers
             Animales = new List<Animal>();
             foreach (var mesh in Spawns.Meshes)
                 Spawnear(mesh.Name, mesh.BoundingBox.Position);
-            Spawns = null;
+            Spawns.DisposeAll();
         }
 
         private void Spawnear(string tipo, TGCVector3 posicion) {
@@ -52,6 +52,11 @@ namespace CShark.Managers
 
         public void Render(GameModel game) {
             Animales.ForEach(animal => animal.Render());
-        }   
+        }
+
+        public void Dispose() {
+            Animales.ForEach(a => a.Dispose());
+            Tiburon.Dispose();
+        }
     }
 }

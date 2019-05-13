@@ -27,7 +27,7 @@ namespace CShark.Model
         public TGCVector3 SpawnPlayer;
 
         public GameManager() {
-            PantallaCarga = new LoadingScreen(9);
+            PantallaCarga = new LoadingScreen(10);
             Initialize();
         }
 
@@ -38,36 +38,48 @@ namespace CShark.Model
         public void Update(GameModel game) {
             Managers.ForEach(m => m.Update(game));
         }
-        
+
         public async void Initialize() {
-            PantallaCarga = new LoadingScreen(9);
+            PantallaCarga = new LoadingScreen(12);
             Task task = Task.Run(() => PantallaCarga.Render());
             var loader = new TgcSceneLoader();
             var media = Game.Default.MediaDirectory;
+            PantallaCarga.Progresar("Cargando terreno...");
+            Mapa.Instancia.CargarTerreno();
+            PantallaCarga.Progresar("Cargando skybox...");
+            Mapa.Instancia.CargarSkybox();
+            PantallaCarga.Progresar("Cargando superficie...");
+            Mapa.Instancia.CargarSuperficie();
             PantallaCarga.Progresar("Cargando rocas...");
             var rocas = loader.loadSceneFromFile(media + @"Mapa\Rocas-TgcScene.xml");
             PantallaCarga.Progresar("Cargando extras...");
             var extras = loader.loadSceneFromFile(media + @"Mapa\Extras-TgcScene.xml");
             PantallaCarga.Progresar("Cargando spawns...");
-            var spawns = loader.loadSceneFromFile(media + @"Mapa\Spawns-TgcScene.xml");
-            SpawnPlayer = spawns.getMeshByName("SpawnPlayer").BoundingBox.Position;
+            var peces = loader.loadSceneFromFile(media + @"Mapa\Peces-TgcScene.xml");
+            //SpawnPlayer = spawns.getMeshByName("SpawnPlayer").BoundingBox.Position;
+            SpawnPlayer = new TGCVector3(1500f, 3500f, 0);
             PantallaCarga.Progresar("Posicionando rocas...");
             Mapa.Instancia.CargarRocas(rocas);
             PantallaCarga.Progresar("Posicionando extras...");
             Mapa.Instancia.CargarExtras(extras);
+
             Managers = new List<IManager>();
             MenuManager = new MenuManager();
-            PezManager = new FaunaManager(spawns);
-            RecolectablesManager = new RecolectablesManager();
+            PezManager = new FaunaManager(peces);
             PantallaCarga.Progresar("Cargando peces...");
             Managers.Add(PezManager);
             PezManager.Initialize();
             PantallaCarga.Progresar("Cargando menúes...");
             Managers.Add(MenuManager);
             MenuManager.Initialize();
-            PantallaCarga.Progresar("Cargando items...");
+            PantallaCarga.Progresar("Cargando recolectables...");
+            var recolectables = loader.loadSceneFromFile(media + @"Mapa\Recolectables-TgcScene.xml");
+            RecolectablesManager = new RecolectablesManager(recolectables);
             Managers.Add(RecolectablesManager);
-            RecolectablesManager.Initialize();
+            RecolectablesManager.Initialize(recolectables);
+            PantallaCarga.Progresar("Cargando paredes invisibles...");
+            var paredes = loader.loadSceneFromFile(media + @"Mapa\Paredes-TgcScene.xml");
+            Mapa.Instancia.CargarParedes(paredes);
             PantallaCarga.Progresar("Cargando audio...");
             MusicPlayer = new MusicPlayer();
             await task;

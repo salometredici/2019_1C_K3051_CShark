@@ -10,6 +10,9 @@ using CShark.Terreno;
 using CShark.UI;
 using CShark.UI.HUD;
 using CShark.Jugador;
+using Microsoft.DirectX.Direct3D;
+using TGC.Core.Textures;
+using Microsoft.DirectX;
 
 namespace CShark.Model
 {
@@ -33,7 +36,14 @@ namespace CShark.Model
         public override void Init() {
             Cursor.Hide();
             PantallaMuerte = new PantallaMuerte();            
-            GameManager = new GameManager(); 
+            GameManager = new GameManager();
+            var device = D3DDevice.Instance.Device;
+            float ancho = device.CreationParameters.FocusWindow.Width;
+            float alto = device.CreationParameters.FocusWindow.Height;
+            var anchoAltoMapa = 60000f;
+            var farDistance = FastMath.Sqrt(anchoAltoMapa * anchoAltoMapa * 2);
+            var transformacion= Matrix.PerspectiveFovLH(FastMath.QUARTER_PI, ancho / alto, 1f, farDistance);
+            device.Transform.Projection = transformacion;
             Start();
         }
 
@@ -67,7 +77,7 @@ namespace CShark.Model
         }
 
         private void Start() {
-            var posInicial = new TGCVector3(1500f, 3500f, 0);
+            var posInicial = GameManager.SpawnPlayer;
             Player = new Player(posInicial, 500, 1000, Input);
             Camara = Player.CamaraInterna;
         }
@@ -75,7 +85,7 @@ namespace CShark.Model
         public override void Render() {
 
             PreRender();
-            
+
             GameManager.Render(this);
             Mapa.Render(Player);
 

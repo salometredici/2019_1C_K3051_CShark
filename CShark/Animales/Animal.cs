@@ -54,6 +54,10 @@ namespace CShark.Animales
             return TGCMatrix.RotationYawPitchRoll(Rotacion.Y, Rotacion.X, Rotacion.Z) * TGCMatrix.Translation(Posicion);
         }
 
+        public void Dispose() {
+            Mesh.Dispose();
+        }
+
         public TGCVector3 Posicion {
             get { return Mesh.Position; }
             set { Mesh.Position = value; }

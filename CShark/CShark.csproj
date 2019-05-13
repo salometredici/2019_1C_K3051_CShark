@@ -117,6 +117,10 @@
     <Compile Include="Items\ICrafteable.cs" />
     <Compile Include="Items\Crafteables\Oxigeno.cs" />
     <Compile Include="Items\IRecolectable.cs" />
+    <Compile Include="Items\RecolectableEstatico.cs" />
+    <Compile Include="Items\Recolectables\Coral.cs" />
+    <Compile Include="Terreno\TerrainExtension.cs" />
+    <Compile Include="Terreno\WaveTerrain.cs" />
     <Compile Include="UI\HUD\MensajePlus.cs" />
     <Compile Include="UI\HUD\MensajesContainer.cs" />
     <Compile Include="Items\Recolectable.cs" />
@@ -317,6 +321,10 @@
     <Content Include="Media\Items\burbuja.png" />
     <Content Include="Media\Items\chip.png" />
     <Content Include="Media\Items\wumpa.png" />
+    <Content Include="Media\Mapa\Paredes-TgcScene.xml" />
+    <Content Include="Media\Mapa\Peces-TgcScene.xml" />
+    <Content Include="Media\Mapa\Recolectables-TgcScene.xml" />
+    <Content Include="Media\Mapa\Textures\fondo.png" />
     <Content Include="Media\MenuCrafteo\craftFocus.png" />
     <Content Include="Media\Heightmaps\heightmap.JPG" />
     <Content Include="Media\Heightmaps\wave bump.png" />
@@ -331,7 +339,6 @@
     <Content Include="Media\Mapa\Extras-TgcScene.xml" />
     <Content Include="Media\Mapa\Textures\arena.png" />
     <Content Include="Media\Mapa\Rocas-TgcScene.xml" />
-    <Content Include="Media\Mapa\Spawns-TgcScene.xml" />
     <Content Include="Media\Mapa\Textures\1.jpg" />
     <Content Include="Media\Mapa\Textures\10.png" />
     <Content Include="Media\Mapa\Textures\2.jpg" />
@@ -348,7 +355,6 @@
     <Content Include="Media\Mapa\Textures\texturaAgua.png" />
     <Content Include="Media\Mapa\Textures\texturita2.jpg" />
     <Content Include="Media\Mapa\Textures\water.png" />
-    <Content Include="Media\Mapa\Textures\waveHeightmap.png" />
     <Content Include="Media\MenuCrafteo\cerrar.png" />
     <Content Include="Media\MenuCrafteo\craft.png" />
     <Content Include="Media\MenuCrafteo\fondo.png" />
@@ -422,6 +428,7 @@
     <Content Include="Media\Textures\water.jpg" />
     <Content Include="Media\Textures\Water_Texture.jpg" />
     <Content Include="Media\vegetation-TgcScene.xml" />
+    <Content Include="Media\Mapa\Textures\waveHeightmap.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
