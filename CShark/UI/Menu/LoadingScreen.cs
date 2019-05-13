@@ -121,7 +121,6 @@ namespace CShark.UI
                 var ancho = (float)Progreso / Operaciones * Barra.Bitmap.Width;
                 Barra.SrcRect = new Rectangle(0, 0, (int)ancho, Barra.Bitmap.Height);
             }
-            Thread.Sleep(500); //para que se vea algo..
             if (Progreso >= Operaciones)
                 Cargado = true;
         }

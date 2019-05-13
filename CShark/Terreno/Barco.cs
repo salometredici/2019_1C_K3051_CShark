@@ -20,20 +20,17 @@ namespace CShark.Terreno
         private RigidBody Body;
 
         //referencia porque esta dentro de su constructor..
-        public Barco(Mapa mapa) {
+        public Barco(TgcMesh mesh) {
             var loader = new TgcSceneLoader();
-            var barco = loader.loadSceneFromFile(Game.Default.MediaDirectory + "bot-TgcScene.xml").Meshes[0];
-            barco.Position = new TGCVector3(2000f, 2950f, -500f);
-            barco.Scale = new TGCVector3(0.15f, 0.15f, 0.15f);
-            barco.RotateY(180f);
-            Mesh = barco;
-            Mesa = new MesaCrafteo(barco.Position + new TGCVector3(0, 100, -250f));
+            var mesa = loader.loadSceneFromFile(Game.Default.MediaDirectory + @"Mapa\Mesa-TgcScene.xml").Meshes[0];
+            Mesh = mesh;
+            Mesa = new MesaCrafteo(mesa);
             var size = Mesh.BoundingBox.calculateSize() - new TGCVector3(0, 250, 0);
             var pos = Mesh.BoundingBox.Position;
             Body = BulletRigidBodyFactory.Instance.CreateBox(new TGCVector3(size.X,size.Y -20f, size.Z), 0, pos, 0, 0, 0, 0.5f, false);
-            mapa.AgregarBody(Body);
-            var mesaRB = BulletRigidBodyFactory.Instance.CreateBox(Mesa.Box.Size, 1f, Mesa.Box.Position, 0, 0, 0, 0.5f, false);
-            mapa.AgregarBody(mesaRB);
+            var mesaRB = BulletRigidBodyFactory.Instance.CreateBox(Mesa.Size, 1f, Mesa.Position, 0, 0, 0, 0.5f, false);
+            Mapa.Instancia.AgregarBody(Body);
+            Mapa.Instancia.AgregarBody(mesaRB);
         }
         
         public void Update(GameModel game) {

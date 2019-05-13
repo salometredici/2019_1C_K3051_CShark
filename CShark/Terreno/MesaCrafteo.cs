@@ -23,17 +23,16 @@ namespace CShark.Terreno
 {
     public class MesaCrafteo : IDisposable
     {
-        public TGCBox Box;
+        public TgcMesh Mesh;
         private TgcBoundingSphere EsferaCercania;
         private TgcText2D TextoPresione;
         private bool MostrarTexto = false;
+        public TGCVector3 Size => Mesh.BoundingBox.calculateSize();
+        public TGCVector3 Position => Mesh.BoundingBox.calculateBoxCenter();
 
-        public MesaCrafteo(TGCVector3 posicion) {
-            var textura = TgcTexture.createTexture(Game.Default.MediaDirectory + @"Textures\mesa.png");
-            var p = posicion + new TGCVector3(250, 165, 0);
-            Box = TGCBox.fromSize(p, new TGCVector3(200, 200, 200), textura);
-            Box.Transform = TGCMatrix.Translation(p);
-            EsferaCercania = new TgcBoundingSphere(posicion, 750f);
+        public MesaCrafteo(TgcMesh mesh) {
+            Mesh = mesh;
+            EsferaCercania = new TgcBoundingSphere(Position, 3000f);
             EsferaCercania.setRenderColor(Color.Red);
             InicializarTexto();
         }
@@ -67,14 +66,14 @@ namespace CShark.Terreno
         }
 
         public void Render() {
-            Box.Render();
-            EsferaCercania.Render();
+            Mesh.Render();
+            //EsferaCercania.Render();
             if (MostrarTexto)
                 TextoPresione.render();
         }
 
         public void Dispose() {
-            Box.Dispose();
+            Mesh.Render();
             EsferaCercania.Dispose();
         }
 

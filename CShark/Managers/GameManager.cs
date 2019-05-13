@@ -40,7 +40,7 @@ namespace CShark.Model
         }
 
         public async void Initialize() {
-            PantallaCarga = new LoadingScreen(12);
+            PantallaCarga = new LoadingScreen(13);
             Task task = Task.Run(() => PantallaCarga.Render());
             var loader = new TgcSceneLoader();
             var media = Game.Default.MediaDirectory;
@@ -57,7 +57,7 @@ namespace CShark.Model
             PantallaCarga.Progresar("Cargando spawns...");
             var peces = loader.loadSceneFromFile(media + @"Mapa\Peces-TgcScene.xml");
             //SpawnPlayer = spawns.getMeshByName("SpawnPlayer").BoundingBox.Position;
-            SpawnPlayer = new TGCVector3(1500f, 3500f, 0);
+            
             PantallaCarga.Progresar("Posicionando rocas...");
             Mapa.Instancia.CargarRocas(rocas);
             PantallaCarga.Progresar("Posicionando extras...");
@@ -69,6 +69,10 @@ namespace CShark.Model
             PantallaCarga.Progresar("Cargando peces...");
             Managers.Add(PezManager);
             PezManager.Initialize();
+            PantallaCarga.Progresar("Cargando barquito...");
+            var barco = loader.loadSceneFromFile(media + @"Mapa\Barco-TgcScene.xml").Meshes[0];
+            SpawnPlayer = barco.BoundingBox.calculateBoxCenter() + new TGCVector3(0, 3000, 0);
+            Mapa.Instancia.CargarBarco(barco);
             PantallaCarga.Progresar("Cargando menúes...");
             Managers.Add(MenuManager);
             MenuManager.Initialize();

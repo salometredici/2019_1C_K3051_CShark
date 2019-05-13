@@ -149,11 +149,9 @@
     <Compile Include="Animales\Peces\PezPayaso.cs" />
     <Compile Include="Animales\Peces\PezTropical.cs" />
     <Compile Include="Model\Terrain.cs" />
-    <Compile Include="Model\TriangleSpherePhysics.cs" />
     <Compile Include="Animales\IAnimal.cs" />
     <Compile Include="Animales\Animal.cs" />
     <Compile Include="Terreno\Barco.cs" />
-    <Compile Include="Terreno\Isla.cs" />
     <Compile Include="Terreno\Mapa.cs" />
     <Compile Include="UI\Menu\MenuCrafteo.cs" />
     <Compile Include="Terreno\MesaCrafteo.cs" />
@@ -224,6 +222,7 @@
     <None Include="Media\Animales\Textures\greatwhiteshark.tga" />
     <None Include="Media\Animales\Textures\greatwhiteshark_Eye.tga" />
     <None Include="Media\Animales\Textures\greatwhiteshark_teeth.tga" />
+    <None Include="Media\Mapa\Textures\boat_d.tga" />
     <None Include="Media\Mapa\Textures\container_D.tga" />
     <None Include="Media\Mapa\Textures\rocks_01_dif.tga" />
     <None Include="Media\Otros\Textures\Crossbow_01_D.tga" />
@@ -321,14 +320,17 @@
     <Content Include="Media\Items\burbuja.png" />
     <Content Include="Media\Items\chip.png" />
     <Content Include="Media\Items\wumpa.png" />
+    <Content Include="Media\Mapa\Barco-TgcScene.xml" />
+    <Content Include="Media\Mapa\Mesa-TgcScene.xml" />
     <Content Include="Media\Mapa\Paredes-TgcScene.xml" />
     <Content Include="Media\Mapa\Peces-TgcScene.xml" />
     <Content Include="Media\Mapa\Recolectables-TgcScene.xml" />
-    <Content Include="Media\Mapa\Textures\fondo.png" />
+    <Content Include="Media\Mapa\Textures\DefaultMaterial_Base_Color.png" />
+    <Content Include="Media\Mapa\Textures\mesa.png" />
+    <Content Include="Media\Mapa\Textures\terreno.png" />
     <Content Include="Media\MenuCrafteo\craftFocus.png" />
     <Content Include="Media\Heightmaps\heightmap.JPG" />
     <Content Include="Media\Heightmaps\wave bump.png" />
-    <Content Include="Media\Mapa\Textures\hm.jpg" />
     <Content Include="Media\HUD\Muerte\fondo.png" />
     <Content Include="Media\HUD\Muerte\franja.png" />
     <Content Include="Media\HUD\Muerte\texto.png" />
@@ -337,7 +339,6 @@
     <Content Include="Media\HUD\vidaBarra.png" />
     <Content Include="Media\HUD\vidaFondo.png" />
     <Content Include="Media\Mapa\Extras-TgcScene.xml" />
-    <Content Include="Media\Mapa\Textures\arena.png" />
     <Content Include="Media\Mapa\Rocas-TgcScene.xml" />
     <Content Include="Media\Mapa\Textures\1.jpg" />
     <Content Include="Media\Mapa\Textures\10.png" />
@@ -352,9 +353,6 @@
     <Content Include="Media\Mapa\Textures\side.jpg" />
     <Content Include="Media\Mapa\Textures\stone_01.jpg" />
     <Content Include="Media\Mapa\Textures\stone_01_albedo.jpg" />
-    <Content Include="Media\Mapa\Textures\texturaAgua.png" />
-    <Content Include="Media\Mapa\Textures\texturita2.jpg" />
-    <Content Include="Media\Mapa\Textures\water.png" />
     <Content Include="Media\MenuCrafteo\cerrar.png" />
     <Content Include="Media\MenuCrafteo\craft.png" />
     <Content Include="Media\MenuCrafteo\fondo.png" />

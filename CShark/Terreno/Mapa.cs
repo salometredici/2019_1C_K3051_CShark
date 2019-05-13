@@ -28,7 +28,7 @@ namespace CShark.Terreno
         private SkyBox Skybox;
         private TgcSimpleTerrain Terreno;
         private ColisionesTerreno Colisiones;
-        private Isla Isla;
+        private Barco Barco;
         private TgcScene Rocas;
         private TgcScene Extras;
         public Superficie Superficie;
@@ -41,13 +41,17 @@ namespace CShark.Terreno
             Centro = Terreno.Center;
             Skybox = new SkyBox(Centro);
             Box = TGCBox.fromSize(Skybox.Center, Skybox.Size);
-            Isla = new Isla(this);
+
+        }
+
+        public void CargarBarco(TgcMesh mesh) {
+            Barco = new Barco(mesh);
         }
 
         public void CargarTerreno() {
-            var tamañoHM = 100f;
+            var tamañoHM = 1024f;
             Terreno = new TgcSimpleTerrain();
-            CargarTerreno(Terreno, @"Mapa\Textures\fondo.png", @"Mapa\Textures\seafloor.jpg", 60000 / tamañoHM, 1f, TGCVector3.Empty);
+            CargarTerreno(Terreno, @"Mapa\Textures\terreno.png", @"Mapa\Textures\seafloor.jpg", 100000 / tamañoHM, 22f, TGCVector3.Empty);
             Colisiones = new ColisionesTerreno();
             Colisiones.Init(Terreno.getData());
         }
@@ -55,10 +59,6 @@ namespace CShark.Terreno
         public void CargarSuperficie() {
             Superficie = new Superficie();
             Superficie.CargarTerrains();
-            /*var olas = BulletRigidBodyFactory.Instance.CreateSurfaceFromHeighMap(Superficie.Terrain.getData());
-            AgregarBody(olas);
-            Colisiones.OlasRB = olas;*/
-            //no tiene sentido porque la posicion de las olas la hago desde el shader. por ahora 
         }
 
         public void CargarParedes(TgcScene paredes) {
@@ -88,7 +88,7 @@ namespace CShark.Terreno
                 Colisiones.CambiarGravedad(Constants.UnderWaterGravity);
             }
             Superficie.Update(elapsedTime);
-            Isla.Update(game);
+            Barco.Update(game);
             Colisiones.Update();
         }
 
@@ -121,7 +121,7 @@ namespace CShark.Terreno
         public void Render(Player player) {
             Terreno.Render();
             Skybox.Render();
-            Isla.Render();
+            Barco.Render();
             Rocas.RenderAll();
             Extras.RenderAll();
             Superficie.Render();
@@ -130,7 +130,7 @@ namespace CShark.Terreno
         public void Dispose() {
             Terreno.Dispose();
             Skybox.Dispose();
-            Isla.Dispose();
+            Barco.Dispose();
             Rocas.DisposeAll();
             Extras.DisposeAll();
             Superficie.Dispose();

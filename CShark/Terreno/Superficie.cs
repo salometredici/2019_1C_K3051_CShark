@@ -19,29 +19,25 @@ namespace CShark.Terreno
         public TgcSimpleTerrain Terrain;
         private float Time = 0;
         private Effect Effect;
-        public float Altura = 2800f;
+        public float Altura = 4000f;
 
-        private readonly float TamañoHM = 512f;
+        //private readonly float TamañoHM = 512f;
+        private readonly float TamañoHM = 128f;
 
         public Superficie() {
-            Effect = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "CopiaParaNoPisarElTuyo.fx");
-        }
-
-        private float AlturaTerrain() {
-            int[,] data = Terrain.HeightmapData;
-            float suma = 0f;
-            for (int i = 0; i < TamañoHM; i++)
-                suma += data[i, i];
-            return suma / TamañoHM;
+            Effect = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "WaveShader.fx");
         }
 
         public void CargarTerrains() {
-            var textura = Game.Default.MediaDirectory + @"Mapa\Textures\texturita2.jpg";
-            var heightmap = Game.Default.MediaDirectory + @"Mapa\Textures\waveHeightmap.png";
+            //var textura = Game.Default.MediaDirectory + @"Mapa\Textures\waterTexture.jpg";
+            //var heightmap = Game.Default.MediaDirectory + @"Mapa\Textures\waveHeightmap.png";
+            //mas eficientes ponele
+            var textura = Game.Default.MediaDirectory + @"Mapa\Textures\wave1.jpg";
+            var heightmap = Game.Default.MediaDirectory + @"Mapa\Textures\wave2.png";
             Terrain = new TgcSimpleTerrain();
             Terrain.loadTexture(textura);
-            Terrain.loadHeightmap(heightmap, 10000 / 512f, 2, new TGCVector3(0, 0, 0));
-            Terrain.loadHeightmap(heightmap, 10000 / 512f, 2, new TGCVector3(0, -AlturaTerrain() / 2, 0));
+            //Terrain.loadHeightmap(heightmap, 10000 / TamañoHM, 2, TGCVector3.Empty);
+            Terrain.loadHeightmap(heightmap, 100000 / TamañoHM, 1, TGCVector3.Empty);
             Terrain.AlphaBlendEnable = true;
             Terrain.Effect = Effect;
             Terrain.Technique = "WaveEffect";

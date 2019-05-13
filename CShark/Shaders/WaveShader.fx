@@ -36,11 +36,11 @@ VS_OUTPUT vs_main(VS_INPUT Input)
 {
     VS_OUTPUT Output;
     
-    float altura = 2800;
-   
+    float altura = 4000;
     Input.Position.x += sin(time) * 30;
     Input.Position.y += cos(time) * sign(Input.Position.y - 20);
-    float variacion = Input.Position.y > 0 ? cos(time) * 1.1 : cos(time) * 0.9;
+    Input.Position.z += sin(time);
+    float variacion = Input.Position.y > 0 ? cos(time) * 2.5 : cos(time) * 1.25;
     Input.Position.y *= variacion;
     Input.Position.y += altura;
 
@@ -54,7 +54,7 @@ VS_OUTPUT vs_main(VS_INPUT Input)
 float4 ps_main(float3 Texcoord : TEXCOORD0) : COLOR0
 {
     float4 color = tex2D(diffuseMap, Texcoord);
-    color.a = 0.7;
+    color.a = 0.6;
     return color;
 }
 

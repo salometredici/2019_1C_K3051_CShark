@@ -55,7 +55,7 @@ namespace CShark.Fisica.Colisiones
             //Creamos el terreno
             FondoDelMarRB = BulletRigidBodyFactory.Instance.CreateSurfaceFromHeighMap(DataTriangulos);
 
-            World.StepSimulation(1 / Configuracion.Instancia.FPS.Valor, 100);
+            //World.StepSimulation(1 / 60f, 100);
 
             World.AddRigidBody(FondoDelMarRB);
         }
@@ -85,7 +85,7 @@ namespace CShark.Fisica.Colisiones
         }
 
         public void Update() {
-            World.StepSimulation(1 / Configuracion.Instancia.FPS.Valor, 100);
+            World.StepSimulation(1 / 60f, 100);
         }
 
         public void Dispose() {
