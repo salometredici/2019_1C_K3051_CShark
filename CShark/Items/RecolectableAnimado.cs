@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TGC.Core.BoundingVolumes;
 using TGC.Core.Interpolation;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
@@ -22,9 +23,13 @@ namespace CShark.Items
         private InterpoladorVaiven Interpolador;
         private TgcMesh LetraE1;
         private TgcMesh LetraE2;
+        private TGCVector3 escalaBox; //un poco mas grande para agarre
 
+        public override TgcBoundingAxisAlignBox Box => _box;
         public override TGCVector3 Posicion => Mesh.Position;
         public override TGCVector3 Rotacion => Mesh.Rotation;
+
+        private TgcBoundingAxisAlignBox _box;
 
         public RecolectableAnimado(string mesh, float _escala, TGCVector3 _posicion, float _offsetLetra) : base(_posicion) {
             var loader = new TgcSceneLoader();
@@ -38,16 +43,19 @@ namespace CShark.Items
             rotacion = 0f;
             posicion = _posicion;
             offsetLetra = _offsetLetra;
+            escalaBox = new TGCVector3(1.3f, 1.3f, 1.3f);
             Interpolador = new InterpoladorVaiven {
                 Min = -30f,
                 Max = 30f,
                 Current = 0,
                 Speed = 135f
             };
+            _box = GenerarBox();
+            _box.transform(TGCMatrix.Scaling(escala) * TGCMatrix.Translation(posicion));
         }
 
-        private TGCMatrix GetLetraTransform(float offsetX) {
-            var yRot = TGCMatrix.RotationY(FastMath.PI / 2);
+        private TGCMatrix GetLetraTransform(float offsetX, float rot) {
+            var yRot = TGCMatrix.RotationY(FastMath.PI / 2 + rot);
             var offset = TGCMatrix.Translation(new TGCVector3(offsetX, 0, 0));
             var orbita = TGCMatrix.RotationY(rotacion);
             var reposicion = TGCMatrix.Translation(posicion);
@@ -61,12 +69,23 @@ namespace CShark.Items
             return yRot * scale * pos;
         }
 
+        private TgcBoundingAxisAlignBox GenerarBox() {
+            var size = Mesh.BoundingBox.calculateSize();
+            var lado = size.X > size.Y ? size.X : size.Y;
+            lado = size.Z > lado ? size.Z : lado;
+            var centro = Mesh.BoundingBox.calculateBoxCenter();
+            var m = lado; //escalar si quiero..
+            var pmin = new TGCVector3(centro.X - m, centro.Y - m, centro.Z - m);
+            var pmax = new TGCVector3(centro.X + m, centro.Y + m, centro.Z + m);
+            return new TgcBoundingAxisAlignBox(pmin, pmax);
+        }
+
         public override void Render(GameModel game) {
             if (!Recogido) {
                 rotacion += game.ElapsedTime * 2f;
                 Mesh.Transform = GetMeshTransform(game.ElapsedTime);
-                LetraE1.Transform = GetLetraTransform(offsetLetra);
-                LetraE2.Transform = GetLetraTransform(-offsetLetra);
+                LetraE1.Transform = GetLetraTransform(offsetLetra, 0);
+                LetraE2.Transform = GetLetraTransform(-offsetLetra, FastMath.PI);
                 Mesh.Render();
                 if (PuedeRecoger(game.Player)) {
                     LetraE1.Render();

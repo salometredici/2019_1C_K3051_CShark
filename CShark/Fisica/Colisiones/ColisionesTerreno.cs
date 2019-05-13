@@ -1,6 +1,7 @@
 ﻿using BulletSharp;
 using BulletSharp.Math;
 using CShark.Managers;
+using CShark.Model;
 using CShark.NPCs.Enemigos;
 using CShark.Utils;
 using Microsoft.DirectX.Direct3D;

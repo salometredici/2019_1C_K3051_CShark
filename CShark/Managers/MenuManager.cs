@@ -40,10 +40,11 @@ namespace CShark.Managers
             
             var config = Configuracion.Instancia;
 
-            MenuOpciones.AgregarCheckbox(new Checkbox(config.ModoDios, ScreenCenter.X, 100));
-            MenuOpciones.AgregarCheckbox(new Checkbox(config.Niebla, ScreenCenter.X, 200));
-            MenuOpciones.AgregarCheckbox(new Checkbox(config.PostProcesadoCasco, ScreenCenter.X, 300));
-            MenuOpciones.AgregarCheckbox(new Checkbox(config.MotionBlur, ScreenCenter.X, 400));
+            MenuOpciones.AgregarCheckbox(new Checkbox(config.MostrarRayo, ScreenCenter.X, 100));
+            MenuOpciones.AgregarCheckbox(new Checkbox(config.ModoDios, ScreenCenter.X, 200));
+            MenuOpciones.AgregarCheckbox(new Checkbox(config.Niebla, ScreenCenter.X, 300));
+            MenuOpciones.AgregarCheckbox(new Checkbox(config.PostProcesadoCasco, ScreenCenter.X, 400));
+            MenuOpciones.AgregarCheckbox(new Checkbox(config.MotionBlur, ScreenCenter.X, 500));
 
             MenuVariables.AgregarSlider(new Slider(config.VelocidadRotacion, 0.05f, 0.2f, ScreenCenter.X, 100));
             MenuVariables.AgregarSlider(new Slider(config.VelocidadMovimiento, 200, 1000, ScreenCenter.X, 200));

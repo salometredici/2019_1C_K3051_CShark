@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using CShark.Model;
 using CShark.Variables;
 
-namespace CShark.Managers
+namespace CShark.Model
 {
-    public class Configuracion {
+    public class Configuracion
+    {
         public Variable<float> VelocidadMovimiento;
         public Variable<float> VelocidadRotacion;
         public Variable<bool> ModoDios;
@@ -16,6 +17,7 @@ namespace CShark.Managers
         public Variable<bool> PostProcesadoCasco;
         public Variable<bool> MotionBlur;
         public Variable<float> FPS;
+        public Variable<bool> MostrarRayo;
 
         private static Configuracion instancia;
 
@@ -35,6 +37,7 @@ namespace CShark.Managers
             PostProcesadoCasco = new Variable<bool>("Post Procesado (Casco)", false);
             MotionBlur = new Variable<bool>("Motion Blur", false);
             FPS = new Variable<float>("Cuadros por segundo", 60f);
+            MostrarRayo = new Variable<bool>("Mostrar rayo de agarre", false);
         }
     }
 }

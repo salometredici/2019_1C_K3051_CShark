@@ -20,7 +20,7 @@ namespace CShark.Model
     public class TgcFpsCamera : TgcCamera
     {
         public TGCMatrix cameraRotation;
-        private TGCVector3 directionView;
+        public TGCVector3 directionView;
         public float leftrightRot;
         public float updownRot;
         public TGCVector3 PositionEye;
@@ -34,8 +34,8 @@ namespace CShark.Model
             Player = player;
             PositionEye = player.Posicion;
             directionView = new TGCVector3(0, 0, -1);
-            leftrightRot = FastMath.PI_HALF;
-            updownRot = -FastMath.PI / 10.0f;
+            leftrightRot = 0;
+            updownRot = 0;
             cameraRotation = TGCMatrix.RotationX(updownRot) * TGCMatrix.RotationY(leftrightRot);
             VelocidadRotacion = Configuracion.Instancia.VelocidadRotacion;
         }
