@@ -52,7 +52,7 @@ namespace CShark.Terreno
 
         public void Render() {
             ActivarAlphaBlend();
-            //Terrain.Render();
+            Terrain.Render();
             DesactivarAlphaBlend();
         }
 

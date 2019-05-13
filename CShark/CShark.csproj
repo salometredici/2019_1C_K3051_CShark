@@ -133,7 +133,6 @@
     <Compile Include="Jugador\Crossbow.cs" />
     <Compile Include="Jugador\HUD.cs" />
     <Compile Include="Jugador\Inventario.cs" />
-    <Compile Include="Jugador\SphereCollisionManager.cs" />
     <Compile Include="Managers\RecolectablesManager.cs" />
     <Compile Include="Model\Configuracion.cs" />
     <Compile Include="Managers\IManager.cs" />

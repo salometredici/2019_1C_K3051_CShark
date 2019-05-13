@@ -67,7 +67,7 @@ namespace CShark.Terreno
 
         public void Render() {
             Mesh.Render();
-            //EsferaCercania.Render();
+            EsferaCercania.Render();
             if (MostrarTexto)
                 TextoPresione.render();
         }

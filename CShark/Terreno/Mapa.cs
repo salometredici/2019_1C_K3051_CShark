@@ -106,10 +106,12 @@ namespace CShark.Terreno
 
         public void CargarRigidBodiesFromScene(TgcScene scene)
         {
-            foreach(var mesh in scene.Meshes)
+            //esto me baja de 700fps a 80 :)))))) hay algunas rocas y eso que tienen 
+            //bocha de poligonos, usar esferas o algo mas simple..
+            /*foreach(var mesh in scene.Meshes)
             {
                 CargarRigidBodyFromMesh(mesh);
-            }
+            }*/
         }
 
         public void CargarRigidBodyFromMesh(TgcMesh mesh)
