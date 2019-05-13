@@ -120,7 +120,6 @@
     <Compile Include="Items\RecolectableEstatico.cs" />
     <Compile Include="Items\Recolectables\Coral.cs" />
     <Compile Include="Terreno\TerrainExtension.cs" />
-    <Compile Include="Terreno\WaveTerrain.cs" />
     <Compile Include="UI\HUD\MensajePlus.cs" />
     <Compile Include="UI\HUD\MensajesContainer.cs" />
     <Compile Include="Items\Recolectable.cs" />
@@ -178,6 +177,7 @@
     <Compile Include="UI\Menu\Slider.cs" />
     <Compile Include="UI\Menu\TipoMenu.cs" />
     <Compile Include="Utils\AnimatedSprite.cs" />
+    <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\CustomBitmap.cs" />
     <Compile Include="Utils\CustomSprite.cs" />
     <Compile Include="Utils\Drawer2D.cs" />

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TGC.Core.BoundingVolumes;
+using TGC.Core.BulletPhysics;
 using TGC.Core.Collision;
 using TGC.Core.Direct3D;
 using TGC.Core.Geometry;
@@ -22,7 +23,7 @@ namespace CShark.Terreno
 {
     public class MesaCrafteo : IDisposable
     {
-        private TGCBox Box;
+        public TGCBox Box;
         private TgcBoundingSphere EsferaCercania;
         private TgcText2D TextoPresione;
         private bool MostrarTexto = false;

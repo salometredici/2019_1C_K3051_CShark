@@ -3,6 +3,7 @@ using BulletSharp.Math;
 using CShark.Managers;
 using CShark.Model;
 using CShark.NPCs.Enemigos;
+using CShark.Utils;
 using Microsoft.DirectX.Direct3D;
 using System;
 using System.Collections.Generic;
@@ -19,17 +20,25 @@ namespace CShark.Fisica.Colisiones
 {
     public class ColisionesTerreno {
 
-        private DiscreteDynamicsWorld World;
+        public DiscreteDynamicsWorld World;
         private CollisionDispatcher Dispatcher;
         private DefaultCollisionConfiguration Configuration;
         private SequentialImpulseConstraintSolver ConstraintSolver;
         private BroadphaseInterface OverlappingPairCache;
         private CustomVertex.PositionTextured[] DataTriangulos;
 
-        public void CambiarGravedad(float gravedad) {
+        public RigidBody FondoDelMarRB;
+        public RigidBody OlasRB;
+
+        public void CambiarGravedad(Vector3 gravedad) {
+            World.Gravity = gravedad;
+        }
+
+        public void CambiarGravedad(float gravedad)
+        {
             World.Gravity = new Vector3(0, gravedad, 0);
         }
-        
+
         public void Init(CustomVertex.PositionTextured[] dataTriangulos) {
             DataTriangulos = dataTriangulos;
             Configuration = new DefaultCollisionConfiguration();
@@ -37,15 +46,18 @@ namespace CShark.Fisica.Colisiones
             GImpactCollisionAlgorithm.RegisterAlgorithm(Dispatcher);
             ConstraintSolver = new SequentialImpulseConstraintSolver();
             OverlappingPairCache = new DbvtBroadphase();
-            World = new DiscreteDynamicsWorld(Dispatcher, OverlappingPairCache, ConstraintSolver, Configuration);
 
-            World.Gravity = new Vector3(0, -100f, 0);
+            World = new DiscreteDynamicsWorld(Dispatcher, OverlappingPairCache, ConstraintSolver, Configuration)
+            {
+                Gravity = Constants.StandardGravity
+            };
 
             //Creamos el terreno
-            var bodyTerreno = BulletRigidBodyFactory.Instance.CreateSurfaceFromHeighMap(DataTriangulos);
+            FondoDelMarRB = BulletRigidBodyFactory.Instance.CreateSurfaceFromHeighMap(DataTriangulos);
+
             World.StepSimulation(1 / Configuracion.Instancia.FPS.Valor, 100);
 
-            World.AddRigidBody(bodyTerreno);
+            World.AddRigidBody(FondoDelMarRB);
         }
 
         //OPTIMIZAR ESTA BASURA
@@ -83,7 +95,6 @@ namespace CShark.Fisica.Colisiones
             ConstraintSolver.Dispose();
             OverlappingPairCache.Dispose();
         }
-
 
     }
 }

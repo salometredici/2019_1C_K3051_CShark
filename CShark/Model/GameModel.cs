@@ -80,6 +80,7 @@ namespace CShark.Model
             var posInicial = GameManager.SpawnPlayer;
             Player = new Player(posInicial, 500, 1000, Input);
             Camara = Player.CamaraInterna;
+            //D3DDevice.Instance.Device.Transform.Projection = TGCMatrix.PerspectiveFovLH(45, D3DDevice.Instance.AspectRatio, D3DDevice.Instance.ZNearPlaneDistance, D3DDevice.Instance.ZFarPlaneDistance * 40f);
         }
 
         public override void Render() {
@@ -95,6 +96,7 @@ namespace CShark.Model
                 PantallaMuerte.Render();
 
             PostRender();
+
         }
 
         public override void Dispose() {

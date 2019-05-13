@@ -49,7 +49,7 @@ namespace CShark.Terreno
             SkyboxUnderwater.setFaceTexture(SkyFaces.Right, texturesPath + @"UnderwaterSkybox\side.jpg");
             SkyboxUnderwater.setFaceTexture(SkyFaces.Front, texturesPath + @"UnderwaterSkybox\side.jpg");
             SkyboxUnderwater.setFaceTexture(SkyFaces.Back, texturesPath + @"UnderwaterSkybox\side.jpg");
-            SkyboxUnderwater.SkyEpsilon = 50f;
+            SkyboxUnderwater.SkyEpsilon = 100f;
             SkyboxUnderwater.Center += new TGCVector3(0,250f,0);
         }
 
@@ -66,7 +66,7 @@ namespace CShark.Terreno
             SkyboxIsland.setFaceTexture(SkyFaces.Front, texturesPath + @"SkyBox-LostAtSeaDay\lostatseaday_bk.jpg");
             SkyboxIsland.setFaceTexture(SkyFaces.Up, texturesPath + @"SkyBox-LostAtSeaDay\lostatseaday_up.jpg");
             SkyboxIsland.setFaceTexture(SkyFaces.Down, texturesPath + @"SkyBox-LostAtSeaDay\skybox-island-water.png");
-            SkyboxIsland.SkyEpsilon = 50f;
+            SkyboxIsland.SkyEpsilon = 100f;
         }
         
         private void CargarCaras() {

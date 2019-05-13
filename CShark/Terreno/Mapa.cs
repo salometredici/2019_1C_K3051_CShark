@@ -4,6 +4,7 @@ using CShark.Fisica.Colisiones;
 using CShark.Items;
 using CShark.Jugador;
 using CShark.Model;
+using CShark.Utils;
 using Microsoft.DirectX.Direct3D;
 using System.Collections.Generic;
 using System.Drawing;
@@ -25,7 +26,6 @@ namespace CShark.Terreno
         public TGCVector3 Centro;
 
         private SkyBox Skybox;
-
         private TgcSimpleTerrain Terreno;
         private ColisionesTerreno Colisiones;
         private Isla Isla;
@@ -36,7 +36,7 @@ namespace CShark.Terreno
         public static Mapa Instancia { get; } = new Mapa();
 
         private Mapa() { }
-
+              
         public void CargarSkybox() {
             Centro = Terreno.Center;
             Skybox = new SkyBox(Centro);
@@ -55,8 +55,12 @@ namespace CShark.Terreno
         public void CargarSuperficie() {
             Superficie = new Superficie();
             Superficie.CargarTerrains();
+            /*var olas = BulletRigidBodyFactory.Instance.CreateSurfaceFromHeighMap(Superficie.Terrain.getData());
+            AgregarBody(olas);
+            Colisiones.OlasRB = olas;*/
+            //no tiene sentido porque la posicion de las olas la hago desde el shader. por ahora 
         }
-        
+
         public void CargarParedes(TgcScene paredes) {
             foreach (var face in paredes.Meshes) {
                 var size = face.BoundingBox.calculateSize();
@@ -69,25 +73,19 @@ namespace CShark.Terreno
 
         public void CargarRocas(TgcScene rocas) {
             Rocas = rocas;
+            CargarRigidBodiesFromScene(Rocas);
         }
 
         public void CargarExtras(TgcScene extras) {
             Extras = extras;
+            CargarRigidBodiesFromScene(Extras);
         }
-
-        public float XMin => Centro.X - Box.Size.X / 2f;
-        public float XMax => Centro.X + Box.Size.X / 2f;
-        public float YMin => Centro.Y;
-        public float YMax => Centro.Y + Box.Size.Y / 2f;
-        public float ZMin => Centro.Z - Box.Size.Z / 2f;
-        public float ZMax => Centro.Z + Box.Size.Z / 2f;
-        public float AlturaMar => 2800f;
 
         public void Update(float elapsedTime, GameModel game) {
             if (game.Player.Posicion.Y > Superficie.Altura) {
-                Colisiones.CambiarGravedad(-100);
+                Colisiones.CambiarGravedad(Constants.StandardGravity);
             } else {
-                Colisiones.CambiarGravedad(-5);
+                Colisiones.CambiarGravedad(Constants.UnderWaterGravity);
             }
             Superficie.Update(elapsedTime);
             Isla.Update(game);
@@ -104,6 +102,20 @@ namespace CShark.Terreno
 
         public bool Colisionan(CollisionObject ob1, CollisionObject ob2) {
             return Colisiones.Colisionan(ob1, ob2);
+        }
+
+        public void CargarRigidBodiesFromScene(TgcScene scene)
+        {
+            foreach(var mesh in scene.Meshes)
+            {
+                CargarRigidBodyFromMesh(mesh);
+            }
+        }
+
+        public void CargarRigidBodyFromMesh(TgcMesh mesh)
+        {
+            var rigidBody = BulletRigidBodyFactory.Instance.CreateRigidBodyFromTgcMesh(mesh);
+            AgregarBody(rigidBody);
         }
 
         public void Render(Player player) {
@@ -129,5 +141,13 @@ namespace CShark.Terreno
             terreno.loadHeightmap(mediaDir + heightMapDir, xz, y, position);
             terreno.loadTexture(mediaDir + textureDir);
         }
+
+        public float XMin => Centro.X - Box.Size.X / 2f;
+        public float XMax => Centro.X + Box.Size.X / 2f;
+        public float YMin => Centro.Y;
+        public float YMax => Centro.Y + Box.Size.Y / 2f;
+        public float ZMin => Centro.Z - Box.Size.Z / 2f;
+        public float ZMax => Centro.Z + Box.Size.Z / 2f;
+        public float AlturaMar => 2800f;
     }
 }
