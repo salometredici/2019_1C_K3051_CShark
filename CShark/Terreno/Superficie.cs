@@ -40,7 +40,7 @@ namespace CShark.Terreno
             var heightmap = Game.Default.MediaDirectory + @"Mapa\Textures\waveHeightmap.png";
             Terrain = new TgcSimpleTerrain();
             Terrain.loadTexture(textura);
-            Terrain.loadHeightmap(heightmap, 10000 / 512f, 2.5f, new TGCVector3(0, -AlturaTerrain() / 2, 0));
+            Terrain.loadHeightmap(heightmap, 10000 / 512f, 2.5f, new TGCVector3(0, 0, 0));
             Terrain.AlphaBlendEnable = true;
             Terrain.Effect = Effect;
             Terrain.Technique = "WaveEffect";
