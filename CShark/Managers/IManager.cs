@@ -1,13 +1,10 @@
 ﻿using CShark.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TGC.Core.SceneLoader;
 
 namespace CShark.Managers
 {
-    public interface IManager
+    public interface IManager : IDisposable
     {
         void Initialize();
         void Render(GameModel game);

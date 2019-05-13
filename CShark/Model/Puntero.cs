@@ -10,7 +10,7 @@ using CShark.Utils;
 
 namespace CShark.Model
 {
-    public class Puntero
+    public class Puntero : IDisposable
     {
         private CustomSprite Sprite;
         private Drawer2D Drawer;
@@ -39,6 +39,8 @@ namespace CShark.Model
             Sprite.Position = Posicion;
         }
 
-
+        public void Dispose() {
+            Sprite.Dispose();
+        }
     }
 }

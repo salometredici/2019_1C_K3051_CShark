@@ -42,7 +42,11 @@ namespace CShark.Jugador
         public bool RozandoSuperficie => Posicion.Y <= 2900f && Posicion.Y >= 2700f;
 
         public Player(TGCVector3 posicion, int vidaInicial, int oxigenoInicial, TgcD3dInput input) {
-            Posicion = posicion;            
+            Inventario = new Inventario();
+            Posicion = posicion;
+            Vida = vidaInicial;
+            Oxigeno = oxigenoInicial;
+            HUD = new HUD(Vida, Oxigeno);
             Input = input;
             CamaraInterna = new TgcFpsCamera(input, this);
             InicializarVariables(vidaInicial, oxigenoInicial);
@@ -96,20 +100,13 @@ namespace CShark.Jugador
                 UpdateCapsula(new Vector3(20f + cos, 0, 20f  + sin));
             }
 
+
             if (input.keyPressed(Key.Space) && !jumping) {
                 if (RozandoSuperficie || !Sumergido) {
                     jumping = true;
-                    UpdateCapsula(new Vector3(0, 50 * strength, 0));
+                    Capsula.ActivationState = ActivationState.ActiveTag;
+                    Capsula.ApplyCentralImpulse(new TGCVector3(0, 1000 * strength, 0).ToBulletVector3());
                 }
-                else
-                {
-                    UpdateCapsula(new Vector3(0, 100 * strength, 0));
-                }
-            }
-
-            if (input.keyPressed(Key.X))
-            {
-                UpdateCapsula(new Vector3(0, -100 * strength, 0));
             }
 
             if (input.keyPressed(Key.F))
@@ -138,7 +135,7 @@ namespace CShark.Jugador
             var vel = FastMath.Abs(Capsula.LinearVelocity.Y);
             return vel < 0.01f;
         }
-        
+
         public void Update(GameModel game) {
             time += game.ElapsedTime;
             if (!onPause)
@@ -148,17 +145,15 @@ namespace CShark.Jugador
                 CamaraInterna.PositionEye = Posicion;
                 RayoProximidad.Update(CamaraInterna, Posicion);
                 ActualizarOxigeno(game);
-                if (EstaVivo)
-                {
+                if (EstaVivo) {
                     Arma.Update(game);
                     HUD.Update(Vida, Oxigeno, game.ElapsedTime);
                 }
-                else
-                {
+                else {
                     _murio = true;
                     BloquearCamara(CamaraInterna);
                 }
-            }          
+            }
         }
 
         public void Recoger(Recolectable item) {
@@ -176,7 +171,7 @@ namespace CShark.Jugador
 
         public void CraftearItem(ICrafteable item) {
             AgregarItem(item.Tipo);
-            foreach(var m in item.Materiales) {
+            foreach (var m in item.Materiales) {
                 for (int i = 0; i < m.Value; i++)
                     GastarItem(m.Key);
             }
@@ -208,7 +203,7 @@ namespace CShark.Jugador
         private bool EstaCerca(IRecolectable recolectable) {
             return TgcCollisionUtils.testPointSphere(recolectable.EsferaCercania, Posicion);
         }
-        
+
         private bool EstaMirando(IRecolectable recolectable) {
             return RayoProximidad.Intersecta(recolectable.Box);
         }
@@ -227,6 +222,5 @@ namespace CShark.Jugador
                 HUD.Render();
             }
         }
-
     }
 }

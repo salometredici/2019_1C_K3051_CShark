@@ -7,26 +7,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TGC.Core.Mathematica;
+using TGC.Core.SceneLoader;
 
 namespace CShark.Managers
 {
     public class RecolectablesManager : IManager
     {
         private List<IRecolectable> Recolectables;
+        private TgcScene Spawns;
 
-        public RecolectablesManager() {
-            Recolectables = new List<IRecolectable>();
+        public RecolectablesManager(TgcScene spawns) {
+            Spawns = spawns;
         }
 
-        public void Initialize() {
-            for (int i = 0; i < 5; i++)
-                Recolectables.Add(new Wumpa(new TGCVector3(i * 300, 300, 500)));
-            for (int i = 0; i < 5; i++)
-                Recolectables.Add(new Chip(new TGCVector3(i * 400, 800, 0)));
-            for (int i = 0; i < 5; i++)
-                Recolectables.Add(new Burbuja(new TGCVector3(600, 1000, i * 600)));
-            for (int i = 0; i < 5; i++)
-                Recolectables.Add(new Bateria(new TGCVector3(400, 400, i * 400)));
+        public void Initialize(TgcScene spawns) {
+            Recolectables = new List<IRecolectable>();
+            foreach(var mesh in spawns.Meshes)
+                Spawnear(mesh.BoundingBox.Position);
+            Spawns.DisposeAll();
+        }
+
+        private void Spawnear(TGCVector3 posicion) {
+            var item = RandomItem(posicion);
+            Recolectables.Add(item);
+        }
+
+        private ERecolectable RandomTipo() {
+            Array values = Enum.GetValues(typeof(ERecolectable));
+            Random random = new Random();
+            return (ERecolectable)values.GetValue(random.Next(values.Length));
+        }
+
+        private IRecolectable RandomItem(TGCVector3 posicion) {
+            var tipo = RandomTipo();
+            switch (tipo) {
+                case ERecolectable.Bateria: return new Bateria(posicion);
+                case ERecolectable.Burbuja: return new Burbuja(posicion);
+                case ERecolectable.Chip: return new Chip(posicion);
+                case ERecolectable.Wumpa: return new Wumpa(posicion);
+                default: return new Bateria(posicion);
+            }
         }
 
         public void Render(GameModel game) {
@@ -35,6 +55,14 @@ namespace CShark.Managers
 
         public void Update(GameModel game) {
             Recolectables.ForEach(r => r.Update(game));
+        }
+
+        public void Initialize() {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose() {
+            Recolectables.ForEach(r => r.Dispose());
         }
     }
 }

@@ -58,7 +58,6 @@ namespace CShark.Fisica.Colisiones
             World.StepSimulation(1 / Configuracion.Instancia.FPS.Valor, 100);
 
             World.AddRigidBody(FondoDelMarRB);
-            World.AddRigidBody(OlasRB);
         }
 
         //OPTIMIZAR ESTA BASURA

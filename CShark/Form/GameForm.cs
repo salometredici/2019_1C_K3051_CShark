@@ -85,7 +85,7 @@ namespace CShark.Form
             var currentDirectory = Environment.CurrentDirectory + "\\";
 
             //Cargar shaders del framework
-            TGCShaders.Instance.LoadCommonShaders(currentDirectory + Game.Default.ShadersDirectory, D3DDevice.Instance);
+            TGCShaders.Instance.LoadCommonShaders(currentDirectory + Game.Default.ShadersDirectory, TGC.Core.Direct3D.D3DDevice.Instance);
 
             //Juego a ejecutar, si quisiéramos tener diferentes modelos aquí podemos cambiar la instancia e invocar a otra clase.
             Modelo = new GameModel(currentDirectory + Game.Default.MediaDirectory,
@@ -182,7 +182,7 @@ namespace CShark.Form
             StopCurrentExample();
 
             //Liberar Device al finalizar la aplicacion
-            D3DDevice.Instance.Dispose();
+            TGC.Core.Direct3D.D3DDevice.Instance.Dispose();
             TexturesPool.Instance.clearAll();
         }
     }
