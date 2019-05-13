@@ -16,6 +16,7 @@ namespace CShark.Managers
         private MenuVariables MenuVariables;
         private MenuInventario MenuInventario;
         private MenuCrafteo MenuCrafteo;
+        private GuideMenu MenuGuia;
         public Menu MenuSeleccionado;
         private Puntero Puntero;
 
@@ -28,11 +29,12 @@ namespace CShark.Managers
             MenuVariables = new MenuVariables();
             MenuInventario = new MenuInventario();
             MenuCrafteo = new MenuCrafteo();
+            MenuGuia = new GuideMenu();
             Puntero = new Puntero();
 
             MenuSeleccionado = MenuPrincipal;
 
-            MenuPrincipal.AgregarBoton("Inventario", j => j.CambiarMenu(TipoMenu.Inventario));
+            MenuPrincipal.AgregarBoton("Controles", j => j.CambiarMenu(TipoMenu.Guia));
             MenuPrincipal.AgregarBoton("Opciones", j => j.CambiarMenu(TipoMenu.Opciones));
             MenuPrincipal.AgregarBoton("Variables", j => j.CambiarMenu(TipoMenu.Variables));
             MenuPrincipal.AgregarBoton("Cheats", j => j.CambiarMenu(TipoMenu.Principal));
@@ -71,6 +73,9 @@ namespace CShark.Managers
                     return MenuInventario;
                 case TipoMenu.Crafteo:
                     return MenuCrafteo;
+                case TipoMenu.Guia:
+                    return MenuGuia;
+                case TipoMenu.CombosCrafteo:
                 default:
                     return null;
             }

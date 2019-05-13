@@ -93,15 +93,23 @@ namespace CShark.Jugador
             if (input.keyDown(Key.A)) {
                 var cos = FastMath.Cos(CamaraInterna.leftrightRot + FastMath.PI / 2);
                 var sin = FastMath.Sin(CamaraInterna.leftrightRot + FastMath.PI / 2);
-                UpdateCapsula(new Vector3(20f + sin, 0, 20f + cos));
+                UpdateCapsula(new Vector3(20f + cos, 0, 20f  + sin));
             }
 
             if (input.keyPressed(Key.Space) && !jumping) {
                 if (RozandoSuperficie || !Sumergido) {
                     jumping = true;
-                    Capsula.ActivationState = ActivationState.ActiveTag;
-                    Capsula.ApplyCentralImpulse(new Vector3(0, 200 * strength, 0));
+                    UpdateCapsula(new Vector3(0, 50 * strength, 0));
                 }
+                else
+                {
+                    UpdateCapsula(new Vector3(0, 100 * strength, 0));
+                }
+            }
+
+            if (input.keyPressed(Key.X))
+            {
+                UpdateCapsula(new Vector3(0, -100 * strength, 0));
             }
 
             if (input.keyPressed(Key.F))

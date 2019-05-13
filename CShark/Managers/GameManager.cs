@@ -27,8 +27,7 @@ namespace CShark.Model
         public TGCVector3 SpawnPlayer;
 
         public GameManager() {
-            PantallaCarga = new LoadingScreen(9);
-            Initialize();
+            Initialize();            
         }
 
         public void Render(GameModel game) {
@@ -62,7 +61,7 @@ namespace CShark.Model
             PantallaCarga.Progresar("Cargando peces...");
             Managers.Add(PezManager);
             PezManager.Initialize();
-            PantallaCarga.Progresar("Cargando menúes...");
+            PantallaCarga.Progresar("Cargando menús...");
             Managers.Add(MenuManager);
             MenuManager.Initialize();
             PantallaCarga.Progresar("Cargando items...");

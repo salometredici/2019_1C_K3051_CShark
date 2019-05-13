@@ -33,7 +33,7 @@ namespace CShark.Model
         public override void Init() {
             Cursor.Hide();
             PantallaMuerte = new PantallaMuerte();            
-            GameManager = new GameManager(); 
+            GameManager = new GameManager();            
             Start();
         }
 
@@ -71,6 +71,8 @@ namespace CShark.Model
             Player = new Player(posInicial, 500, 1000, Input);
             Camara = Player.CamaraInterna;
             D3DDevice.Instance.Device.Transform.Projection = TGCMatrix.PerspectiveFovLH(45, D3DDevice.Instance.AspectRatio, D3DDevice.Instance.ZNearPlaneDistance, D3DDevice.Instance.ZFarPlaneDistance * 40f);
+            CambiarMenu(TipoMenu.Guia);
+            GameManager.SwitchMenu(this);
         }
 
         public override void Render() {
