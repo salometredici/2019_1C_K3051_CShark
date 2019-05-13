@@ -34,17 +34,27 @@ namespace CShark.Jugador
         private RigidBody Capsula;
 
         public Player(TGCVector3 posicion, int vidaInicial, int oxigenoInicial, TgcD3dInput input) {
-            Inventario = new Inventario();
-            Posicion = posicion;
-            Vida = vidaInicial;
-            Oxigeno = oxigenoInicial;
-            HUD = new HUD(Vida, Oxigeno);
+            Posicion = posicion;            
             Input = input;
             CamaraInterna = new TgcFpsCamera(input, this);
+            InicializarVariables(vidaInicial, oxigenoInicial);
+            CrearCapsula();            
+        }
+
+        private void InicializarVariables(int vida, int oxigeno)
+        {
+            Inventario = new Inventario();
+            Vida = vida;
+            Oxigeno = oxigeno;
+            HUD = new HUD(Vida, Oxigeno);
             Arma = new Crossbow();
             onPause = false;
             VelocidadMovimiento = Configuracion.Instancia.VelocidadMovimiento;
-            Capsula = BulletRigidBodyFactory.Instance.CreateCapsule(300, 500, posicion, 5, false);
+        }
+
+        private void CrearCapsula()
+        {
+            Capsula = BulletRigidBodyFactory.Instance.CreateCapsule(300, 500, Posicion, 5, false);
             Capsula.SetDamping(0.1f, 0f);
             Capsula.Restitution = 0.1f;
             Capsula.Friction = 0.3f;
@@ -52,59 +62,60 @@ namespace CShark.Jugador
         }
         
         private void MoverCapsula(float elapsedTime, TgcD3dInput input) {
-            var strength = 10.30f;
+            var strength = 50.30f;
 
             if (input.keyDown(Key.W)) {
-                Capsula.ActivationState = ActivationState.ActiveTag;
-                Capsula.AngularVelocity = TGCVector3.Empty.ToBulletVector3();
                 var cos = FastMath.Cos(CamaraInterna.leftrightRot);
                 var sin = FastMath.Sin(CamaraInterna.leftrightRot);
-                Capsula.ApplyCentralImpulse(-strength * new Vector3(sin, 0, cos));
+                UpdateCapsula(-strength * new Vector3(sin, 0, cos));
             }
 
             if (input.keyDown(Key.S)) {
-                Capsula.ActivationState = ActivationState.ActiveTag;
-                Capsula.AngularVelocity = TGCVector3.Empty.ToBulletVector3();
                 var cos = FastMath.Cos(CamaraInterna.leftrightRot);
                 var sin = FastMath.Sin(CamaraInterna.leftrightRot);
-                Capsula.ApplyCentralImpulse(strength * new Vector3(sin, 0, cos));
+                UpdateCapsula(strength * new Vector3(sin, 0, cos));
             }
 
             if (input.keyDown(Key.D)) {
-                Capsula.ActivationState = ActivationState.ActiveTag;
-                Capsula.AngularVelocity = TGCVector3.Empty.ToBulletVector3();
                 var cos = FastMath.Cos(CamaraInterna.leftrightRot + FastMath.PI / 2);
                 var sin = FastMath.Sin(CamaraInterna.leftrightRot + FastMath.PI / 2);
-                Capsula.ApplyCentralImpulse(-strength * new Vector3(sin, 0, cos));
+                UpdateCapsula(new Vector3(20f + sin, 0, 20f + cos));
             }
 
             if (input.keyDown(Key.A)) {
-                Capsula.ActivationState = ActivationState.ActiveTag;
-                Capsula.AngularVelocity = TGCVector3.Empty.ToBulletVector3();
                 var cos = FastMath.Cos(CamaraInterna.leftrightRot + FastMath.PI / 2);
                 var sin = FastMath.Sin(CamaraInterna.leftrightRot + FastMath.PI / 2);
-                Capsula.ApplyCentralImpulse(strength * new Vector3(sin, 0, cos));
+                UpdateCapsula(new Vector3(20f + sin, 0, 20f + cos));
             }
-
 
             if (input.keyPressed(Key.Space) && !jumping) {
                 if (RozandoSuperficie || !Sumergido) {
                     jumping = true;
                     Capsula.ActivationState = ActivationState.ActiveTag;
-                    Capsula.ApplyCentralImpulse(new TGCVector3(0, 500 * strength, 0).ToBulletVector3());
+                    Capsula.ApplyCentralImpulse(new Vector3(0, 200 * strength, 0));
                 }
+            }
+
+            if (input.keyPressed(Key.F))
+            {
+                Capsula.LinearVelocity = Vector3.Zero;
             }
 
             //nadar lentamente hacia arriba
             if (input.keyDown(Key.Space) && Sumergido) {
-                Capsula.ActivationState = ActivationState.ActiveTag;
-                Capsula.AngularVelocity = TGCVector3.Empty.ToBulletVector3();
-                Capsula.ApplyCentralImpulse(new TGCVector3(0, 2f, 0).ToBulletVector3());
+                UpdateCapsula(new Vector3(0, 50f, 0));
             }
 
             if (TocandoPiso()) {
                 jumping = false;
             }
+        }
+
+        private void UpdateCapsula(Vector3 direccion)
+        {
+            Capsula.ActivationState = ActivationState.ActiveTag;
+            Capsula.AngularVelocity = Vector3.Zero;
+            Capsula.ApplyCentralImpulse(direccion);
         }
 
         private bool TocandoPiso() {

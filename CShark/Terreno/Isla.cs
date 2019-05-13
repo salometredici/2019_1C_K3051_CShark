@@ -16,11 +16,11 @@ namespace CShark.Terreno
 {
     public class Isla
     {
-        private List<TgcMesh> objetosIsla;
         private Octree octree;
-        private TgcMesh terreno;
-        private Barco Barco;
         private TgcFrustum frustum;
+        public TgcMesh terreno;
+        public Barco Barco;
+        public List<TgcMesh> objetosIsla;
 
         public Isla(Mapa mapa) {
             frustum = new TgcFrustum();
@@ -39,12 +39,24 @@ namespace CShark.Terreno
             //Reposicionar toda la escena al nivel del mar
             foreach (var item in scene.Meshes) {
                 item.Position += new TGCVector3(0, 2900f, 0);
+                item.Scale = new TGCVector3(1.5f, 1.5f, 1.5f);
             }
 
             //Crear Octree
             octree = new Octree();
             octree.create(objetosIsla, scene.BoundingBox);
             octree.createDebugOctreeMeshes();
+
+            CargarRigidBodies(mapa);
+        }
+
+        private void CargarRigidBodies(Mapa mapa)
+        {
+            mapa.CargarRigidBodyFromMesh(terreno);
+            foreach(var objeto in objetosIsla)
+            {
+                mapa.CargarRigidBodyFromMesh(objeto);
+            }
         }
 
         public void Update(GameModel game) {

@@ -26,6 +26,7 @@ namespace CShark.UI
         private TgcText2D Texto;
         private CustomSprite Fondo;
         private CustomSprite Barra;
+        private CustomSprite Logo;
         private Drawer2D Drawer;
         public bool Cargado = false;
 
@@ -36,6 +37,7 @@ namespace CShark.UI
             Drawer = new Drawer2D();
             Fondo = new CustomSprite();
             Barra = new CustomSprite();
+            Logo = new CustomSprite();
             Texto = new TgcText2D();
             Initialize();
         }
@@ -49,6 +51,9 @@ namespace CShark.UI
             Barra.Bitmap = ObtenerBitmap(viewport.Width);
             Barra.Position = PosicionarBarra(viewport);
             Barra.Scaling = EscalarBarra(Barra.Bitmap);
+            Logo.Bitmap = new CustomBitmap(media + @"Menu\Loading\logo.png", D3DDevice.Instance.Device);
+            Logo.Position = TGCVector2.Zero;
+            Logo.Scaling = EscalarFondo(Logo.Bitmap, viewport);
             Texto.Color = Color.White;
             Texto.Size = new Size(viewport.Width, 75);
             Texto.Align = TgcText2D.TextAlign.CENTER;
@@ -89,6 +94,7 @@ namespace CShark.UI
                 Drawer.BeginDrawSprite();
                 Drawer.DrawSprite(Fondo);
                 Drawer.DrawSprite(Barra);
+                Drawer.DrawSprite(Logo);
                 Drawer.EndDrawSprite();
                 Texto.render();
                 PostRender();

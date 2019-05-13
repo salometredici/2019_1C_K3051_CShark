@@ -67,9 +67,10 @@ namespace CShark.Model
         }
 
         private void Start() {
-            var posInicial = new TGCVector3(1500f, 3500f, 0);
+            var posInicial = new TGCVector3(2000f, 3500f, -500f);
             Player = new Player(posInicial, 500, 1000, Input);
             Camara = Player.CamaraInterna;
+            D3DDevice.Instance.Device.Transform.Projection = TGCMatrix.PerspectiveFovLH(45, D3DDevice.Instance.AspectRatio, D3DDevice.Instance.ZNearPlaneDistance, D3DDevice.Instance.ZFarPlaneDistance * 40f);
         }
 
         public override void Render() {
@@ -85,6 +86,7 @@ namespace CShark.Model
                 PantallaMuerte.Render();
 
             PostRender();
+
         }
 
         public override void Dispose() {

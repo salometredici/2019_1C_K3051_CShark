@@ -41,7 +41,7 @@ namespace CShark.Terreno
             SkyboxUnderwater = new TgcSkyBox
             {
                 Center = centro,
-                Size = new TGCVector3(10000, 5000, 10000)
+                Size = new TGCVector3(30000, 5000, 30000)
             };
             SkyboxUnderwater.setFaceTexture(SkyFaces.Up, texturesPath + @"UnderwaterSkybox\up1.png");
             SkyboxUnderwater.setFaceTexture(SkyFaces.Down, texturesPath + @"UnderwaterSkybox\seafloor.jpg");
@@ -49,7 +49,7 @@ namespace CShark.Terreno
             SkyboxUnderwater.setFaceTexture(SkyFaces.Right, texturesPath + @"UnderwaterSkybox\side.jpg");
             SkyboxUnderwater.setFaceTexture(SkyFaces.Front, texturesPath + @"UnderwaterSkybox\side.jpg");
             SkyboxUnderwater.setFaceTexture(SkyFaces.Back, texturesPath + @"UnderwaterSkybox\side.jpg");
-            SkyboxUnderwater.SkyEpsilon = 50f;
+            SkyboxUnderwater.SkyEpsilon = 100f;
             SkyboxUnderwater.Center += new TGCVector3(0,250f,0);
         }
 
@@ -58,7 +58,7 @@ namespace CShark.Terreno
             SkyboxIsland = new TgcSkyBox
             {
                 Center = centroIsla,
-                Size = new TGCVector3(10000, 2500, 10000)
+                Size = new TGCVector3(30000, 3000, 30000)
             };
             SkyboxIsland.setFaceTexture(SkyFaces.Left, texturesPath + @"SkyBox-LostAtSeaDay\lostatseaday_lf.jpg");
             SkyboxIsland.setFaceTexture(SkyFaces.Back, texturesPath + @"SkyBox-LostAtSeaDay\lostatseaday_ft.jpg");
@@ -66,7 +66,7 @@ namespace CShark.Terreno
             SkyboxIsland.setFaceTexture(SkyFaces.Front, texturesPath + @"SkyBox-LostAtSeaDay\lostatseaday_bk.jpg");
             SkyboxIsland.setFaceTexture(SkyFaces.Up, texturesPath + @"SkyBox-LostAtSeaDay\lostatseaday_up.jpg");
             SkyboxIsland.setFaceTexture(SkyFaces.Down, texturesPath + @"SkyBox-LostAtSeaDay\skybox-island-water.png");
-            SkyboxIsland.SkyEpsilon = 50f;
+            SkyboxIsland.SkyEpsilon = 100f;
         }
         
         private void CargarCaras() {
