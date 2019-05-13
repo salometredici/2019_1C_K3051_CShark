@@ -57,7 +57,6 @@ namespace CShark.Jugador
             HUD = new HUD(Vida, Oxigeno);
             Arma = new Crossbow();
             onPause = false;
-            VelocidadMovimiento = Configuracion.Instancia.VelocidadMovimiento;
             RayoProximidad = new RayoProximidad();
         }
 
@@ -220,9 +219,6 @@ namespace CShark.Jugador
                 HUD.Render();
             }
         }
-
-        public bool Sumergido => Posicion.Y < 2800f;
-        public bool RozandoSuperficie => Posicion.Y <= 2900f && Posicion.Y >= 2700f;
 
     }
 }

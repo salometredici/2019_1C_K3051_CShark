@@ -23,7 +23,7 @@ namespace CShark.Terreno
         public float Altura = 2800f;
 
         public Superficie() {
-            Effect = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "WaveShader - Copy.fx");
+            Effect = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "CopiaParaNoPisarElTuyo.fx");
         }
 
         private float AlturaTerrain() {
