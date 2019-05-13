@@ -74,7 +74,7 @@ namespace CShark.Jugador
         }
 
         private void MoverCapsula(float elapsedTime, TgcD3dInput input) {
-            var strength = 50.30f;
+            var strength = 40.30f;
 
             if (input.keyDown(Key.W)) {
                 var cos = FastMath.Cos(CamaraInterna.leftrightRot);
@@ -85,7 +85,7 @@ namespace CShark.Jugador
             if (input.keyDown(Key.S)) {
                 var cos = FastMath.Cos(CamaraInterna.leftrightRot);
                 var sin = FastMath.Sin(CamaraInterna.leftrightRot);
-                UpdateCapsula(strength * new Vector3(sin, 0, cos));
+                UpdateCapsula(strength * new Vector3(cos, 0, sin));
             }
 
             if (input.keyDown(Key.D)) {
@@ -104,9 +104,17 @@ namespace CShark.Jugador
             if (input.keyPressed(Key.Space) && !jumping) {
                 if (RozandoSuperficie || !Sumergido) {
                     jumping = true;
-                    Capsula.ActivationState = ActivationState.ActiveTag;
-                    Capsula.ApplyCentralImpulse(new TGCVector3(0, 1000 * strength, 0).ToBulletVector3());
+                    UpdateCapsula(new Vector3(0, 20 * strength, 0)); //Apreté space y se me fue el personaje a la Quiaca
                 }
+                else
+                {
+                    UpdateCapsula(new Vector3(0, 40 * strength, 0));
+                }
+            }
+
+            if (input.keyPressed(Key.X))
+            {
+                UpdateCapsula(new Vector3(0, -100 * strength, 0));
             }
 
             if (input.keyPressed(Key.F))
