@@ -153,6 +153,7 @@
     <Compile Include="Animales\Animal.cs" />
     <Compile Include="Terreno\Barco.cs" />
     <Compile Include="Terreno\Mapa.cs" />
+    <Compile Include="UI\Menu\GuideMenu.cs" />
     <Compile Include="UI\Menu\MenuCrafteo.cs" />
     <Compile Include="Terreno\MesaCrafteo.cs" />
     <Compile Include="Terreno\SkyBox.cs" />

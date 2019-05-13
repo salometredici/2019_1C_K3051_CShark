@@ -60,6 +60,7 @@ namespace CShark.UI.Inventario
         public void CrearInventario()
         {
             AgregarBoton("Craft", j => j.CambiarMenu(TipoMenu.Principal));
+            AgregarBoton("Combos de crafteo", j => j.CambiarMenu(TipoMenu.Guia));
             AgregarBoton("Volver", j => j.CambiarMenu(TipoMenu.Principal));
             AgregarBotonesInventario();
         }

@@ -42,11 +42,11 @@ namespace CShark.Terreno
             TextoPresione.Text = "Presione E para craftear";
             var w = D3DDevice.Instance.Device.Viewport.Width;
             var h = D3DDevice.Instance.Device.Viewport.Height;
-            TextoPresione.Position = new Point(0, h - 200);
+            TextoPresione.Position = new Point(0, h - 100);
             TextoPresione.Align = TgcText2D.TextAlign.CENTER;
             TextoPresione.Color = Color.Yellow;
             TextoPresione.Size = new Size(w, 50);
-            TextoPresione.changeFont(new Font("Arial", 36f, FontStyle.Bold));
+            TextoPresione.changeFont(new Font("Arial", 30f, FontStyle.Bold));
         }
 
         public void Update(GameModel game) {

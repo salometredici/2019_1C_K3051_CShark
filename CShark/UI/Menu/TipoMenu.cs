@@ -13,6 +13,8 @@ namespace CShark.UI
         Variables,
         Cheats,
         Inventario,
-        Crafteo
+        Crafteo,
+        Guia,
+        CombosCrafteo
     }
 }

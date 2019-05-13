@@ -37,6 +37,7 @@ namespace CShark.Model
             Cursor.Hide();
             PantallaMuerte = new PantallaMuerte();            
             GameManager = new GameManager();
+
             var device = D3DDevice.Instance.Device;
             float ancho = device.CreationParameters.FocusWindow.Width;
             float alto = device.CreationParameters.FocusWindow.Height;
@@ -44,6 +45,7 @@ namespace CShark.Model
             var farDistance = FastMath.Sqrt(anchoAltoMapa * anchoAltoMapa * 2);
             var transformacion= Matrix.PerspectiveFovLH(FastMath.QUARTER_PI, ancho / alto, 1f, farDistance);
             device.Transform.Projection = transformacion;
+
             Start();
         }
 
@@ -80,7 +82,8 @@ namespace CShark.Model
             var posInicial = GameManager.SpawnPlayer;
             Player = new Player(posInicial, 500, 1000, Input);
             Camara = Player.CamaraInterna;
-            //D3DDevice.Instance.Device.Transform.Projection = TGCMatrix.PerspectiveFovLH(45, D3DDevice.Instance.AspectRatio, D3DDevice.Instance.ZNearPlaneDistance, D3DDevice.Instance.ZFarPlaneDistance * 40f);
+            CambiarMenu(TipoMenu.Guia);
+            GameManager.SwitchMenu(this);
         }
 
         public override void Render() {

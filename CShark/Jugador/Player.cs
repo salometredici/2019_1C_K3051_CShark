@@ -49,13 +49,27 @@ namespace CShark.Jugador
             HUD = new HUD(Vida, Oxigeno);
             Input = input;
             CamaraInterna = new TgcFpsCamera(input, this);
+            InicializarVariables(vidaInicial, oxigenoInicial);
+            CrearCapsula();            
+        }
+
+        private void InicializarVariables(int vida, int oxigeno)
+        {
+            Inventario = new Inventario();
+            Vida = vida;
+            Oxigeno = oxigeno;
+            HUD = new HUD(Vida, Oxigeno);
             Arma = new Crossbow();
             onPause = false;
-            Capsula = BulletRigidBodyFactory.Instance.CreateCapsule(300, 500, posicion, 5, false);
+            RayoProximidad = new RayoProximidad();
+        }
+
+        private void CrearCapsula()
+        {
+            Capsula = BulletRigidBodyFactory.Instance.CreateCapsule(300, 500, Posicion, 5, false);
             Capsula.SetDamping(0.1f, 0f);
             Capsula.Restitution = 0.1f;
             Capsula.Friction = 0.3f;
-            RayoProximidad = new RayoProximidad();
             Mapa.Instancia.AgregarBody(Capsula);
         }
 
@@ -122,7 +136,8 @@ namespace CShark.Jugador
 
         public void Update(GameModel game) {
             time += game.ElapsedTime;
-            if (!onPause) {
+            if (!onPause)
+            {
                 MoverCapsula(game.ElapsedTime, game.Input);
                 Posicion = Capsula.CenterOfMassPosition.ToTGCVector3();
                 CamaraInterna.PositionEye = Posicion;
@@ -160,7 +175,8 @@ namespace CShark.Jugador
             }
         }
 
-        private void ActualizarOxigeno(GameModel game) {
+        private void ActualizarOxigeno(GameModel game)
+        {
             Oxigeno = !Sumergido && Oxigeno < HUD.BarraOxigeno.ValorMaximo ?
                 Oxigeno += 14f * game.ElapsedTime :
                 Oxigeno -= 7f * game.ElapsedTime;
@@ -168,7 +184,8 @@ namespace CShark.Jugador
 
         private bool _murio = false;
         private void BloquearCamara(TgcFpsCamera camara) {
-            if (!_murio) {
+            if (!_murio)
+            {
                 camara.Lock();
             }
         }
@@ -196,7 +213,8 @@ namespace CShark.Jugador
         private float time = 0;
 
         public void Render() {
-            if (EstaVivo) {
+            if (EstaVivo)
+            {
                 RayoProximidad.Render();
                 Arma.Render();
                 HUD.Render();

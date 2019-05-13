@@ -36,8 +36,10 @@ namespace CShark.Terreno
             var heightmap = Game.Default.MediaDirectory + @"Mapa\Textures\wave2.png";
             Terrain = new TgcSimpleTerrain();
             Terrain.loadTexture(textura);
-            //Terrain.loadHeightmap(heightmap, 10000 / TamañoHM, 2, TGCVector3.Empty);
-            Terrain.loadHeightmap(heightmap, 100000 / TamañoHM, 1, TGCVector3.Empty);
+            //por ahora dejalo asi esto, la otra opcion es cargar un heightmap
+            //gigante para que quede bien, pero el D3d es una verga y se queda sin memoria
+            //al cargar
+            Terrain.loadHeightmap(heightmap, 100000 / TamañoHM, 1, TGCVector3.Empty); 
             Terrain.AlphaBlendEnable = true;
             Terrain.Effect = Effect;
             Terrain.Technique = "WaveEffect";
@@ -50,7 +52,7 @@ namespace CShark.Terreno
 
         public void Render() {
             ActivarAlphaBlend();
-            Terrain.Render();
+            //Terrain.Render();
             DesactivarAlphaBlend();
         }
 
