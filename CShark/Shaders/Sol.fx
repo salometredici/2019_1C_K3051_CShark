@@ -1,4 +1,3 @@
-//Matrices de transformacion
 float4x4 matWorld; //Matriz de transformacion World
 float4x4 matWorldView; //Matriz World * View
 float4x4 matWorldViewProj; //Matriz World * View * Projection
@@ -29,37 +28,29 @@ struct VS_OUTPUT
 {
     float4 Position : POSITION0;
     float2 Texcoord : TEXCOORD0;
+    float4 Color : TEXCOORD1;
 };
 
 
 VS_OUTPUT vs_main(VS_INPUT Input)
 {
     VS_OUTPUT Output;
-    
-    float altura = 18000;
-    Input.Position.x += sin(time) * 30;
-    Input.Position.y += cos(time) * sign(Input.Position.y - 20);
-    Input.Position.z += sin(time);
-    float variacion = Input.Position.y > 0 ? cos(time) * 2.5 : cos(time) * 1.25;
-    Input.Position.y *= variacion;
-    Input.Position.y += altura;
-
     Output.Position = mul(Input.Position, matWorldViewProj);
     Output.Texcoord = Input.Texcoord;
-
+    float red = Input.Color.r * cos(time) * 1.3 * Input.Position.x;
+    float blue = Input.Color.b * cos(time) * 1.9 * Input.Position.y;
+    float green = Input.Color.g * cos(time) * 0.5 * Input.Position.z;
+    float alpha = clamp(Input.Color.a * sin(time), 0.3, 0.8);
+    Output.Color = float4(red, blue, green, alpha);
     return (Output);
 }
 
-//Pixel Shader
-float4 ps_main(float3 Texcoord : TEXCOORD0) : COLOR0
+float4 ps_main(float4 Color : TEXCOORD1) : COLOR0
 {
-    float4 color = tex2D(diffuseMap, Texcoord);
-    color.a = 0.6;
-    return color;
+    return Color;
 }
 
-
-technique WaveEffect
+technique Burbuja
 {
     pass Pass_0
     {

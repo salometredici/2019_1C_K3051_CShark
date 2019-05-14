@@ -119,6 +119,10 @@
     <Compile Include="Items\IRecolectable.cs" />
     <Compile Include="Items\RecolectableEstatico.cs" />
     <Compile Include="Items\Recolectables\Coral.cs" />
+    <Compile Include="Jugador\InputHandler.cs" />
+    <Compile Include="Jugador\Control.cs" />
+    <Compile Include="Terreno\Sol.cs" />
+    <Compile Include="Terreno\Suelo.cs" />
     <Compile Include="Terreno\TerrainExtension.cs" />
     <Compile Include="UI\HUD\MensajePlus.cs" />
     <Compile Include="UI\HUD\MensajesContainer.cs" />
@@ -198,6 +202,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Variable.cs" />
     <Compile Include="Utils\ExtensionMethods.cs" />
+    <Compile Include="Utils\HeightmapMethods.cs" />
     <Compile Include="Utils\MusicPlayer.cs" />
     <Compile Include="Utils\Octree.cs" />
     <Compile Include="Utils\OctreeBuilder.cs" />
@@ -240,6 +245,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Shaders\Sol.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Shaders\LuzItem.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -325,9 +333,15 @@
     <Content Include="Media\Mapa\Paredes-TgcScene.xml" />
     <Content Include="Media\Mapa\Peces-TgcScene.xml" />
     <Content Include="Media\Mapa\Recolectables-TgcScene.xml" />
+    <Content Include="Media\Mapa\Sphere-TgcScene.xml" />
+    <Content Include="Media\Mapa\Textures\SunTexture.jpg" />
+    <Content Include="Media\Mapa\Textures\arena.png" />
     <Content Include="Media\Mapa\Textures\DefaultMaterial_Base_Color.png" />
     <Content Include="Media\Mapa\Textures\mesa.png" />
     <Content Include="Media\Mapa\Textures\terreno.png" />
+    <Content Include="Media\Mapa\Textures\textura_pasarlascanutas_2553.jpg" />
+    <Content Include="Media\Mapa\Textures\waveHeightmap2.png" />
+    <Content Include="Media\Mapa\Textures\waveHeightmap3.png" />
     <Content Include="Media\MenuCrafteo\craftFocus.png" />
     <Content Include="Media\Heightmaps\heightmap.JPG" />
     <Content Include="Media\Heightmaps\wave bump.png" />

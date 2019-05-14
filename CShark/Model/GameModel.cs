@@ -13,6 +13,7 @@ using CShark.Jugador;
 using Microsoft.DirectX.Direct3D;
 using TGC.Core.Textures;
 using Microsoft.DirectX;
+using TGC.Core;
 
 namespace CShark.Model
 {
@@ -31,13 +32,13 @@ namespace CShark.Model
         public Tiburon Tiburon;
         public GameManager GameManager;
         private PantallaMuerte PantallaMuerte;
+        
         private Mapa Mapa => Mapa.Instancia;
 
         public override void Init() {
             Cursor.Hide();
             PantallaMuerte = new PantallaMuerte();            
             GameManager = new GameManager();
-
             var device = D3DDevice.Instance.Device;
             float ancho = device.CreationParameters.FocusWindow.Width;
             float alto = device.CreationParameters.FocusWindow.Height;
@@ -45,7 +46,6 @@ namespace CShark.Model
             var farDistance = FastMath.Sqrt(anchoAltoMapa * anchoAltoMapa * 2);
             var transformacion= Matrix.PerspectiveFovLH(FastMath.QUARTER_PI, ancho / alto, 1f, farDistance);
             device.Transform.Projection = transformacion;
-
             Start();
         }
 
@@ -66,7 +66,6 @@ namespace CShark.Model
                     Start();
                 }
             }
-
             else
             {
                 Mapa.Update(ElapsedTime, this);
@@ -75,7 +74,6 @@ namespace CShark.Model
             }
             
             PostUpdate();
-
         }
 
         private void Start() {
@@ -85,6 +83,7 @@ namespace CShark.Model
             CambiarMenu(TipoMenu.Guia);
             GameManager.SwitchMenu(this);
         }
+
 
         public override void Render() {
 

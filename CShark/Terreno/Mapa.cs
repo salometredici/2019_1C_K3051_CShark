@@ -26,22 +26,23 @@ namespace CShark.Terreno
         public TGCVector3 Centro;
 
         private SkyBox Skybox;
-        private TgcSimpleTerrain Terreno;
+        private Suelo Suelo;
         private ColisionesTerreno Colisiones;
         private Barco Barco;
         private TgcScene Rocas;
         private TgcScene Extras;
         public Superficie Superficie;
+        private Sol Sol;
 
         public static Mapa Instancia { get; } = new Mapa();
 
         private Mapa() { }
               
         public void CargarSkybox() {
-            Centro = Terreno.Center;
+            Centro = Suelo.Center;
             Skybox = new SkyBox(Centro);
             Box = TGCBox.fromSize(Skybox.Center, Skybox.Size);
-
+            Sol = new Sol(Centro + new TGCVector3(0, 50000, 0));
         }
 
         public void CargarBarco(TgcMesh mesh) {
@@ -49,11 +50,9 @@ namespace CShark.Terreno
         }
 
         public void CargarTerreno() {
-            var tamañoHM = 1024f;
-            Terreno = new TgcSimpleTerrain();
-            CargarTerreno(Terreno, @"Mapa\Textures\terreno.png", @"Mapa\Textures\seafloor.jpg", 100000 / tamañoHM, 22f, TGCVector3.Empty);
+            Suelo = new Suelo();
             Colisiones = new ColisionesTerreno();
-            Colisiones.Init(Terreno.getData());
+            Colisiones.Init(Suelo.GetData());
         }
 
         public void CargarSuperficie() {
@@ -71,6 +70,7 @@ namespace CShark.Terreno
             paredes.DisposeAll();
         }
 
+
         public void CargarRocas(TgcScene rocas) {
             Rocas = rocas;
             CargarRigidBodiesFromScene(Rocas);
@@ -87,7 +87,9 @@ namespace CShark.Terreno
             } else {
                 Colisiones.CambiarGravedad(Constants.UnderWaterGravity);
             }
+            Suelo.Update(Sol, game.Player.CamaraInterna.PositionEye);
             Superficie.Update(elapsedTime);
+            Sol.Update(elapsedTime);
             Barco.Update(game);
             Colisiones.Update();
         }
@@ -121,27 +123,23 @@ namespace CShark.Terreno
         }
 
         public void Render(Player player) {
-            Terreno.Render();
+            Suelo.Render();
             Skybox.Render();
             Barco.Render();
             Rocas.RenderAll();
             Extras.RenderAll();
             Superficie.Render();
+            Sol.Render();
         }
 
         public void Dispose() {
-            Terreno.Dispose();
+            Suelo.Dispose();
             Skybox.Dispose();
             Barco.Dispose();
             Rocas.DisposeAll();
             Extras.DisposeAll();
             Superficie.Dispose();
-        }
-
-        private void CargarTerreno(TgcSimpleTerrain terreno, string heightMapDir, string textureDir, float xz, float y, TGCVector3 position) {
-            terreno.AlphaBlendEnable = true;
-            terreno.loadHeightmap(mediaDir + heightMapDir, xz, y, position);
-            terreno.loadTexture(mediaDir + textureDir);
+            Sol.Dispose();
         }
 
         public float XMin => Centro.X - Box.Size.X / 2f;

@@ -62,7 +62,6 @@ namespace CShark.Model
             Mapa.Instancia.CargarRocas(rocas);
             PantallaCarga.Progresar("Posicionando extras...");
             Mapa.Instancia.CargarExtras(extras);
-
             Managers = new List<IManager>();
             MenuManager = new MenuManager();
             PezManager = new FaunaManager(peces);

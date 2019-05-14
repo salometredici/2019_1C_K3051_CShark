@@ -54,6 +54,8 @@ namespace CShark.Fisica.Colisiones
 
             //Creamos el terreno
             FondoDelMarRB = BulletRigidBodyFactory.Instance.CreateSurfaceFromHeighMap(DataTriangulos);
+            FondoDelMarRB.Friction = 0.1f;
+
 
             World.AddRigidBody(FondoDelMarRB);
         }

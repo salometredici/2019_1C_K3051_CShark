@@ -19,27 +19,23 @@ namespace CShark.Terreno
         public TgcSimpleTerrain Terrain;
         private float Time = 0;
         private Effect Effect;
-        public float Altura = 4000f;
+        public float Altura = 18000f;
 
-        //private readonly float TamañoHM = 512f;
-        private readonly float TamañoHM = 128f;
+        private readonly float TamañoHM = 512f;
 
         public Superficie() {
             Effect = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "WaveShader.fx");
         }
 
         public void CargarTerrains() {
-            //var textura = Game.Default.MediaDirectory + @"Mapa\Textures\waterTexture.jpg";
-            //var heightmap = Game.Default.MediaDirectory + @"Mapa\Textures\waveHeightmap.png";
-            //mas eficientes ponele
             var textura = Game.Default.MediaDirectory + @"Mapa\Textures\wave1.jpg";
-            var heightmap = Game.Default.MediaDirectory + @"Mapa\Textures\wave2.png";
+            var heightmap = Game.Default.MediaDirectory + @"Mapa\Textures\waveHeightmap3.png";
             Terrain = new TgcSimpleTerrain();
             Terrain.loadTexture(textura);
             //por ahora dejalo asi esto, la otra opcion es cargar un heightmap
             //gigante para que quede bien, pero el D3d es una verga y se queda sin memoria
             //al cargar
-            Terrain.loadHeightmap(heightmap, 100000 / TamañoHM, 1, TGCVector3.Empty); 
+            Terrain.loadHeightmap(heightmap, 150000 / TamañoHM, 2.25f, TGCVector3.Empty); 
             Terrain.AlphaBlendEnable = true;
             Terrain.Effect = Effect;
             Terrain.Technique = "WaveEffect";
