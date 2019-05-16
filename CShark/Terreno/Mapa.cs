@@ -1,20 +1,13 @@
 ﻿using BulletSharp;
-using CShark.Fisica;
 using CShark.Fisica.Colisiones;
-using CShark.Items;
 using CShark.Jugador;
 using CShark.Model;
+using CShark.Utilidades;
 using CShark.Utils;
-using Microsoft.DirectX.Direct3D;
-using System.Collections.Generic;
-using System.Drawing;
-using TGC.Core.BoundingVolumes;
 using TGC.Core.BulletPhysics;
 using TGC.Core.Geometry;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
-using TGC.Core.Shaders;
-using TGC.Core.Terrain;
 
 namespace CShark.Terreno
 {
@@ -87,11 +80,11 @@ namespace CShark.Terreno
             } else {
                 Colisiones.CambiarGravedad(Constants.UnderWaterGravity);
             }
-            Suelo.Update(Sol, game.Player.CamaraInterna.PositionEye);
+            Suelo.Update(game.Player.CamaraInterna.PositionEye);
             Superficie.Update(elapsedTime);
             Sol.Update(elapsedTime);
             Barco.Update(game);
-            Colisiones.Update();
+            Colisiones.Update(elapsedTime);
         }
 
         public void AgregarBody(RigidBody body) {
@@ -140,6 +133,7 @@ namespace CShark.Terreno
             Extras.DisposeAll();
             Superficie.Dispose();
             Sol.Dispose();
+            MeshLoader.Instance.Dispose();
         }
 
         public float XMin => Centro.X - Box.Size.X / 2f;

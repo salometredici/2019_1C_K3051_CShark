@@ -1,7 +1,10 @@
 ﻿using BulletSharp;
 using CShark.Fisica;
 using CShark.Jugador;
+using CShark.Luces;
+using CShark.Luces.Materiales;
 using CShark.Model;
+using Microsoft.DirectX.Direct3D;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +21,8 @@ namespace CShark.Terreno
         private TgcMesh Mesh;
         private MesaCrafteo Mesa;
         private RigidBody Body;
+        private Effect Efecto;
+        private IMaterial Material;
 
         //referencia porque esta dentro de su constructor..
         public Barco(TgcMesh mesh) {
@@ -31,9 +36,14 @@ namespace CShark.Terreno
             var mesaRB = BulletRigidBodyFactory.Instance.CreateBox(Mesa.Size, 1f, Mesa.Position, 0, 0, 0, 0.5f, false);
             Mapa.Instancia.AgregarBody(Body);
             Mapa.Instancia.AgregarBody(mesaRB);
+            Efecto = Iluminacion.EfectoLuz;
+            Mesh.Effect = Efecto;
+            Mesh.Technique = "Iluminado";
+            Material = new Metal();
         }
         
         public void Update(GameModel game) {
+            Iluminacion.ActualizarEfecto(Efecto, Material, game.Camara.Position);
             Mesa.Update(game);
         }
 

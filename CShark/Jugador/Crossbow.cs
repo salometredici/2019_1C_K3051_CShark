@@ -58,7 +58,7 @@ namespace CShark.Jugador
             var harpoonBody = CrearHarpoonBody(player);
             var direccionDisparo = new TGCVector3(camara.LookAt.X - camara.Position.X, camara.LookAt.Y - camara.Position.Y, camara.LookAt.Z - camara.Position.Z).ToBulletVector3();
             direccionDisparo.Normalize();
-            harpoonBody.LinearVelocity = direccionDisparo * 900;
+            harpoonBody.LinearVelocity = direccionDisparo * 90;
             harpoonBody.LinearFactor = TGCVector3.One.ToBulletVector3();
             Municiones.Add(harpoonBody);
             Mapa.Instancia.AgregarBody(harpoonBody);

@@ -28,15 +28,14 @@ namespace CShark.Fisica.Colisiones
         private CustomVertex.PositionTextured[] DataTriangulos;
 
         public RigidBody FondoDelMarRB;
-        public RigidBody OlasRB;
-
-        public void CambiarGravedad(Vector3 gravedad) {
-            World.Gravity = gravedad;
-        }
 
         public void CambiarGravedad(float gravedad)
         {
             World.Gravity = new Vector3(0, gravedad, 0);
+        }
+
+        public void CambiarGravedad(Vector3 gravedad) {
+            World.Gravity = gravedad;
         }
 
         public void Init(CustomVertex.PositionTextured[] dataTriangulos) {
@@ -84,8 +83,8 @@ namespace CShark.Fisica.Colisiones
             World.RemoveRigidBody(body);
         }
 
-        public void Update() {
-            World.StepSimulation(1 / 60f, 100);
+        public void Update(float elapsedTime) {
+            World.StepSimulation(elapsedTime);
         }
 
         public void Dispose() {

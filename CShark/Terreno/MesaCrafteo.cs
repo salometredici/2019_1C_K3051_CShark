@@ -1,4 +1,6 @@
 ﻿using CShark.Jugador;
+using CShark.Luces;
+using CShark.Luces.Materiales;
 using CShark.Model;
 using CShark.Utils;
 using Microsoft.DirectX.DirectInput;
@@ -18,6 +20,7 @@ using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 using TGC.Core.Text;
 using TGC.Core.Textures;
+using Effect = Microsoft.DirectX.Direct3D.Effect;
 
 namespace CShark.Terreno
 {
@@ -30,11 +33,18 @@ namespace CShark.Terreno
         public TGCVector3 Size => Mesh.BoundingBox.calculateSize();
         public TGCVector3 Position => Mesh.BoundingBox.calculateBoxCenter();
 
+        private Effect Efecto;
+        private IMaterial Material;
+
         public MesaCrafteo(TgcMesh mesh) {
             Mesh = mesh;
             EsferaCercania = new TgcBoundingSphere(Position, 3000f);
             EsferaCercania.setRenderColor(Color.Red);
             InicializarTexto();
+            Efecto = Iluminacion.EfectoLuz;
+            Mesh.Effect = Efecto;
+            Mesh.Technique = "Iluminado";
+            Material = new Madera();
         }
 
         private void InicializarTexto() {
@@ -50,6 +60,7 @@ namespace CShark.Terreno
         }
 
         public void Update(GameModel game) {
+            Iluminacion.ActualizarEfecto(Efecto, Material, game.Camara.Position);
             if (EstaCerca(game.Player)) {
                 EsferaCercania.setRenderColor(Color.Yellow);
                 MostrarTexto = true;

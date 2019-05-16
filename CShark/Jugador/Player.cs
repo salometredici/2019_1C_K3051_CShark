@@ -1,21 +1,13 @@
 ﻿using TGC.Core.Mathematica;
 using CShark.Model;
 using TGC.Core.Input;
-using Microsoft.DirectX.DirectInput;
-using CShark.Variables;
-using CShark.Managers;
 using CShark.Items;
 using BulletSharp;
 using CShark.Terreno;
 using TGC.Core.BulletPhysics;
 using CShark.Utils;
 using BulletSharp.Math;
-using CShark.Items.Crafteables;
 using TGC.Core.Collision;
-using TGC.Core.Geometry;
-using System.Drawing;
-using TGC.Core.Text;
-using TGC.Core.Direct3D;
 using CShark.Jugador.Camara;
 
 namespace CShark.Jugador
@@ -76,17 +68,16 @@ namespace CShark.Jugador
         }
 
         public void MoverCapsula(float x, float y, float z) {
-            var fuerza = 20f;
-            Capsula.ActivationState = ActivationState.ActiveTag;
-            Capsula.AngularVelocity = Vector3.Zero;
-            Capsula.ApplyCentralImpulse(fuerza * new Vector3(x, y, z));
+            Impulsar(20f * new Vector3(x, y, z));
         }
 
         public void Flotar(int sentido) {
-            var movimiento = 20f * sentido;
+            Impulsar(new Vector3(20f * sentido));
+        }
+
+        private void Impulsar(Vector3 impulso) {
             Capsula.ActivationState = ActivationState.ActiveTag;
-            Capsula.AngularVelocity = Vector3.Zero;
-            Capsula.ApplyCentralImpulse(new Vector3(0, movimiento, 0));
+            Capsula.ApplyCentralImpulse(impulso);
         }
 
         public void Saltar() {

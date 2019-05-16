@@ -2,6 +2,7 @@
 using CShark.NPCs.Peces;
 using CShark.Terreno;
 using CShark.UI;
+using CShark.Utilidades;
 using CShark.Utils;
 using System;
 using System.Collections.Generic;
@@ -54,10 +55,8 @@ namespace CShark.Model
             var rocas = loader.loadSceneFromFile(media + @"Mapa\Rocas-TgcScene.xml");
             PantallaCarga.Progresar("Cargando extras...");
             var extras = loader.loadSceneFromFile(media + @"Mapa\Extras-TgcScene.xml");
-            PantallaCarga.Progresar("Cargando spawns...");
+            PantallaCarga.Progresar("Cargando peces...");
             var peces = loader.loadSceneFromFile(media + @"Mapa\Peces-TgcScene.xml");
-            //SpawnPlayer = spawns.getMeshByName("SpawnPlayer").BoundingBox.Position;
-            
             PantallaCarga.Progresar("Posicionando rocas...");
             Mapa.Instancia.CargarRocas(rocas);
             PantallaCarga.Progresar("Posicionando extras...");

@@ -17,7 +17,7 @@ namespace CShark.Items
     {
         public TgcMesh Mesh;
         private float rotacion;
-        private TGCVector3 posicion;
+        private TGCVector3 posicion; //estatica central
         private TGCVector3 escala;
         private float offsetLetra;
         private InterpoladorVaiven Interpolador;
@@ -26,8 +26,8 @@ namespace CShark.Items
         private TGCVector3 escalaBox; //un poco mas grande para agarre
 
         public override TgcBoundingAxisAlignBox Box => _box;
-        public override TGCVector3 Posicion => Mesh.Position;
-        public override TGCVector3 Rotacion => Mesh.Rotation;
+        public override TGCVector3 Posicion => posicion;
+        public override TGCVector3 Rotacion => new TGCVector3(0,rotacion,0);
 
         private TgcBoundingAxisAlignBox _box;
 
