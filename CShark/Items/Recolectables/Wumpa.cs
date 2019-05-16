@@ -4,6 +4,7 @@ using CShark.Jugador;
 using CShark.Terreno;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,6 @@ namespace CShark.Items.Recolectables
     public class Wumpa : RecolectableAnimado
     {
         public override ERecolectable Tipo => ERecolectable.Wumpa;
-        public Wumpa(TGCVector3 posicion) : base("Wumpa", 2, posicion, 40f) { }
+        public Wumpa(TGCVector3 posicion) : base("Wumpa", 2, posicion, 40f, Color.OrangeRed) { }
     }
 }

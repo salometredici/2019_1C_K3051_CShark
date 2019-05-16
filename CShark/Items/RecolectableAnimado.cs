@@ -1,4 +1,7 @@
-﻿using CShark.Model;
+﻿using CShark.Luces;
+using CShark.Luces.Materiales;
+using CShark.Model;
+using Microsoft.DirectX.Direct3D;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -31,7 +34,11 @@ namespace CShark.Items
 
         private TgcBoundingAxisAlignBox _box;
 
-        public RecolectableAnimado(string mesh, float _escala, TGCVector3 _posicion, float _offsetLetra) : base(_posicion) {
+        private Effect Efecto;
+        private IMaterial Material;
+        private Luz Luz;
+
+        public RecolectableAnimado(string mesh, float _escala, TGCVector3 _posicion, float _offsetLetra, Color colorLuz) : base(_posicion) {
             var loader = new TgcSceneLoader();
             Mesh = loader.loadSceneFromFile(Game.Default.MediaDirectory + @"Recolectables\" + mesh + "-TgcScene.xml").Meshes[0];
             LetraE1 = loader.loadSceneFromFile(Game.Default.MediaDirectory + @"Recolectables\LetraE-TgcScene.xml").Meshes[0];
@@ -52,6 +59,11 @@ namespace CShark.Items
             };
             _box = GenerarBox();
             _box.transform(TGCMatrix.Scaling(escala) * TGCMatrix.Translation(posicion));
+            Efecto = Iluminacion.EfectoLuz;
+            Efecto.Technique = "Iluminado";
+            Material = new Metal();
+            Luz = new Luz(colorLuz, posicion, 10f, 0.1f, 9f);
+            Iluminacion.AgregarLuz(Luz);
         }
 
         private TGCMatrix GetLetraTransform(float offsetX, float rot) {
@@ -80,6 +92,11 @@ namespace CShark.Items
             return new TgcBoundingAxisAlignBox(pmin, pmax);
         }
 
+        public override void Update(GameModel game) {
+            base.Update(game);
+            Luz.Update(Posicion);
+        }
+
         public override void Render(GameModel game) {
             if (!Recogido) {
                 rotacion += game.ElapsedTime * 2f;
@@ -91,11 +108,17 @@ namespace CShark.Items
                     LetraE1.Render();
                     LetraE2.Render();
                 }
+                Iluminacion.ActualizarEfecto(Efecto, Material, game.Camara.Position);
             }
         }
 
         public override void Dispose() {
             Mesh.Dispose();
+            Luz.Dispose();
+        }
+
+        public override void Desaparecer() {
+            Iluminacion.SacarLuz(Luz);
         }
     }
 }

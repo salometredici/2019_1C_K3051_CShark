@@ -21,9 +21,7 @@ namespace CShark.Items
 
         public abstract void Render(GameModel game);
         public abstract void Dispose();
-        public virtual void Desaparecer() {
-
-        }
+        public abstract void Desaparecer();
 
         public Recolectable(TGCVector3 posicion) {
             EsferaCercania = new TgcBoundingSphere(posicion, 700f);

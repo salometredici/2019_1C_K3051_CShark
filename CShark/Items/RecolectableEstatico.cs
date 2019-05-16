@@ -48,5 +48,9 @@ namespace CShark.Items
             var pmax = new TGCVector3(centro.X + m, centro.Y + m, centro.Z + m);
             return new TgcBoundingAxisAlignBox(pmin, pmax);
         }
+
+        public override void Desaparecer() {
+
+        }
     }
 }

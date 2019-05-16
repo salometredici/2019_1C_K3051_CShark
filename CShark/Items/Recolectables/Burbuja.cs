@@ -61,5 +61,9 @@ namespace CShark.Items.Recolectables
         public override void Dispose() {
             Esfera.Dispose();
         }
+
+        public override void Desaparecer() {
+
+        }
     }
 }
