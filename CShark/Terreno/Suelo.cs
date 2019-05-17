@@ -40,10 +40,17 @@ namespace CShark.Terreno
             Terreno.loadHeightmap(heightmap, xz, y, TGCVector3.Empty);
             Terreno.loadTexture(textura);
             Efecto = Iluminacion.EfectoLuz;
+
+            //Efecto = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "Suelo.fx");
             Terreno.Effect = Efecto;
+            //Terreno.Technique = "SueloEffect";
             Terreno.Technique = "Iluminado";
             Material = new Arena();
+            var path = Game.Default.MediaDirectory + @"Mapa\Textures\fondo.png";
+            tex = TgcTexture.createTexture(D3DDevice.Instance.Device, path).D3dTexture;
         }
+
+        Texture tex;
         
         public void Dispose() {
             Terreno.Dispose();
@@ -54,6 +61,7 @@ namespace CShark.Terreno
         }
 
         public void Render() {
+            //Terreno.Effect.SetValue("texx", tex);
             Terreno.Render();
         }
 
