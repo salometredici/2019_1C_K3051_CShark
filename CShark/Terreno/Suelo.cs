@@ -27,6 +27,7 @@ namespace CShark.Terreno
 
         private Effect Efecto;
         private IMaterial Material;
+        private Texture TexturaRayoSol;
 
         public Suelo() {
             var tamañoHM = 256f;
@@ -40,28 +41,23 @@ namespace CShark.Terreno
             Terreno.loadHeightmap(heightmap, xz, y, TGCVector3.Empty);
             Terreno.loadTexture(textura);
             Efecto = Iluminacion.EfectoLuz;
-
-            //Efecto = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "Suelo.fx");
             Terreno.Effect = Efecto;
-            //Terreno.Technique = "SueloEffect";
-            Terreno.Technique = "Iluminado";
+            Terreno.Technique = "Iluminado_Rayos_Sol";
             Material = new Arena();
             var path = Game.Default.MediaDirectory + @"Mapa\Textures\fondo.png";
-            tex = TgcTexture.createTexture(D3DDevice.Instance.Device, path).D3dTexture;
+            TexturaRayoSol = TgcTexture.createTexture(D3DDevice.Instance.Device, path).D3dTexture;
         }
 
-        Texture tex;
-        
         public void Dispose() {
             Terreno.Dispose();
         }
 
         public void Update(TGCVector3 camara) {
             Iluminacion.ActualizarEfecto(Efecto, Material, camara);
+            Terreno.Effect.SetValue("texRayosSol", TexturaRayoSol);
         }
 
         public void Render() {
-            //Terreno.Effect.SetValue("texx", tex);
             Terreno.Render();
         }
 

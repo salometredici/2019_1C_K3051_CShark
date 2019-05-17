@@ -34,12 +34,6 @@ sampler2D diffuseMap = sampler_state
     MIPFILTER = LINEAR;
 };
 
-texture texLightMap;
-sampler2D lightMap = sampler_state
-{
-    Texture = (texLightMap);
-};
-
 struct Luz
 {
     float3 Color;
@@ -48,7 +42,7 @@ struct Luz
     float Atenuacion;
 };
 
-struct VS_INPUT_DIFFUSE_MAP
+struct VS_INPUT
 {
     float4 Position : POSITION0;
     float3 Normal : NORMAL0;
@@ -56,7 +50,7 @@ struct VS_INPUT_DIFFUSE_MAP
     float2 Texcoord : TEXCOORD0;
 };
 
-struct VS_OUTPUT_DIFFUSE_MAP
+struct VS_OUTPUT
 {
     float4 Position : POSITION0;
     float2 Texcoord : TEXCOORD0;
@@ -64,7 +58,7 @@ struct VS_OUTPUT_DIFFUSE_MAP
     float3 WorldNormal : TEXCOORD2;
 };
 
-struct PS_DIFFUSE_MAP
+struct PS_INPUT
 {
     float2 Texcoord : TEXCOORD0;
     float3 WorldPosition : TEXCOORD1;
@@ -81,19 +75,9 @@ Luz getLuz(int i)
     return luz;
 };
 
-VS_OUTPUT_DIFFUSE_MAP vertex_shader(VS_INPUT_DIFFUSE_MAP input)
+float4 calcularLuces(float3 worldNormal, float3 worldPosition, float3 texel)
 {
-    VS_OUTPUT_DIFFUSE_MAP output;
-    output.Position = mul(input.Position, matWorldViewProj);
-    output.Texcoord = input.Texcoord;
-    output.WorldPosition = mul(input.Position, matWorld);
-    output.WorldNormal = mul(input.Normal, matInverseTransposeWorld).xyz;
-    return output;
-}
-
-float4 pixel_shader(PS_DIFFUSE_MAP input) : COLOR0
-{
-    float3 Nn = normalize(input.WorldNormal);
+    float3 Nn = normalize(worldNormal);
     float3 luzEspecular = 0;
     float3 luzAmbiente = 0;
     float3 luzDifusa = colorEmisivo;
@@ -102,12 +86,12 @@ float4 pixel_shader(PS_DIFFUSE_MAP input) : COLOR0
     {
         Luz luz = getLuz(i);
 
-        float3 Ln = normalize(luz.Posicion - input.WorldPosition);
-        float3 Hn = normalize(posicionCamara.xyz - 2 * input.WorldPosition + luz.Posicion);
+        float3 Ln = normalize(luz.Posicion - worldPosition);
+        float3 Hn = normalize(posicionCamara.xyz - 2 * worldPosition + luz.Posicion);
         float3 n_dot_l = max(0.0, dot(Nn, Ln));
         float3 n_dot_h = max(0.0, dot(Nn, Hn));
 
-        float distanciaAtenuada = length(luz.Posicion - input.WorldPosition) * luz.Atenuacion;
+        float distanciaAtenuada = length(luz.Posicion - worldPosition) * luz.Atenuacion;
         float intensidad = luz.Intensidad / distanciaAtenuada;
         
         luzAmbiente += intensidad * luz.Color;
@@ -118,17 +102,85 @@ float4 pixel_shader(PS_DIFFUSE_MAP input) : COLOR0
     luzEspecular *= colorEspecular;
     luzAmbiente *= colorAmbiente;
     luzDifusa *= colorDifuso;
-
-    float3 colorTexel = tex2D(diffuseMap, input.Texcoord);
-
-    return float4(saturate(colorEmisivo + luzDifusa + luzAmbiente) * colorTexel + luzEspecular, colorDifuso.a);
+       
+    return float4(saturate(colorEmisivo + luzDifusa + luzAmbiente) * texel + luzEspecular, colorDifuso.a);
 }
 
+VS_OUTPUT vertex_iluminado(VS_INPUT input)
+{
+    VS_OUTPUT output;
+    output.Position = mul(input.Position, matWorldViewProj);
+    output.Texcoord = input.Texcoord;
+    output.WorldPosition = mul(input.Position, matWorld);
+    output.WorldNormal = mul(input.Normal, matInverseTransposeWorld).xyz;
+    return output;
+}
+
+float4 pixel_iluminado(PS_INPUT input) : COLOR0
+{
+    float3 colorTexel = tex2D(diffuseMap, input.Texcoord);
+    return calcularLuces(input.WorldNormal, input.WorldPosition, colorTexel);
+}
+
+//simplemente iluminados
 technique Iluminado
 {
     pass Pass_0
     {
-        VertexShader = compile vs_3_0 vertex_shader();
-        PixelShader = compile ps_3_0 pixel_shader();
+        VertexShader = compile vs_3_0 vertex_iluminado();
+        PixelShader = compile ps_3_0 pixel_iluminado();
+    }
+}
+
+struct VS_OUTPUT_RAYOS
+{
+    float4 Position : POSITION0;
+    float2 Texcoord : TEXCOORD0;
+    float3 WorldPosition : TEXCOORD1;
+    float3 WorldNormal : TEXCOORD2;
+    float Rayitas : TEXCOORD3;
+};
+
+texture texRayosSol;
+sampler2D diffuseMapRayos = sampler_state
+{
+    Texture = (texRayosSol);
+    ADDRESSU = WRAP;
+    ADDRESSV = WRAP;
+    MINFILTER = LINEAR;
+    MAGFILTER = LINEAR;
+    MIPFILTER = LINEAR;
+};
+
+VS_OUTPUT_RAYOS vertex_iluminado_rayos(VS_INPUT Input)
+{
+    VS_OUTPUT_RAYOS Output;
+    float alturaSuperficie = 18000.0f;
+    float tamanioTile = 64.0f;
+    Output.Position = mul(Input.Position, matWorldViewProj);
+    Output.Texcoord = Input.Texcoord * tamanioTile;
+    Output.WorldPosition = mul(Input.Position, matWorld);
+    Output.WorldNormal = mul(Input.Normal, matInverseTransposeWorld).xyz;
+    Output.Rayitas = Input.Position.y < alturaSuperficie ? 0.8 : 0.15; //si estoy bajo agua veo MÁS los reflejitos
+    return Output;
+}
+
+float4 pixel_iluminado_rayos(VS_OUTPUT_RAYOS Input) : COLOR0
+{
+    float plano = 1 - Input.Rayitas;
+    float3 color1 = tex2D(diffuseMap, Input.Texcoord).rgb;
+    float3 color2 = tex2D(diffuseMapRayos, Input.Texcoord).rgb;
+    float3 colorTexel = color1 * plano + color2 * Input.Rayitas;
+    //el texel es el que calculo haciendo el blend entre las dos texturas
+    return calcularLuces(Input.WorldNormal, Input.WorldPosition, colorTexel);
+}
+
+//arena iluminada y un blend de arena simple + arena con rayos solares (bajo agua)
+technique Iluminado_Rayos_Sol
+{
+    pass Pass_0
+    {
+        VertexShader = compile vs_3_0 vertex_iluminado_rayos();
+        PixelShader = compile ps_3_0 pixel_iluminado_rayos();
     }
 }
