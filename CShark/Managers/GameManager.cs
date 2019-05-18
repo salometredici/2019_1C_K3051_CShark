@@ -6,6 +6,7 @@ using CShark.Utilidades;
 using CShark.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -40,38 +41,53 @@ namespace CShark.Model
             Managers.ForEach(m => m.Update(game));
         }
 
+        private void ArreglarXML(string path) {
+            string[] filePaths = Directory.GetFiles(path, "*.xml");
+            foreach (var file in filePaths) {
+                var tempFile = Path.GetTempFileName();
+                var linesToKeep = File.ReadLines(file)
+                    .Where(l => !l.Contains("MapChannel:1"));
+                File.WriteAllLines(tempFile, linesToKeep);
+                File.Delete(file);
+                File.Move(tempFile, file);
+            }
+        }
+
         public async void Initialize() {
-            PantallaCarga = new LoadingScreen(13);
+            PantallaCarga = new LoadingScreen(12);
             Task task = Task.Run(() => PantallaCarga.Render());
             var loader = new TgcSceneLoader();
             var media = Game.Default.MediaDirectory;
+            PantallaCarga.Progresar("Arreglando escenas con Map Channel 1...");
+            //ArreglarXML(media + "Mapa"); USAR ESTO SOLO CUANDO AGREGO UN NUEVO XML QUE ROMPE
             PantallaCarga.Progresar("Cargando terreno...");
             Mapa.Instancia.CargarTerreno();
             PantallaCarga.Progresar("Cargando skybox...");
             Mapa.Instancia.CargarSkybox();
             PantallaCarga.Progresar("Cargando superficie...");
             Mapa.Instancia.CargarSuperficie();
+            PantallaCarga.Progresar("Cargando palmeras...");
+            var palmeras = loader.loadSceneFromFile(media + @"Mapa\Palmeras-TgcScene.xml");
+            Mapa.Instancia.CargarPalmeras(palmeras);
             PantallaCarga.Progresar("Cargando rocas...");
             var rocas = loader.loadSceneFromFile(media + @"Mapa\Rocas-TgcScene.xml");
+            Mapa.Instancia.CargarRocas(rocas);
             PantallaCarga.Progresar("Cargando extras...");
             var extras = loader.loadSceneFromFile(media + @"Mapa\Extras-TgcScene.xml");
+            Mapa.Instancia.CargarExtras(extras);
             PantallaCarga.Progresar("Cargando peces...");
             var peces = loader.loadSceneFromFile(media + @"Mapa\Peces-TgcScene.xml");
-            PantallaCarga.Progresar("Posicionando rocas...");
-            Mapa.Instancia.CargarRocas(rocas);
-            PantallaCarga.Progresar("Posicionando extras...");
-            Mapa.Instancia.CargarExtras(extras);
             Managers = new List<IManager>();
-            MenuManager = new MenuManager();
             PezManager = new FaunaManager(peces);
-            PantallaCarga.Progresar("Cargando peces...");
             Managers.Add(PezManager);
             PezManager.Initialize();
-            PantallaCarga.Progresar("Cargando barquito...");
+
+            //esto cambiar despues
             var barco = loader.loadSceneFromFile(media + @"Mapa\Barco-TgcScene.xml").Meshes[0];
             SpawnPlayer = barco.BoundingBox.calculateBoxCenter() + new TGCVector3(0, 3000, 0);
-            Mapa.Instancia.CargarBarco(barco);
+
             PantallaCarga.Progresar("Cargando menúes...");
+            MenuManager = new MenuManager();
             Managers.Add(MenuManager);
             MenuManager.Initialize();
             PantallaCarga.Progresar("Cargando recolectables...");
@@ -84,6 +100,7 @@ namespace CShark.Model
             Mapa.Instancia.CargarParedes(paredes);
             PantallaCarga.Progresar("Cargando audio...");
             MusicPlayer = new MusicPlayer();
+            PantallaCarga.Finalizar();
             await task;
         }
 

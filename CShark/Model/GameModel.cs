@@ -42,8 +42,8 @@ namespace CShark.Model
             var device = D3DDevice.Instance.Device;
             float ancho = device.CreationParameters.FocusWindow.Width;
             float alto = device.CreationParameters.FocusWindow.Height;
-            var anchoAltoMapa = 100000f;
-            var farDistance = FastMath.Sqrt(anchoAltoMapa * anchoAltoMapa * 2);
+            var anchoJugable = 290000f; //300k - 10k; 
+            var farDistance = FastMath.Sqrt(anchoJugable * anchoJugable * 2);
             var transformacion= Matrix.PerspectiveFovLH(FastMath.QUARTER_PI, ancho / alto, 1f, farDistance);
             device.Transform.Projection = transformacion;
             Start();

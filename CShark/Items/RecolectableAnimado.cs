@@ -1,6 +1,6 @@
 ﻿using CShark.Luces;
-using CShark.Luces.Materiales;
 using CShark.Model;
+using CShark.Objetos;
 using Microsoft.DirectX.Direct3D;
 using System;
 using System.Collections.Generic;
@@ -13,6 +13,7 @@ using TGC.Core.Interpolation;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 using TGC.Core.Text;
+using Material = CShark.Objetos.Material;
 
 namespace CShark.Items
 {
@@ -35,7 +36,7 @@ namespace CShark.Items
         private TgcBoundingAxisAlignBox _box;
 
         private Effect Efecto;
-        private IMaterial Material;
+        private Material Material;
         private Luz Luz;
 
         public RecolectableAnimado(string mesh, float _escala, TGCVector3 _posicion, float _offsetLetra, Color colorLuz) : base(_posicion) {
@@ -61,7 +62,7 @@ namespace CShark.Items
             _box.transform(TGCMatrix.Scaling(escala) * TGCMatrix.Translation(posicion));
             Efecto = Iluminacion.EfectoLuz;
             Efecto.Technique = "Iluminado";
-            Material = new Metal();
+            Material = Materiales.Metal;
             Luz = new Luz(colorLuz, posicion, 10f, 0.1f, 9f);
             Iluminacion.AgregarLuz(Luz);
         }

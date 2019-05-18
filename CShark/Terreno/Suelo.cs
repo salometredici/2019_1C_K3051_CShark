@@ -1,5 +1,6 @@
 ﻿using CShark.Luces;
-using CShark.Luces.Materiales;
+using CShark.Model;
+using CShark.Objetos;
 using CShark.Utils;
 using Microsoft.DirectX.Direct3D;
 using System;
@@ -15,6 +16,7 @@ using TGC.Core.Shaders;
 using TGC.Core.Terrain;
 using TGC.Core.Textures;
 using static Microsoft.DirectX.Direct3D.CustomVertex;
+using Material = CShark.Objetos.Material;
 
 namespace CShark.Terreno
 {
@@ -26,15 +28,15 @@ namespace CShark.Terreno
         public TGCVector3 Center => Terreno.Center;
 
         private Effect Efecto;
-        private IMaterial Material;
+        private Material Material;
         private Texture TexturaRayoSol;
 
         public Suelo() {
-            var tamañoHM = 256f;
-            var alturaTerreno = 19996.643f; //desde 3ds max para que quede exacto
-            var anchoAltoMapa = 150000f;
+            var tamañoHM = 1024f;
+            var alturaTerreno = 20000f; //desde 3ds max para que quede exacto
+            var anchoAltoMapa = 300000f;
             var textura = Game.Default.MediaDirectory + @"Mapa\Textures\arena.png";
-            var heightmap = Game.Default.MediaDirectory + @"Mapa\Textures\terreno.png";
+            var heightmap = Game.Default.MediaDirectory + @"Mapa\Textures\terreno2.png";
             var xz = anchoAltoMapa / tamañoHM;
             var y = alturaTerreno / HeightmapMethods.AlturaHeightmap(heightmap);
             Terreno = new TgcSimpleTerrain();
@@ -43,18 +45,22 @@ namespace CShark.Terreno
             Efecto = Iluminacion.EfectoLuz;
             Terreno.Effect = Efecto;
             Terreno.Technique = "Iluminado_Rayos_Sol";
-            Material = new Arena();
+            Material = Materiales.Arena;
             var path = Game.Default.MediaDirectory + @"Mapa\Textures\fondo.png";
             TexturaRayoSol = TgcTexture.createTexture(D3DDevice.Instance.Device, path).D3dTexture;
         }
+
+        float time = 0;
 
         public void Dispose() {
             Terreno.Dispose();
         }
 
-        public void Update(TGCVector3 camara) {
+        public void Update(float elapsedTime, TGCVector3 camara) {
+            time += elapsedTime;
             Iluminacion.ActualizarEfecto(Efecto, Material, camara);
             Terreno.Effect.SetValue("texRayosSol", TexturaRayoSol);
+            Terreno.Effect.SetValue("time", time);
         }
 
         public void Render() {

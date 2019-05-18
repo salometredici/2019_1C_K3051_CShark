@@ -134,11 +134,11 @@ technique Iluminado
 
 struct VS_OUTPUT_RAYOS
 {
-    float4 Position : POSITION0;
     float2 Texcoord : TEXCOORD0;
     float3 WorldPosition : TEXCOORD1;
     float3 WorldNormal : TEXCOORD2;
     float Rayitas : TEXCOORD3;
+    float4 Position : POSITION0;
 };
 
 texture texRayosSol;
@@ -152,13 +152,24 @@ sampler2D diffuseMapRayos = sampler_state
     MIPFILTER = LINEAR;
 };
 
+float time = 0;
+
 VS_OUTPUT_RAYOS vertex_iluminado_rayos(VS_INPUT Input)
 {
     VS_OUTPUT_RAYOS Output;
     float alturaSuperficie = 18000.0f;
-    float tamanioTile = 64.0f;
+    float proporcion = Input.Position.y / alturaSuperficie;
+    float tamanioTile = 0;
+    /*if (0.6 < proporcion && proporcion <= 1)
+        tamanioTile = 256.0f;
+    else if (0.2 < proporcion && proporcion <= 0.6)
+        tamanioTile = 128.0f;
+    else if (proporcion <= 0.2)*/
+        tamanioTile = 32.0f;
     Output.Position = mul(Input.Position, matWorldViewProj);
     Output.Texcoord = Input.Texcoord * tamanioTile;
+    Output.Texcoord.x += sin(time) / 32;
+    Output.Texcoord.y += cos(time) / 32;
     Output.WorldPosition = mul(Input.Position, matWorld);
     Output.WorldNormal = mul(Input.Normal, matInverseTransposeWorld).xyz;
     Output.Rayitas = Input.Position.y < alturaSuperficie ? 0.8 : 0.15; //si estoy bajo agua veo MÁS los reflejitos

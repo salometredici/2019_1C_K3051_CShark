@@ -1,9 +1,10 @@
-﻿using CShark.Luces.Materiales;
+﻿using CShark.Objetos;
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using System.Collections.Generic;
 using TGC.Core.Mathematica;
 using TGC.Core.Shaders;
+using Material = CShark.Objetos.Material;
 
 namespace CShark.Luces
 {
@@ -23,7 +24,7 @@ namespace CShark.Luces
             }
         }
 
-        public static void ActualizarEfecto(Effect efecto, IMaterial material, TGCVector3 camara) {
+        public static void ActualizarEfecto(Effect efecto, Material material, TGCVector3 camara) {
             var contenedor = ContenedorLuces.Instancia;
 
             //cargar propiedades de las luces

@@ -1,7 +1,10 @@
-﻿using BulletSharp;
+﻿using System;
+using System.Collections.Generic;
+using BulletSharp;
 using CShark.Fisica.Colisiones;
 using CShark.Jugador;
 using CShark.Model;
+using CShark.Objetos;
 using CShark.Utilidades;
 using CShark.Utils;
 using TGC.Core.BulletPhysics;
@@ -18,28 +21,29 @@ namespace CShark.Terreno
         private TGCBox Box;
         public TGCVector3 Centro;
 
-        private SkyBox Skybox;
-        private Suelo Suelo;
         private ColisionesTerreno Colisiones;
+
+        //Objetos especiales
         private Barco Barco;
-        private TgcScene Rocas;
-        private TgcScene Extras;
+        private MesaCrafteo Mesa;
+        private List<IRenderable> Objetos;
+
+        private Suelo Suelo;
+        private SkyBox Skybox;
         public Superficie Superficie;
         private Sol Sol;
 
         public static Mapa Instancia { get; } = new Mapa();
 
-        private Mapa() { }
+        private Mapa() {
+            Objetos = new List<IRenderable>();
+        }
               
         public void CargarSkybox() {
             Centro = Suelo.Center;
             Skybox = new SkyBox(Centro);
             Box = TGCBox.fromSize(Skybox.Center, Skybox.Size);
             Sol = new Sol(Centro + new TGCVector3(0, 50000, 0));
-        }
-
-        public void CargarBarco(TgcMesh mesh) {
-            Barco = new Barco(mesh);
         }
 
         public void CargarTerreno() {
@@ -63,15 +67,24 @@ namespace CShark.Terreno
             paredes.DisposeAll();
         }
 
+        public void CargarPalmeras(TgcScene palmeras) {
+            foreach (var palmera in palmeras.Meshes) {
+                Objetos.Add(new Palmera(palmera));
+                palmera.AlphaBlendEnable = true;
+            }
+        }
 
         public void CargarRocas(TgcScene rocas) {
-            Rocas = rocas;
-            CargarRigidBodiesFromScene(Rocas);
+            foreach (var roca in rocas.Meshes) {
+                Objetos.Add(new Roca(roca));
+            }
         }
 
         public void CargarExtras(TgcScene extras) {
-            Extras = extras;
-            CargarRigidBodiesFromScene(Extras);
+            foreach (var objeto in extras.Meshes)
+                Objetos.Add(new Extra(objeto));
+            Barco = new Barco();
+            Mesa = new MesaCrafteo();
         }
 
         public void Update(float elapsedTime, GameModel game) {
@@ -80,7 +93,7 @@ namespace CShark.Terreno
             } else {
                 Colisiones.CambiarGravedad(Constants.UnderWaterGravity);
             }
-            Suelo.Update(game.Player.CamaraInterna.PositionEye);
+            Suelo.Update(elapsedTime, game.Player.CamaraInterna.PositionEye);
             Superficie.Update(elapsedTime);
             Sol.Update(elapsedTime);
             Barco.Update(game);
@@ -119,8 +132,7 @@ namespace CShark.Terreno
             Suelo.Render();
             Skybox.Render();
             Barco.Render();
-            Rocas.RenderAll();
-            Extras.RenderAll();
+            Objetos.ForEach(o => o.Render(player.CamaraInterna.PositionEye));
             Superficie.Render();
             Sol.Render();
         }
@@ -129,8 +141,7 @@ namespace CShark.Terreno
             Suelo.Dispose();
             Skybox.Dispose();
             Barco.Dispose();
-            Rocas.DisposeAll();
-            Extras.DisposeAll();
+            Objetos.ForEach(o => o.Dispose());
             Superficie.Dispose();
             Sol.Dispose();
             MeshLoader.Instance.Dispose();
@@ -142,6 +153,6 @@ namespace CShark.Terreno
         public float YMax => Centro.Y + Box.Size.Y / 2f;
         public float ZMin => Centro.Z - Box.Size.Z / 2f;
         public float ZMax => Centro.Z + Box.Size.Z / 2f;
-        public float AlturaMar => 2800f;
+        public float AlturaMar => 18000f;
     }
 }

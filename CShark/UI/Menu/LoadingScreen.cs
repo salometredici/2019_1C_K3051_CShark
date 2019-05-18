@@ -3,6 +3,7 @@ using CShark.Terreno;
 using CShark.Utils;
 using Microsoft.DirectX.Direct3D;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -86,9 +87,9 @@ namespace CShark.UI
                 return new CustomBitmap(Game.Default.MediaDirectory + @"Menu\Loading\barra1920.png", D3DDevice.Instance.Device);
             }
         }
-
+        
         public async Task Render() {
-            while (!Cargado)
+            /*while (!Cargado)
             {
                 PreRender();
                 Drawer.BeginDrawSprite();
@@ -98,7 +99,7 @@ namespace CShark.UI
                 Drawer.EndDrawSprite();
                 Texto.render();
                 PostRender();
-            }
+            }*/
             await Task.Delay(0);
         }
 
@@ -113,6 +114,10 @@ namespace CShark.UI
             D3DDevice.Instance.Device.Present();
         }
 
+        public void Finalizar() {
+            Cargado = true;
+        }
+
         public void Progresar(string texto) {
             if (!Cargado)
             {
@@ -121,8 +126,6 @@ namespace CShark.UI
                 var ancho = (float)Progreso / Operaciones * Barra.Bitmap.Width;
                 Barra.SrcRect = new Rectangle(0, 0, (int)ancho, Barra.Bitmap.Height);
             }
-            if (Progreso >= Operaciones)
-                Cargado = true;
         }
 
     }

@@ -1,5 +1,4 @@
 ﻿using CShark.Luces;
-using CShark.Luces.Materiales;
 using CShark.Model;
 using Microsoft.DirectX.Direct3D;
 using System.Drawing;

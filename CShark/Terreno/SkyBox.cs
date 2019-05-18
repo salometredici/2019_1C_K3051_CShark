@@ -41,7 +41,7 @@ namespace CShark.Terreno
             SkyboxUnderwater = new TgcSkyBox
             {
                 Center = centro,
-                Size = new TGCVector3(150000, 30000, 150000)
+                Size = new TGCVector3(300000, 30000, 300000)
             };
             SkyboxUnderwater.setFaceTexture(SkyFaces.Up, texturesPath + @"UnderwaterSkybox\up1.png");
             SkyboxUnderwater.setFaceTexture(SkyFaces.Down, texturesPath + @"UnderwaterSkybox\seafloor.jpg");
@@ -57,7 +57,7 @@ namespace CShark.Terreno
             SkyboxIsland = new TgcSkyBox
             {
                 Center = centroIsla,
-                Size = new TGCVector3(150000, 36000, 150000)
+                Size = new TGCVector3(300000, 36000, 300000)
             };
             SkyboxIsland.setFaceTexture(SkyFaces.Left, texturesPath + @"SkyBox-LostAtSeaDay\lostatseaday_lf.jpg");
             SkyboxIsland.setFaceTexture(SkyFaces.Back, texturesPath + @"SkyBox-LostAtSeaDay\lostatseaday_ft.jpg");
