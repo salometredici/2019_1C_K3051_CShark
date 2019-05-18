@@ -30,15 +30,15 @@ namespace CShark.Objetos
 
         public MesaCrafteo() {
             Mesh = new TgcSceneLoader().loadSceneFromFile(Game.Default.MediaDirectory + @"Mapa\Mesa-TgcScene.xml").Meshes[0];
-            EsferaCercania = new TgcBoundingSphere(Position, 3000f);
+            EsferaCercania = new TgcBoundingSphere(Position, 500f);
             EsferaCercania.setRenderColor(Color.Red);
             InicializarTexto();
             Efecto = Iluminacion.EfectoLuz;
             Mesh.Effect = Efecto;
             Mesh.Technique = "Iluminado";
             Material = Materiales.Madera;
-            var mesaRB = BulletRigidBodyFactory.Instance.CreateBox(Mesh.BoundingBox.calculateSize(), 1f, Mesh.Position, 0, 0, 0, 0.5f, false);
-            Mapa.Instancia.AgregarBody(mesaRB);
+            var body = BulletRigidBodyFactory.Instance.CreateRigidBodyFromTgcMesh(Mesh);
+            Mapa.Instancia.AgregarBody(body);
         }
 
         private void InicializarTexto() {

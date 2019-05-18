@@ -89,7 +89,7 @@ namespace CShark.UI
         }
         
         public async Task Render() {
-            /*while (!Cargado)
+            while (!Cargado)
             {
                 PreRender();
                 Drawer.BeginDrawSprite();
@@ -99,7 +99,7 @@ namespace CShark.UI
                 Drawer.EndDrawSprite();
                 Texto.render();
                 PostRender();
-            }*/
+            }
             await Task.Delay(0);
         }
 

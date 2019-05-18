@@ -26,8 +26,9 @@ namespace CShark.Fisica.Colisiones
         private SequentialImpulseConstraintSolver ConstraintSolver;
         private BroadphaseInterface OverlappingPairCache;
         private CustomVertex.PositionTextured[] DataTriangulos;
-
         public RigidBody FondoDelMarRB;
+
+        BroadphaseInterface Broadphase;
 
         public void CambiarGravedad(float gravedad)
         {
@@ -42,7 +43,13 @@ namespace CShark.Fisica.Colisiones
             DataTriangulos = dataTriangulos;
             Configuration = new DefaultCollisionConfiguration();
             Dispatcher = new CollisionDispatcher(Configuration);
+
+            Broadphase = new AxisSweep3(new Vector3(-1000, -1000, -1000), new Vector3(1000, 1000, 1000));
+            Broadphase.OverlappingPairCache.SetInternalGhostPairCallback(new GhostPairCallback());
+
             GImpactCollisionAlgorithm.RegisterAlgorithm(Dispatcher);
+
+
             ConstraintSolver = new SequentialImpulseConstraintSolver();
             OverlappingPairCache = new DbvtBroadphase();
 
@@ -53,8 +60,8 @@ namespace CShark.Fisica.Colisiones
 
             //Creamos el terreno
             FondoDelMarRB = BulletRigidBodyFactory.Instance.CreateSurfaceFromHeighMap(DataTriangulos);
-            FondoDelMarRB.Friction = 0.1f;
-
+            //FondoDelMarRB.Friction = 0.5f;
+            FondoDelMarRB.Friction = 0f;
 
             World.AddRigidBody(FondoDelMarRB);
         }

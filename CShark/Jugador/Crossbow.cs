@@ -25,7 +25,7 @@ namespace CShark.Jugador
             var loader = new TgcSceneLoader();
             var path = Game.Default.MediaDirectory + @"Otros\";
             var meshCrossbow = loader.loadSceneFromFile(path + "Crossbow-TgcScene.xml").Meshes[0];
-            var meshHarpoon =  loader.loadSceneFromFile(path + "Harpoon-TgcScene.xml").Meshes[0];
+            var meshHarpoon = loader.loadSceneFromFile(path + "Harpoon-TgcScene.xml").Meshes[0];
             Mesh = meshCrossbow;
             MeshHarpoon = meshHarpoon;
             Mesh.AutoTransformEnable = false;
@@ -34,9 +34,8 @@ namespace CShark.Jugador
 
         public override void Update(GameModel game) {
             base.Update(game);
-            foreach (var bala in Municiones.ToList() /*bien villero para poder pisar la lista en el loop*/)
-            {
-                if (Mapa.Instancia.Colisionan(bala, FaunaManager.Tiburon.Body)) { 
+            foreach (var bala in Municiones.ToList() /*bien villero para poder pisar la lista en el loop*/) {
+                if (Mapa.Instancia.Colisionan(bala, FaunaManager.Tiburon.Body)) {
                     FaunaManager.Tiburon.RecibirDaño(50f);
                     Municiones.Remove(bala);
                 }
@@ -45,8 +44,7 @@ namespace CShark.Jugador
 
         public override void Render() {
             base.Render();
-            foreach (var bala in Municiones)
-            {
+            foreach (var bala in Municiones) {
                 MeshHarpoon.Transform = new TGCMatrix(bala.InterpolationWorldTransform);
                 MeshHarpoon.Render();
             }
@@ -58,7 +56,7 @@ namespace CShark.Jugador
             var harpoonBody = CrearHarpoonBody(player);
             var direccionDisparo = new TGCVector3(camara.LookAt.X - camara.Position.X, camara.LookAt.Y - camara.Position.Y, camara.LookAt.Z - camara.Position.Z).ToBulletVector3();
             direccionDisparo.Normalize();
-            harpoonBody.LinearVelocity = direccionDisparo * 90;
+            harpoonBody.LinearVelocity = direccionDisparo * 900;
             harpoonBody.LinearFactor = TGCVector3.One.ToBulletVector3();
             Municiones.Add(harpoonBody);
             Mapa.Instancia.AgregarBody(harpoonBody);
@@ -66,8 +64,7 @@ namespace CShark.Jugador
         }
 
         private void LimitarCantidad() {
-            if (Municiones.Count() > 5)
-            {
+            if (Municiones.Count() > 5) {
                 var primero = Municiones.First();
                 Municiones.Remove(primero);
                 Mapa.Instancia.SacarBody(primero);
@@ -80,7 +77,7 @@ namespace CShark.Jugador
             var size = new TGCVector3(pmax.X - pmin.X, pmax.Y - pmin.Y, pmax.Z - pmin.Z);
             var posicion = CalcularPuntaCañon();
             var rotacionY = player.CamaraInterna.leftrightRot + (float)Math.PI;
-            var rotacionZ = - player.CamaraInterna.updownRot - (float)Math.PI/32; //un fix visual pequeño
+            var rotacionZ = -player.CamaraInterna.updownRot - (float)Math.PI / 32; //un fix visual pequeño
             return BulletRigidBodyFactory.Instance.CreateBox(size, 10f, posicion, rotacionY, rotacionZ, 0, 1, false);
         }
 

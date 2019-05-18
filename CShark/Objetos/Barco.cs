@@ -24,10 +24,8 @@ namespace CShark.Objetos
         private Material Material;
 
         public Barco() {
-            Mesh = new TgcSceneLoader().loadSceneFromFile(Game.Default.MediaDirectory + @"Mapa\Mesa-TgcScene.xml").Meshes[0];
-            var size = Mesh.BoundingBox.calculateSize();
-            var pos = Mesh.BoundingBox.Position;
-            Body = BulletRigidBodyFactory.Instance.CreateBox(new TGCVector3(size.X,size.Y, size.Z), 0, pos, 0, 0, 0, 0.1f, false);
+            Mesh = new TgcSceneLoader().loadSceneFromFile(Game.Default.MediaDirectory + @"Mapa\Barco-TgcScene.xml").Meshes[0];
+            Body = BulletRigidBodyFactory.Instance.CreateRigidBodyFromTgcMesh(Mesh);
             Mapa.Instancia.AgregarBody(Body);
             Efecto = Iluminacion.EfectoLuz;
             Mesh.Effect = Efecto;

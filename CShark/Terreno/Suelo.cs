@@ -34,7 +34,7 @@ namespace CShark.Terreno
         public Suelo() {
             var tamañoHM = 1024f;
             var alturaTerreno = 20000f; //desde 3ds max para que quede exacto
-            var anchoAltoMapa = 300000f;
+            var anchoAltoMapa = 350000f;
             var textura = Game.Default.MediaDirectory + @"Mapa\Textures\arena.png";
             var heightmap = Game.Default.MediaDirectory + @"Mapa\Textures\terreno2.png";
             var xz = anchoAltoMapa / tamañoHM;

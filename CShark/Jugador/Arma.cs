@@ -23,14 +23,14 @@ namespace CShark.Jugador
         protected TGCVector3 Offset;
         protected float Oscilacion;
 
-        public Arma() {   
+        public Arma() {
             Offset = new TGCVector3(10f, -10f, 30f);
             RotacionY = 0f;
             Oscilacion = 0;
         }
 
         public abstract void Atacar(Player player);
-        
+
         public virtual void Update(GameModel game) {
             Transform = ArmaTransform(game.Player);
             if (game.Input.buttonPressed(TGC.Core.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
@@ -40,16 +40,15 @@ namespace CShark.Jugador
         public virtual void Render() {
             Mesh.Render();
         }
-        
+
         public TGCMatrix ArmaTransform(Player player) {
-            var viewMatrix = player.CamaraInterna.GetViewMatrix();
-            var fpsMatrixInv = TGCMatrix.Invert(viewMatrix);
-            float z = (float)Math.Cos(Oscilacion) / 2;
-            float y = (float)Math.Sin(2 * Oscilacion) / 16;
-            var offset = TGCMatrix.Translation(Offset + new TGCVector3(0, y, z));
             var scale = TGCMatrix.Scaling(0.5f, 0.5f, 0.5f);
-            var rotationY = TGCMatrix.RotationY(RotacionY);  
-            return scale * rotationY * offset * fpsMatrixInv;
+            var rotY = player.CamaraInterna.leftrightRot + FastMath.PI;
+            var rotX = -player.CamaraInterna.updownRot;
+            var rotation = TGCMatrix.RotationYawPitchRoll(rotY, rotX, 0);
+            var offset = TGCMatrix.Translation(Offset);
+            var position = TGCMatrix.Translation(player.Posicion);
+            return scale * offset * rotation * position;
         }
 
         public TGCVector3 Posicion {

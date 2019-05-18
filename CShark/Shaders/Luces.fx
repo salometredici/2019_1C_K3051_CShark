@@ -159,17 +159,17 @@ VS_OUTPUT_RAYOS vertex_iluminado_rayos(VS_INPUT Input)
     VS_OUTPUT_RAYOS Output;
     float alturaSuperficie = 18000.0f;
     float proporcion = Input.Position.y / alturaSuperficie;
-    float tamanioTile = 0;
-    /*if (0.6 < proporcion && proporcion <= 1)
-        tamanioTile = 256.0f;
-    else if (0.2 < proporcion && proporcion <= 0.6)
-        tamanioTile = 128.0f;
-    else if (proporcion <= 0.2)*/
-        tamanioTile = 32.0f;
+    float tamanioTile = 32.0f;
     Output.Position = mul(Input.Position, matWorldViewProj);
     Output.Texcoord = Input.Texcoord * tamanioTile;
-    Output.Texcoord.x += sin(time) / 32;
-    Output.Texcoord.y += cos(time) / 32;
+
+    //si esta debajo de las olas, muevo los rayitos del sol
+    if (Input.Position.y < alturaSuperficie)
+    {
+        Output.Texcoord.x += sin(time) / tamanioTile;
+        Output.Texcoord.y += cos(time) / tamanioTile;
+    }
+
     Output.WorldPosition = mul(Input.Position, matWorld);
     Output.WorldNormal = mul(Input.Normal, matInverseTransposeWorld).xyz;
     Output.Rayitas = Input.Position.y < alturaSuperficie ? 0.8 : 0.15; //si estoy bajo agua veo MÁS los reflejitos

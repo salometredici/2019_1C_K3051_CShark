@@ -17,7 +17,7 @@ namespace CShark.Fisica
         private float Masa = 1f;
         private float Rebote = 1f;
         private float Damping = 1f;
-        private float Rozamiento = 1f;
+        private float Rozamiento = 0f;
 
         public RigidBodyBuilder(string box) {
             var loader = new TgcSceneLoader();

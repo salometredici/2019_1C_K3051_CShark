@@ -44,7 +44,7 @@ namespace CShark.Jugador
             InputHandler = new InputHandler(this);
             CamaraInterna = new TgcFpsCamera(input, this);
             InicializarVariables(vidaInicial, oxigenoInicial);
-            CrearCapsula();            
+            CrearCapsula();
         }
 
         private void InicializarVariables(int vida, int oxigeno)
@@ -60,30 +60,38 @@ namespace CShark.Jugador
 
         private void CrearCapsula()
         {
-            Capsula = BulletRigidBodyFactory.Instance.CreateCapsule(300, 500, Posicion, 5, false);
+            Capsula = BulletRigidBodyFactory.Instance.CreateCapsule(300, 500, Posicion, 5, true);
             Capsula.SetDamping(0.1f, 0f);
             Capsula.Restitution = 0.1f;
-            Capsula.Friction = 0.3f;
+            Capsula.Friction = 0f; //la friccion hago que dependa de las superficies, no del player..
+            Capsula.AngularFactor = new Vector3(0, 1, 0);
             Mapa.Instancia.AgregarBody(Capsula);
         }
 
+        float Velocidad = 5000f;
+        float Salto = 10f;
+        float Flote = 20f;
+
         public void MoverCapsula(float x, float y, float z) {
-            Impulsar(20f * new Vector3(x, y, z));
+            Capsula.ActivationState = ActivationState.ActiveTag;
+            //Capsula.AngularVelocity = Vector3.Zero;
+            Capsula.LinearVelocity += Velocidad * new Vector3(x , 0, z);
         }
 
         public void Flotar(int sentido) {
-            Impulsar(new Vector3(20f * sentido));
+            Impulsar(new Vector3(Flote * sentido));
         }
 
         private void Impulsar(Vector3 impulso) {
             Capsula.ActivationState = ActivationState.ActiveTag;
+            //Capsula.AngularVelocity = Vector3.Zero;
             Capsula.ApplyCentralImpulse(impulso);
         }
 
         public void Saltar() {
             if (!Saltando) {
                 Saltando = true;
-                MoverCapsula(0, 1000, 0);
+                Impulsar(new Vector3(0, Velocidad * Salto, 0));
             }
         }
 
@@ -92,10 +100,15 @@ namespace CShark.Jugador
             return vel < 0.01f;
         }
 
+        private void Detenerse() {
+            Capsula.LinearVelocity -= new Vector3(Capsula.LinearVelocity.X, 0, Capsula.LinearVelocity.Z);
+        }
+
         public void Update(GameModel game) {
             time += game.ElapsedTime;
             if (!onPause)
             {
+                Detenerse();
                 InputHandler.Update();
                 Posicion = Capsula.CenterOfMassPosition.ToTGCVector3();
                 CamaraInterna.PositionEye = Posicion;

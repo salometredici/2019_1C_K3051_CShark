@@ -21,7 +21,7 @@ namespace CShark.Terreno
         private TGCBox Box;
         public TGCVector3 Centro;
 
-        private ColisionesTerreno Colisiones;
+        public ColisionesTerreno Colisiones;
 
         //Objetos especiales
         private Barco Barco;
@@ -94,9 +94,10 @@ namespace CShark.Terreno
                 Colisiones.CambiarGravedad(Constants.UnderWaterGravity);
             }
             Suelo.Update(elapsedTime, game.Player.CamaraInterna.PositionEye);
-            Superficie.Update(elapsedTime);
+            Superficie.Update(game);
             Sol.Update(elapsedTime);
             Barco.Update(game);
+            Mesa.Update(game);
             Colisiones.Update(elapsedTime);
         }
 
@@ -112,25 +113,10 @@ namespace CShark.Terreno
             return Colisiones.Colisionan(ob1, ob2);
         }
 
-        public void CargarRigidBodiesFromScene(TgcScene scene)
-        {
-            //esto me baja de 700fps a 80 :)))))) hay algunas rocas y eso que tienen 
-            //bocha de poligonos, usar esferas o algo mas simple..
-            /*foreach(var mesh in scene.Meshes)
-            {
-                CargarRigidBodyFromMesh(mesh);
-            }*/
-        }
-
-        public void CargarRigidBodyFromMesh(TgcMesh mesh)
-        {
-            var rigidBody = BulletRigidBodyFactory.Instance.CreateRigidBodyFromTgcMesh(mesh);
-            AgregarBody(rigidBody);
-        }
-
         public void Render(Player player) {
             Suelo.Render();
             Skybox.Render();
+            Mesa.Render();
             Barco.Render();
             Objetos.ForEach(o => o.Render(player.CamaraInterna.PositionEye));
             Superficie.Render();
