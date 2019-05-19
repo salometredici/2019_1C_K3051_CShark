@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TGC.Core.Geometry;
 using TGC.Core.Mathematica;
 
-namespace CShark.Luces
+namespace CShark.EfectosLuces
 {
     public class Luz : IDisposable
     {

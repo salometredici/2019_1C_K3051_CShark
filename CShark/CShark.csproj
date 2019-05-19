@@ -122,9 +122,9 @@
     <Compile Include="Items\Recolectables\Coral.cs" />
     <Compile Include="Jugador\InputHandler.cs" />
     <Compile Include="Jugador\Control.cs" />
-    <Compile Include="Luces\Iluminacion.cs" />
-    <Compile Include="Luces\Luz.cs" />
-    <Compile Include="Luces\ContenedorLuces.cs" />
+    <Compile Include="Efectos y Luces\Efectos.cs" />
+    <Compile Include="Efectos y Luces\Luz.cs" />
+    <Compile Include="Efectos y Luces\ContenedorLuces.cs" />
     <Compile Include="Objetos\Extra.cs" />
     <Compile Include="Objetos\Materiales\Material.cs" />
     <Compile Include="Objetos\Materiales\Materiales.cs" />
@@ -254,10 +254,19 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Shaders\Luces.fx">
+    <None Include="Shaders\Niebla.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Shaders\Recolectable.fx">
+    <None Include="Shaders\Shared\Suelo.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Shaders\Shared\Common.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Shaders\Shared\Niebla.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Shaders\Iluminacion.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Shaders\TgcKeyFrameMeshShader.fx">
@@ -284,7 +293,7 @@
     <None Include="Shaders\Burbuja.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Shaders\Suelo.fx">
+    <None Include="Shaders\Shared\Iluminacion.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Shaders\WaveShader.fx">

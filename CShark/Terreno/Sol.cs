@@ -1,4 +1,4 @@
-﻿using CShark.Luces;
+﻿using CShark.EfectosLuces;
 using System.Drawing;
 using TGC.Core.Direct3D;
 using TGC.Core.Mathematica;
@@ -23,7 +23,7 @@ namespace CShark.Terreno
             Posicion = posicion;
             Rotacion = 0;
             Luz = new Luz(Color.White, Posicion, 3000f, 0.1f, 20f);
-            Iluminacion.AgregarLuz(Luz);
+            Efectos.AgregarLuz(Luz);
             Mesh = new TgcSceneLoader().loadSceneFromFile(sphere).Meshes[0];
             Mesh.AutoTransformEnable = false;
             Mesh.changeDiffuseMaps(new[] {

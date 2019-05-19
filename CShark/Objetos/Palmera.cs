@@ -1,4 +1,5 @@
-﻿using CShark.Luces;
+﻿using CShark.EfectosLuces;
+using CShark.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,18 +17,19 @@ namespace CShark.Objetos
 
         public Palmera(TgcMesh mesh) {
             Mesh = mesh;
-            Mesh.Effect = Iluminacion.EfectoLuz;
-            Mesh.Technique = "Iluminado";
             Material = Materiales.Madera;
         }
 
-        public void Render(TGCVector3 camara) {
-            Iluminacion.ActualizarEfecto(Mesh.Effect, Material, camara);
+        public void Render() {
             Mesh.Render();
         }
 
         public void Dispose() {
             Mesh.Dispose();
+        }
+
+        public void Update(GameModel game) {
+            Efectos.ActualizarLuces(Mesh.Effect, Material, game.Player.Posicion);
         }
     }
 }

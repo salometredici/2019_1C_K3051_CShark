@@ -20,6 +20,7 @@ namespace CShark.Jugador
         private HUD HUD;
         private Arma Arma;
         public TGCVector3 Posicion;
+        private UbicacionPlayer Ubicacion;
         
         public bool onPause;
         public bool EstaVivo => Vida > 0 && Oxigeno > 0;
@@ -45,6 +46,7 @@ namespace CShark.Jugador
             CamaraInterna = new TgcFpsCamera(input, this);
             InicializarVariables(vidaInicial, oxigenoInicial);
             CrearCapsula();
+            Ubicacion = UbicacionPlayer.Superficie;
         }
 
         private void InicializarVariables(int vida, int oxigeno)
@@ -73,18 +75,15 @@ namespace CShark.Jugador
         float Flote = 20f;
 
         public void MoverCapsula(float x, float y, float z) {
-            Capsula.ActivationState = ActivationState.ActiveTag;
-            //Capsula.AngularVelocity = Vector3.Zero;
             Capsula.LinearVelocity += Velocidad * new Vector3(x , 0, z);
         }
 
         public void Flotar(int sentido) {
-            Impulsar(new Vector3(Flote * sentido));
+            Impulsar(new Vector3(0, Flote * sentido, 0));
         }
 
         private void Impulsar(Vector3 impulso) {
             Capsula.ActivationState = ActivationState.ActiveTag;
-            //Capsula.AngularVelocity = Vector3.Zero;
             Capsula.ApplyCentralImpulse(impulso);
         }
 
@@ -114,6 +113,7 @@ namespace CShark.Jugador
                 CamaraInterna.PositionEye = Posicion;
                 RayoProximidad.Update(CamaraInterna, Posicion);
                 ActualizarOxigeno(game);
+                CheckearUbicacion();
                 if (EstaVivo) {
                     Arma.Update(game);
                     HUD.Update(Vida, Oxigeno, game.ElapsedTime);
@@ -126,6 +126,13 @@ namespace CShark.Jugador
                     Saltando = false;
                 }
             }
+        }
+
+        private void CheckearUbicacion() {
+            var ubic = Ubicacion;
+            Ubicacion = Sumergido ? UbicacionPlayer.Sumergido : UbicacionPlayer.Superficie;
+            if (ubic != Ubicacion)
+                Mapa.Instancia.CambiarEfecto(Sumergido);
         }
 
         public void Recoger(Recolectable item) {
@@ -194,5 +201,11 @@ namespace CShark.Jugador
                 HUD.Render();
             }
         }
+    }
+
+    public enum UbicacionPlayer
+    {
+        Sumergido,
+        Superficie
     }
 }

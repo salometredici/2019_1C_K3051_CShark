@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CShark.Model;
+using System;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 
@@ -8,6 +9,7 @@ namespace CShark.Objetos
     {
         Material Material { get; }
         TgcMesh Mesh { get; }
-        void Render(TGCVector3 camara);
+        void Render();
+        void Update(GameModel game);
     }
 }

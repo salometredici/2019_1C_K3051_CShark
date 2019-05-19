@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 
-namespace CShark.Luces
+namespace CShark.EfectosLuces
 {
     public class ContenedorLuces
     {

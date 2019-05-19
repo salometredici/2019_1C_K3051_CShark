@@ -1,4 +1,4 @@
-﻿using CShark.Luces;
+﻿using CShark.EfectosLuces;
 using CShark.Model;
 using CShark.Objetos;
 using Microsoft.DirectX.Direct3D;
@@ -60,11 +60,11 @@ namespace CShark.Items
             };
             _box = GenerarBox();
             _box.transform(TGCMatrix.Scaling(escala) * TGCMatrix.Translation(posicion));
-            Efecto = Iluminacion.EfectoLuz;
-            Efecto.Technique = "Iluminado";
+            Efecto = Efectos.EfectoLuzNiebla;
+            Efecto.Technique = "Nublado";
             Material = Materiales.Metal;
             Luz = new Luz(colorLuz, posicion, 10f, 0.1f, 9f);
-            Iluminacion.AgregarLuz(Luz);
+            Efectos.AgregarLuz(Luz);
         }
 
         private TGCMatrix GetLetraTransform(float offsetX, float rot) {
@@ -109,7 +109,7 @@ namespace CShark.Items
                     LetraE1.Render();
                     LetraE2.Render();
                 }
-                Iluminacion.ActualizarEfecto(Efecto, Material, game.Camara.Position);
+                Efectos.ActualizarLuces(Efecto, Material, game.Camara.Position);
             }
         }
 
@@ -119,7 +119,7 @@ namespace CShark.Items
         }
 
         public override void Desaparecer() {
-            Iluminacion.SacarLuz(Luz);
+            Efectos.SacarLuz(Luz);
         }
     }
 }

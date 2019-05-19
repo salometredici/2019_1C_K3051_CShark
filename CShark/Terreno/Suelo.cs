@@ -1,4 +1,4 @@
-﻿using CShark.Luces;
+﻿using CShark.EfectosLuces;
 using CShark.Model;
 using CShark.Objetos;
 using CShark.Utils;
@@ -27,7 +27,6 @@ namespace CShark.Terreno
         public bool AlphaBlendEnable => Terreno.AlphaBlendEnable;
         public TGCVector3 Center => Terreno.Center;
 
-        private Effect Efecto;
         private Material Material;
         private Texture TexturaRayoSol;
 
@@ -42,9 +41,6 @@ namespace CShark.Terreno
             Terreno = new TgcSimpleTerrain();
             Terreno.loadHeightmap(heightmap, xz, y, TGCVector3.Empty);
             Terreno.loadTexture(textura);
-            Efecto = Iluminacion.EfectoLuz;
-            Terreno.Effect = Efecto;
-            Terreno.Technique = "Iluminado_Rayos_Sol";
             Material = Materiales.Arena;
             var path = Game.Default.MediaDirectory + @"Mapa\Textures\fondo.png";
             TexturaRayoSol = TgcTexture.createTexture(D3DDevice.Instance.Device, path).D3dTexture;
@@ -58,7 +54,7 @@ namespace CShark.Terreno
 
         public void Update(float elapsedTime, TGCVector3 camara) {
             time += elapsedTime;
-            Iluminacion.ActualizarEfecto(Efecto, Material, camara);
+            Efectos.ActualizarLuces(Terreno.Effect, Material, camara);
             Terreno.Effect.SetValue("texRayosSol", TexturaRayoSol);
             Terreno.Effect.SetValue("time", time);
         }
@@ -69,6 +65,11 @@ namespace CShark.Terreno
 
         public PositionTextured[] GetData() {
             return Terreno.getData();
+        }
+
+        public void CambiarEfecto(Effect efecto, string technique) {
+            Terreno.Effect = efecto;
+            Terreno.Technique = "Suelo" + technique;
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using CShark.Jugador;
-using CShark.Luces;
 using CShark.Model;
 using Microsoft.DirectX.DirectInput;
 using TGC.Core.BoundingVolumes;

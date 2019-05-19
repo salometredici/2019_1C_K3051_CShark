@@ -1,4 +1,8 @@
-﻿using CShark.Jugador;
+﻿using CShark.EfectosLuces;
+using CShark.Jugador;
+using CShark.Model;
+using CShark.Objetos;
+using Microsoft.DirectX.Direct3D;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +14,7 @@ using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 using TGC.Core.Terrain;
 using static TGC.Core.Terrain.TgcSkyBox; //para enums
+using Material = CShark.Objetos.Material;
 
 namespace CShark.Terreno
 {
@@ -41,7 +46,7 @@ namespace CShark.Terreno
             SkyboxUnderwater = new TgcSkyBox
             {
                 Center = centro,
-                Size = new TGCVector3(300000, 30000, 300000)
+                Size = new TGCVector3(350000, 30000, 350000)
             };
             SkyboxUnderwater.setFaceTexture(SkyFaces.Up, texturesPath + @"UnderwaterSkybox\up1.png");
             SkyboxUnderwater.setFaceTexture(SkyFaces.Down, texturesPath + @"UnderwaterSkybox\seafloor.jpg");
@@ -57,7 +62,7 @@ namespace CShark.Terreno
             SkyboxIsland = new TgcSkyBox
             {
                 Center = centroIsla,
-                Size = new TGCVector3(300000, 36000, 300000)
+                Size = new TGCVector3(350000, 36000, 350000)
             };
             SkyboxIsland.setFaceTexture(SkyFaces.Left, texturesPath + @"SkyBox-LostAtSeaDay\lostatseaday_lf.jpg");
             SkyboxIsland.setFaceTexture(SkyFaces.Back, texturesPath + @"SkyBox-LostAtSeaDay\lostatseaday_ft.jpg");
@@ -77,6 +82,10 @@ namespace CShark.Terreno
             FacesToRender = faces;
         }
 
+        public void Update(GameModel game) {
+            FacesToRender.ForEach(f => Efectos.ActualizarLuces(f.Effect, Materiales.Normal, game.Player.Posicion));
+        }
+
         public void Render()
         {
             FacesToRender.ForEach(f => f.Render());
@@ -85,6 +94,13 @@ namespace CShark.Terreno
         public void Dispose() {
             SkyboxIsland.Dispose();
             SkyboxUnderwater.Dispose();
+        }
+
+        public void CambiarEfecto(Effect efecto, string technique) {
+            FacesToRender.ForEach(f => {
+                f.Effect = efecto;
+                f.Technique = technique;
+            });
         }
 
         public TGCVector3 Center {

@@ -2,13 +2,14 @@
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using System.Collections.Generic;
+using System.Drawing;
 using TGC.Core.Mathematica;
 using TGC.Core.Shaders;
 using Material = CShark.Objetos.Material;
 
-namespace CShark.Luces
+namespace CShark.EfectosLuces
 {
-    public static class Iluminacion
+    public class Efectos
     {
         public static void AgregarLuz(Luz luz) {
             ContenedorLuces.Instancia.AgregarLuz(luz);
@@ -20,11 +21,26 @@ namespace CShark.Luces
 
         public static Effect EfectoLuz {
             get {
-                return TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "Luces.fx");
+                return TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "Iluminacion.fx");
             }
         }
 
-        public static void ActualizarEfecto(Effect efecto, Material material, TGCVector3 camara) {
+        public static Effect EfectoLuzNiebla { get; } = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "Niebla.fx");
+
+        //efecto parametro porque puede ser la niebla del suelo q es otro efecto..
+        public static void ActualizarNiebla() {
+            var distanciaInicio = 10000;
+            var distanciaFin = 20000;
+            var densidad = 0.0025f;
+            var colorNiebla = Color.Black;
+
+            EfectoLuzNiebla.SetValue("colorNiebla", colorNiebla.ToArgb());
+            EfectoLuzNiebla.SetValue("distanciaInicio", distanciaInicio);
+            EfectoLuzNiebla.SetValue("distanciaFin", distanciaFin);
+            EfectoLuzNiebla.SetValue("densidad", densidad);
+        }
+
+        public static void ActualizarLuces(Effect efecto, Material material, TGCVector3 camara) {
             var contenedor = ContenedorLuces.Instancia;
 
             //cargar propiedades de las luces

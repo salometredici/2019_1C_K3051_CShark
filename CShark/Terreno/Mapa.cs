@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using BulletSharp;
+using CShark.EfectosLuces;
 using CShark.Fisica.Colisiones;
 using CShark.Jugador;
 using CShark.Model;
 using CShark.Objetos;
 using CShark.Utilidades;
 using CShark.Utils;
+using Microsoft.DirectX.Direct3D;
 using TGC.Core.BulletPhysics;
+using TGC.Core.Fog;
 using TGC.Core.Geometry;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
+using TGC.Core.Shaders;
 
 namespace CShark.Terreno
 {
@@ -85,6 +90,9 @@ namespace CShark.Terreno
                 Objetos.Add(new Extra(objeto));
             Barco = new Barco();
             Mesa = new MesaCrafteo();
+            Objetos.Add(Barco);
+            Objetos.Add(Mesa);
+            CambiarEfecto(false);
         }
 
         public void Update(float elapsedTime, GameModel game) {
@@ -93,12 +101,24 @@ namespace CShark.Terreno
             } else {
                 Colisiones.CambiarGravedad(Constants.UnderWaterGravity);
             }
+            Objetos.ForEach(o => o.Update(game));
             Suelo.Update(elapsedTime, game.Player.CamaraInterna.PositionEye);
             Superficie.Update(game);
             Sol.Update(elapsedTime);
-            Barco.Update(game);
-            Mesa.Update(game);
             Colisiones.Update(elapsedTime);
+
+            Efectos.ActualizarNiebla();
+        }
+
+        public void CambiarEfecto(bool sumergido) {
+            var efecto = sumergido ? Efectos.EfectoLuzNiebla : Efectos.EfectoLuz;
+            var technique = sumergido ? "Nublado" : "Iluminado";
+            Objetos.ForEach(o => {
+                o.Mesh.Effect = efecto;
+                o.Mesh.Technique = technique;
+            });
+            Suelo.CambiarEfecto(efecto, technique);
+            Skybox.CambiarEfecto(efecto, technique);
         }
 
         public void AgregarBody(RigidBody body) {
@@ -116,9 +136,7 @@ namespace CShark.Terreno
         public void Render(Player player) {
             Suelo.Render();
             Skybox.Render();
-            Mesa.Render();
-            Barco.Render();
-            Objetos.ForEach(o => o.Render(player.CamaraInterna.PositionEye));
+            Objetos.ForEach(o => o.Render());
             Superficie.Render();
             Sol.Render();
         }

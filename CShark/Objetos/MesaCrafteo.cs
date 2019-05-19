@@ -1,5 +1,5 @@
-﻿using CShark.Jugador;
-using CShark.Luces;
+﻿using CShark.EfectosLuces;
+using CShark.Jugador;
 using CShark.Model;
 using CShark.Terreno;
 using Microsoft.DirectX.DirectInput;
@@ -16,26 +16,23 @@ using Effect = Microsoft.DirectX.Direct3D.Effect;
 
 namespace CShark.Objetos
 {
-    public class MesaCrafteo : IDisposable
+    public class MesaCrafteo : IRenderable
     {
-        public TgcMesh Mesh;
         private TgcBoundingSphere EsferaCercania;
         private TgcText2D TextoPresione;
         private bool MostrarTexto = false;
         public TGCVector3 Size => Mesh.BoundingBox.calculateSize();
         public TGCVector3 Position => Mesh.BoundingBox.calculateBoxCenter();
 
-        private Effect Efecto;
-        private Material Material;
+        public Material Material { get; }
+        public TgcMesh Mesh { get; }
+
 
         public MesaCrafteo() {
             Mesh = new TgcSceneLoader().loadSceneFromFile(Game.Default.MediaDirectory + @"Mapa\Mesa-TgcScene.xml").Meshes[0];
             EsferaCercania = new TgcBoundingSphere(Position, 500f);
             EsferaCercania.setRenderColor(Color.Red);
             InicializarTexto();
-            Efecto = Iluminacion.EfectoLuz;
-            Mesh.Effect = Efecto;
-            Mesh.Technique = "Iluminado";
             Material = Materiales.Madera;
             var body = BulletRigidBodyFactory.Instance.CreateRigidBodyFromTgcMesh(Mesh);
             Mapa.Instancia.AgregarBody(body);
@@ -54,7 +51,7 @@ namespace CShark.Objetos
         }
 
         public void Update(GameModel game) {
-            Iluminacion.ActualizarEfecto(Efecto, Material, game.Camara.Position);
+            Efectos.ActualizarLuces(Mesh.Effect, Material, game.Camara.Position);
             if (EstaCerca(game.Player)) {
                 EsferaCercania.setRenderColor(Color.Yellow);
                 MostrarTexto = true;
@@ -70,13 +67,6 @@ namespace CShark.Objetos
             }
         }
 
-        public void Render() {
-            Mesh.Render();
-            EsferaCercania.Render();
-            if (MostrarTexto)
-                TextoPresione.render();
-        }
-
         public void Dispose() {
             Mesh.Render();
             EsferaCercania.Dispose();
@@ -84,6 +74,13 @@ namespace CShark.Objetos
 
         public bool EstaCerca(Player player) {
             return TgcCollisionUtils.testPointSphere(EsferaCercania, player.Posicion);
+        }
+
+        public void Render() {
+            Mesh.Render();
+            EsferaCercania.Render();
+            if (MostrarTexto)
+                TextoPresione.render();
         }
     }
 }

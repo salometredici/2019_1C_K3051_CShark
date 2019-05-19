@@ -1,5 +1,4 @@
-﻿using CShark.Luces;
-using CShark.Model;
+﻿using CShark.Model;
 using Microsoft.DirectX.Direct3D;
 using System.Drawing;
 using TGC.Core.Mathematica;

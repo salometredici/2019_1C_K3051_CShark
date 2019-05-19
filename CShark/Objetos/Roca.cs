@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CShark.Luces;
+using CShark.EfectosLuces;
+using CShark.Model;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 
@@ -16,18 +17,19 @@ namespace CShark.Objetos
 
         public Roca(TgcMesh mesh) {
             Mesh = mesh;
-            Mesh.Effect = Iluminacion.EfectoLuz;
-            Mesh.Technique = "Iluminado";
             Material = Materiales.Roca;
         }
 
-        public void Render(TGCVector3 camara) {
-            Iluminacion.ActualizarEfecto(Mesh.Effect, Material, camara);
+        public void Render() {
             Mesh.Render();
         }
 
         public void Dispose() {
             Mesh.Dispose();
+        }
+
+        public void Update(GameModel game) {
+            Efectos.ActualizarLuces(Mesh.Effect, Material, game.Player.Posicion);
         }
     }
 }

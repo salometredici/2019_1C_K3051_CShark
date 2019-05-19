@@ -1,7 +1,7 @@
 ﻿using BulletSharp;
+using CShark.EfectosLuces;
 using CShark.Fisica;
 using CShark.Jugador;
-using CShark.Luces;
 using CShark.Model;
 using CShark.Terreno;
 using Microsoft.DirectX.Direct3D;
@@ -16,37 +16,30 @@ using TGC.Core.SceneLoader;
 
 namespace CShark.Objetos
 {
-    public class Barco : IDisposable //cambiar a rendearable
+    public class Barco : IRenderable
     {
-        private TgcMesh Mesh;
         private RigidBody Body;
-        private Effect Efecto;
-        private Material Material;
+        public Material Material { get; }
+        public TgcMesh Mesh { get; }
 
         public Barco() {
             Mesh = new TgcSceneLoader().loadSceneFromFile(Game.Default.MediaDirectory + @"Mapa\Barco-TgcScene.xml").Meshes[0];
             Body = BulletRigidBodyFactory.Instance.CreateRigidBodyFromTgcMesh(Mesh);
             Mapa.Instancia.AgregarBody(Body);
-            Efecto = Iluminacion.EfectoLuz;
-            Mesh.Effect = Efecto;
-            Mesh.Technique = "Iluminado";
             Material = Materiales.Metal;
         }
         
         public void Update(GameModel game) {
-            Iluminacion.ActualizarEfecto(Efecto, Material, game.Camara.Position);
-        }
-
-        public void Render() {
-            Mesh.Render();
+            Efectos.ActualizarLuces(Mesh.Effect, Material, game.Camara.Position);
         }
 
         public void Dispose() {
             Mesh.Dispose();
         }
 
-        public void Render(TGCVector3 camara) {
-            throw new NotImplementedException();
+        public void Render() {
+            Mesh.Render();
+
         }
     }
 }
