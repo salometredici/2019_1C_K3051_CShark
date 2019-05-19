@@ -21,7 +21,7 @@ namespace CShark.UI.HUD
             Mensajes = new List<MensajePlus>();
             Mensajes.Add(new MensajePlus("burbuja.png", "Burbuja", this));
             Mensajes.Add(new MensajePlus("chip.png", "Chip", this));
-            Mensajes.Add(new MensajePlus("bateria.png", "Bateria", this));
+            Mensajes.Add(new MensajePlus("pila.png", "Pila", this));
             Mensajes.Add(new MensajePlus("wumpa.png", "Wumpa", this));
         }
 
@@ -49,7 +49,7 @@ namespace CShark.UI.HUD
             switch (tipo) {
                 case ERecolectable.Burbuja: return Mensajes[0];
                 case ERecolectable.Chip: return Mensajes[1];
-                case ERecolectable.Bateria: return Mensajes[2];
+                case ERecolectable.Pila: return Mensajes[2];
                 case ERecolectable.Wumpa: return Mensajes[3];
                 default: return null;
             }

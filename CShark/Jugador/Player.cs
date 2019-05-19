@@ -16,7 +16,7 @@ namespace CShark.Jugador
     {
         public float Vida;
         public float Oxigeno;
-        private Inventario Inventario;
+        public Inventario Inventario;
         private HUD HUD;
         private Arma Arma;
         public TGCVector3 Posicion;

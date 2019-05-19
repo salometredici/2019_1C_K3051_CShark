@@ -18,14 +18,16 @@ namespace CShark.UI
         private CustomBitmap FondoClick;
         private CustomSprite Fondo;
         public bool Seleccionado = false;
+        public ERecolectable Item;
         public TGCVector2 Posicion => Fondo.Position;
         public string Titulo;
         public int Ancho => Fondo.Bitmap.ImageInformation.Width;
         public int Alto => Fondo.Bitmap.ImageInformation.Height;
 
-        public BotonInventario(string nombreItem, TGCVector2 posicion)
+        public BotonInventario(ERecolectable item, TGCVector2 posicion)
         {
-            Titulo = nombreItem;
+            Item = item;
+            Titulo = item.ToString();
             FondoNormal = CargarBitmap(Titulo);
             FondoHover = CargarBitmap(Titulo + "Hover");
             FondoClick = CargarBitmap(Titulo + "Click");

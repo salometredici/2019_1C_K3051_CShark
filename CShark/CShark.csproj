@@ -137,11 +137,12 @@
     <Compile Include="Terreno\Sol.cs" />
     <Compile Include="Terreno\Suelo.cs" />
     <Compile Include="Terreno\TerrainExtension.cs" />
+    <Compile Include="UI\HUD\ItemsMenus.cs" />
     <Compile Include="UI\HUD\MensajePlus.cs" />
     <Compile Include="UI\HUD\MensajesContainer.cs" />
     <Compile Include="Items\Recolectable.cs" />
     <Compile Include="Items\RecolectableAnimado.cs" />
-    <Compile Include="Items\Recolectables\Bateria.cs" />
+    <Compile Include="Items\Recolectables\Pila.cs" />
     <Compile Include="Items\Recolectables\Burbuja.cs" />
     <Compile Include="Items\Recolectables\Chip.cs" />
     <Compile Include="Items\Recolectables\Wumpa.cs" />

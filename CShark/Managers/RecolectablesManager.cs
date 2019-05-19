@@ -41,11 +41,11 @@ namespace CShark.Managers
         private IRecolectable RandomItem(TGCVector3 posicion) {
             var tipo = RandomTipo();
             switch (tipo) {
-                case ERecolectable.Bateria: return new Bateria(posicion);
+                case ERecolectable.Pila: return new Pila(posicion);
                 case ERecolectable.Burbuja: return new Burbuja(posicion);
                 case ERecolectable.Chip: return new Chip(posicion);
                 case ERecolectable.Wumpa: return new Wumpa(posicion);
-                default: return new Bateria(posicion);
+                default: return new Pila(posicion);
             }
         }
 

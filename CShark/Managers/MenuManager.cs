@@ -26,8 +26,8 @@ namespace CShark.Managers
             MenuPrincipal = new MenuPrincipal();
             MenuOpciones = new MenuOpciones();
             MenuVariables = new MenuVariables();
-            MenuInventario = new MenuInventario();
-            MenuCrafteo = new MenuCrafteo();
+            MenuInventario = new MenuInventario("Menu\\Inventario\\");
+            MenuCrafteo = new MenuCrafteo("MenuCrafteo\\");
             MenuGuia = new GuideMenu();
             Puntero = new Puntero();
 
@@ -96,7 +96,6 @@ namespace CShark.Managers
             }
             else
             {
-                var viewport = D3DDevice.Instance.Device.Viewport;
                 var centroPantalla = new Point(DeviceWidth / 2, DeviceHeight / 2);
                 System.Windows.Forms.Cursor.Position = centroPantalla;
             }

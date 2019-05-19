@@ -21,7 +21,7 @@ namespace CShark.Items
 
     public enum ERecolectable
     {
-        Bateria,
+        Pila,
         Chip,
         Burbuja,
         Wumpa,
@@ -29,6 +29,9 @@ namespace CShark.Items
         Pez,
         Oro,
         Plata, 
-        Hierro
+        Hierro,
+        Medkit,
+        Oxigeno,
+        Arpon
     }
 }

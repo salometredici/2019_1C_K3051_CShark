@@ -3,6 +3,7 @@ using CShark.Items.Crafteables;
 using CShark.Items.Recolectables;
 using CShark.Jugador;
 using CShark.Model;
+using CShark.UI.HUD;
 using CShark.Utils;
 using System;
 using System.Collections.Generic;
@@ -18,59 +19,18 @@ using TGC.Core.Text;
 
 namespace CShark.UI
 {
-    public class MenuInventario : Menu, IDisposable
+    public class MenuInventario : ItemsMenus, IDisposable
     {
-        private Drawer2D Drawer;
-        private CustomSprite Fondo;
-        private BotonCerrar Cerrar;
         private List<BotonInventario> Botones;
-        public Point PosicionTitulo;
-        public TgcText2D Titulo;
-        private string Seleccionado;
+        private TgcText2D InfoItem;
+        private ERecolectable Seleccionado ;
 
-        private Player player;
-
-        public int Ancho => Fondo.Bitmap.ImageInformation.Width;
-
-        public MenuInventario()
+        public MenuInventario(string rutaFondo)
         {
-            Drawer = new Drawer2D();
-            CargarFondo();
-            float anchoReal = Fondo.Bitmap.ImageInformation.Width;
-            float altoReal = Fondo.Bitmap.ImageInformation.Height;
-            var posAux = new Point((int)Fondo.Position.X + 29, (int)Fondo.Position.Y + 387);
-            PosicionTitulo = posAux;
-            Cerrar = new BotonCerrar(Fondo.Position, anchoReal, altoReal);
+            base.Init(rutaFondo, "");
             CargarBotones(Fondo.Position);
-            Titulo = CargarTexto(Color.White, 20f);
-        }
-
-        private TgcText2D CargarTexto(Color color, float size)
-        {
-            var texto = new TgcText2D
-            {
-                Color = color,
-                Position = PosicionTitulo,
-                Align = TgcText2D.TextAlign.LEFT,
-                Size = new Size(Ancho, 70),
-                Text = ""
-            };
-            texto.changeFont(new Font("Arial", size, FontStyle.Bold));
-            return texto;
-        }
-
-        private void CargarFondo()
-        {
-            var device = D3DDevice.Instance.Device;
-            var w = device.Viewport.Width;
-            var h = device.Viewport.Height;
-            var path = Game.Default.MediaDirectory + @"Menu\Inventario\";
-            Fondo = new CustomSprite();
-            Fondo.Bitmap = new CustomBitmap(path + "fondo.png", device);
-            float anchoReal = Fondo.Bitmap.ImageInformation.Width;
-            float altoReal = Fondo.Bitmap.ImageInformation.Height;
-            Fondo.Position = new TGCVector2((w - anchoReal) / 2f, (h - altoReal) / 2f);
-            Fondo.Scaling = new TGCVector2(anchoReal / Fondo.Bitmap.Width, altoReal / Fondo.Bitmap.Height);
+            Titulo.Position = new Point((int)Fondo.Position.X + 537 + 29, (int)Fondo.Position.Y + 29);
+            InfoItem = new TgcText2D();
         }
 
         private void CargarBotones(TGCVector2 posInicial)
@@ -78,37 +38,56 @@ namespace CShark.UI
             var pos = posInicial + new TGCVector2(29, 29);
             var desplazamColumna = new TGCVector2(179, 0);
             var desplazamFila = new TGCVector2(-358, 179);
-            Botones = new List<BotonInventario>();
-            Botones.Add(new BotonInventario("Arpon", pos));
+            Botones = new List<BotonInventario>
+            {
+                new BotonInventario(ERecolectable.Arpon, pos)
+            };
             pos += desplazamColumna;
-            Botones.Add(new BotonInventario("Oxigeno", pos));
+            Botones.Add(new BotonInventario(ERecolectable.Oxigeno, pos));
             pos += desplazamColumna;
-            Botones.Add(new BotonInventario("Medkit", pos));
+            Botones.Add(new BotonInventario(ERecolectable.Medkit, pos));
             pos += desplazamFila;
-            Botones.Add(new BotonInventario("Oro", pos));
+            Botones.Add(new BotonInventario(ERecolectable.Oro, pos));
             pos += desplazamColumna;
-            Botones.Add(new BotonInventario("Plata", pos));
+            Botones.Add(new BotonInventario(ERecolectable.Plata, pos));
             pos += desplazamColumna;
-            Botones.Add(new BotonInventario("Hierro", pos));
+            Botones.Add(new BotonInventario(ERecolectable.Hierro, pos));
             pos += desplazamFila;
-            Botones.Add(new BotonInventario("Wumpa", pos));
+            Botones.Add(new BotonInventario(ERecolectable.Wumpa, pos));
             pos += desplazamColumna;
-            Botones.Add(new BotonInventario("Coral", pos));
+            Botones.Add(new BotonInventario(ERecolectable.Coral, pos));
             pos += desplazamColumna;
-            Botones.Add(new BotonInventario("Pez", pos));
+            Botones.Add(new BotonInventario(ERecolectable.Pez, pos));
             pos += desplazamFila;
-            Botones.Add(new BotonInventario("Chip", pos));
+            Botones.Add(new BotonInventario(ERecolectable.Chip, pos));
             pos += desplazamColumna;
-            Botones.Add(new BotonInventario("Pila", pos));
+            Botones.Add(new BotonInventario(ERecolectable.Pila, pos));
             pos += desplazamColumna;
-            Botones.Add(new BotonInventario("Burbuja",pos));
+            Botones.Add(new BotonInventario(ERecolectable.Burbuja,pos));
+
         }
 
         public void CambiarItem(BotonInventario boton)
         {
             Botones.ForEach(b => b.Seleccionado = false);
             boton.Seleccionado = true;
-            Seleccionado = boton.Titulo;
+            Seleccionado = boton.Item;
+            InfoItem = CantDisponibleDisplay(player);
+        }
+        private TgcText2D CantDisponibleDisplay(Player player)
+        {
+            var pos = new Point(Titulo.Position.X - 329, Titulo.Position.Y + 39);
+            var cantDisponible = player.CuantosTiene(Seleccionado);
+            var linea = new TgcText2D()
+            {
+                Align = TgcText2D.TextAlign.CENTER,
+                Position = pos,
+                Text = "Cantidad: " + cantDisponible.ToString(),
+                Size = new Size(Ancho, 20),
+                Color = cantDisponible > 0 ? Color.Yellow : Color.Red
+            };
+            linea.changeFont(new Font("Arial", 16f, FontStyle.Regular));
+            return linea;
         }
 
         public override void Render()
@@ -119,31 +98,21 @@ namespace CShark.UI
             Botones.ForEach(b => b.Render(Drawer));
             Drawer.EndDrawSprite();
             Titulo.render();
+            InfoItem.render();
         }
 
         public override void Update(GameModel juego)
         {
-            if (player == null)
-                player = juego.Player; //esto esta como el orto
-            Cerrar.Update(juego);
+            base.Update(juego);
             Botones.ForEach(b => b.Update(juego, this));
-            if (Seleccionado != null)
-                Titulo.Text = TituloDisplay();
-        }
-        private string TituloDisplay()
-        {
-            switch (Seleccionado)
-            {
-                default:
-                    return Seleccionado;
-            }
+            Titulo.Text = Seleccionado.ToString();
+            InfoItem = CantDisponibleDisplay(player);
         }
 
         public new void Dispose()
         {
-            Cerrar.Dispose();
-            Titulo.Dispose();
-            Fondo.Dispose();
+            base.Dispose();
+            InfoItem.Dispose();
             Botones.ForEach(b => b.Dispose());
         }
     }
