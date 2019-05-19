@@ -25,6 +25,10 @@ namespace CShark.Items
         Burbuja,
         Chip,
         Wumpa,
-        Coral
+        Coral,
+        Oro,
+        Plata, 
+        Hierro,
+        Pez
     }
 }

@@ -38,12 +38,12 @@ namespace CShark.UI
             CargarFondo();
             float anchoReal = Fondo.Bitmap.ImageInformation.Width;
             float altoReal = Fondo.Bitmap.ImageInformation.Height;
-            var posAux = Fondo.Position + new TGCVector2(0, 200);
-            PosicionTitulo = new Point((int)posAux.X, (int)posAux.Y);
+            var posAux = new Point((int)Fondo.Position.X + 29, (int)Fondo.Position.Y + 387);
+            PosicionTitulo = posAux;
             Cerrar = new BotonCerrar(Fondo.Position, anchoReal, altoReal);
             Boton = new BotonCraftear(Fondo.Position, anchoReal, altoReal);
             CargarBotones(Fondo.Position);
-            Titulo = CargarTexto(Color.White, 36f);
+            Titulo = CargarTexto(Color.White, 20f);
             Requerimientos = new List<TgcText2D>();
         }
 
@@ -51,7 +51,7 @@ namespace CShark.UI
             var texto = new TgcText2D {
                 Color = color,
                 Position = PosicionTitulo,
-                Align = TgcText2D.TextAlign.CENTER,
+                Align = TgcText2D.TextAlign.LEFT,
                 Size = new Size(Ancho, 70),
                 Text = ""
             };
@@ -74,13 +74,20 @@ namespace CShark.UI
 
         private void CargarBotones(TGCVector2 posInicial) {
             var pos = posInicial + new TGCVector2(29, 29);
-            var posTitulo = posInicial + new TGCVector2(0, 200);
+            var desplazamColumna = new TGCVector2(179, 0);
+            var desplazamFila = new TGCVector2(-358, 179);
             Botones = new List<BotonItem>();
-            Botones.Add(new BotonItem(new Oxigeno(), pos, this));
-            pos += new TGCVector2(179, 0);
             Botones.Add(new BotonItem(new Arpon(), pos, this));
-            pos += new TGCVector2(179, 0);
+            pos += desplazamColumna;
+            Botones.Add(new BotonItem(new Oxigeno(), pos, this));
+            pos += desplazamColumna;
             Botones.Add(new BotonItem(new Medkit(), pos, this));
+            pos += desplazamFila;
+            Botones.Add(new BotonItem(new Oro(), pos, this));
+            pos += desplazamColumna;
+            Botones.Add(new BotonItem(new AumentoOxigeno(), pos, this));
+            pos += desplazamColumna;
+            Botones.Add(new BotonItem(new AumentoVida(), pos, this));
         }
 
         public void CambiarItem(BotonItem boton) {
@@ -115,13 +122,25 @@ namespace CShark.UI
             Boton.Update(this, juego.Input);
             Botones.ForEach(b => b.Update(juego, this));
             if (Seleccionado != null)
-                Titulo.Text = Seleccionado.Tipo.ToString();
+                Titulo.Text = TituloDisplay();
         }
-        
+        private string TituloDisplay()
+        {
+            switch (Seleccionado.Tipo)
+            {
+                case (ECrafteable.AumentoOxigeno):
+                    return "Aumento de Oxígeno";
+                case (ECrafteable.AumentoVida):
+                    return "Aumento de Vida";
+                default:
+                    return Seleccionado.Tipo.ToString();
+            }
+        }
+
         private List<TgcText2D> ArmarRequerimientos(Player player) {
             var texto = string.Empty;
             var lineas = new List<TgcText2D>();
-            var pos = new Point((int)Fondo.Position.X + 29, (int)Fondo.Position.Y + 200);
+            var pos = new Point(Titulo.Position.X, Titulo.Position.Y + 39);
             foreach (var material in Seleccionado.Materiales) {
                 var tipo = material.Key;
                 var disponibles = player.CuantosTiene(tipo);
@@ -140,7 +159,7 @@ namespace CShark.UI
             return lineas;
         }
 
-        public void Dispose() {
+        public new void Dispose() {
             Cerrar.Dispose();
             Boton.Dispose();
             Titulo.Dispose();

@@ -29,7 +29,7 @@ namespace CShark.UI
             Ancho = Sprite.Bitmap.ImageInformation.Width;
             Alto = Sprite.Bitmap.ImageInformation.Height;
             Sprite.Scaling = new TGCVector2(Ancho / Sprite.Bitmap.Width, Alto / Sprite.Bitmap.Height);
-            Sprite.Position = posicionMenu + new TGCVector2(ancho - Ancho - 10, alto - Alto - 10);
+            Sprite.Position = posicionMenu + new TGCVector2(ancho - Ancho - 29, alto - Alto - 29);
         }
 
         private CustomBitmap CargarBitmap(string bm) {

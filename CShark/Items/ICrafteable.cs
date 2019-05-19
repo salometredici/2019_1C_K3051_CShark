@@ -19,6 +19,9 @@ namespace CShark.Items
     {
         Arpon,
         Oxigeno,
-        Medkit
+        Medkit,
+        Oro,
+        AumentoOxigeno,
+        AumentoVida
     }
 }

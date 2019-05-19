@@ -113,8 +113,11 @@
     <Compile Include="Fisica\Colisiones\ColisionesTerreno.cs" />
     <Compile Include="Fisica\RigidBodyUtils.cs" />
     <Compile Include="Geometria\IRotable.cs" />
+    <Compile Include="Items\AumentoVida.cs" />
     <Compile Include="Items\Crafteables\Arpon.cs" />
+    <Compile Include="Items\Crafteables\AumentoOxigeno.cs" />
     <Compile Include="Items\Crafteables\Medkit.cs" />
+    <Compile Include="Items\Crafteables\Oro.cs" />
     <Compile Include="Items\ICrafteable.cs" />
     <Compile Include="Items\Crafteables\Oxigeno.cs" />
     <Compile Include="Items\IRecolectable.cs" />

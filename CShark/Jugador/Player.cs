@@ -137,7 +137,7 @@ namespace CShark.Jugador
 
         public void Recoger(Recolectable item) {
             Inventario.Agregar(item);
-            HUD.PopMensaje(item.Tipo);
+            //HUD.PopMensaje(item.Tipo);
         }
 
         public void AgregarItem(ECrafteable tipo) {
