@@ -27,7 +27,7 @@ namespace CShark.UI
 
         public BotonItem(ICrafteable item, TGCVector2 posicion, MenuCrafteo menu) {
             Item = item;
-            Titulo = item.Tipo.ToString();//CargarTitulo(item);
+            Titulo = item.Tipo.ToString();
             FondoNormal = CargarBitmap(Titulo);
             FondoHover = CargarBitmap(Titulo + "Hover");
             FondoClick = CargarBitmap(Titulo + "Click");

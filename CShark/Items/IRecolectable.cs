@@ -22,13 +22,13 @@ namespace CShark.Items
     public enum ERecolectable
     {
         Bateria,
-        Burbuja,
         Chip,
+        Burbuja,
         Wumpa,
         Coral,
+        Pez,
         Oro,
         Plata, 
-        Hierro,
-        Pez
+        Hierro
     }
 }

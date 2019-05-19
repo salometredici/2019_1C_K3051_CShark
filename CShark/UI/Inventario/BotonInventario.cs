@@ -1,49 +1,89 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TGC.Core.Text;
-using System.Drawing;
-using CShark.Utils;
-using TGC.Core.Direct3D;
-using TGC.Core.Mathematica;
-using System.Windows.Forms;
-using TGC.Core.Input;
-using Microsoft.DirectX.Direct3D;
+﻿using CShark.Items;
 using CShark.Model;
-using Font = System.Drawing.Font;
+using CShark.Utils;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+using TGC.Core.Direct3D;
+using TGC.Core.Input;
+using TGC.Core.Mathematica;
+using TGC.Core.Text;
 
 namespace CShark.UI
 {
-    public class BotonInventario : Boton
+    public class BotonInventario : IDisposable
     {
-        public new Point Posicion;
-        private readonly string InventoryDir = Game.Default.InventoryDir;
+        private CustomBitmap FondoNormal;
+        private CustomBitmap FondoHover;
+        private CustomBitmap FondoClick;
+        private CustomSprite Fondo;
+        public bool Seleccionado = false;
+        public TGCVector2 Posicion => Fondo.Position;
+        public string Titulo;
+        public int Ancho => Fondo.Bitmap.ImageInformation.Width;
+        public int Alto => Fondo.Bitmap.ImageInformation.Height;
 
-        public BotonInventario(CustomSprite item, string texto, int x, int y, Action<GameModel> action) : base(item,texto,x,y,action) {
-            CargarTexto(texto);
-            Posicion = new Point(x, y);
+        public BotonInventario(string nombreItem, TGCVector2 posicion)
+        {
+            Titulo = nombreItem;
+            FondoNormal = CargarBitmap(Titulo);
+            FondoHover = CargarBitmap(Titulo + "Hover");
+            FondoClick = CargarBitmap(Titulo + "Click");
+            Fondo = CargarSprite(posicion);
         }
 
-        public override void CargarTexto(string texto) {
-            Texto = new TgcText2D
+        private CustomSprite CargarSprite(TGCVector2 posicion)
+        {
+            var sprite = new CustomSprite
             {
-                Color = Color.White,
-                Text = texto,
-                Size = new Size(Ancho, Alto),
-                Format = DrawTextFormat.Center,
-                Position = Posicion
+                Position = posicion,
+                Bitmap = FondoNormal
             };
-            Texto.changeFont(new Font("Arial", 25, FontStyle.Bold, GraphicsUnit.Pixel));
-            Texto.Position = new Point(Posicion.X + 55, Posicion.Y + 55);
+            float anchoReal = sprite.Bitmap.ImageInformation.Width;
+            float altoReal = sprite.Bitmap.ImageInformation.Height;
+            sprite.Scaling = new TGCVector2(anchoReal / sprite.Bitmap.Width, altoReal / sprite.Bitmap.Height);
+            return sprite;
         }
 
-        public bool MouseAdentro() {
+        private CustomBitmap CargarBitmap(string nombre)
+        {
+            var path = Game.Default.MediaDirectory + @"Menu\Inventario\ItemsInventario\";
+            return new CustomBitmap(path + nombre + ".png", D3DDevice.Instance.Device);
+        }
+
+        public void Update(GameModel juego, MenuInventario menu)
+        {
+            Fondo.Bitmap = MouseAdentro() ? FondoHover : FondoNormal;
+            if (Seleccionado)
+                Fondo.Bitmap = FondoClick;
+            if (Presionado(juego.Input))
+                menu.CambiarItem(this);
+        }
+
+        private bool Presionado(TgcD3dInput input)
+        {
+            return input.buttonPressed(TgcD3dInput.MouseButtons.BUTTON_LEFT) && MouseAdentro();
+        }
+
+        public void Render(Drawer2D Drawer)
+        {
+            Drawer.DrawSprite(Fondo);
+        }
+
+        private bool MouseAdentro()
+        {
             return Cursor.Position.X > Posicion.X &&
             Cursor.Position.X < Posicion.X + Ancho &&
             Cursor.Position.Y > Posicion.Y &&
             Cursor.Position.Y < Posicion.Y + Alto;
+        }
+
+        public void Dispose()
+        {
+            FondoNormal.Dispose();
+            FondoHover.Dispose();
+            FondoClick.Dispose();
+            Fondo.Dispose();
         }
     }
 }

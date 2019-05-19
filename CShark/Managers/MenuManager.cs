@@ -2,7 +2,6 @@
 using CShark.Terreno;
 using CShark.UI;
 using CShark.UI.HUD;
-using CShark.UI.Inventario;
 using System.Drawing;
 using TGC.Core.Direct3D;
 using static CShark.Model.GameModel;

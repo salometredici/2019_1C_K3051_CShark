@@ -1,107 +1,150 @@
-﻿using System;
+﻿using CShark.Items;
+using CShark.Items.Crafteables;
+using CShark.Items.Recolectables;
+using CShark.Jugador;
+using CShark.Model;
+using CShark.Utils;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using TGC.Core.Direct3D;
 using TGC.Core.Input;
 using TGC.Core.Mathematica;
-using CShark.Model;
-using static CShark.Model.GameModel;
-using CShark.Utils;
+using TGC.Core.Text;
 
-namespace CShark.UI.Inventario
+namespace CShark.UI
 {
-    class MenuInventario : Menu
+    public class MenuInventario : Menu, IDisposable
     {
         private Drawer2D Drawer;
-        private List<Boton> Botones;
-        private int Separacion;
-        private int AlturaBotones;
-        private List<BotonInventario> BotonesItems;
-        private static string InventoryDir = Game.Default.InventoryDir;
+        private CustomSprite Fondo;
+        private BotonCerrar Cerrar;
+        private List<BotonInventario> Botones;
+        public Point PosicionTitulo;
+        public TgcText2D Titulo;
+        private string Seleccionado;
 
-        private readonly string[,] GrillaRutas = new string[,]
-        {
-           { InventoryDir + "wumpa-fruit-inventory.png", InventoryDir + "coral-inventory.png" },
-           { InventoryDir + "batteries-inventory.png", InventoryDir + "medkit-inventory.png" },
-           { InventoryDir + "seashell-inventory.png", InventoryDir + "oxygen-inventory.png" }
-        };
+        private Player player;
 
-        private TGCVector2[,] GrillaItems;
+        public int Ancho => Fondo.Bitmap.ImageInformation.Width;
 
-        public int CantidadBotones => Botones.Count();
-
-        public MenuInventario() : base()
+        public MenuInventario()
         {
             Drawer = new Drawer2D();
-            Botones = new List<Boton>();
-            BotonesItems = new List<BotonInventario>();
-            SetGrillaItems();
-            Separacion = 50;
-            AlturaBotones = 75;
-            SetItem(Title, InventoryDir + "inventory-title-menu.png", new TGCVector2(Title.Position.X, Title.Position.Y + DeviceHeight / 12), Title.Scaling);
-            SetItem(Logo, InventoryDir + "woodboard1.png", new TGCVector2(DeviceWidth / 12 - 30, DeviceHeight / 12 + 30), new TGCVector2(0.68f, 0.575f));
-            CrearInventario();
+            CargarFondo();
+            float anchoReal = Fondo.Bitmap.ImageInformation.Width;
+            float altoReal = Fondo.Bitmap.ImageInformation.Height;
+            var posAux = new Point((int)Fondo.Position.X + 29, (int)Fondo.Position.Y + 387);
+            PosicionTitulo = posAux;
+            Cerrar = new BotonCerrar(Fondo.Position, anchoReal, altoReal);
+            CargarBotones(Fondo.Position);
+            Titulo = CargarTexto(Color.White, 20f);
         }
 
-        private void SetGrillaItems()
+        private TgcText2D CargarTexto(Color color, float size)
         {
-            var Columna0PosX = Logo.Position.X - 70;
-            var Columna1PosX = Columna0PosX + 275 + 70;
-            var Fila0PosY = Logo.Position.Y + 25;
-            GrillaItems = new TGCVector2[,] {
-                { new TGCVector2(Columna0PosX, Fila0PosY), new TGCVector2(Columna1PosX, Fila0PosY) },
-                { new TGCVector2(Columna0PosX, Fila0PosY + 185), new TGCVector2(Columna1PosX, Fila0PosY + 185) },
-                { new TGCVector2(Columna0PosX, Fila0PosY + 370), new TGCVector2(Columna1PosX, Fila0PosY + 370) }
-            };
-        }
-
-        public void CrearInventario()
-        {
-            AgregarBoton("Craft", j => j.CambiarMenu(TipoMenu.Principal));
-            AgregarBoton("Combos de crafteo", j => j.CambiarMenu(TipoMenu.Guia));
-            AgregarBoton("Volver", j => j.CambiarMenu(TipoMenu.Principal));
-            AgregarBotonesInventario();
-        }
-
-
-        public void AgregarBotonesInventario()
-        {
-            for (int i = 0; i < 3; i++)
+            var texto = new TgcText2D
             {
-                for (int j = 0; j < 2; j++)
-                {
-                    var item = new CustomSprite();
-                    var posicionX = (int)GrillaItems[i, j].X;
-                    var posicionY = (int)GrillaItems[i, j].Y;
-                    SetItem(item, GrillaRutas[i, j], new TGCVector2(posicionX, posicionY), new TGCVector2(0.625f, 0.625f));
-                    BotonesItems.Add(new BotonInventario(item, "--", posicionX, posicionY, k => k.CambiarMenu(TipoMenu.Principal)));
-                }
-            }
+                Color = color,
+                Position = PosicionTitulo,
+                Align = TgcText2D.TextAlign.LEFT,
+                Size = new Size(Ancho, 70),
+                Text = ""
+            };
+            texto.changeFont(new Font("Arial", size, FontStyle.Bold));
+            return texto;
         }
 
-        public void AgregarBoton(string texto, Action<GameModel> accion)
+        private void CargarFondo()
         {
-            var posicionX = (int)RightMenuXPos_X;
-            var posicionY = CantidadBotones > 0 ? Botones.Last().Posicion.Y + Separacion : (int)RightMenuPos_Y + 100;
-            Botones.Add(new Boton(texto, posicionX, posicionY, accion));
+            var device = D3DDevice.Instance.Device;
+            var w = device.Viewport.Width;
+            var h = device.Viewport.Height;
+            var path = Game.Default.MediaDirectory + @"Menu\Inventario\";
+            Fondo = new CustomSprite();
+            Fondo.Bitmap = new CustomBitmap(path + "fondo.png", device);
+            float anchoReal = Fondo.Bitmap.ImageInformation.Width;
+            float altoReal = Fondo.Bitmap.ImageInformation.Height;
+            Fondo.Position = new TGCVector2((w - anchoReal) / 2f, (h - altoReal) / 2f);
+            Fondo.Scaling = new TGCVector2(anchoReal / Fondo.Bitmap.Width, altoReal / Fondo.Bitmap.Height);
         }
 
-        public override void Update(GameModel juego)
+        private void CargarBotones(TGCVector2 posInicial)
         {
-            BotonesItems.ForEach(b => b.Update(juego));
-            Botones.ForEach(b => b.Update(juego));
+            var pos = posInicial + new TGCVector2(29, 29);
+            var desplazamColumna = new TGCVector2(179, 0);
+            var desplazamFila = new TGCVector2(-358, 179);
+            Botones = new List<BotonInventario>();
+            Botones.Add(new BotonInventario("Arpon", pos));
+            pos += desplazamColumna;
+            Botones.Add(new BotonInventario("Oxigeno", pos));
+            pos += desplazamColumna;
+            Botones.Add(new BotonInventario("Medkit", pos));
+            pos += desplazamFila;
+            Botones.Add(new BotonInventario("Oro", pos));
+            pos += desplazamColumna;
+            Botones.Add(new BotonInventario("Plata", pos));
+            pos += desplazamColumna;
+            Botones.Add(new BotonInventario("Hierro", pos));
+            pos += desplazamFila;
+            Botones.Add(new BotonInventario("Wumpa", pos));
+            pos += desplazamColumna;
+            Botones.Add(new BotonInventario("Coral", pos));
+            pos += desplazamColumna;
+            Botones.Add(new BotonInventario("Pez", pos));
+            pos += desplazamFila;
+            Botones.Add(new BotonInventario("Chip", pos));
+            pos += desplazamColumna;
+            Botones.Add(new BotonInventario("Pila", pos));
+            pos += desplazamColumna;
+            Botones.Add(new BotonInventario("Burbuja",pos));
+        }
+
+        public void CambiarItem(BotonInventario boton)
+        {
+            Botones.ForEach(b => b.Seleccionado = false);
+            boton.Seleccionado = true;
+            Seleccionado = boton.Titulo;
         }
 
         public override void Render()
         {
-            base.Render();
             Drawer.BeginDrawSprite();
-            Drawer.DrawSprite(Title);
+            Drawer.DrawSprite(Fondo);
+            Cerrar.Render(Drawer);
+            Botones.ForEach(b => b.Render(Drawer));
             Drawer.EndDrawSprite();
-            BotonesItems.ForEach(b => b.Render());
-            Botones.ForEach(b => b.Render());
+            Titulo.render();
+        }
+
+        public override void Update(GameModel juego)
+        {
+            if (player == null)
+                player = juego.Player; //esto esta como el orto
+            Cerrar.Update(juego);
+            Botones.ForEach(b => b.Update(juego, this));
+            if (Seleccionado != null)
+                Titulo.Text = TituloDisplay();
+        }
+        private string TituloDisplay()
+        {
+            switch (Seleccionado)
+            {
+                default:
+                    return Seleccionado;
+            }
+        }
+
+        public new void Dispose()
+        {
+            Cerrar.Dispose();
+            Titulo.Dispose();
+            Fondo.Dispose();
+            Botones.ForEach(b => b.Dispose());
         }
     }
 }
