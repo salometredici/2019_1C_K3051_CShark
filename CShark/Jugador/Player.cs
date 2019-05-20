@@ -62,7 +62,7 @@ namespace CShark.Jugador
 
         private void CrearCapsula()
         {
-            Capsula = BulletRigidBodyFactory.Instance.CreateCapsule(300, 500, Posicion, 5, true);
+            Capsula = BulletRigidBodyFactory.Instance.CreateCapsule(100, 500, Posicion, 5, true);
             Capsula.SetDamping(0.1f, 0f);
             Capsula.Restitution = 0.1f;
             Capsula.Friction = 0f; //la friccion hago que dependa de las superficies, no del player..
@@ -72,14 +72,14 @@ namespace CShark.Jugador
 
         float Velocidad = 5000f;
         float Salto = 10f;
-        float Flote = 20f;
+        float Flote = 200f;
 
         public void MoverCapsula(float x, float y, float z) {
-            Capsula.LinearVelocity += Velocidad * new Vector3(x , 0, z);
+            Capsula.LinearVelocity += Velocidad * new Vector3(x , y, z);
         }
 
         public void Flotar(int sentido) {
-            Impulsar(new Vector3(0, Flote * sentido, 0));
+            Capsula.LinearVelocity += new Vector3(0, sentido * Flote, 0);
         }
 
         private void Impulsar(Vector3 impulso) {

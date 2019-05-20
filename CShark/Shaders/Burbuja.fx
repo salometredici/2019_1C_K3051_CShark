@@ -1,7 +1,5 @@
 #include <Shared/Common.fx>
 
-float time = 0;
-
 struct VS_INPUT
 {
     float4 Position : POSITION0;

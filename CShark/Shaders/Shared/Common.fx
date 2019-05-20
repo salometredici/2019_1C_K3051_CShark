@@ -3,6 +3,8 @@ float4x4 matWorldView; //Matriz World * View
 float4x4 matWorldViewProj; //Matriz World * View * Projection
 float3x4 matInverseTransposeWorld; //Matriz Transpose(Invert(World))
 
+float time = 0;
+
 texture texDiffuseMap;
 sampler2D diffuseMap = sampler_state
 {

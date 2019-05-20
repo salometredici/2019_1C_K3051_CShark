@@ -35,7 +35,7 @@ namespace CShark.Terreno
             FacesToRender = new List<TgcMesh>();
             texturesPath = Game.Default.MediaDirectory + @"Textures\";
             SetUnderWaterSkybox(centro);
-            SetIslandSkybox(centro + new TGCVector3(0, 36000, 0));
+            SetIslandSkybox(centro + new TGCVector3(0, 32500, 0));
             SkyboxUnderwater.Init();
             SkyboxIsland.Init();
             CargarCaras();

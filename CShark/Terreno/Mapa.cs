@@ -119,6 +119,7 @@ namespace CShark.Terreno
             });
             Suelo.CambiarEfecto(efecto, technique);
             Skybox.CambiarEfecto(efecto, technique);
+            Superficie.CambiarEfecto(efecto, technique);
         }
 
         public void AgregarBody(RigidBody body) {

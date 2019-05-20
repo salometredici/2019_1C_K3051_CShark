@@ -1,6 +1,3 @@
-
-float time = 0;
-
 struct VS_INPUT_SUELO
 {
     float4 Position : POSITION0;

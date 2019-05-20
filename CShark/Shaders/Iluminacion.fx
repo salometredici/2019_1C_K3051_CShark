@@ -2,6 +2,7 @@
 #include <Shared/Iluminacion.fx>
 #include <Shared/Niebla.fx>
 #include <Shared/Suelo.fx>
+#include <Shared/Olas.fx>
 
 struct VS_INPUT_ILUMINADO
 {
@@ -57,5 +58,22 @@ technique SueloIluminado
     {
         VertexShader = compile vs_3_0 vertex_suelo();
         PixelShader = compile ps_3_0 ps_suelo_iluminado();
+    }
+}
+
+float4 ps_olas(VS_OUTPUT_OLAS Input) : COLOR0
+{
+    float3 color = tex2D(diffuseMap, Input.Texcoord).rgb;
+    return float4(color, Input.Alpha);
+}
+
+
+//hacer iluminacion FALTAA
+technique OlasIluminado
+{
+    pass Pass_0
+    {
+        VertexShader = compile vs_3_0 vs_olas();
+        PixelShader = compile ps_3_0 ps_olas();
     }
 }

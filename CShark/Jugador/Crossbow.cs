@@ -1,4 +1,5 @@
 ﻿using BulletSharp;
+using BulletSharp.Math;
 using CShark.Managers;
 using CShark.Model;
 using CShark.Terreno;
@@ -52,8 +53,8 @@ namespace CShark.Jugador
 
         public override void Atacar(Player player) {
             var camara = player.CamaraInterna;
-            var puntaCañon = CalcularPuntaCañon();
-            var harpoonBody = CrearHarpoonBody(player);
+            var puntaCañon = CalcularPuntaCañon(player);
+            var harpoonBody = CrearHarpoonBody(player, puntaCañon);
             var direccionDisparo = new TGCVector3(camara.LookAt.X - camara.Position.X, camara.LookAt.Y - camara.Position.Y, camara.LookAt.Z - camara.Position.Z).ToBulletVector3();
             direccionDisparo.Normalize();
             harpoonBody.LinearVelocity = direccionDisparo * 900;
@@ -71,18 +72,26 @@ namespace CShark.Jugador
             }
         }
 
-        private RigidBody CrearHarpoonBody(Player player) {
-            var pmin = MeshHarpoon.BoundingBox.PMin;
-            var pmax = MeshHarpoon.BoundingBox.PMax;
-            var size = new TGCVector3(pmax.X - pmin.X, pmax.Y - pmin.Y, pmax.Z - pmin.Z);
-            var posicion = CalcularPuntaCañon();
+        private RigidBody CrearHarpoonBody(Player player, TGCVector3 punta) {
+            var size = MeshHarpoon.BoundingBox.calculateSize();
             var rotacionY = player.CamaraInterna.leftrightRot + (float)Math.PI;
-            var rotacionZ = -player.CamaraInterna.updownRot - (float)Math.PI / 32; //un fix visual pequeño
-            return BulletRigidBodyFactory.Instance.CreateBox(size, 10f, posicion, rotacionY, rotacionZ, 0, 1, false);
+            var rotacionZ = -player.CamaraInterna.updownRot; //un fix visual pequeño
+            return BulletRigidBodyFactory.Instance.CreateBox(size, 5f, punta, rotacionY, rotacionZ, 0, 0, false);
         }
 
-        private TGCVector3 CalcularPuntaCañon() {
-            return TGCVector3.transform(Posicion, Transform);
+        private TGCVector3 CalcularPuntaCañon(Player player) {
+            var rotY = player.CamaraInterna.leftrightRot + FastMath.PI;
+            var rotX = -player.CamaraInterna.updownRot;
+            var rotation = TGCMatrix.RotationYawPitchRoll(rotY, rotX, 0);
+            var offset = TGCMatrix.Translation(Offset + new TGCVector3(0, 0, 100f));
+            var position = TGCMatrix.Translation(player.Posicion);
+            return TGCVector3.transform(TGCVector3.Empty, offset * rotation * position);
+        }
+
+        private Vector3 DireccionDisparo(Player player) {
+            var punta = CalcularPuntaCañon(player);
+            var lookAt = player.CamaraInterna.LookAt;
+            return (punta - lookAt).ToBulletVector3();
         }
     }
 }

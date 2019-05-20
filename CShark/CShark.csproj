@@ -257,6 +257,9 @@
     <None Include="Shaders\Niebla.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Shaders\Shared\Olas.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Shaders\Shared\Suelo.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -294,9 +297,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Shaders\Shared\Iluminacion.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Shaders\WaveShader.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Shaders\Varios.fx">

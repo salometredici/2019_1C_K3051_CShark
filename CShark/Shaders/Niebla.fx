@@ -2,6 +2,7 @@
 #include <Shared/Niebla.fx>
 #include <Shared/Iluminacion.fx>
 #include <Shared/Suelo.fx>
+#include <Shared/Olas.fx>
 
 struct VS_INPUT_NIEBLA
 {
@@ -77,5 +78,22 @@ technique SueloNublado
     {
         VertexShader = compile vs_3_0 vertex_suelo();
         PixelShader = compile ps_3_0 ps_suelo_nublado();
+    }
+}
+
+float4 ps_olas_nublado(VS_OUTPUT_OLAS Input) : COLOR0
+{
+    float4 tex = tex2D(diffuseMap, Input.Texcoord);
+    float distancia = Input.Distancia;
+    float3 color = calcularNiebla(distancia, tex);
+    return float4(color, Input.Alpha);
+}
+
+technique OlasNublado
+{
+    pass Pass_0
+    {
+        VertexShader = compile vs_3_0 vs_olas();
+        PixelShader = compile ps_3_0 ps_olas_nublado();
     }
 }
