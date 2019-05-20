@@ -13,6 +13,15 @@ namespace CShark.Jugador
         public int Arpones = 0;
         public int Oxigenos = 0;
         public int Medkits = 0;
+        public int Corales = 0;
+        public int Wumpas = 0;
+        public int Peces = 0;
+        public int Oro = 0;
+        public int Plata = 0;
+        public int Hierro = 0;
+        public int Pilas = 0;
+        public int Chips = 0;
+        public int Burbujas = 0;
 
         private List<IRecolectable> Items;
 
@@ -45,6 +54,9 @@ namespace CShark.Jugador
                 case ECrafteable.Medkit:
                     Medkits++;
                     break;
+                case ECrafteable.Oro:
+                    Oro++;
+                    break;
             }            
         }
 
@@ -58,6 +70,9 @@ namespace CShark.Jugador
                     break;
                 case ECrafteable.Medkit:
                     Medkits--;
+                    break;
+                case ECrafteable.Oro:
+                    Oro--;
                     break;
             }
         }

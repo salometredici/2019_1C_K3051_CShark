@@ -16,7 +16,7 @@ namespace CShark.Jugador
     {
         public float Vida;
         public float Oxigeno;
-        private Inventario Inventario;
+        public Inventario Inventario;
         private HUD HUD;
         private Arma Arma;
         public TGCVector3 Posicion;
@@ -137,7 +137,7 @@ namespace CShark.Jugador
 
         public void Recoger(Recolectable item) {
             Inventario.Agregar(item);
-            HUD.PopMensaje(item.Tipo);
+            //HUD.PopMensaje(item.Tipo);
         }
 
         public void AgregarItem(ECrafteable tipo) {

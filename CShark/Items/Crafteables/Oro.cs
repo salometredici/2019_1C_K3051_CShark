@@ -1,30 +1,31 @@
 ﻿using CShark.Jugador;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CShark.Items.Crafteables
 {
-    public class Medkit : ICrafteable
+    public class Oro : ICrafteable
     {
         public Dictionary<ERecolectable, int> Materiales { get; }
 
-        public ECrafteable Tipo => ECrafteable.Medkit;
+        public ECrafteable Tipo => ECrafteable.Oro;
 
-        public Medkit() {
+        public Oro()
+        {
             Materiales = new Dictionary<ERecolectable, int>
             {
-                { ERecolectable.Pez, 5 }
+                { ERecolectable.Plata, 2 },
+                { ERecolectable.Hierro, 2 }
             };
         }
 
-        public void Craftear(Player player) {
-            player.AgregarItem(ECrafteable.Medkit);
+        public void Craftear(Player player)
+        {
+            player.AgregarItem(ECrafteable.Oro);
         }
 
-        public bool PuedeCraftear(Player player) {
+        public bool PuedeCraftear(Player player)
+        {
             return Materiales.All(m =>
                 player.CuantosTiene(m.Key) >= m.Value
             );

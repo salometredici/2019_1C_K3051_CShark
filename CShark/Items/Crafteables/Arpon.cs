@@ -15,7 +15,7 @@ namespace CShark.Items.Crafteables
 
         public Arpon() {
             Materiales = new Dictionary<ERecolectable, int>();
-            Materiales.Add(ERecolectable.Bateria, 2);
+            Materiales.Add(ERecolectable.Pila, 2);
         }
 
         public void Craftear(Player player) {

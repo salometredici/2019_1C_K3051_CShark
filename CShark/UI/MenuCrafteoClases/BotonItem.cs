@@ -35,9 +35,11 @@ namespace CShark.UI
         }
 
         private CustomSprite CargarSprite(TGCVector2 posicion) {
-            var sprite = new CustomSprite();
-            sprite.Position = posicion;
-            sprite.Bitmap = FondoNormal;
+            var sprite = new CustomSprite
+            {
+                Position = posicion,
+                Bitmap = FondoNormal
+            };
             float anchoReal = sprite.Bitmap.ImageInformation.Width;
             float altoReal = sprite.Bitmap.ImageInformation.Height;
             sprite.Scaling = new TGCVector2(anchoReal / sprite.Bitmap.Width, altoReal / sprite.Bitmap.Height);

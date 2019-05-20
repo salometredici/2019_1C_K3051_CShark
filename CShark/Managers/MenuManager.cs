@@ -2,7 +2,6 @@
 using CShark.Terreno;
 using CShark.UI;
 using CShark.UI.HUD;
-using CShark.UI.Inventario;
 using System.Drawing;
 using TGC.Core.Direct3D;
 using static CShark.Model.GameModel;
@@ -27,8 +26,8 @@ namespace CShark.Managers
             MenuPrincipal = new MenuPrincipal();
             MenuOpciones = new MenuOpciones();
             MenuVariables = new MenuVariables();
-            MenuInventario = new MenuInventario();
-            MenuCrafteo = new MenuCrafteo();
+            MenuInventario = new MenuInventario("Menu\\Inventario\\");
+            MenuCrafteo = new MenuCrafteo("MenuCrafteo\\");
             MenuGuia = new GuideMenu();
             Puntero = new Puntero();
 
@@ -97,7 +96,6 @@ namespace CShark.Managers
             }
             else
             {
-                var viewport = D3DDevice.Instance.Device.Viewport;
                 var centroPantalla = new Point(DeviceWidth / 2, DeviceHeight / 2);
                 System.Windows.Forms.Cursor.Position = centroPantalla;
             }
