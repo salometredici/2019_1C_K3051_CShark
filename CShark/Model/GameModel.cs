@@ -28,6 +28,7 @@ namespace CShark.Model
         private PantallaMuerte PantallaMuerte;
         private Mapa Mapa => Mapa.Instancia;
         private Casco Casco;
+        private bool RenderCasco = false;
 
         public GameModel(string mediaDir, string shadersDir) : base(mediaDir, shadersDir)
         {
@@ -44,6 +45,15 @@ namespace CShark.Model
             D3DDevice.Instance.Device.Transform.Projection = TGCMatrix.PerspectiveFovLH(FastMath.QUARTER_PI, D3DDevice.Instance.AspectRatio, D3DDevice.Instance.ZNearPlaneDistance, farDistance);
             Casco = new Casco();
             Start();
+        }
+
+        private void Start()
+        {
+            var posInicial = GameManager.SpawnPlayer;
+            Player = new Player(posInicial, 500, 1000, Input);
+            Camara = Player.CamaraInterna;
+            CambiarMenu(TipoMenu.Guia);
+            GameManager.SwitchMenu(this);
         }
 
         public override void Update() {
@@ -73,20 +83,15 @@ namespace CShark.Model
             PostUpdate();
         }
 
-        private void Start() {
-            var posInicial = GameManager.SpawnPlayer;
-            Player = new Player(posInicial, 500, 1000, Input);
-            Camara = Player.CamaraInterna;
-            CambiarMenu(TipoMenu.Guia);
-            GameManager.SwitchMenu(this);
-        }
-
-
         public override void Render() {
+
+            RenderCasco = Configuracion.Instancia.PostProcesadoCasco.Valor && !Player.onPause;
 
             PreRender();
 
-            Casco.RenderBeforeScene();
+            if (RenderCasco) {
+                Casco.RenderBeforeScene();
+            }
 
             GameManager.Render(this);
             Mapa.Render(Player);
@@ -96,7 +101,10 @@ namespace CShark.Model
             else
                 PantallaMuerte.Render();
 
-            Casco.RenderAfterScene();
+            if (RenderCasco)
+            {
+                Casco.RenderAfterScene();
+            }
 
             PostRender();
 
