@@ -24,7 +24,7 @@ namespace CShark.Utils
             {
                 FileName = currentFile
             };
-            //mp3Player.play(true);
+            mp3Player.play(true);
         }
 
         public void SwitchMusic(bool abreMenu)
@@ -51,7 +51,7 @@ namespace CShark.Utils
         {
             mp3Player.closeFile();
             mp3Player.FileName = file;
-            //mp3Player.play(true);
+            mp3Player.play(true);
         }
 
         public void Dispose()

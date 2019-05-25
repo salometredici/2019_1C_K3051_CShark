@@ -13,17 +13,11 @@ using CShark.Jugador;
 using Microsoft.DirectX.Direct3D;
 using TGC.Core.Textures;
 using Microsoft.DirectX;
-using TGC.Core;
+using CShark.EfectosLuces;
 
 namespace CShark.Model
 {
     public class GameModel : TgcExample {
-
-        public GameModel(string mediaDir, string shadersDir) : base(mediaDir, shadersDir) {
-            Category = Game.Default.Category;
-            Name = Game.Default.Name;
-            Description = Game.Default.Description;
-        }
         
         public static int DeviceWidth = D3DDevice.Instance.Device.Viewport.Width;
         public static int DeviceHeight = D3DDevice.Instance.Device.Viewport.Height;
@@ -32,19 +26,23 @@ namespace CShark.Model
         public Tiburon Tiburon;
         public GameManager GameManager;
         private PantallaMuerte PantallaMuerte;
-        
         private Mapa Mapa => Mapa.Instancia;
+        private Casco Casco;
+
+        public GameModel(string mediaDir, string shadersDir) : base(mediaDir, shadersDir)
+        {
+            Category = Game.Default.Category;
+            Name = Game.Default.Name;
+            Description = Game.Default.Description;
+        }
 
         public override void Init() {
             Cursor.Hide();
             PantallaMuerte = new PantallaMuerte();            
             GameManager = new GameManager();
-            var device = D3DDevice.Instance.Device;
-            float ancho = device.CreationParameters.FocusWindow.Width;
-            float alto = device.CreationParameters.FocusWindow.Height;
             var farDistance = 459619.4078f; //raiz de (325000 ^ 2 + 325000 ^ 2)
-            var transformacion= Matrix.PerspectiveFovLH(FastMath.QUARTER_PI, ancho / alto, 1f, farDistance);
-            device.Transform.Projection = transformacion;
+            D3DDevice.Instance.Device.Transform.Projection = TGCMatrix.PerspectiveFovLH(FastMath.QUARTER_PI, D3DDevice.Instance.AspectRatio, D3DDevice.Instance.ZNearPlaneDistance, farDistance);
+            Casco = new Casco();
             Start();
         }
 
@@ -88,6 +86,8 @@ namespace CShark.Model
 
             PreRender();
 
+            Casco.RenderBeforeScene();
+
             GameManager.Render(this);
             Mapa.Render(Player);
 
@@ -96,12 +96,15 @@ namespace CShark.Model
             else
                 PantallaMuerte.Render();
 
+            Casco.RenderAfterScene();
+
             PostRender();
 
         }
 
         public override void Dispose() {
             GameManager.Dispose();
+            Casco.Dispose();
         }
 
         public void CambiarMenu(TipoMenu tipoMenu) {

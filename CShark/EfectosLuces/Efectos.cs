@@ -25,6 +25,14 @@ namespace CShark.EfectosLuces
             }
         }
 
+        public static Effect EfectoCasco
+        {
+            get
+            {
+                return TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "Casco.fx");
+            }
+        }
+
         public static Effect EfectoLuzNiebla { get; } = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "Niebla.fx");
 
         //efecto parametro porque puede ser la niebla del suelo q es otro efecto..

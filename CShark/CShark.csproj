@@ -109,6 +109,7 @@
     <Compile Include="Animales\IComportamiento.cs" />
     <Compile Include="Animales\Comportamiento\Lineal.cs" />
     <Compile Include="Animales\Enemigos\HealthBar.cs" />
+    <Compile Include="EfectosLuces\Casco.cs" />
     <Compile Include="Fisica\RigidBodyBuilder.cs" />
     <Compile Include="Fisica\Colisiones\ColisionesTerreno.cs" />
     <Compile Include="Fisica\RigidBodyUtils.cs" />
@@ -125,9 +126,9 @@
     <Compile Include="Items\Recolectables\Coral.cs" />
     <Compile Include="Jugador\InputHandler.cs" />
     <Compile Include="Jugador\Control.cs" />
-    <Compile Include="Efectos y Luces\Efectos.cs" />
-    <Compile Include="Efectos y Luces\Luz.cs" />
-    <Compile Include="Efectos y Luces\ContenedorLuces.cs" />
+    <Compile Include="EfectosLuces\Efectos.cs" />
+    <Compile Include="EfectosLuces\Luz.cs" />
+    <Compile Include="EfectosLuces\ContenedorLuces.cs" />
     <Compile Include="Objetos\Extra.cs" />
     <Compile Include="Objetos\Materiales\Material.cs" />
     <Compile Include="Objetos\Materiales\Materiales.cs" />
