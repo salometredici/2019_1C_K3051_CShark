@@ -30,7 +30,7 @@ namespace CShark.Model
 
         public TgcScene loadSceneFromFile(string filePath) {
             var mediaPath = filePath.Substring(0, filePath.LastIndexOf('\\') + 1);
-            ArreglarXML(filePath);
+            //ArreglarXML(filePath);
             return loadSceneFromFile(filePath, mediaPath);
         }
 

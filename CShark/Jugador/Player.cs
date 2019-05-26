@@ -90,7 +90,15 @@ namespace CShark.Jugador
         public void Saltar() {
             if (!Saltando) {
                 Saltando = true;
-                Impulsar(new Vector3(0, Velocidad * Salto, 0));
+                Impulsar(new Vector3(0, Velocidad, 0));
+            }
+        }
+
+        public void Atacado()
+        {
+            if (!Configuracion.Instancia.ModoDios.Valor)
+            {
+                Vida -= 50;
             }
         }
 

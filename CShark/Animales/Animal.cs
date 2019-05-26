@@ -2,11 +2,6 @@
 using BulletSharp.Math;
 using CShark.Model;
 using CShark.Terreno;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 
@@ -29,10 +24,10 @@ namespace CShark.Animales
             Mesh.AutoTransformEnable = false;            
         }
 
-        public virtual void Update(float elapsedTime) {
+        public virtual void Update(GameModel game) {
             if (!UsarTransformacionFisica)
                 Body.WorldTransform = TGCMatrix.Translation(Posicion).ToBsMatrix;
-            Comportamiento.Update(elapsedTime, this);
+            Comportamiento.Update(game.ElapsedTime, this);
         }
 
         public virtual void Render() {

@@ -28,11 +28,11 @@ namespace CShark.Managers
             CalcularAreaSpawneable();
             var tipos = new string[] { "Payaso", "Azul", "Betta", "Tropical" };
             var rnd = new Random();
-            for (int i = 0; i < 50; i++) {
+            /*for (int i = 0; i < 50; i++) {
                 var tipo = tipos[rnd.Next(tipos.Length)];
                 var posicion = SpawnPezRandom();
                 Spawnear(tipo, posicion);
-            }
+            }*/
             Spawnear("Tiburon", SpawnPezRandom());
         }
 
@@ -74,7 +74,7 @@ namespace CShark.Managers
         }
 
         public void Update(GameModel game) {
-            Animales.ForEach(animal => animal.Update(game.ElapsedTime));
+            Animales.ForEach(animal => animal.Update(game));
         }
 
         public void Render(GameModel game) {

@@ -108,6 +108,7 @@
     <Compile Include="Animales\Comportamiento\Aleatorio.cs" />
     <Compile Include="Animales\Comportamiento\Flotador.cs" />
     <Compile Include="Animales\Comportamiento\Giratorio.cs" />
+    <Compile Include="Animales\Comportamiento\Perseguidor.cs" />
     <Compile Include="Animales\IComportamiento.cs" />
     <Compile Include="Animales\Comportamiento\Lineal.cs" />
     <Compile Include="Animales\Enemigos\HealthBar.cs" />
