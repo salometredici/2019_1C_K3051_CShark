@@ -41,7 +41,7 @@ namespace CShark.EfectosLuces
             screenQuadVB.SetData(screenQuadVertices, 0, LockFlags.None);
             depthStencilOld = device.DepthStencilSurface;
             RenderTarget2D = new Texture(device, device.PresentationParameters.BackBufferWidth, device.PresentationParameters.BackBufferHeight, 1, Usage.RenderTarget, Format.X8R8G8B8, Pool.Default);
-            TexturaCasco = TgcTexture.createTexture(device, Game.Default.MediaDirectory + "Helmet.png");
+            TexturaCasco = TgcTexture.createTexture(device, Game.Default.MediaDirectory + "Helmet2.png");
             Efecto = Efectos.EfectoCasco;
         }
 
