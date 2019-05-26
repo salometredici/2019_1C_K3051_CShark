@@ -42,7 +42,7 @@ namespace CShark.EfectosLuces
             depthStencilOld = device.DepthStencilSurface;
             RenderTarget2D = new Texture(device, device.PresentationParameters.BackBufferWidth, device.PresentationParameters.BackBufferHeight, 1, Usage.RenderTarget, Format.X8R8G8B8, Pool.Default);
             TexturaCasco = TgcTexture.createTexture(device, Game.Default.MediaDirectory + "Helmet2.png");
-            Efecto = Efectos.EfectoCasco;
+            Efecto = Efectos.Instancia.EfectoCasco;
         }
 
         public void RenderBeforeScene()
@@ -79,7 +79,8 @@ namespace CShark.EfectosLuces
             Efecto.Dispose();
             TexturaCasco.dispose();
             RenderTarget2D.Dispose();
-            pOldRT.Dispose();
+            if (pOldRT != null) //asd
+                pOldRT.Dispose();
         }
     }
 }

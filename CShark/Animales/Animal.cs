@@ -1,5 +1,6 @@
 ﻿using BulletSharp;
 using BulletSharp.Math;
+using CShark.Model;
 using CShark.Terreno;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace CShark.Animales
 
         public Animal(string mesh, TGCVector3 posicionInicial) {
             var ruta = Game.Default.MediaDirectory + @"Animales\" + mesh + "-TgcScene.xml";
-            Mesh = new TgcSceneLoader().loadSceneFromFile(ruta).Meshes[0];
+            Mesh = new CargadorEscena().loadSceneFromFile(ruta).Meshes[0];
             Posicion = posicionInicial;
             UsarTransformacionFisica = false;
             Mesh.AutoTransformEnable = false;            
@@ -51,7 +52,9 @@ namespace CShark.Animales
         }
 
         public TGCMatrix ArmarTransformacion() {
-            return TGCMatrix.RotationYawPitchRoll(Rotacion.Y, Rotacion.X, Rotacion.Z) * TGCMatrix.Translation(Posicion);
+            return TGCMatrix.Scaling(Escala) *
+                TGCMatrix.RotationYawPitchRoll(Rotacion.Y, Rotacion.X, Rotacion.Z) 
+                * TGCMatrix.Translation(Posicion);
         }
 
         public void Dispose() {
@@ -67,5 +70,7 @@ namespace CShark.Animales
             get { return Mesh.Rotation; }
             set { Mesh.Rotation = value; }
         }
+
+        public TGCVector3 Escala;
     }
 }

@@ -11,36 +11,29 @@ namespace CShark.EfectosLuces
 {
     public class Efectos
     {
-        public static void AgregarLuz(Luz luz) {
+        public static Efectos Instancia { get; } = new Efectos();
+
+        public float distanciaNiebla { get; set; } = 80000;
+        public Color colorNiebla { get; set; } = Color.LightGray;
+
+        public Effect EfectoLuz { get; } = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "Iluminacion.fx");
+
+        public Effect EfectoCasco { get; } = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "Casco.fx");
+
+        public Effect EfectoLuzNiebla { get; } = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "Niebla.fx");
+
+        public void AgregarLuz(Luz luz) {
             ContenedorLuces.Instancia.AgregarLuz(luz);
         }
 
-        public static void SacarLuz(Luz luz) {
+        public void SacarLuz(Luz luz) {
             ContenedorLuces.Instancia.SacarLuz(luz);
         }
 
-        public static Effect EfectoLuz {
-            get {
-                return TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "Iluminacion.fx");
-            }
-        }
-
-        public static Effect EfectoCasco
-        {
-            get
-            {
-                return TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "Casco.fx");
-            }
-        }
-
-        public static Effect EfectoLuzNiebla { get; } = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "Niebla.fx");
-
-        //efecto parametro porque puede ser la niebla del suelo q es otro efecto..
-        public static void ActualizarNiebla() {
+        public void ActualizarNiebla() {
             var distanciaInicio = 10000;
-            var distanciaFin = 20000;
+            var distanciaFin = distanciaNiebla;
             var densidad = 0.0025f;
-            var colorNiebla = Color.Black;
 
             EfectoLuzNiebla.SetValue("colorNiebla", colorNiebla.ToArgb());
             EfectoLuzNiebla.SetValue("distanciaInicio", distanciaInicio);
@@ -48,7 +41,7 @@ namespace CShark.EfectosLuces
             EfectoLuzNiebla.SetValue("densidad", densidad);
         }
 
-        public static void ActualizarLuces(Effect efecto, Material material, TGCVector3 camara) {
+        public void ActualizarLuces(Effect efecto, Material material, TGCVector3 camara) {
             var contenedor = ContenedorLuces.Instancia;
 
             //cargar propiedades de las luces

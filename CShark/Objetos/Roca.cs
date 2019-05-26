@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CShark.EfectosLuces;
 using CShark.Model;
+using TGC.Core.BoundingVolumes;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 
@@ -14,6 +15,11 @@ namespace CShark.Objetos
     {
         public TgcMesh Mesh { get; }
         public Material Material { get; }
+        public TgcBoundingAxisAlignBox BoundingBox => Mesh.BoundingBox;
+        public bool Enabled {
+            get => Mesh.Enabled;
+            set => Mesh.Enabled = value;
+        }
 
         public Roca(TgcMesh mesh) {
             Mesh = mesh;
@@ -29,7 +35,7 @@ namespace CShark.Objetos
         }
 
         public void Update(GameModel game) {
-            Efectos.ActualizarLuces(Mesh.Effect, Material, game.Player.Posicion);
+            Efectos.Instancia.ActualizarLuces(Mesh.Effect, Material, game.Player.Posicion);
         }
     }
 }

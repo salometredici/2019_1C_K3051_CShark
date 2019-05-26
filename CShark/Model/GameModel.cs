@@ -14,6 +14,7 @@ using Microsoft.DirectX.Direct3D;
 using TGC.Core.Textures;
 using Microsoft.DirectX;
 using CShark.EfectosLuces;
+using TGC.Core.Shaders;
 
 namespace CShark.Model
 {
@@ -27,8 +28,8 @@ namespace CShark.Model
         public GameManager GameManager;
         private PantallaMuerte PantallaMuerte;
         private Mapa Mapa => Mapa.Instancia;
-        private Casco Casco;
-        private bool RenderCasco = false;
+        //private Casco Casco;
+       // private bool RenderCasco = false;
 
         public GameModel(string mediaDir, string shadersDir) : base(mediaDir, shadersDir)
         {
@@ -41,9 +42,7 @@ namespace CShark.Model
             Cursor.Hide();
             PantallaMuerte = new PantallaMuerte();            
             GameManager = new GameManager();
-            var farDistance = 459619.4078f; //raiz de (325000 ^ 2 + 325000 ^ 2)
-            D3DDevice.Instance.Device.Transform.Projection = TGCMatrix.PerspectiveFovLH(FastMath.QUARTER_PI, D3DDevice.Instance.AspectRatio, D3DDevice.Instance.ZNearPlaneDistance, farDistance);
-            Casco = new Casco();
+            //Casco = new Casco();
             Start();
         }
 
@@ -85,26 +84,30 @@ namespace CShark.Model
 
         public override void Render() {
 
-            RenderCasco = Configuracion.Instancia.PostProcesadoCasco.Valor && !Player.onPause;
+           // RenderCasco = Configuracion.Instancia.PostProcesadoCasco.Valor && !Player.onPause;
+            BackgroundColor = Efectos.Instancia.colorNiebla;
 
             PreRender();
+            Frustum.updateVolume(TGCMatrix.FromMatrix(D3DDevice.Instance.Device.Transform.View), TGCMatrix.FromMatrix(D3DDevice.Instance.Device.Transform.Projection));
+            Frustum.updateMesh(Player.Posicion, Camara.LookAt, 16.0f / 9, 0, 10000, 70);
+            UpdateFrustum();
 
-            if (RenderCasco) {
+            /*if (RenderCasco) {
                 Casco.RenderBeforeScene();
-            }
+            }*/
 
             GameManager.Render(this);
-            Mapa.Render(Player);
+            Mapa.Render(this);
 
             if (Player.EstaVivo)
                 Player.Render();
             else
                 PantallaMuerte.Render();
 
-            if (RenderCasco)
+            /*if (RenderCasco)
             {
                 Casco.RenderAfterScene();
-            }
+            }*/
 
             PostRender();
 
@@ -112,7 +115,8 @@ namespace CShark.Model
 
         public override void Dispose() {
             GameManager.Dispose();
-            Casco.Dispose();
+            /*if (Casco != null)
+                Casco.Dispose();*/
         }
 
         public void CambiarMenu(TipoMenu tipoMenu) {

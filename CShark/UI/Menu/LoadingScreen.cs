@@ -100,7 +100,7 @@ namespace CShark.UI
                 Texto.render();
                 PostRender();
             }
-            await Task.Delay(0);
+            await Task.CompletedTask;
         }
 
         private void PreRender() {

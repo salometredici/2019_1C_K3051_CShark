@@ -16,6 +16,7 @@ namespace CShark.NPCs.Peces
         public PezPayaso(TGCVector3 posicion) : base("Pez Payaso", posicion) {
             Comportamiento = new Lineal(500f, 250f, 1f);
             Body = BulletRigidBodyFactory.Instance.CreateBall(10f, 50f, posicion);
+            Escala = new TGCVector3(4, 4, 4);
         }
     }
 }

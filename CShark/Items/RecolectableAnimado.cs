@@ -40,7 +40,7 @@ namespace CShark.Items
         private Luz Luz;
 
         public RecolectableAnimado(string mesh, float _escala, TGCVector3 _posicion, float _offsetLetra, Color colorLuz) : base(_posicion) {
-            var loader = new TgcSceneLoader();
+            var loader = new CargadorEscena();
             Mesh = loader.loadSceneFromFile(Game.Default.MediaDirectory + @"Recolectables\" + mesh + "-TgcScene.xml").Meshes[0];
             LetraE1 = loader.loadSceneFromFile(Game.Default.MediaDirectory + @"Recolectables\LetraE-TgcScene.xml").Meshes[0];
             LetraE2 = LetraE1.clone("E2");
@@ -60,11 +60,11 @@ namespace CShark.Items
             };
             _box = GenerarBox();
             _box.transform(TGCMatrix.Scaling(escala) * TGCMatrix.Translation(posicion));
-            Efecto = Efectos.EfectoLuzNiebla;
+            Efecto = Efectos.Instancia.EfectoLuzNiebla;
             Efecto.Technique = "Nublado";
             Material = Materiales.Metal;
             Luz = new Luz(colorLuz, posicion, 10f, 0.1f, 9f);
-            Efectos.AgregarLuz(Luz);
+            Efectos.Instancia.AgregarLuz(Luz);
         }
 
         private TGCMatrix GetLetraTransform(float offsetX, float rot) {
@@ -109,7 +109,7 @@ namespace CShark.Items
                     LetraE1.Render();
                     LetraE2.Render();
                 }
-                Efectos.ActualizarLuces(Efecto, Material, game.Camara.Position);
+                Efectos.Instancia.ActualizarLuces(Efecto, Material, game.Camara.Position);
             }
         }
 
@@ -119,7 +119,7 @@ namespace CShark.Items
         }
 
         public override void Desaparecer() {
-            Efectos.SacarLuz(Luz);
+            Efectos.Instancia.SacarLuz(Luz);
         }
     }
 }

@@ -98,6 +98,8 @@
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="TGC.Core, Version=2.3.4.0, Culture=neutral, processorArchitecture=x86">
       <HintPath>..\packages\TGC.Core.2.3.4\lib\net472\TGC.Core.dll</HintPath>
     </Reference>
@@ -123,18 +125,31 @@
     <Compile Include="Items\Crafteables\Oxigeno.cs" />
     <Compile Include="Items\IRecolectable.cs" />
     <Compile Include="Items\RecolectableEstatico.cs" />
+    <Compile Include="Items\Recolectables\Arpon.cs" />
     <Compile Include="Items\Recolectables\Coral.cs" />
+    <Compile Include="Items\Recolectables\Hierro.cs" />
+    <Compile Include="Items\Recolectables\Medkit.cs" />
+    <Compile Include="Items\Recolectables\Oro.cs" />
+    <Compile Include="Items\Recolectables\Oxigeno.cs" />
+    <Compile Include="Items\Recolectables\PezRecolectable.cs" />
+    <Compile Include="Items\Recolectables\Plata.cs" />
     <Compile Include="Jugador\InputHandler.cs" />
     <Compile Include="Jugador\Control.cs" />
     <Compile Include="EfectosLuces\Efectos.cs" />
     <Compile Include="EfectosLuces\Luz.cs" />
     <Compile Include="EfectosLuces\ContenedorLuces.cs" />
+    <Compile Include="Model\CargadorEscena.cs" />
+    <Compile Include="Model\ParserBueno.cs" />
+    <Compile Include="Objetos\Coral.cs" />
     <Compile Include="Objetos\Extra.cs" />
     <Compile Include="Objetos\Materiales\Material.cs" />
     <Compile Include="Objetos\Materiales\Materiales.cs" />
     <Compile Include="Objetos\IRenderable.cs" />
     <Compile Include="Objetos\Palmera.cs" />
     <Compile Include="Objetos\Roca.cs" />
+    <Compile Include="Optimizaciones\Octree.cs" />
+    <Compile Include="Optimizaciones\OctreeBuilder.cs" />
+    <Compile Include="Optimizaciones\OctreeNode.cs" />
     <Compile Include="Terreno\Sol.cs" />
     <Compile Include="Terreno\Suelo.cs" />
     <Compile Include="Terreno\TerrainExtension.cs" />
@@ -219,9 +234,6 @@
     <Compile Include="Utils\ExtensionMethods.cs" />
     <Compile Include="Utils\HeightmapMethods.cs" />
     <Compile Include="Utils\MusicPlayer.cs" />
-    <Compile Include="Utils\Octree.cs" />
-    <Compile Include="Utils\OctreeBuilder.cs" />
-    <Compile Include="Utils\OctreeNode.cs" />
     <EmbeddedResource Include="Form\GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -246,9 +258,12 @@
     <None Include="Media\Mapa\Textures\container_D.tga" />
     <None Include="Media\Mapa\Textures\Map__2_Gradient.tga" />
     <None Include="Media\Mapa\Textures\rocks_01_dif.tga" />
+    <None Include="Media\Mapa\Textures\Rock_Albedo.tga" />
+    <None Include="Media\Mapa\Textures\ZBrush_defualt_group_albedo.tga" />
     <None Include="Media\Otros\Textures\Crossbow_01_D.tga" />
     <None Include="Media\Otros\Textures\Crossbow_02_D.tga" />
     <None Include="Media\Recolectables\Textures\diff_.tga" />
+    <None Include="Media\Recolectables\Textures\ingot_Base_Color.tga" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -351,15 +366,39 @@
     <Content Include="Media\Items\burbuja.png" />
     <Content Include="Media\Items\chip.png" />
     <Content Include="Media\Items\wumpa.png" />
-    <Content Include="Media\Mapa\Barco-TgcScene.xml" />
-    <Content Include="Media\Mapa\Mesa-TgcScene.xml" />
+    <Content Include="Media\Mapa\Corales 1-TgcScene.xml" />
+    <Content Include="Media\Mapa\Corales 2-TgcScene.xml" />
+    <Content Include="Media\Mapa\Corales 3-TgcScene.xml" />
     <Content Include="Media\Mapa\Palmeras-TgcScene.xml" />
     <Content Include="Media\Mapa\Paredes-TgcScene.xml" />
     <Content Include="Media\Mapa\Peces-TgcScene.xml" />
+    <Content Include="Media\Mapa\Props 1-TgcScene.xml" />
+    <Content Include="Media\Mapa\Props 2-TgcScene.xml" />
+    <Content Include="Media\Mapa\Props 3-TgcScene.xml" />
     <Content Include="Media\Mapa\Recolectables-TgcScene.xml" />
+    <Content Include="Media\Mapa\SpawnPeces-TgcScene.xml" />
     <Content Include="Media\Mapa\Sphere-TgcScene.xml" />
+    <Content Include="Media\Mapa\Textures\10010_Coral_v1_Diffuse.jpg" />
+    <Content Include="Media\Mapa\Textures\20941_Brain_Coral_Diff_v1.jpg" />
+    <Content Include="Media\Mapa\Textures\20943_Spiral_Wire_Coral_v1_diff.JPG" />
+    <Content Include="Media\Mapa\Textures\blue.jpg" />
+    <Content Include="Media\Mapa\Textures\Bomb_1_blinn1SG_BaseColor.png" />
     <Content Include="Media\Mapa\Textures\camp_diffuse.jpg" />
+    <Content Include="Media\Mapa\Textures\CASIZ098672PocilloporaVerrucosa01.jpg" />
+    <Content Include="Media\Mapa\Textures\Container_albedo.jpg" />
+    <Content Include="Media\Mapa\Textures\DefaultMaterial_albedo.jpg" />
+    <Content Include="Media\Mapa\Textures\defaultMat_albedo.jpg" />
+    <Content Include="Media\Mapa\Textures\fluss_fels_sketchfab.png" />
+    <Content Include="Media\Mapa\Textures\lambert6_albedo.jpg" />
+    <Content Include="Media\Mapa\Textures\material0_albedo.jpg" />
     <Content Include="Media\Mapa\Textures\rocks_diffuse.jpg" />
+    <Content Include="Media\Mapa\Textures\rock_big_a_d.TGA.png" />
+    <Content Include="Media\Mapa\Textures\shell_basecolour.jpg" />
+    <Content Include="Media\Mapa\Textures\ship.jpg" />
+    <Content Include="Media\Mapa\Textures\Ship_albedo.jpg" />
+    <Content Include="Media\Mapa\Textures\sm_worledCoral_worledCoral_BaseColor.png" />
+    <Content Include="Media\Mapa\Textures\spitfire_d.dds" />
+    <Content Include="Media\Mapa\Textures\T1_baseTexBaked.bmp" />
     <Content Include="Media\Mapa\Textures\terreno.png" />
     <Content Include="Media\Mapa\Textures\terreno2.png" />
     <Content Include="Media\Mapa\Textures\Breccia-Marble-Floor-Tile.jpg" />
@@ -372,6 +411,9 @@
     <Content Include="Media\Mapa\Textures\DefaultMaterial_Base_Color.png" />
     <Content Include="Media\Mapa\Textures\mesa.png" />
     <Content Include="Media\Mapa\Textures\textura_pasarlascanutas_2553.jpg" />
+    <Content Include="Media\Mapa\Textures\TreasureChest_albedo.jpg" />
+    <Content Include="Media\Mapa\Textures\Treasure_Chest_albedo.jpg" />
+    <Content Include="Media\Mapa\Textures\Tree_albedo.jpg" />
     <Content Include="Media\Mapa\Textures\utensilrope_diffuse.jpg" />
     <Content Include="Media\Mapa\Textures\waterTexture.jpg" />
     <Content Include="Media\Mapa\Textures\waveHeightmap2.png" />
@@ -387,7 +429,6 @@
     <Content Include="Media\HUD\oxigenoFondo.png" />
     <Content Include="Media\HUD\vidaBarra.png" />
     <Content Include="Media\HUD\vidaFondo.png" />
-    <Content Include="Media\Mapa\Extras-TgcScene.xml" />
     <Content Include="Media\Mapa\Rocas-TgcScene.xml" />
     <Content Include="Media\Mapa\Textures\1.jpg" />
     <Content Include="Media\Mapa\Textures\10.png" />
@@ -430,8 +471,20 @@
     <Content Include="Media\Menu\slider1.png" />
     <Content Include="Media\Menu\slider2.png" />
     <Content Include="Media\Menu\slider3.png" />
+    <Content Include="Media\Recolectables\Arpon-TgcScene.xml" />
+    <Content Include="Media\Recolectables\Coral-TgcScene.xml" />
+    <Content Include="Media\Recolectables\Hierro-TgcScene.xml" />
     <Content Include="Media\Recolectables\LetraE-TgcScene.xml" />
+    <Content Include="Media\Recolectables\Oro-TgcScene.xml" />
+    <Content Include="Media\Recolectables\Pez-TgcScene.xml" />
+    <Content Include="Media\Recolectables\Pila-TgcScene.xml" />
+    <Content Include="Media\Recolectables\Plata-TgcScene.xml" />
+    <Content Include="Media\Recolectables\Textures\10010_Coral_v1_Diffuse.jpg" />
     <Content Include="Media\Recolectables\Textures\Breccia-Marble-Floor-Tile.jpg" />
+    <Content Include="Media\Recolectables\Textures\harpoon.jpg" />
+    <Content Include="Media\Recolectables\Textures\ingot_Base_Color.png" />
+    <Content Include="Media\Recolectables\Textures\ingot_tex.png" />
+    <Content Include="Media\Recolectables\Textures\TropicalFish12.jpg" />
     <Content Include="Media\Textures\crosshair.png" />
     <Content Include="Media\Textures\mesa.png" />
     <Content Include="Media\Music\Deep_Trouble.mp3" />
@@ -444,7 +497,6 @@
     <Content Include="Media\Otros\Textures\harpoon.jpg" />
     <Content Include="Media\Otros\Textures\LaserGun1.jpg" />
     <Content Include="Media\Otros\Textures\LaserGun2.jpg" />
-    <Content Include="Media\Recolectables\Bateria-TgcScene.xml" />
     <Content Include="Media\Recolectables\Chip-TgcScene.xml" />
     <Content Include="Media\Recolectables\Medkit-TgcScene.xml" />
     <Content Include="Media\Recolectables\Oxigeno-TgcScene.xml" />

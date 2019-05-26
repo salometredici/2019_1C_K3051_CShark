@@ -38,6 +38,8 @@ float4 pixel_nublado(VS_OUTPUT_NIEBLA input) : COLOR0
     return calcularNiebla(input.Distancia, texel);
 }
 
+
+
 technique Nublado
 {
     pass Pass_0
@@ -65,6 +67,15 @@ float4 pixel_iluminado_nublado(VS_OUTPUT_NIEBLA input) : COLOR0
     return calcularNiebla(input.Distancia, color);
 }
 
+technique NubladoIluminado
+{
+    pass Pass_0
+    {
+        VertexShader = compile vs_3_0 vertex_iluminado_nublado();
+        PixelShader = compile ps_3_0 pixel_iluminado_nublado();
+    }
+}
+
 float4 ps_suelo_nublado(VS_OUTPUT_SUELO Input) : COLOR0
 {
     float4 texel = calcularBlendRayos(Input.Rayitas, Input.Texcoord);
@@ -72,7 +83,7 @@ float4 ps_suelo_nublado(VS_OUTPUT_SUELO Input) : COLOR0
     return calcularNiebla(Input.Distancia, luces);
 }
 
-technique SueloNublado
+technique SueloNubladoIluminado
 {
     pass Pass_0
     {
@@ -89,7 +100,8 @@ float4 ps_olas_nublado(VS_OUTPUT_OLAS Input) : COLOR0
     return float4(color, Input.Alpha);
 }
 
-technique OlasNublado
+/*en realidad noise esta iluminado :))))) */
+technique OlasNubladoIluminado
 {
     pass Pass_0
     {

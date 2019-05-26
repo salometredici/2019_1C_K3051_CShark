@@ -26,20 +26,17 @@ namespace CShark.EfectosLuces
 
         private ContenedorLuces() {
             Luces = new List<Luz>();
-            ActualizarArrays();
         }
 
         public void AgregarLuz(Luz luz) {
             Luces.Add(luz);
-            ActualizarArrays();
         }
 
         public void SacarLuz(Luz luz) {
             Luces.Remove(luz);
-            ActualizarArrays();
         }
 
-        private void ActualizarArrays() {
+        public void ArmarLuces() {
             Colores = new ColorValue[N];
             Intensidades = new float[N];
             Posiciones = new Vector4[N];

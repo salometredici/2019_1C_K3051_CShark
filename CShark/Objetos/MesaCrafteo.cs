@@ -26,10 +26,15 @@ namespace CShark.Objetos
 
         public Material Material { get; }
         public TgcMesh Mesh { get; }
+        public TgcBoundingAxisAlignBox BoundingBox => Mesh.BoundingBox;
+        public bool Enabled {
+            get => Mesh.Enabled;
+            set => Mesh.Enabled = value;
+        }
 
 
-        public MesaCrafteo() {
-            Mesh = new TgcSceneLoader().loadSceneFromFile(Game.Default.MediaDirectory + @"Mapa\Mesa-TgcScene.xml").Meshes[0];
+        public MesaCrafteo(TgcMesh mesh) {
+            Mesh = mesh;
             EsferaCercania = new TgcBoundingSphere(Position, 500f);
             EsferaCercania.setRenderColor(Color.Red);
             InicializarTexto();
@@ -51,7 +56,7 @@ namespace CShark.Objetos
         }
 
         public void Update(GameModel game) {
-            Efectos.ActualizarLuces(Mesh.Effect, Material, game.Camara.Position);
+            Efectos.Instancia.ActualizarLuces(Mesh.Effect, Material, game.Camara.Position);
             if (EstaCerca(game.Player)) {
                 EsferaCercania.setRenderColor(Color.Yellow);
                 MostrarTexto = true;

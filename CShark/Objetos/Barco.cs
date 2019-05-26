@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TGC.Core.BoundingVolumes;
 using TGC.Core.BulletPhysics;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
@@ -21,16 +22,21 @@ namespace CShark.Objetos
         private RigidBody Body;
         public Material Material { get; }
         public TgcMesh Mesh { get; }
+        public TgcBoundingAxisAlignBox BoundingBox => Mesh.BoundingBox;
+        public bool Enabled {
+            get => Mesh.Enabled;
+            set => Mesh.Enabled = value;
+        }
 
-        public Barco() {
-            Mesh = new TgcSceneLoader().loadSceneFromFile(Game.Default.MediaDirectory + @"Mapa\Barco-TgcScene.xml").Meshes[0];
+        public Barco(TgcMesh mesh) {
+            Mesh = mesh;
             Body = BulletRigidBodyFactory.Instance.CreateRigidBodyFromTgcMesh(Mesh);
             Mapa.Instancia.AgregarBody(Body);
             Material = Materiales.Metal;
         }
         
         public void Update(GameModel game) {
-            Efectos.ActualizarLuces(Mesh.Effect, Material, game.Camara.Position);
+            Efectos.Instancia.ActualizarLuces(Mesh.Effect, Material, game.Camara.Position);
         }
 
         public void Dispose() {

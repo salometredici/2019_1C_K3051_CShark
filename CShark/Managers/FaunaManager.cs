@@ -11,6 +11,7 @@ using CShark.Model;
 using CShark.NPCs.Enemigos;
 using TGC.Core.Mathematica;
 using CShark.Animales;
+using TGC.Core.BoundingVolumes;
 
 namespace CShark.Managers
 {
@@ -18,17 +19,41 @@ namespace CShark.Managers
     {
         private List<Animal> Animales;
         public static Tiburon Tiburon;
-        private TgcScene Spawns;
 
-        public FaunaManager(TgcScene spawns) {
-            Spawns = spawns;
+        public FaunaManager() {
         }
 
         public void Initialize() {
             Animales = new List<Animal>();
-            foreach (var mesh in Spawns.Meshes)
-                Spawnear(mesh.Name, mesh.BoundingBox.Position);
-            Spawns.DisposeAll();
+            CalcularAreaSpawneable();
+            var tipos = new string[] { "Payaso", "Azul", "Betta", "Tropical" };
+            var rnd = new Random();
+            for (int i = 0; i < 50; i++) {
+                var tipo = tipos[rnd.Next(tipos.Length)];
+                var posicion = SpawnPezRandom();
+                Spawnear(tipo, posicion);
+            }
+            Spawnear("Tiburon", SpawnPezRandom());
+        }
+
+        private TgcBoundingAxisAlignBox AreaSpawneable1;
+        private TgcBoundingAxisAlignBox AreaSpawneable2;
+
+        private void CalcularAreaSpawneable() {
+            var loader = new CargadorEscena();
+            var path = Game.Default.MediaDirectory + @"Mapa\SpawnPeces-TgcScene.xml";
+            var boxes = loader.loadSceneFromFile(path);
+            AreaSpawneable1 = boxes.Meshes[0].BoundingBox;
+            AreaSpawneable2 = boxes.Meshes[1].BoundingBox;
+        }
+
+        private TGCVector3 SpawnPezRandom() {
+            var random = new Random();
+            var area = random.Next(0, 1) == 0 ? AreaSpawneable1 : AreaSpawneable2;
+            var x = random.Next((int)area.PMin.X, (int)area.PMax.X);
+            var y = random.Next((int)area.PMin.Y, (int)area.PMax.Y);
+            var z = random.Next((int)area.PMin.Z, (int)area.PMax.Z);
+            return new TGCVector3(x, y, z);
         }
 
         private void Spawnear(string tipo, TGCVector3 posicion) {
@@ -42,8 +67,10 @@ namespace CShark.Managers
                 Animales.Add(new PezAzul(posicion));
             else if (tipo.Contains("Betta"))
                 Animales.Add(new PezBetta(posicion));
-            else if (tipo.Contains("Tropical"))
-                Animales.Add(new PezTropical(tipo.Last(), posicion));
+            else if (tipo.Contains("Tropical")) {
+                var tipoPez = new Random().Next(1, 6);
+                Animales.Add(new PezTropical(tipoPez, posicion));
+            }
         }
 
         public void Update(GameModel game) {

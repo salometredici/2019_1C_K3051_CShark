@@ -1,5 +1,6 @@
 ﻿using CShark.Model;
 using System;
+using TGC.Core.BoundingVolumes;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 
@@ -9,6 +10,8 @@ namespace CShark.Objetos
     {
         Material Material { get; }
         TgcMesh Mesh { get; }
+        TgcBoundingAxisAlignBox BoundingBox { get; }
+        bool Enabled { get; set; }
         void Render();
         void Update(GameModel game);
     }

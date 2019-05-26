@@ -1,4 +1,5 @@
 ﻿using BulletSharp;
+using CShark.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace CShark.Fisica
         private float Rozamiento = 0f;
 
         public RigidBodyBuilder(string box) {
-            var loader = new TgcSceneLoader();
+            var loader = new CargadorEscena();
             Mesh = loader.loadSceneFromFile(Game.Default.MediaDirectory + @"Boxes Colision\" + box + "-TgcScene.xml").Meshes[0];
         }
 

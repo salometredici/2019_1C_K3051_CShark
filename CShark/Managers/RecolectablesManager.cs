@@ -45,6 +45,14 @@ namespace CShark.Managers
                 case ERecolectable.Burbuja: return new Burbuja(posicion);
                 case ERecolectable.Chip: return new Chip(posicion);
                 case ERecolectable.Wumpa: return new Wumpa(posicion);
+                case ERecolectable.Arpon: return new Arpon(posicion);
+                case ERecolectable.Coral: return new Coral(posicion);
+                case ERecolectable.Hierro: return new Hierro(posicion);
+                case ERecolectable.Medkit: return new Medkit(posicion);
+                case ERecolectable.Oro: return new Oro(posicion);
+                case ERecolectable.Oxigeno: return new Oxigeno(posicion);
+                case ERecolectable.Pez: return new PezRecolectable(posicion);
+                case ERecolectable.Plata: return new Plata(posicion);
                 default: return new Pila(posicion);
             }
         }

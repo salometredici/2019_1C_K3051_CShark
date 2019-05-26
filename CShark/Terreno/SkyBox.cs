@@ -83,7 +83,7 @@ namespace CShark.Terreno
         }
 
         public void Update(GameModel game) {
-            FacesToRender.ForEach(f => Efectos.ActualizarLuces(f.Effect, Materiales.Normal, game.Player.Posicion));
+            FacesToRender.ForEach(f => Efectos.Instancia.ActualizarLuces(f.Effect, Materiales.Normal, game.Player.Posicion));
         }
 
         public void Render()

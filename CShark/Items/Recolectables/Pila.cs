@@ -9,8 +9,6 @@ namespace CShark.Items.Recolectables
     public class Pila : RecolectableAnimado
     {
         public override ERecolectable Tipo => ERecolectable.Pila;
-
         public Pila(TGCVector3 posicion) : base("Pila", 4, posicion, 75f, Color.Yellow) { }
-
     }
 }

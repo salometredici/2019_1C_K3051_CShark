@@ -7,10 +7,13 @@ using CShark.Fisica.Colisiones;
 using CShark.Jugador;
 using CShark.Model;
 using CShark.Objetos;
+using CShark.Optimizaciones;
 using CShark.Utilidades;
 using CShark.Utils;
 using Microsoft.DirectX.Direct3D;
+using TGC.Core.BoundingVolumes;
 using TGC.Core.BulletPhysics;
+using TGC.Core.Direct3D;
 using TGC.Core.Fog;
 using TGC.Core.Geometry;
 using TGC.Core.Mathematica;
@@ -27,6 +30,7 @@ namespace CShark.Terreno
         public TGCVector3 Centro;
 
         public ColisionesTerreno Colisiones;
+        private Octree Octree;
 
         //Objetos especiales
         private Barco Barco;
@@ -88,11 +92,20 @@ namespace CShark.Terreno
         public void CargarExtras(TgcScene extras) {
             foreach (var objeto in extras.Meshes)
                 Objetos.Add(new Extra(objeto));
-            Barco = new Barco();
-            Mesa = new MesaCrafteo();
+        }
+
+
+        public void CargarMesaBarco(TgcMesh mesa, TgcMesh barco) {
+            Barco = new Barco(barco);
+            Mesa = new MesaCrafteo(mesa);
             Objetos.Add(Barco);
             Objetos.Add(Mesa);
-            CambiarEfecto(false);
+        }
+
+        public void CargarCorales(TgcScene corales) {
+            foreach (var coral in corales.Meshes) {
+                Objetos.Add(new Coral(coral));
+            }
         }
 
         public void Update(float elapsedTime, GameModel game) {
@@ -107,19 +120,25 @@ namespace CShark.Terreno
             Sol.Update(elapsedTime);
             Colisiones.Update(elapsedTime);
 
-            Efectos.ActualizarNiebla();
+            Efectos.Instancia.ActualizarNiebla();
         }
 
         public void CambiarEfecto(bool sumergido) {
-            var efecto = sumergido ? Efectos.EfectoLuzNiebla : Efectos.EfectoLuz;
-            var technique = sumergido ? "Nublado" : "Iluminado";
+            Efectos.Instancia.distanciaNiebla = sumergido ? 40000 : 80000;
+            Efectos.Instancia.colorNiebla = sumergido ? Color.Black : Color.LightGray;
+            var distanciaFarPlane = Efectos.Instancia.distanciaNiebla + 1000;
+            D3DDevice.Instance.Device.Transform.Projection = 
+                TGCMatrix.PerspectiveFovLH(FastMath.QUARTER_PI, D3DDevice.Instance.AspectRatio, 
+                D3DDevice.Instance.ZNearPlaneDistance, distanciaFarPlane);
+            D3DDevice.Instance.ZFarPlaneDistance = distanciaFarPlane;
+
             Objetos.ForEach(o => {
-                o.Mesh.Effect = efecto;
-                o.Mesh.Technique = technique;
+                o.Mesh.Effect = Efectos.Instancia.EfectoLuzNiebla;
+                o.Mesh.Technique = "NubladoIluminado";
             });
-            Suelo.CambiarEfecto(efecto, technique);
-            Skybox.CambiarEfecto(efecto, technique);
-            Superficie.CambiarEfecto(efecto, technique);
+            Suelo.CambiarEfecto(Efectos.Instancia.EfectoLuzNiebla, "NubladoIluminado");
+            Skybox.CambiarEfecto(Efectos.Instancia.EfectoLuzNiebla, "NubladoIluminado");
+            Superficie.CambiarEfecto(Efectos.Instancia.EfectoLuzNiebla, "NubladoIluminado");
         }
 
         public void AgregarBody(RigidBody body) {
@@ -134,10 +153,11 @@ namespace CShark.Terreno
             return Colisiones.Colisionan(ob1, ob2);
         }
 
-        public void Render(Player player) {
+        public void Render(GameModel game) {
             Suelo.Render();
             Skybox.Render();
-            Objetos.ForEach(o => o.Render());
+            //Objetos.ForEach(o => o.Render());
+            Octree.render(game.Frustum);
             Superficie.Render();
             Sol.Render();
         }
@@ -150,6 +170,12 @@ namespace CShark.Terreno
             Superficie.Dispose();
             Sol.Dispose();
             MeshLoader.Instance.Dispose();
+        }
+
+        public void Optimizar() {
+            Octree = new Octree();
+            var bb = new TgcBoundingAxisAlignBox(new TGCVector3(XMin, YMin, ZMin), new TGCVector3(XMax, YMax, ZMax));
+            Octree.create(Objetos, bb);
         }
 
         public float XMin => Centro.X - Box.Size.X / 2f;

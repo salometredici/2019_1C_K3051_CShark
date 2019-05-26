@@ -54,7 +54,7 @@ namespace CShark.Terreno
 
         public void Update(float elapsedTime, TGCVector3 camara) {
             time += elapsedTime;
-            Efectos.ActualizarLuces(Terreno.Effect, Material, camara);
+            Efectos.Instancia.ActualizarLuces(Terreno.Effect, Material, camara);
             Terreno.Effect.SetValue("texRayosSol", TexturaRayoSol);
             Terreno.Effect.SetValue("time", time);
         }

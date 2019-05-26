@@ -24,7 +24,7 @@ float4 calcularNiebla(float distancia, float4 color)
         float total = distanciaFin - distanciaInicio;
         float resto = distancia - distanciaInicio;
         float niebla = 1 - resto / total;
-        color *= niebla;
+        color = (1 - niebla) * colorNiebla + color * niebla;
     }
     return distancia > distanciaFin ? colorNiebla : color;
 }
