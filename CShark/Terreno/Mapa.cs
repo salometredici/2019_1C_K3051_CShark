@@ -37,6 +37,13 @@ namespace CShark.Terreno
         private SkyBox Skybox;
         public Superficie Superficie;
         private Sol Sol;
+        public float XMin => Centro.X - Box.Size.X / 2f;
+        public float XMax => Centro.X + Box.Size.X / 2f;
+        public float YMin => Centro.Y;
+        public float YMax => Centro.Y + Box.Size.Y / 2f;
+        public float ZMin => Centro.Z - Box.Size.Z / 2f;
+        public float ZMax => Centro.Z + Box.Size.Z / 2f;
+        public float AlturaMar => 18000f;
 
         public static Mapa Instancia { get; } = new Mapa();
 
@@ -152,12 +159,5 @@ namespace CShark.Terreno
             MeshLoader.Instance.Dispose();
         }
 
-        public float XMin => Centro.X - Box.Size.X / 2f;
-        public float XMax => Centro.X + Box.Size.X / 2f;
-        public float YMin => Centro.Y;
-        public float YMax => Centro.Y + Box.Size.Y / 2f;
-        public float ZMin => Centro.Z - Box.Size.Z / 2f;
-        public float ZMax => Centro.Z + Box.Size.Z / 2f;
-        public float AlturaMar => 18000f;
     }
 }

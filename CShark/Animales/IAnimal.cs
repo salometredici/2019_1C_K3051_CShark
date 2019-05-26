@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CShark.Model;
+using System;
 using TGC.Core.Mathematica;
 
 namespace CShark.Animales
 {
     public interface IAnimal : IDisposable
     {
-        void Update(float elapsedTime);
+        void Update(GameModel game);
         void Render();
         void Morir();
         TGCMatrix ArmarTransformacion();

@@ -47,7 +47,7 @@ namespace CShark.Managers
         }
 
         public void Update(GameModel game) {
-            Animales.ForEach(animal => animal.Update(game.ElapsedTime));
+            Animales.ForEach(animal => animal.Update(game));
         }
 
         public void Render(GameModel game) {
