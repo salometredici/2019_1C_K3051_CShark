@@ -42,7 +42,7 @@ namespace CShark.Model
             Cursor.Hide();
             PantallaMuerte = new PantallaMuerte();            
             GameManager = new GameManager();
-            D3DDevice.Instance.Device.Transform.Projection = TGCMatrix.PerspectiveFovLH(45, D3DDevice.Instance.AspectRatio, D3DDevice.Instance.ZNearPlaneDistance, 450000f);
+            D3DDevice.Instance.Device.Transform.Projection = TGCMatrix.PerspectiveFovLH(45, D3DDevice.Instance.AspectRatio, D3DDevice.Instance.ZNearPlaneDistance, 350000f);
             Casco = new Casco();
             Start();
         }
@@ -91,7 +91,7 @@ namespace CShark.Model
             ClearTextures();
 
             PreRender();
-            var FrustumMatrix = TGCMatrix.PerspectiveFovLH(45,D3DDevice.Instance.AspectRatio,D3DDevice.Instance.ZNearPlaneDistance,450f);
+            var FrustumMatrix = TGCMatrix.PerspectiveFovLH(45,D3DDevice.Instance.AspectRatio,D3DDevice.Instance.ZNearPlaneDistance,550f);
             Frustum.updateVolume(TGCMatrix.FromMatrix(D3DDevice.Instance.Device.Transform.View), TGCMatrix.FromMatrix(FrustumMatrix));
             Frustum.updateMesh(Player.Posicion, Camara.LookAt, 16.0f / 9, 0, 1000, 70);
             //UpdateFrustum();
@@ -102,7 +102,10 @@ namespace CShark.Model
             }
 
             GameManager.Render(this);
-            Mapa.Render(this);
+            if (!Player.onPause)
+            {
+                Mapa.Render(this);
+            }            
 
             if (Player.EstaVivo)
                 Player.Render();

@@ -35,7 +35,7 @@ namespace CShark.Objetos
         }
 
         public void Update(GameModel game) {
-            Efectos.Instancia.ActualizarLuces(Mesh.Effect, Material, game.Player.Posicion);
+            //Efectos.Instancia.ActualizarLuces(Mesh.Effect, Material, game.Player.Posicion);
         }
     }
 }

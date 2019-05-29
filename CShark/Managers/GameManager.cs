@@ -36,11 +36,25 @@ namespace CShark.Model
         }
 
         public void Render(GameModel game) {
-            Managers.ForEach(m => m.Render(game));
+            if (!game.Player.onPause)
+            {
+                Managers.ForEach(m => m.Render(game));
+            }
+            else
+            {
+                MenuManager.Render(game);
+            }
         }
 
         public void Update(GameModel game) {
-            Managers.ForEach(m => m.Update(game));
+            if (!game.Player.onPause)
+            {
+                Managers.ForEach(m => m.Update(game));
+            }
+            else
+            {
+                MenuManager.Update(game);
+            }
         }
 
         public /*async */void Initialize() {

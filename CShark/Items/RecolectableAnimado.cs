@@ -109,7 +109,7 @@ namespace CShark.Items
                     LetraE1.Render();
                     LetraE2.Render();
                 }
-                Efectos.Instancia.ActualizarLuces(Efecto, Material, game.Camara.Position);
+                //Efectos.Instancia.ActualizarLuces(Efecto, Material, game.Camara.Position);
             }
         }
 
