@@ -28,7 +28,7 @@ namespace CShark.NPCs.Enemigos
             TiempoInvencibilidad = 0f;
             BarraVida = new HealthBar(Vida);
             var builder = new RigidBodyBuilder("Tiburon");
-            Body = builder.ConDamping(1f).ConRotacion(Rotacion).ConPosicion(Posicion)
+            Body = builder.ConDamping(1f).ConRotacion(Rotacion).ConPosicion(posicionInicial)
                 .ConRebote(10f).ConRozamiento(1f).ConMasa(0f).Build();
             Mapa.Instancia.AgregarBody(Body);
             Mesh.BoundingBox.setRenderColor(Color.Red);

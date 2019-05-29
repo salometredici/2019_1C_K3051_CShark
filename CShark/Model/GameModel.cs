@@ -28,8 +28,8 @@ namespace CShark.Model
         public GameManager GameManager;
         private PantallaMuerte PantallaMuerte;
         private Mapa Mapa => Mapa.Instancia;
-        //private Casco Casco;
-       // private bool RenderCasco = false;
+        private Casco Casco;
+        private bool RenderCasco = false;
 
         public GameModel(string mediaDir, string shadersDir) : base(mediaDir, shadersDir)
         {
@@ -43,7 +43,7 @@ namespace CShark.Model
             PantallaMuerte = new PantallaMuerte();            
             GameManager = new GameManager();
             D3DDevice.Instance.Device.Transform.Projection = TGCMatrix.PerspectiveFovLH(45, D3DDevice.Instance.AspectRatio, D3DDevice.Instance.ZNearPlaneDistance, 450000f);
-            //Casco = new Casco();
+            Casco = new Casco();
             Start();
         }
 
@@ -86,7 +86,7 @@ namespace CShark.Model
         public override void Render() {
 
         
-           // RenderCasco = Configuracion.Instancia.PostProcesadoCasco.Valor && !Player.onPause;
+           RenderCasco = Configuracion.Instancia.PostProcesadoCasco.Valor && !Player.onPause;
             BackgroundColor = Efectos.Instancia.colorNiebla;
             ClearTextures();
 
@@ -96,9 +96,10 @@ namespace CShark.Model
             Frustum.updateMesh(Player.Posicion, Camara.LookAt, 16.0f / 9, 0, 1000, 70);
             //UpdateFrustum();
 
-            /*if (RenderCasco) {
+            if (RenderCasco)
+            {
                 Casco.RenderBeforeScene();
-            }*/
+            }
 
             GameManager.Render(this);
             Mapa.Render(this);
@@ -108,10 +109,10 @@ namespace CShark.Model
             else
                 PantallaMuerte.Render();
 
-            /*if (RenderCasco)
+            if (RenderCasco)
             {
                 Casco.RenderAfterScene();
-            }*/
+            }
 
             PostRender();
 
@@ -119,8 +120,8 @@ namespace CShark.Model
 
         public override void Dispose() {
             GameManager.Dispose();
-            /*if (Casco != null)
-                Casco.Dispose();*/
+            if (Casco != null)
+                Casco.Dispose();
         }
 
         public void CambiarMenu(TipoMenu tipoMenu) {

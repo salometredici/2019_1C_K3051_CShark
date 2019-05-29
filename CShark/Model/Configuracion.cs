@@ -32,7 +32,7 @@ namespace CShark.Model
         private Configuracion() {
             VelocidadMovimiento = new Variable<float>("Velocidad de movimiento", 500f);
             VelocidadRotacion = new Variable<float>("Velocidad de rotación", 0.1f);
-            ModoDios = new Variable<bool>("Modo Dios", true);
+            ModoDios = new Variable<bool>("Modo Dios", false);
             Niebla = new Variable<bool>("Niebla", false);
             PostProcesadoCasco = new Variable<bool>("Post Procesado (Casco)", false);
             MotionBlur = new Variable<bool>("Motion Blur", false);

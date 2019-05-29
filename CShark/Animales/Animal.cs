@@ -31,7 +31,7 @@ namespace CShark.Animales
         }
 
         public virtual void Render() {
-            Mesh.Transform = UsarTransformacionFisica 
+            Mesh.Transform = UsarTransformacionFisica
                 ? new TGCMatrix(Body.InterpolationWorldTransform)
                 : ArmarTransformacion();
             Mesh.Render();

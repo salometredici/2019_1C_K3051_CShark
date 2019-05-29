@@ -33,7 +33,7 @@ namespace CShark.Managers
                 var posicion = SpawnPezRandom();
                 Spawnear(tipo, posicion);
             }*/
-            Spawnear("Tiburon", SpawnPezRandom());
+            Spawnear("Tiburon", new TGCVector3(85195,12304,-62625));
         }
 
         private TgcBoundingAxisAlignBox AreaSpawneable1;
