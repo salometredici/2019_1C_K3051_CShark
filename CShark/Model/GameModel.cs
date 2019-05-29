@@ -42,6 +42,7 @@ namespace CShark.Model
             Cursor.Hide();
             PantallaMuerte = new PantallaMuerte();            
             GameManager = new GameManager();
+            D3DDevice.Instance.Device.Transform.Projection = TGCMatrix.PerspectiveFovLH(45, D3DDevice.Instance.AspectRatio, D3DDevice.Instance.ZNearPlaneDistance, 450000f);
             //Casco = new Casco();
             Start();
         }
@@ -84,13 +85,16 @@ namespace CShark.Model
 
         public override void Render() {
 
+        
            // RenderCasco = Configuracion.Instancia.PostProcesadoCasco.Valor && !Player.onPause;
             BackgroundColor = Efectos.Instancia.colorNiebla;
+            ClearTextures();
 
             PreRender();
-            Frustum.updateVolume(TGCMatrix.FromMatrix(D3DDevice.Instance.Device.Transform.View), TGCMatrix.FromMatrix(D3DDevice.Instance.Device.Transform.Projection));
-            Frustum.updateMesh(Player.Posicion, Camara.LookAt, 16.0f / 9, 0, 10000, 70);
-            UpdateFrustum();
+            var FrustumMatrix = TGCMatrix.PerspectiveFovLH(45,D3DDevice.Instance.AspectRatio,D3DDevice.Instance.ZNearPlaneDistance,450f);
+            Frustum.updateVolume(TGCMatrix.FromMatrix(D3DDevice.Instance.Device.Transform.View), TGCMatrix.FromMatrix(FrustumMatrix));
+            Frustum.updateMesh(Player.Posicion, Camara.LookAt, 16.0f / 9, 0, 1000, 70);
+            //UpdateFrustum();
 
             /*if (RenderCasco) {
                 Casco.RenderBeforeScene();

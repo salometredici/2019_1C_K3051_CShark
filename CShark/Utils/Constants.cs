@@ -17,12 +17,13 @@ namespace CShark.Utils
             "Impulsar hacia la derecha - D",
             "Impulsar hacia adelante - W",
             "Impulsar hacia atrás - S",
-            "Impulsar hacia arriba/Saltar (Fuera del agua) - Space",
-            "Impulsar hacia abajo - X",
-            "Frenar impulso - F",
+            "Impulsar hacia arriba/Saltar - Space",
+            //"Impulsar hacia abajo - X",
+            //"Frenar impulso - F",
             "Disparar - Click derecho",
             "Abrir/Cerrar menús - Esc",
-            "Abrir menú de crafteo - E (Sólo en radio del bote)",
+            "Abrir menú de crafteo - E (Sólo en mesa de crafteo)",
+            "Recoger item - E",
             "Abrir inventario - I"
         };
     }

@@ -106,7 +106,6 @@ namespace CShark.UI
             base.Update(juego);
             Botones.ForEach(b => b.Update(juego, this));
             Titulo.Text = Seleccionado.ToString();
-            InfoItem = CantDisponibleDisplay(player);
         }
 
         public new void Dispose()

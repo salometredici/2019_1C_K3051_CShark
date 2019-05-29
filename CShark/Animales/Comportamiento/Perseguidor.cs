@@ -26,14 +26,18 @@ namespace CShark.Animales.Comportamiento
 
         public void Render()
         {
-           
+
         }
 
         private void AvanzarHaciaPlayer(float elapsedTime, Animal animal)
         {
             var direccionDespl = Objetivo.Posicion - animal.Posicion;
             var desplazam = direccionDespl * VelocidadMovimiento * 0.1f;
-            animal.Posicion += desplazam;
+            if (direccionDespl.Length() < 100f)
+            {
+                animal.Posicion += desplazam;
+            }
+
         }
 
     }
