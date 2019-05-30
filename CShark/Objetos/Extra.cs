@@ -11,31 +11,8 @@ using TGC.Core.SceneLoader;
 
 namespace CShark.Objetos
 {
-    public class Extra : IRenderable
+    public class Extra : Iluminable
     {
-        public TgcMesh Mesh { get; }
-        public Material Material { get; }
-        public TgcBoundingAxisAlignBox BoundingBox => Mesh.BoundingBox;
-        public bool Enabled {
-            get => Mesh.Enabled;
-            set => Mesh.Enabled = value;
-        }
-
-        public Extra(TgcMesh mesh) {
-            Mesh = mesh;
-            Material = Materiales.Normal;
-        }
-
-        public void Dispose() {
-            Mesh.Dispose();
-        }
-
-        public void Render() {
-            Mesh.Render();
-        }
-
-        public void Update(GameModel game) {
-            //Efectos.Instancia.ActualizarLuces(Mesh.Effect, Material, game.Player.Posicion);
-        }
+        public Extra(TgcMesh mesh) : base(mesh, Materiales.Normal) { }
     }
 }

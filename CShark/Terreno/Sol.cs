@@ -23,7 +23,7 @@ namespace CShark.Terreno
             var sphere = Game.Default.MediaDirectory + @"Mapa\Sphere-TgcScene.xml";
             Posicion = posicion;
             Rotacion = 0;
-            Luz = new Luz(Color.White, Posicion, 3000f, 0.1f, 20f);
+            Luz = new Luz(Color.White, Posicion, 3000f, 0.1f);
             Efectos.Instancia.AgregarLuz(Luz);
             Mesh = new CargadorEscena().loadSceneFromFile(sphere).Meshes[0];
             Mesh.AutoTransformEnable = false;
@@ -33,12 +33,10 @@ namespace CShark.Terreno
         }
 
         public void Dispose() {
-            Luz.Dispose();
             Mesh.Dispose();
         }
 
         public void Update(float elapsedTime) {
-            Luz.Update(Posicion);
             Rotacion += elapsedTime * 0.5f;
         }
 

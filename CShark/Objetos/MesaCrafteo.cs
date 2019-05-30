@@ -16,7 +16,7 @@ using Effect = Microsoft.DirectX.Direct3D.Effect;
 
 namespace CShark.Objetos
 {
-    public class MesaCrafteo : IRenderable
+    public class MesaCrafteo : Iluminable
     {
         private TgcBoundingSphere EsferaCercania;
         private TgcText2D TextoPresione;
@@ -24,21 +24,11 @@ namespace CShark.Objetos
         public TGCVector3 Size => Mesh.BoundingBox.calculateSize();
         public TGCVector3 Position => Mesh.BoundingBox.calculateBoxCenter();
 
-        public Material Material { get; }
-        public TgcMesh Mesh { get; }
-        public TgcBoundingAxisAlignBox BoundingBox => Mesh.BoundingBox;
-        public bool Enabled {
-            get => Mesh.Enabled;
-            set => Mesh.Enabled = value;
-        }
-
-
-        public MesaCrafteo(TgcMesh mesh) {
+        public MesaCrafteo(TgcMesh mesh) : base(mesh, Materiales.Madera) {
             Mesh = mesh;
             EsferaCercania = new TgcBoundingSphere(Position, 500f);
             EsferaCercania.setRenderColor(Color.Red);
             InicializarTexto();
-            Material = Materiales.Madera;
             var body = BulletRigidBodyFactory.Instance.CreateRigidBodyFromTgcMesh(Mesh);
             Mapa.Instancia.AgregarBody(body);
         }
@@ -56,7 +46,6 @@ namespace CShark.Objetos
         }
 
         public void Update(GameModel game) {
-            //Efectos.Instancia.ActualizarLuces(Mesh.Effect, Material, game.Camara.Position);
             if (EstaCerca(game.Player)) {
                 EsferaCercania.setRenderColor(Color.Yellow);
                 MostrarTexto = true;
@@ -72,8 +61,8 @@ namespace CShark.Objetos
             }
         }
 
-        public void Dispose() {
-            Mesh.Render();
+        public override void Dispose() {
+            base.Dispose();
             EsferaCercania.Dispose();
         }
 

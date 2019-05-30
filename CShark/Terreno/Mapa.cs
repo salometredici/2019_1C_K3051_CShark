@@ -122,7 +122,7 @@ namespace CShark.Terreno
                 Colisiones.CambiarGravedad(Constants.UnderWaterGravity);
             }
             Objetos.ForEach(o => o.Update(game));
-            Suelo.Update(elapsedTime, game.Player.CamaraInterna.PositionEye);
+            Suelo.Update(elapsedTime);
             Superficie.Update(game);
             Sol.Update(elapsedTime);
             Colisiones.Update(elapsedTime);
@@ -138,7 +138,6 @@ namespace CShark.Terreno
                 TGCMatrix.PerspectiveFovLH(FastMath.QUARTER_PI, D3DDevice.Instance.AspectRatio, 
                 D3DDevice.Instance.ZNearPlaneDistance, distanciaFarPlane);
             D3DDevice.Instance.ZFarPlaneDistance = distanciaFarPlane;
-
             Objetos.ForEach(o => {
                 o.Mesh.Effect = Efectos.Instancia.EfectoLuzNiebla;
                 o.Mesh.Technique = "NubladoIluminado";
@@ -161,10 +160,9 @@ namespace CShark.Terreno
         }
 
         public void Render(GameModel game) {
-            Suelo.Render();
-            Skybox.Render();
-            //Objetos.ForEach(o => o.Render());
-            Octree.render(game.Frustum);
+            Suelo.Render(game);
+            Skybox.Render(game);
+            Octree.render(game);
             Superficie.Render();
             Sol.Render();
         }

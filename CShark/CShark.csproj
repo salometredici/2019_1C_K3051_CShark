@@ -143,6 +143,7 @@
     <Compile Include="Model\ParserBueno.cs" />
     <Compile Include="Objetos\Coral.cs" />
     <Compile Include="Objetos\Extra.cs" />
+    <Compile Include="Objetos\Iluminable.cs" />
     <Compile Include="Objetos\Materiales\Material.cs" />
     <Compile Include="Objetos\Materiales\Materiales.cs" />
     <Compile Include="Objetos\IRenderable.cs" />
@@ -379,6 +380,7 @@
     <Content Include="Media\Mapa\Recolectables-TgcScene.xml" />
     <Content Include="Media\Mapa\SpawnPeces-TgcScene.xml" />
     <Content Include="Media\Mapa\Sphere-TgcScene.xml" />
+    <Content Include="Media\Mapa\Terreno-TgcScene.xml" />
     <Content Include="Media\Mapa\Textures\10010_Coral_v1_Diffuse.jpg" />
     <Content Include="Media\Mapa\Textures\20941_Brain_Coral_Diff_v1.jpg" />
     <Content Include="Media\Mapa\Textures\20943_Spiral_Wire_Coral_v1_diff.JPG" />

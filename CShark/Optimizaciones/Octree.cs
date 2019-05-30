@@ -1,4 +1,5 @@
-﻿using CShark.Objetos;
+﻿using CShark.Model;
+using CShark.Objetos;
 using System.Collections.Generic;
 using System.Linq;
 using TGC.Core.BoundingVolumes;
@@ -30,15 +31,15 @@ namespace CShark.Optimizaciones
                 objeto.Enabled = false;
         }
 
-        public void render(TgcFrustum frustum) {
+        public void render(GameModel game) {
             var pMax = sceneBounds.PMax;
             var pMin = sceneBounds.PMin;
-            findVisibleMeshes(frustum, octreeRootNode,
+            findVisibleMeshes(game.Frustum, octreeRootNode,
                 pMin.X, pMin.Y, pMin.Z,
                 pMax.X, pMax.Y, pMax.Z);
             foreach (var mesh in Objetos) {
                 if (mesh.Enabled) {
-                    mesh.Render();
+                    mesh.Render(game);
                     mesh.Enabled = false;
                 }
             }

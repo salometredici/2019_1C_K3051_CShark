@@ -42,24 +42,7 @@ namespace CShark.EfectosLuces
         }
 
         public void ActualizarLuces(Effect efecto, Material material, TGCVector3 camara) {
-            var contenedor = ContenedorLuces.Instancia;
-
-            //cargar propiedades de las luces
-            efecto.SetValue("coloresLuces", contenedor.Colores);
-            efecto.SetValue("posicionesLuces", contenedor.Posiciones);
-            efecto.SetValue("intensidadesLuces", contenedor.Intensidades);
-            efecto.SetValue("atenuacionesLuces", contenedor.Atenuaciones);
-            efecto.SetValue("cantidadLuces", contenedor.Cantidad);
-
-            //cargar propiedades del material
-            efecto.SetValue("colorEmisivo", material.Emisivo);
-            efecto.SetValue("colorDifuso", material.Difuso);
-            efecto.SetValue("colorEspecular", material.Especular);
-            efecto.SetValue("exponenteEspecular", material.Brillito);
-            efecto.SetValue("colorAmbiente", material.Ambiente);
-
-            //cargar posicion de la camara
-            efecto.SetValue("posicionCamara", TGCVector3.Vector3ToFloat4Array(camara));
+            
         }
     }
 }

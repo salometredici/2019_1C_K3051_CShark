@@ -10,7 +10,7 @@ namespace CShark.Objetos
 {
     public class Materiales
     {
-        public static Material Normal => new Material {
+        public static Material Normal { get; } = new Material {
             Difuso = ColorValue.FromColor(Color.White),
             Emisivo = ColorValue.FromColor(Color.Black),
             Ambiente = ColorValue.FromColor(Color.White),
@@ -18,7 +18,7 @@ namespace CShark.Objetos
             Brillito = 5f
         };
 
-        public static Material Arena => new Material {
+        public static Material Arena { get; } = new Material {
             Difuso = ColorValue.FromColor(Color.White),
             Emisivo = ColorValue.FromColor(Color.FromArgb(255,33, 17, 0)),
             Ambiente = ColorValue.FromColor(Color.White),
@@ -26,7 +26,7 @@ namespace CShark.Objetos
             Brillito = 5f
         };
 
-        public static Material Metal => new Material {
+        public static Material Metal { get; } = new Material {
             Difuso = ColorValue.FromColor(Color.White),
             Emisivo = ColorValue.FromColor(Color.FromArgb(255, 53, 53, 53)),
             Ambiente = ColorValue.FromColor(Color.White),
@@ -34,7 +34,7 @@ namespace CShark.Objetos
             Brillito = 50f
         };
 
-        public static Material Madera => new Material {
+        public static Material Madera { get; } = new Material {
             Difuso = ColorValue.FromColor(Color.White),
             Emisivo = ColorValue.FromColor(Color.FromArgb(255, 33, 17, 0)),
             Ambiente = ColorValue.FromColor(Color.White),
@@ -42,7 +42,7 @@ namespace CShark.Objetos
             Brillito = 10f
         };
 
-        public static Material Roca => new Material {
+        public static Material Roca { get; } = new Material {
             Difuso = ColorValue.FromColor(Color.White),
             Emisivo = ColorValue.FromColor(Color.Black),
             Ambiente = ColorValue.FromColor(Color.DarkGray),

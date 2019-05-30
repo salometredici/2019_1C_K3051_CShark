@@ -63,7 +63,7 @@ namespace CShark.Items
             Efecto = Efectos.Instancia.EfectoLuzNiebla;
             Efecto.Technique = "Nublado";
             Material = Materiales.Metal;
-            Luz = new Luz(colorLuz, posicion, 10f, 0.1f, 9f);
+            Luz = new Luz(colorLuz, posicion, 10f, 0.1f);
             Efectos.Instancia.AgregarLuz(Luz);
         }
 
@@ -93,11 +93,6 @@ namespace CShark.Items
             return new TgcBoundingAxisAlignBox(pmin, pmax);
         }
 
-        public override void Update(GameModel game) {
-            base.Update(game);
-            Luz.Update(Posicion);
-        }
-
         public override void Render(GameModel game) {
             if (!Recogido) {
                 rotacion += game.ElapsedTime * 2f;
@@ -109,13 +104,11 @@ namespace CShark.Items
                     LetraE1.Render();
                     LetraE2.Render();
                 }
-                //Efectos.Instancia.ActualizarLuces(Efecto, Material, game.Camara.Position);
             }
         }
 
         public override void Dispose() {
             Mesh.Dispose();
-            Luz.Dispose();
         }
 
         public override void Desaparecer() {

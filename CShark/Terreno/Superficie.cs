@@ -26,9 +26,6 @@ namespace CShark.Terreno
             var heightmap = Game.Default.MediaDirectory + @"Mapa\Textures\waveHeightmap3.png";
             Terrain = new TgcSimpleTerrain();
             Terrain.loadTexture(textura);
-            //por ahora dejalo asi esto, la otra opcion es cargar un heightmap
-            //gigante para que quede bien, pero el D3d es una verga y se queda sin memoria
-            //al cargar
             Terrain.loadHeightmap(heightmap, 350000 / TamañoHM, 2.25f, TGCVector3.Empty); 
             Terrain.AlphaBlendEnable = true;
         }

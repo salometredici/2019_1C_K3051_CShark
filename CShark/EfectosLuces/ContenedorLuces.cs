@@ -47,7 +47,6 @@ namespace CShark.EfectosLuces
                 Colores[i] = ColorValue.FromColor(Luces[i].Color);
                 Intensidades[i] = Luces[i].Intensidad;
                 Atenuaciones[i] = Luces[i].Atenuacion;
-                Especulares[i] = Luces[i].Especular;
                 Posiciones[i] = TGCVector3.Vector3ToVector4(Luces[i].Posicion);
             }
         }

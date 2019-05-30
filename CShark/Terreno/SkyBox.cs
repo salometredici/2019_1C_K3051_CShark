@@ -18,14 +18,14 @@ using Material = CShark.Objetos.Material;
 
 namespace CShark.Terreno
 {
-    public class SkyBox : IDisposable
+    public class SkyBox : Iluminable
     {
         private TgcSkyBox SkyboxUnderwater;
         private TgcSkyBox SkyboxIsland;
         public List<TgcMesh> FacesToRender;
         private string texturesPath;
 
-        public SkyBox(TGCVector3 centro)
+        public SkyBox(TGCVector3 centro) : base(Materiales.Normal)
         {
             Inicializar(centro);
         }
@@ -79,24 +79,31 @@ namespace CShark.Terreno
             var marTerreno = SkyboxUnderwater.Faces.FirstOrDefault(f => f.Name.Equals("SkyBox-Up"));
             faces.Remove(marIsla); //parte de abajo de skybox superficial
             faces.Remove(marTerreno); //parte de arriba de skybox agua
-            FacesToRender = faces;
+            FacesToRender = faces.ToList();
+            FacesToRender.ForEach(face => {
+                face.Effect = this.Efecto;
+                face.Technique = this.Tecnica;
+            });
         }
 
-        public void Update(GameModel game) {
-            FacesToRender.ForEach(f => Efectos.Instancia.ActualizarLuces(f.Effect, Materiales.Normal, game.Player.Posicion));
+        public override void Update(GameModel game) {
+            //...
         }
 
-        public void Render()
+        public override void Render(GameModel game)
         {
+            base.Render(game);
             FacesToRender.ForEach(f => f.Render());
         }
 
-        public void Dispose() {
+        public override void Dispose() {
             SkyboxIsland.Dispose();
             SkyboxUnderwater.Dispose();
         }
 
         public void CambiarEfecto(Effect efecto, string technique) {
+            this.Efecto = efecto;
+            this.Tecnica = technique;
             FacesToRender.ForEach(f => {
                 f.Effect = efecto;
                 f.Technique = technique;

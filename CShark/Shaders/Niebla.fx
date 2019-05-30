@@ -38,8 +38,6 @@ float4 pixel_nublado(VS_OUTPUT_NIEBLA input) : COLOR0
     return calcularNiebla(input.Distancia, texel);
 }
 
-
-
 technique Nublado
 {
     pass Pass_0
@@ -59,6 +57,7 @@ VS_OUTPUT_NIEBLA vertex_iluminado_nublado(VS_INPUT_NIEBLA input)
     output.WorldNormal = mul(input.Normal, matInverseTransposeWorld).xyz;
     return output;
 }
+
 
 float4 pixel_iluminado_nublado(VS_OUTPUT_NIEBLA input) : COLOR0
 {

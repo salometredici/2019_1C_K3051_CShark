@@ -12,7 +12,7 @@ namespace CShark.Objetos
         TgcMesh Mesh { get; }
         TgcBoundingAxisAlignBox BoundingBox { get; }
         bool Enabled { get; set; }
-        void Render();
+        void Render(GameModel game);
         void Update(GameModel game);
     }
 }

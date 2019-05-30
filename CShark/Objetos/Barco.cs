@@ -17,35 +17,13 @@ using TGC.Core.SceneLoader;
 
 namespace CShark.Objetos
 {
-    public class Barco : IRenderable
+    public class Barco : Iluminable
     {
         private RigidBody Body;
-        public Material Material { get; }
-        public TgcMesh Mesh { get; }
-        public TgcBoundingAxisAlignBox BoundingBox => Mesh.BoundingBox;
-        public bool Enabled {
-            get => Mesh.Enabled;
-            set => Mesh.Enabled = value;
-        }
 
-        public Barco(TgcMesh mesh) {
-            Mesh = mesh;
+        public Barco(TgcMesh mesh) : base(mesh, Materiales.Metal) {
             Body = BulletRigidBodyFactory.Instance.CreateRigidBodyFromTgcMesh(Mesh);
             Mapa.Instancia.AgregarBody(Body);
-            Material = Materiales.Metal;
-        }
-        
-        public void Update(GameModel game) {
-            //Efectos.Instancia.ActualizarLuces(Mesh.Effect, Material, game.Camara.Position);
-        }
-
-        public void Dispose() {
-            Mesh.Dispose();
-        }
-
-        public void Render() {
-            Mesh.Render();
-
         }
     }
 }
