@@ -135,6 +135,7 @@ namespace CShark.Model
         public void Dispose()
         {
             MusicPlayer.Dispose();
+            MenuManager.Dispose();
         }
 
     }

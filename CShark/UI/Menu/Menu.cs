@@ -30,7 +30,7 @@ namespace CShark.UI
             Logo = new CustomSprite();
             SetItem(Fondo, Game.Default.MediaDirectory + "\\Menu\\fondo-menu.png", TGCVector2.Zero, new TGCVector2(100, 100));
             SetItem(Title, Game.Default.MediaDirectory +"\\Menu\\menu-title.png", new TGCVector2(RightMenuXPos_X - 180, RightMenuPos_Y - DeviceHeight/12), new TGCVector2(0.7f, 0.5f));
-            SetItem(Logo, Game.Default.MediaDirectory + "\\Menu\\logo.png", new TGCVector2(DeviceWidth / 8, DeviceHeight / 8), new TGCVector2(1.25f, 1.25f));
+            SetItem(Logo, Game.Default.MediaDirectory + "\\Menu\\logo.png", new TGCVector2(DeviceWidth / 12, DeviceHeight / 12), new TGCVector2(1.5f, 1.5f));
         }
 
         public void SetItem(CustomSprite item, string route, TGCVector2 position, TGCVector2 scaling)

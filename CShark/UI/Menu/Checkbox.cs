@@ -21,7 +21,7 @@ namespace CShark.UI
     {
         private CustomSprite Fondo;
         private CustomSprite Tick;
-        private Point Posicion;
+        public Point Posicion;
         private TgcText2D Texto;
         private Drawer2D Drawer;
         private Variable<bool> Variable;
@@ -35,7 +35,7 @@ namespace CShark.UI
         public Checkbox(Variable<bool> variable, int x, int y) {
             Variable = variable;
             Drawer = new Drawer2D();
-            Posicion = new Point(x - (Ancho + LargoTexto) / 2, y + Alto / 2); //centrado
+            Posicion = new Point(x, y);
             CargarFondo();
             CargarTexto(variable.Nombre);
         }
