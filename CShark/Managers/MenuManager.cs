@@ -36,7 +36,7 @@ namespace CShark.Managers
             MenuPrincipal.AgregarBoton("Controles", j => j.CambiarMenu(TipoMenu.Guia));
             MenuPrincipal.AgregarBoton("Opciones", j => j.CambiarMenu(TipoMenu.Opciones));
             MenuPrincipal.AgregarBoton("Variables", j => j.CambiarMenu(TipoMenu.Variables));
-            MenuPrincipal.AgregarBoton("Cheats", j => j.CambiarMenu(TipoMenu.Principal));
+            //MenuPrincipal.AgregarBoton("Cheats", j => j.CambiarMenu(TipoMenu.Principal));
             MenuPrincipal.AgregarBoton("Salir", j => j.Salir());
             
             var config = Configuracion.Instancia;
@@ -48,8 +48,9 @@ namespace CShark.Managers
             MenuOpciones.AgregarCheckbox(config.MotionBlur);
             MenuOpciones.AgregarBoton("Volver", j => j.CambiarMenu(TipoMenu.Principal));
 
-            MenuVariables.AgregarSlider(new Slider(config.VelocidadRotacion, 0.05f, 0.2f, ScreenCenter.X, 100));
-            MenuVariables.AgregarSlider(new Slider(config.VelocidadMovimiento, 200, 1000, ScreenCenter.X, 200));
+            MenuVariables.AgregarSlider(config.VelocidadRotacion, 0.05f, 0.2f);
+            MenuVariables.AgregarSlider(config.VelocidadMovimiento, 200, 1000);
+            MenuVariables.AgregarBoton("Volver", j => j.CambiarMenu(TipoMenu.Principal));
         }
 
         public void CambiarMenu(TipoMenu tipoMenu) {

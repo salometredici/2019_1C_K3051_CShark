@@ -103,10 +103,7 @@ namespace CShark.Model
             }
 
             GameManager.Render(this);
-            if (!Player.onPause)
-            {
-                Mapa.Render(this);
-            }
+            Mapa.Render(this);
 
             if (Player.EstaVivo)
                 Player.Render();

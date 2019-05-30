@@ -20,7 +20,7 @@ namespace CShark.UI
         public float ValorMinimo { get; set; }
         public float ValorMaximo { get; set; }
         private Drawer2D Drawer;
-        private TGCVector2 Posicion; //absoluta
+        public TGCVector2 Posicion; //absoluta
         private int Ancho = 400;
         //private int Alto = 20;
 
@@ -38,7 +38,7 @@ namespace CShark.UI
             Variable = variable;
             ValorMinimo = minimo;
             ValorMaximo = maximo;
-            Posicion = new TGCVector2(x - Ancho / 2, y);
+            Posicion = new TGCVector2(x, y);//x - Ancho / 2, y);
             CargarSprites();
         }
 
