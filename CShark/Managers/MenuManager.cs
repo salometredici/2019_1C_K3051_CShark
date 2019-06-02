@@ -1,4 +1,5 @@
-﻿using CShark.Model;
+﻿using CShark.Jugador;
+using CShark.Model;
 using CShark.Terreno;
 using CShark.UI;
 using CShark.UI.HUD;
@@ -34,9 +35,9 @@ namespace CShark.Managers
             MenuSeleccionado = MenuPrincipal;
 
             MenuPrincipal.AgregarBoton("Controles", j => j.CambiarMenu(TipoMenu.Guia));
+            MenuPrincipal.AgregarBoton("Inventario", j => j.CambiarMenu(TipoMenu.Inventario));
             MenuPrincipal.AgregarBoton("Opciones", j => j.CambiarMenu(TipoMenu.Opciones));
             MenuPrincipal.AgregarBoton("Variables", j => j.CambiarMenu(TipoMenu.Variables));
-            //MenuPrincipal.AgregarBoton("Cheats", j => j.CambiarMenu(TipoMenu.Principal));
             MenuPrincipal.AgregarBoton("Salir", j => j.Salir());
             
             var config = Configuracion.Instancia;

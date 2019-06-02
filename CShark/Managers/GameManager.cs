@@ -137,6 +137,5 @@ namespace CShark.Model
             MusicPlayer.Dispose();
             MenuManager.Dispose();
         }
-
     }
 }

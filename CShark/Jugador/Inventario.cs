@@ -77,6 +77,18 @@ namespace CShark.Jugador
             }
         }
 
+        public bool EsUsable(ERecolectable item)
+        {
+            switch (item)
+            {
+                case ERecolectable.Medkit:
+                case ERecolectable.Oxigeno:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         public int CuantosTiene(ERecolectable material) {
             return Items.Where(i => i.Tipo.Equals(material)).Count();
         }

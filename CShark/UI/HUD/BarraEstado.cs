@@ -20,7 +20,7 @@ namespace CShark.UI.HUD
         private TgcText2D SombraTexto;
         protected CustomSprite Fondo;
         protected CustomSprite Barra;
-        public float ValorMaximo { get; }
+        public float ValorMaximo { get; set; }
 
         private readonly int AnchoBarra = 626 / 2;
         private readonly int AltoBarra = 126 / 2;

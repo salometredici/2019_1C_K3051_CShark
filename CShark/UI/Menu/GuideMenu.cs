@@ -31,7 +31,6 @@ namespace CShark.UI
 
         public int Ancho => Fondo.Bitmap.ImageInformation.Width;
 
-        //Copiadisimo de tu menú del craft, después voy a intentar que no se repita tanto el código
         public GuideMenu()
         {
             Drawer = new Drawer2D();
@@ -88,12 +87,12 @@ namespace CShark.UI
                 linea.Color = Color.Yellow;
                 linea.Text = renglon;
                 lineas.Add(linea);
-                pos = new Point(pos.X, pos.Y + 30);
+                pos = new Point(pos.X, pos.Y + 35);
             }
             return lineas;
         }
 
-        public void Dispose()
+        public new void Dispose()
         {
             Cerrar.Dispose();
             Titulo.Dispose();

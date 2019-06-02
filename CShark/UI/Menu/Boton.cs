@@ -20,18 +20,32 @@ namespace CShark.UI
     {
         protected CustomSprite Fondo;
         public Point Posicion;
-        protected TgcText2D Texto;
+        public TgcText2D Texto;
         protected Drawer2D Drawer;
         protected Action<GameModel> Accion;
 
         protected CustomBitmap FondoNormal;
         protected CustomBitmap FondoSeleccionado;
-        protected int Ancho = 400;
-        protected int Alto = 75;
+        public int Ancho;
+        public int Alto;
 
-        public Boton(string texto, int x, int y, Action<GameModel> accion) {
+        public Boton(string texto, int x, int y, Action<GameModel> accion, int ancho, int alto)
+        {
             Accion = accion;
             Drawer = new Drawer2D();
+            Ancho = ancho;
+            Alto = alto;
+            Posicion = new Point(x - Ancho / 2, y + Alto / 2);
+            CargarFondo();
+            CargarTexto(texto);
+        }
+
+        public Boton(string texto, int x, int y, Action<GameModel> accion)
+        {
+            Accion = accion;
+            Drawer = new Drawer2D();
+            Ancho = 400;
+            Alto = 75;
             Posicion = new Point(x - Ancho / 2, y + Alto / 2);
             CargarFondo();
             CargarTexto(texto);
@@ -42,6 +56,8 @@ namespace CShark.UI
             Accion = accion;
             Drawer = new Drawer2D();
             Posicion = new Point(x, y);
+            Ancho = 400;
+            Alto = 75;
             Fondo = sprite;
             FondoNormal = sprite.Bitmap;
             FondoSeleccionado = sprite.Bitmap;

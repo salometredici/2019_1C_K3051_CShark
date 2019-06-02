@@ -45,7 +45,7 @@ namespace CShark.Objetos
             TextoPresione.changeFont(new Font("Arial", 30f, FontStyle.Bold));
         }
 
-        public void Update(GameModel game) {
+        public new void Update(GameModel game) {
             if (EstaCerca(game.Player)) {
                 EsferaCercania.setRenderColor(Color.Yellow);
                 MostrarTexto = true;

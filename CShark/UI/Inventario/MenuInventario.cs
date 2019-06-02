@@ -23,13 +23,15 @@ namespace CShark.UI
     {
         private List<BotonInventario> Botones;
         private TgcText2D InfoItem;
-        private ERecolectable Seleccionado ;
+        private ERecolectable Seleccionado;
+        private Boton BotonVolver;
+        private Boton BotonUsar;
 
         public MenuInventario(string rutaFondo)
         {
             base.Init(rutaFondo, "");
-            CargarBotones(Fondo.Position);
             Titulo.Position = new Point((int)Fondo.Position.X + 537 + 29, (int)Fondo.Position.Y + 29);
+            CargarBotones(Fondo.Position);
             InfoItem = new TgcText2D();
         }
 
@@ -64,7 +66,21 @@ namespace CShark.UI
             Botones.Add(new BotonInventario(ERecolectable.Pila, pos));
             pos += desplazamColumna;
             Botones.Add(new BotonInventario(ERecolectable.Burbuja,pos));
+            CargarBotonesMenu();
+        }
 
+        private void CargarBotonesMenu()
+        {
+            var posicionX = Titulo.Position.X + 29 + 39;
+            var posicionY = Titulo.Position.Y + 29 + 39 + 20;
+            var sizeX = Botones.Last().Ancho;
+            var font = new Font("Arial", 12, FontStyle.Bold, GraphicsUnit.Pixel);
+            BotonUsar = new Boton("Usar", posicionX, posicionY, j => j.UsarItem(Seleccionado), sizeX, Titulo.Size.Height);
+            BotonUsar.Texto.Position = new Point(BotonUsar.Texto.Position.X, BotonUsar.Texto.Position.Y + 10);
+            BotonUsar.Texto.changeFont(font);
+            BotonVolver = new Boton("Menú principal", posicionX, posicionY + 15 + BotonUsar.Alto, j => j.CambiarMenu(TipoMenu.Principal), sizeX, Titulo.Size.Height);
+            BotonVolver.Texto.Position = new Point(BotonVolver.Texto.Position.X, BotonVolver.Texto.Position.Y + 10);
+            BotonVolver.Texto.changeFont(font);
         }
 
         public void CambiarItem(BotonInventario boton)
@@ -99,6 +115,8 @@ namespace CShark.UI
             Drawer.EndDrawSprite();
             Titulo.render();
             InfoItem.render();
+            BotonUsar.Render();
+            BotonVolver.Render();
         }
 
         public override void Update(GameModel juego)
@@ -106,6 +124,11 @@ namespace CShark.UI
             base.Update(juego);
             Botones.ForEach(b => b.Update(juego, this));
             Titulo.Text = Seleccionado.ToString();
+            if(player.PuedeUsar(Seleccionado))
+            {
+               BotonUsar.Update(juego);
+            }
+            BotonVolver.Update(juego);
         }
 
         public new void Dispose()

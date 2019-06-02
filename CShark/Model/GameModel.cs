@@ -15,6 +15,7 @@ using TGC.Core.Textures;
 using Microsoft.DirectX;
 using CShark.EfectosLuces;
 using TGC.Core.Shaders;
+using CShark.Items;
 
 namespace CShark.Model
 {
@@ -132,6 +133,11 @@ namespace CShark.Model
         public void CambiarMenu(TipoMenu tipoMenu)
         {
             GameManager.CambiarMenu(tipoMenu);
+        }
+
+        public void UsarItem(ERecolectable item)
+        {
+            Player.Usar(item);
         }
 
         public void Salir()

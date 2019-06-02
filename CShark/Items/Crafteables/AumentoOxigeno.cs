@@ -14,8 +14,8 @@ namespace CShark.Items.Crafteables
         {
             Materiales = new Dictionary<ERecolectable, int>
             {
-                { ERecolectable.Wumpa, 20 },
-                { ERecolectable.Burbuja, 10 }
+                { ERecolectable.Wumpa, 10 },
+                { ERecolectable.Burbuja, 5 }
             };
         }
 

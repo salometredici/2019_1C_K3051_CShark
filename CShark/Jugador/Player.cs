@@ -9,13 +9,16 @@ using CShark.Utils;
 using BulletSharp.Math;
 using TGC.Core.Collision;
 using CShark.Jugador.Camara;
+using CShark.Items.Recolectables;
 
 namespace CShark.Jugador
 {
     public class Player
     {
         public float Vida;
+        public float TopeVida;
         public float Oxigeno;
+        public float TopeOxigeno;
         public Inventario Inventario;
         private HUD HUD;
         private Arma Arma;
@@ -38,7 +41,9 @@ namespace CShark.Jugador
         public Player(TGCVector3 posicion, int vidaInicial, int oxigenoInicial, TgcD3dInput input) {
             Inventario = new Inventario();
             Posicion = posicion;
+            TopeVida = vidaInicial;
             Vida = vidaInicial;
+            TopeOxigeno = oxigenoInicial;
             Oxigeno = oxigenoInicial;
             HUD = new HUD(Vida, Oxigeno);
             Input = input;
@@ -47,6 +52,7 @@ namespace CShark.Jugador
             InicializarVariables(vidaInicial, oxigenoInicial);
             CrearCapsula();
             Ubicacion = UbicacionPlayer.Superficie;
+            Inventario.Agregar(new Oxigeno(TGCVector3.One));
         }
 
         private void InicializarVariables(int vida, int oxigeno)
@@ -164,11 +170,47 @@ namespace CShark.Jugador
             }
         }
 
+        public bool PuedeUsar(ERecolectable item)
+        {
+            var disponibleYConsumible = CuantosTiene(item) > 0 && Inventario.EsUsable(item);
+            switch (item)
+            {
+                case ERecolectable.Oxigeno:
+                    return disponibleYConsumible && Oxigeno < TopeOxigeno;
+                case ERecolectable.Medkit:
+                    return disponibleYConsumible && Vida < TopeVida;
+                default:
+                    return false;
+            }
+        }
+
+        public void Usar(ERecolectable item)
+        {
+            switch (item)
+            {
+                case ERecolectable.Medkit:
+                    var curacion = Vida + 100 > TopeVida ? TopeVida - Vida : 100;
+                    Vida += curacion;
+                    Inventario.Sacar(item);
+                    break;
+                case ERecolectable.Oxigeno:
+                    var oxigeno = Oxigeno + 200 > TopeOxigeno ? TopeOxigeno - Oxigeno : 200;
+                    Oxigeno += oxigeno;
+                    Inventario.Sacar(item);
+                    break;
+                default:
+                    return;
+            }
+        }
+
         private void ActualizarOxigeno(GameModel game)
         {
-            Oxigeno = !Sumergido && Oxigeno < HUD.BarraOxigeno.ValorMaximo ?
-                Oxigeno += 14f * game.ElapsedTime :
-                Oxigeno -= 7f * game.ElapsedTime;
+            if(!Configuracion.Instancia.ModoDios.Valor)
+            {
+                Oxigeno = !Sumergido && Oxigeno < HUD.BarraOxigeno.ValorMaximo ?
+                    Oxigeno += 14f * game.ElapsedTime :
+                    Oxigeno -= 7f * game.ElapsedTime;
+            }
         }
 
         private bool _murio = false;
