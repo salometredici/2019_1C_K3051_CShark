@@ -14,6 +14,7 @@ using TGC.Core.BulletPhysics;
 using TGC.Core.Direct3D;
 using TGC.Core.Geometry;
 using TGC.Core.Mathematica;
+using TGC.Core.SceneLoader;
 using TGC.Core.Textures;
 
 namespace CShark.Fisica.Colisiones
@@ -25,7 +26,6 @@ namespace CShark.Fisica.Colisiones
         private DefaultCollisionConfiguration Configuration;
         private SequentialImpulseConstraintSolver ConstraintSolver;
         private BroadphaseInterface OverlappingPairCache;
-        private CustomVertex.PositionTextured[] DataTriangulos;
         public RigidBody FondoDelMarRB;
 
         BroadphaseInterface Broadphase;
@@ -39,8 +39,7 @@ namespace CShark.Fisica.Colisiones
             World.Gravity = gravedad;
         }
 
-        public void Init(CustomVertex.PositionTextured[] dataTriangulos) {
-            DataTriangulos = dataTriangulos;
+        public void Init(TgcMesh terreno) {
             Configuration = new DefaultCollisionConfiguration();
             Dispatcher = new CollisionDispatcher(Configuration);
 
@@ -58,11 +57,8 @@ namespace CShark.Fisica.Colisiones
                 Gravity = Constants.StandardGravity
             };
 
-            //Creamos el terreno
-            FondoDelMarRB = BulletRigidBodyFactory.Instance.CreateSurfaceFromHeighMap(DataTriangulos);
-            //FondoDelMarRB.Friction = 0.5f;
+            FondoDelMarRB = BulletRigidBodyFactory.Instance.CreateRigidBodyFromTgcMesh(terreno);
             FondoDelMarRB.Friction = 0f;
-
             World.AddRigidBody(FondoDelMarRB);
         }
 

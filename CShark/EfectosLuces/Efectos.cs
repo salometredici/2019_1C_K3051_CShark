@@ -13,7 +13,7 @@ namespace CShark.EfectosLuces
     {
         public static Efectos Instancia { get; } = new Efectos();
 
-        public float distanciaNiebla { get; set; } = 80000;
+        public float distanciaNiebla { get; set; } = 40000;
         public Color colorNiebla { get; set; } = Color.LightGray;
 
         public Effect EfectoLuz { get; } = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "Iluminacion.fx");

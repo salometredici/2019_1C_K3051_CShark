@@ -65,7 +65,7 @@ namespace CShark.Terreno
         public void CargarTerreno() {
             Suelo = new Suelo();
             Colisiones = new ColisionesTerreno();
-            Colisiones.Init(Suelo.GetData());
+            Colisiones.Init(Suelo.Terreno);
         }
 
         public void CargarSuperficie() {
@@ -131,7 +131,7 @@ namespace CShark.Terreno
         }
 
         public void CambiarEfecto(bool sumergido) {
-            Efectos.Instancia.distanciaNiebla = sumergido ? 40000 : 80000;
+            Efectos.Instancia.distanciaNiebla = sumergido ? 30000 : 40000;
             Efectos.Instancia.colorNiebla = sumergido ? Color.Black : Color.LightGray;
             var distanciaFarPlane = Efectos.Instancia.distanciaNiebla + 1000;
             D3DDevice.Instance.Device.Transform.Projection = 
@@ -160,6 +160,10 @@ namespace CShark.Terreno
         }
 
         public void Render(GameModel game) {
+            var FrustumMatrix = TGCMatrix.PerspectiveFovLH(45, D3DDevice.Instance.AspectRatio, 
+                D3DDevice.Instance.ZNearPlaneDistance, Efectos.Instancia.distanciaNiebla);
+            game.Frustum.updateVolume(TGCMatrix.FromMatrix(D3DDevice.Instance.Device.Transform.View), TGCMatrix.FromMatrix(FrustumMatrix));
+
             Suelo.Render(game);
             Skybox.Render(game);
             Octree.render(game);

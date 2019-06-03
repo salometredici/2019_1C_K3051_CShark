@@ -23,28 +23,17 @@ namespace CShark.Terreno
 {
     public class Suelo : IDisposable
     {
-        //private TgcSimpleTerrain Terreno;
-        private TgcMesh Terreno;
-
+        public TgcMesh Terreno;
         public bool AlphaBlendEnable => Terreno.AlphaBlendEnable;
-        //public TGCVector3 Center => Terreno.Center;
         public TGCVector3 Center => TGCVector3.Empty;
         private Material Material;
         private Texture TexturaRayoSol;
         float time = 0;
 
         public Suelo() {
-            var tamañoHM = 1024f;
-            var alturaTerreno = 20000f; //desde 3ds max para que quede exacto
-            var anchoAltoMapa = 350000f;
             var textura = Game.Default.MediaDirectory + @"Mapa\Textures\arena.png";
             var heightmap = Game.Default.MediaDirectory + @"Mapa\Textures\terreno2.png";
-            var xz = anchoAltoMapa / tamañoHM;
-            var y = alturaTerreno / HeightmapMethods.AlturaHeightmap(heightmap);
             Terreno = new TgcSceneLoader().loadSceneFromFile(Game.Default.MediaDirectory + @"Mapa\Terreno-TgcScene.xml").Meshes[0];
-            /*Terreno = new TgcSimpleTerrain();
-            Terreno.loadHeightmap(heightmap, xz, y, TGCVector3.Empty);
-            Terreno.loadTexture(textura);*/
             Terreno.Effect = Efectos.Instancia.EfectoLuzNiebla;
             Terreno.Technique = "SueloNubladoIluminado";
             Material = Materiales.Arena;
@@ -60,7 +49,16 @@ namespace CShark.Terreno
             Terreno.Effect.SetValue("texRayosSol", TexturaRayoSol);
             Terreno.Effect.SetValue("time", time);
             this.ActualizarLuces(game.Camara.Position);
-            Terreno.Render();
+            //Terreno.Render();
+            this.DibujarWireFrame();
+        }
+
+        private void DibujarWireFrame() {
+            D3DDevice.Instance.Device.RenderState.FillMode = FillMode.WireFrame;
+            D3DDevice.Instance.Device.RenderState.Lighting = false;
+            Terreno.D3dMesh.DrawSubset(0);
+            D3DDevice.Instance.Device.RenderState.FillMode = FillMode.Solid;
+            D3DDevice.Instance.Device.RenderState.Lighting = true;
         }
 
         private void ActualizarLuces(TGCVector3 camara) {
@@ -76,20 +74,6 @@ namespace CShark.Terreno
             Terreno.Effect.SetValue("exponenteEspecular", Material.Brillito);
             Terreno.Effect.SetValue("colorAmbiente", Material.Ambiente);
             Terreno.Effect.SetValue("posicionCamara", TGCVector3.Vector3ToFloat4Array(camara));
-        }
-
-        public PositionTextured[] GetData() {
-            var tamañoHM = 1024f;
-            var alturaTerreno = 20000f; //desde 3ds max para que quede exacto
-            var anchoAltoMapa = 350000f;
-            var t = new TgcSimpleTerrain();
-            var textura = Game.Default.MediaDirectory + @"Mapa\Textures\arena.png";
-            var heightmap = Game.Default.MediaDirectory + @"Mapa\Textures\terreno2.png";
-            var xz = anchoAltoMapa / tamañoHM;
-            var y = alturaTerreno / HeightmapMethods.AlturaHeightmap(heightmap);
-            t.loadHeightmap(heightmap, xz, y, TGCVector3.Empty);
-            t.loadTexture(textura);
-            return t.getData();
         }
 
         public void CambiarEfecto(Effect efecto, string technique) {

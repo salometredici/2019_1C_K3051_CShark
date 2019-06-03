@@ -18,7 +18,7 @@ namespace CShark.Animales
 
         public Animal(string mesh, TGCVector3 posicionInicial) {
             var ruta = Game.Default.MediaDirectory + @"Animales\" + mesh + "-TgcScene.xml";
-            Mesh = new CargadorEscena().loadSceneFromFile(ruta).Meshes[0];
+            Mesh = new TgcSceneLoader().loadSceneFromFile(ruta).Meshes[0];
             Posicion = posicionInicial;
             UsarTransformacionFisica = false;
             Mesh.AutoTransformEnable = false;            
@@ -53,7 +53,8 @@ namespace CShark.Animales
         }
 
         public void Dispose() {
-            Mesh.Dispose();
+            if (Mesh != null)
+                Mesh.Dispose();
         }
 
         public TGCVector3 Posicion {

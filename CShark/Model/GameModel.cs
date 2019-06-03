@@ -26,7 +26,6 @@ namespace CShark.Model
         public static int DeviceHeight = D3DDevice.Instance.Device.Viewport.Height;
         public static Point ScreenCenter = new Point(DeviceWidth / 2, DeviceHeight / 2);
         public Player Player;
-        public Tiburon Tiburon;
         public GameManager GameManager;
         private PantallaMuerte PantallaMuerte;
         private Mapa Mapa => Mapa.Instancia;
@@ -43,7 +42,6 @@ namespace CShark.Model
         public override void Init()
         {
             Cursor.Hide();
-            D3DDevice.Instance.Device.Transform.Projection = TGCMatrix.PerspectiveFovLH(45, D3DDevice.Instance.AspectRatio, D3DDevice.Instance.ZNearPlaneDistance, 350000f);
             PantallaMuerte = new PantallaMuerte();
             GameManager = new GameManager();
             Casco = new Casco();
@@ -94,10 +92,7 @@ namespace CShark.Model
             ClearTextures();
 
             PreRender();
-            var FrustumMatrix = TGCMatrix.PerspectiveFovLH(45, D3DDevice.Instance.AspectRatio, D3DDevice.Instance.ZNearPlaneDistance, 400f);
-            Frustum.updateVolume(TGCMatrix.FromMatrix(D3DDevice.Instance.Device.Transform.View), TGCMatrix.FromMatrix(FrustumMatrix));
-            Frustum.updateMesh(Player.Posicion, Camara.LookAt, 16.0f / 9, 0, 500f, 70);
-
+            
             if (RenderCasco)
             {
                 Casco.RenderBeforeScene();
@@ -123,11 +118,9 @@ namespace CShark.Model
         public override void Dispose()
         {
             GameManager.Dispose();
-            Frustum.dispose();
             Casco.Dispose();
             Mapa.Instancia.Dispose();
             GameManager.Dispose();
-            Tiburon.Dispose();
         }
 
         public void CambiarMenu(TipoMenu tipoMenu)

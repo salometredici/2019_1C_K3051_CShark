@@ -11,6 +11,6 @@ namespace CShark.Items.Recolectables
     public class Medkit : RecolectableAnimado
     {
         public override ERecolectable Tipo => ERecolectable.Medkit;
-        public Medkit(TGCVector3 posicion) : base("Medkit", 2, posicion, 100f, Color.White) { }
+        public Medkit(TGCVector3 posicion) : base("Medkit", 2, posicion, 200f, Color.White) { }
     }
 }

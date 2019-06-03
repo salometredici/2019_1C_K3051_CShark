@@ -31,8 +31,10 @@ namespace CShark.Model
         public TGCVector3 SpawnPlayer;
 
         public GameManager() {
-            PantallaCarga = new LoadingScreen(10);
-            Initialize();
+            PantallaCarga = new LoadingScreen(13);
+            var th = new Thread(Initialize);
+            th.Start();
+            PantallaCarga.Render();
         }
 
         public void Render(GameModel game) {
@@ -57,10 +59,8 @@ namespace CShark.Model
             }
         }
 
-        public /*async */void Initialize() {
-            PantallaCarga = new LoadingScreen(13);
-            //Task task = Task.Run(() => PantallaCarga.Render());
-            var loader = new CargadorEscena();
+        public void Initialize() {
+            var loader = new TgcSceneLoader();
             var media = Game.Default.MediaDirectory;
             var mapPath = media + "Mapa";
             PantallaCarga.Progresar("Cargando terreno...");
@@ -96,9 +96,7 @@ namespace CShark.Model
             PezManager = new FaunaManager();
             Managers.Add(PezManager);
             PezManager.Initialize();
-
             SpawnPlayer = barco.BoundingBox.calculateBoxCenter() + new TGCVector3(0, 3000, 0);
-
             PantallaCarga.Progresar("Cargando menús...");
             MenuManager = new MenuManager();
             Managers.Add(MenuManager);
@@ -118,7 +116,6 @@ namespace CShark.Model
             MusicPlayer = new MusicPlayer();
             ContenedorLuces.Instancia.ArmarLuces();
             PantallaCarga.Finalizar();
-            //await task;
         }
 
         public void CambiarMenu(TipoMenu tipoMenu) {
@@ -136,6 +133,10 @@ namespace CShark.Model
         {
             MusicPlayer.Dispose();
             MenuManager.Dispose();
+        }
+
+        void IManager.Initialize() {
+            throw new NotImplementedException();
         }
     }
 }

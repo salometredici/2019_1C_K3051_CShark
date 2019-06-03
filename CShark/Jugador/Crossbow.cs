@@ -23,7 +23,7 @@ namespace CShark.Jugador
         }
 
         private void Init() {
-            var loader = new CargadorEscena();
+            var loader = new TgcSceneLoader();
             var path = Game.Default.MediaDirectory + @"Otros\";
             var meshCrossbow = loader.loadSceneFromFile(path + "Crossbow-TgcScene.xml").Meshes[0];
             var meshHarpoon = loader.loadSceneFromFile(path + "Harpoon-TgcScene.xml").Meshes[0];

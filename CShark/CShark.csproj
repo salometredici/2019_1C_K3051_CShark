@@ -139,8 +139,6 @@
     <Compile Include="EfectosLuces\Efectos.cs" />
     <Compile Include="EfectosLuces\Luz.cs" />
     <Compile Include="EfectosLuces\ContenedorLuces.cs" />
-    <Compile Include="Model\CargadorEscena.cs" />
-    <Compile Include="Model\ParserBueno.cs" />
     <Compile Include="Objetos\Coral.cs" />
     <Compile Include="Objetos\Extra.cs" />
     <Compile Include="Objetos\Iluminable.cs" />
@@ -326,7 +324,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

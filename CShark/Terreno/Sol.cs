@@ -25,7 +25,7 @@ namespace CShark.Terreno
             Rotacion = 0;
             Luz = new Luz(Color.White, Posicion, 3000f, 0.1f);
             Efectos.Instancia.AgregarLuz(Luz);
-            Mesh = new CargadorEscena().loadSceneFromFile(sphere).Meshes[0];
+            Mesh = new TgcSceneLoader().loadSceneFromFile(sphere).Meshes[0];
             Mesh.AutoTransformEnable = false;
             Mesh.changeDiffuseMaps(new[] {
                 tex

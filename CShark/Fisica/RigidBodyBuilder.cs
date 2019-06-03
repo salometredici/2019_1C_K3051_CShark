@@ -21,7 +21,7 @@ namespace CShark.Fisica
         private float Rozamiento = 0f;
 
         public RigidBodyBuilder(string box) {
-            var loader = new CargadorEscena();
+            var loader = new TgcSceneLoader();
             Mesh = loader.loadSceneFromFile(Game.Default.MediaDirectory + @"Boxes Colision\" + box + "-TgcScene.xml").Meshes[0];
         }
 

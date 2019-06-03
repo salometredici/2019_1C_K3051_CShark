@@ -18,9 +18,21 @@ namespace CShark.Utilidades
             Meshes = new Dictionary<string, TgcMesh>();
         }
 
+        public void LoadMesh(TgcMesh mesh, string name) {
+            if (!Exists(name))
+                Meshes.Add(name, mesh);
+        }
+
+        public void LoadMesh(string folder, string name) {
+            var loader = new TgcSceneLoader();
+            if (!Exists(name)) {
+                var mesh = loader.loadSceneFromFile(folder + name + "-TgcScene.xml").Meshes[0];
+                this.LoadMesh(mesh, name);
+            }
+        }
+
         public void LoadMesh(TgcMesh mesh) {
-            if (!Exists(mesh.Name))
-                Meshes.Add(mesh.Name, mesh);
+            this.LoadMesh(mesh, mesh.Name);
         }
 
         public void LoadScene(TgcScene scene) {
@@ -31,8 +43,8 @@ namespace CShark.Utilidades
             return Meshes.ContainsKey(name);
         }
 
-        public TgcMesh GetInstance(string name) {
-            return Meshes[name].createMeshInstance(name);
+        public static TgcMesh GetInstance(string name) {
+            return Instance.Meshes[name].createMeshInstance(name);
         }
 
         public TgcMesh GetInstance(string name, TgcMesh meshData) {

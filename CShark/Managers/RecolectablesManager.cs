@@ -1,6 +1,7 @@
 ﻿using CShark.Items;
 using CShark.Items.Recolectables;
 using CShark.Model;
+using CShark.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace CShark.Managers
 
         public void Initialize(TgcScene spawns) {
             Recolectables = new List<IRecolectable>();
+            CargarMeshes();
             foreach(var mesh in spawns.Meshes)
                 Spawnear(mesh.BoundingBox.Position);
             Spawns.DisposeAll();
@@ -55,6 +57,17 @@ namespace CShark.Managers
                 case ERecolectable.Plata: return new Plata(posicion);
                 default: return new Pila(posicion);
             }
+        }
+
+        private void CargarMeshes() {
+            var path = Game.Default.MediaDirectory + @"Recolectables\";
+            var loader = new TgcSceneLoader();
+            var meshes = new List<string>() {
+                "Arpon", "Chip", "Coral", "Hierro",
+                "LetraE", "Medkit", "Oro", "Oxigeno",
+                "Pez", "Pila", "Plata", "Wumpa"
+            };
+            meshes.ForEach(m => MeshLoader.Instance.LoadMesh(path, m));
         }
 
         public void Render(GameModel game) {

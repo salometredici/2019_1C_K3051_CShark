@@ -30,10 +30,12 @@ namespace CShark.EfectosLuces
 
         public void AgregarLuz(Luz luz) {
             Luces.Add(luz);
+            //this.ArmarLuces();
         }
 
         public void SacarLuz(Luz luz) {
             Luces.Remove(luz);
+            //this.ArmarLuces();
         }
 
         public void ArmarLuces() {

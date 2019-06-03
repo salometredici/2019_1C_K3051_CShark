@@ -56,7 +56,8 @@ namespace CShark.Objetos
         }
 
         public virtual void Dispose() {
-            Mesh.Dispose();
+            //if (Mesh != null)
+            //    Mesh.Dispose();
         }
 
         public virtual void Render(GameModel game) {

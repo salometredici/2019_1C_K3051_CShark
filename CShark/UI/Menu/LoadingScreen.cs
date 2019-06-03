@@ -1,4 +1,5 @@
 ﻿using CShark.Managers;
+using CShark.Model;
 using CShark.Terreno;
 using CShark.Utils;
 using Microsoft.DirectX.Direct3D;
@@ -87,10 +88,10 @@ namespace CShark.UI
                 return new CustomBitmap(Game.Default.MediaDirectory + @"Menu\Loading\barra1920.png", D3DDevice.Instance.Device);
             }
         }
-        
-        public async Task Render() {
-            while (!Cargado)
-            {
+
+        public void Render() {
+
+            while (!Cargado) {
                 PreRender();
                 Drawer.BeginDrawSprite();
                 Drawer.DrawSprite(Fondo);
@@ -100,11 +101,10 @@ namespace CShark.UI
                 Texto.render();
                 PostRender();
             }
-            await Task.CompletedTask;
         }
 
         private void PreRender() {
-            D3DDevice.Instance.Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.AliceBlue, 1.0f, 0);
+            D3DDevice.Instance.Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
             D3DDevice.Instance.Device.BeginScene();
             TexturesManager.Instance.clearAll();
         }

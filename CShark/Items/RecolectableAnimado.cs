@@ -1,6 +1,7 @@
 ﻿using CShark.EfectosLuces;
 using CShark.Model;
 using CShark.Objetos;
+using CShark.Utilidades;
 using Microsoft.DirectX.Direct3D;
 using System;
 using System.Collections.Generic;
@@ -40,10 +41,9 @@ namespace CShark.Items
         private Luz Luz;
 
         public RecolectableAnimado(string mesh, float _escala, TGCVector3 _posicion, float _offsetLetra, Color colorLuz) : base(_posicion) {
-            var loader = new CargadorEscena();
-            Mesh = loader.loadSceneFromFile(Game.Default.MediaDirectory + @"Recolectables\" + mesh + "-TgcScene.xml").Meshes[0];
-            LetraE1 = loader.loadSceneFromFile(Game.Default.MediaDirectory + @"Recolectables\LetraE-TgcScene.xml").Meshes[0];
-            LetraE2 = LetraE1.clone("E2");
+            Mesh = MeshLoader.GetInstance(mesh);
+            LetraE1 = MeshLoader.GetInstance("LetraE");
+            LetraE2 = MeshLoader.GetInstance("LetraE");
             LetraE1.AutoTransformEnable = false;
             Mesh.AutoTransformEnable = false;
             LetraE2.AutoTransformEnable = false;
@@ -109,6 +109,8 @@ namespace CShark.Items
 
         public override void Dispose() {
             Mesh.Dispose();
+            LetraE1.Dispose();
+            LetraE2.Dispose();
         }
 
         public override void Desaparecer() {

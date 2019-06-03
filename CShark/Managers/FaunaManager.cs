@@ -40,7 +40,7 @@ namespace CShark.Managers
         private TgcBoundingAxisAlignBox AreaSpawneable2;
 
         private void CalcularAreaSpawneable() {
-            var loader = new CargadorEscena();
+            var loader = new TgcSceneLoader();
             var path = Game.Default.MediaDirectory + @"Mapa\SpawnPeces-TgcScene.xml";
             var boxes = loader.loadSceneFromFile(path);
             AreaSpawneable1 = boxes.Meshes[0].BoundingBox;
