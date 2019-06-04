@@ -76,29 +76,39 @@ namespace CShark.Terreno
         public void CargarParedes(TgcScene paredes) {
             foreach (var face in paredes.Meshes) {
                 var size = face.BoundingBox.calculateSize();
-                var position = face.BoundingBox.Position;
+                var position = face.Position;
                 var body = BulletRigidBodyFactory.Instance.CreateBox(size, 0, position, 0, 0, 0, 1, false);
                 AgregarBody(body);
             }
             paredes.DisposeAll();
         }
 
+        public RigidBody CreateRBFromMesh(TgcMesh mesh)
+        {
+            return BulletRigidBodyFactory.Instance.CreateRigidBodyFromTgcMesh(mesh);
+        }
+
         public void CargarPalmeras(TgcScene palmeras) {
             foreach (var palmera in palmeras.Meshes) {
                 Objetos.Add(new Palmera(palmera));
                 palmera.AlphaBlendEnable = true;
+                AgregarBody(CreateRBFromMesh(palmera));
             }
         }
 
         public void CargarRocas(TgcScene rocas) {
             foreach (var roca in rocas.Meshes) {
                 Objetos.Add(new Roca(roca));
+                AgregarBody(CreateRBFromMesh(roca));
             }
         }
 
         public void CargarExtras(TgcScene extras) {
             foreach (var objeto in extras.Meshes)
+            {
                 Objetos.Add(new Extra(objeto));
+                AgregarBody(CreateRBFromMesh(objeto));
+            }
         }
 
 
@@ -112,6 +122,7 @@ namespace CShark.Terreno
         public void CargarCorales(TgcScene corales) {
             foreach (var coral in corales.Meshes) {
                 Objetos.Add(new Coral(coral));
+                AgregarBody(CreateRBFromMesh(coral));
             }
         }
 
@@ -126,7 +137,7 @@ namespace CShark.Terreno
             Superficie.Update(game);
             Sol.Update(elapsedTime);
             Colisiones.Update(elapsedTime);
-
+            Mesa.Update(game);
             Efectos.Instancia.ActualizarNiebla();
         }
 
@@ -163,7 +174,7 @@ namespace CShark.Terreno
             var FrustumMatrix = TGCMatrix.PerspectiveFovLH(FastMath.QUARTER_PI, D3DDevice.Instance.AspectRatio, 
                 D3DDevice.Instance.ZNearPlaneDistance, Efectos.Instancia.distanciaNiebla + 1000);
             game.Frustum.updateVolume(TGCMatrix.FromMatrix(D3DDevice.Instance.Device.Transform.View), TGCMatrix.FromMatrix(FrustumMatrix));
-
+            Mesa.Render(game);
             Suelo.Render(game);
             Skybox.Render(game);
             Octree.render(game);
@@ -178,6 +189,7 @@ namespace CShark.Terreno
             Objetos.ForEach(o => o.Dispose());
             Superficie.Dispose();
             Sol.Dispose();
+            Mesa.Dispose();
             MeshLoader.Instance.Dispose();
         }
 
