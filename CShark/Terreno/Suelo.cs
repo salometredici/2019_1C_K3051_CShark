@@ -49,8 +49,8 @@ namespace CShark.Terreno
             Terreno.Effect.SetValue("texRayosSol", TexturaRayoSol);
             Terreno.Effect.SetValue("time", time);
             this.ActualizarLuces(game.Camara.Position);
-            //Terreno.Render();
-            this.DibujarWireFrame();
+            Terreno.Render();
+            //this.DibujarWireFrame();
         }
 
         private void DibujarWireFrame() {

@@ -45,7 +45,7 @@ namespace CShark.Objetos
             TextoPresione.changeFont(new Font("Arial", 30f, FontStyle.Bold));
         }
 
-        public new void Update(GameModel game) {
+        public override void Update(GameModel game) {
             if (EstaCerca(game.Player)) {
                 EsferaCercania.setRenderColor(Color.Yellow);
                 MostrarTexto = true;
@@ -70,8 +70,8 @@ namespace CShark.Objetos
             return TgcCollisionUtils.testPointSphere(EsferaCercania, player.Posicion);
         }
 
-        public void Render() {
-            Mesh.Render();
+        public override void Render(GameModel game) {
+            base.Render(game);
             EsferaCercania.Render();
             if (MostrarTexto)
                 TextoPresione.render();

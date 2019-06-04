@@ -160,8 +160,8 @@ namespace CShark.Terreno
         }
 
         public void Render(GameModel game) {
-            var FrustumMatrix = TGCMatrix.PerspectiveFovLH(45, D3DDevice.Instance.AspectRatio, 
-                D3DDevice.Instance.ZNearPlaneDistance, Efectos.Instancia.distanciaNiebla);
+            var FrustumMatrix = TGCMatrix.PerspectiveFovLH(FastMath.QUARTER_PI, D3DDevice.Instance.AspectRatio, 
+                D3DDevice.Instance.ZNearPlaneDistance, Efectos.Instancia.distanciaNiebla + 1000);
             game.Frustum.updateVolume(TGCMatrix.FromMatrix(D3DDevice.Instance.Device.Transform.View), TGCMatrix.FromMatrix(FrustumMatrix));
 
             Suelo.Render(game);
