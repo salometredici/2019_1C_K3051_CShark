@@ -14,6 +14,8 @@ namespace CShark.Jugador
         private CustomSprite Crosshair;
         private MensajesContainer Mensajes;
 
+        public static HUD Instancia { get; set; } = new HUD(0, 0);
+
         public HUD(float vida, float oxigeno) {
             int alturaTotal = D3DDevice.Instance.Device.Viewport.Height;
             BarraVida = new BarraVida(new TGCVector2(15, alturaTotal - 140), vida);

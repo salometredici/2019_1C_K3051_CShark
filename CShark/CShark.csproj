@@ -112,7 +112,6 @@
     <Compile Include="Animales\IComportamiento.cs" />
     <Compile Include="Animales\Comportamiento\Lineal.cs" />
     <Compile Include="Animales\Enemigos\HealthBar.cs" />
-    <Compile Include="EfectosLuces\Casco.cs" />
     <Compile Include="Fisica\RigidBodyBuilder.cs" />
     <Compile Include="Fisica\Colisiones\ColisionesTerreno.cs" />
     <Compile Include="Fisica\RigidBodyUtils.cs" />
@@ -274,6 +273,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Shaders\PostProcesado.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Shaders\Niebla.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -496,6 +498,8 @@
     <Content Include="Media\Recolectables\Textures\ingot_Base_Color.png" />
     <Content Include="Media\Recolectables\Textures\ingot_tex.png" />
     <Content Include="Media\Recolectables\Textures\TropicalFish12.jpg" />
+    <Content Include="Media\Textures\bola.png" />
+    <Content Include="Media\Textures\casco.png" />
     <Content Include="Media\Textures\crosshair.png" />
     <Content Include="Media\Textures\mesa.png" />
     <Content Include="Media\Music\Deep_Trouble.mp3" />
@@ -529,6 +533,8 @@
     <Content Include="Media\Textures\dragonball.jpg" />
     <Content Include="Media\Textures\fish.jpg" />
     <Content Include="Media\Textures\Piedra3.jpg" />
+    <Content Include="Media\Textures\rayoSol.jpg" />
+    <Content Include="Media\Textures\rayoSol.png" />
     <Content Include="Media\Textures\red.jpg" />
     <Content Include="Media\Textures\tierra.jpg" />
     <Content Include="Media\Textures\txt_001_diff.png" />

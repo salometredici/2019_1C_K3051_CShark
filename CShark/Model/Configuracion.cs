@@ -34,7 +34,7 @@ namespace CShark.Model
             VelocidadRotacion = new Variable<float>("Velocidad de rotación", 0.1f);
             ModoDios = new Variable<bool>("Modo Dios", false);
             Niebla = new Variable<bool>("Niebla", false);
-            PostProcesadoCasco = new Variable<bool>("Post Procesado (Casco)", false);
+            PostProcesadoCasco = new Variable<bool>("Post Procesado (Casco)", true);
             MotionBlur = new Variable<bool>("Motion Blur", false);
             FPS = new Variable<float>("Cuadros por segundo", 60f);
             MostrarRayo = new Variable<bool>("Mostrar rayo de agarre", false);

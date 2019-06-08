@@ -19,6 +19,7 @@ using TGC.Core.Geometry;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 using TGC.Core.Shaders;
+using TGC.Core.Textures;
 
 namespace CShark.Terreno
 {
@@ -40,7 +41,7 @@ namespace CShark.Terreno
         private Suelo Suelo;
         private SkyBox Skybox;
         public Superficie Superficie;
-        private Sol Sol;
+        public Sol Sol;
         public float XMin => Centro.X - Box.Size.X / 2f;
         public float XMax => Centro.X + Box.Size.X / 2f;
         public float YMin => Centro.Y;
@@ -160,10 +161,9 @@ namespace CShark.Terreno
         }
 
         public void Render(GameModel game) {
-            var FrustumMatrix = TGCMatrix.PerspectiveFovLH(FastMath.QUARTER_PI, D3DDevice.Instance.AspectRatio, 
+            var FrustumMatrix = TGCMatrix.PerspectiveFovLH(FastMath.QUARTER_PI, D3DDevice.Instance.AspectRatio,
                 D3DDevice.Instance.ZNearPlaneDistance, Efectos.Instancia.distanciaNiebla + 1000);
             game.Frustum.updateVolume(TGCMatrix.FromMatrix(D3DDevice.Instance.Device.Transform.View), TGCMatrix.FromMatrix(FrustumMatrix));
-
             Suelo.Render(game);
             Skybox.Render(game);
             Octree.render(game);

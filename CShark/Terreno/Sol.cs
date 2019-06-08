@@ -1,9 +1,15 @@
 ﻿using CShark.EfectosLuces;
 using CShark.Model;
+using Microsoft.DirectX.Direct3D;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
+using TGC.Core.BoundingVolumes;
 using TGC.Core.Direct3D;
+using TGC.Core.Interpolation;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
+using TGC.Core.Shaders;
 using TGC.Core.Textures;
 
 namespace CShark.Terreno
@@ -14,7 +20,7 @@ namespace CShark.Terreno
         public TGCVector3 Posicion;
         private float Rotacion;
         public bool AlphaBlendEnable { get; set; }
-
+        public TgcBoundingAxisAlignBox BoundingBox => Mesh.BoundingBox;
         public Luz Luz;
 
         public Sol(TGCVector3 posicion) {
@@ -32,17 +38,8 @@ namespace CShark.Terreno
             });
         }
 
-        public void Dispose() {
-            Mesh.Dispose();
-        }
-
         public void Update(float elapsedTime) {
             Rotacion += elapsedTime * 0.5f;
-        }
-
-        public void Render() {
-            Mesh.Transform = GetTransform();
-            Mesh.Render();
         }
 
         private TGCMatrix GetTransform() {
@@ -50,6 +47,15 @@ namespace CShark.Terreno
             var position = TGCMatrix.Translation(Posicion);
             var rotation = TGCMatrix.RotationY(Rotacion);
             return scale * rotation * position;
+        }
+
+        public void Dispose() {
+            Mesh.Dispose();
+        }
+
+        public void Render() {
+            Mesh.Transform = this.GetTransform();
+            Mesh.Render();
         }
     }
 }

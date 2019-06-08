@@ -116,13 +116,9 @@ float4 ps_alarma(PS_INPUT_DEFAULT Input) : COLOR0
 
 	//Obtener color de textura de alarma, escalado por un factor
     float4 color2 = tex2D(sampler_alarma, Input.Texcoord) * alarmaScaleFactor;
-	float4 colorfinal = color2;
-	if(color2.g > 0.7f && color2.r < 0.5f){
-		colorfinal = color;
-	}
-	
+
 	//Mezclar ambos texels
-    return colorfinal;
+    return color + color2;
 }
 
 technique AlarmaTechnique
