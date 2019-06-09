@@ -24,24 +24,24 @@ namespace CShark.Managers
         public void Initialize(TgcScene spawns) {
             Recolectables = new List<IRecolectable>();
             CargarMeshes();
-            foreach(var mesh in spawns.Meshes)
-                Spawnear(mesh.BoundingBox.Position);
+            var random = new Random();
+            foreach (var mesh in spawns.Meshes)
+                Spawnear(mesh.BoundingBox.Position, random);
             Spawns.DisposeAll();
         }
 
-        private void Spawnear(TGCVector3 posicion) {
-            var item = RandomItem(posicion);
+        private void Spawnear(TGCVector3 posicion, Random random) {
+            var item = RandomItem(posicion, random);
             Recolectables.Add(item);
         }
 
-        private ERecolectable RandomTipo() {
+        private ERecolectable RandomTipo(Random random) {
             Array values = Enum.GetValues(typeof(ERecolectable));
-            Random random = new Random();
             return (ERecolectable)values.GetValue(random.Next(values.Length));
         }
 
-        private IRecolectable RandomItem(TGCVector3 posicion) {
-            var tipo = RandomTipo();
+        private IRecolectable RandomItem(TGCVector3 posicion, Random random) {
+            var tipo = RandomTipo(random);
             switch (tipo) {
                 case ERecolectable.Pila: return new Pila(posicion);
                 case ERecolectable.Burbuja: return new Burbuja(posicion);

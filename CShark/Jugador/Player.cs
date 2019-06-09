@@ -20,7 +20,6 @@ namespace CShark.Jugador
         public float Oxigeno;
         public float TopeOxigeno;
         public Inventario Inventario;
-        private HUD HUD;
         private Arma Arma;
         public TGCVector3 Posicion;
         private UbicacionPlayer Ubicacion;
@@ -45,7 +44,7 @@ namespace CShark.Jugador
             Vida = vidaInicial;
             TopeOxigeno = oxigenoInicial;
             Oxigeno = oxigenoInicial;
-            HUD = new HUD(Vida, Oxigeno);
+            HUD.Instancia = new HUD(Vida, Oxigeno);
             Input = input;
             InputHandler = new InputHandler(this);
             CamaraInterna = new TgcFpsCamera(input, this);
@@ -60,7 +59,7 @@ namespace CShark.Jugador
             Inventario = new Inventario();
             Vida = vida;
             Oxigeno = oxigeno;
-            HUD = new HUD(Vida, Oxigeno);
+            HUD.Instancia = new HUD(Vida, Oxigeno);
             Arma = new Crossbow();
             onPause = false;
             RayoProximidad = new RayoProximidad();
@@ -130,7 +129,7 @@ namespace CShark.Jugador
                 CheckearUbicacion();
                 if (EstaVivo) {
                     Arma.Update(game);
-                    HUD.Update(Vida, Oxigeno, game.ElapsedTime);
+                    HUD.Instancia.Update(Vida, Oxigeno, game.ElapsedTime);
                 }
                 else {
                     _murio = true;
@@ -151,7 +150,7 @@ namespace CShark.Jugador
 
         public void Recoger(Recolectable item) {
             Inventario.Agregar(item);
-            HUD.PopMensaje(item.Tipo);
+            HUD.Instancia.PopMensaje(item.Tipo);
         }
 
         public void AgregarItem(ECrafteable tipo) {
@@ -207,7 +206,7 @@ namespace CShark.Jugador
         {
             if(!Configuracion.Instancia.ModoDios.Valor)
             {
-                Oxigeno = !Sumergido && Oxigeno < HUD.BarraOxigeno.ValorMaximo ?
+                Oxigeno = !Sumergido && Oxigeno < HUD.Instancia.BarraOxigeno.ValorMaximo ?
                     Oxigeno += 14f * game.ElapsedTime :
                     Oxigeno -= 7f * game.ElapsedTime;
             }
@@ -237,6 +236,10 @@ namespace CShark.Jugador
             return RayoProximidad.Intersecta(recolectable.Box);
         }
 
+        public bool EstaMirando(Sol sol) {
+            return RayoProximidad.Intersecta(sol.BoundingBox);
+        }
+
         public int CuantosTiene(ERecolectable material) {
             return Inventario.CuantosTiene(material);
         }
@@ -248,7 +251,6 @@ namespace CShark.Jugador
             {
                 RayoProximidad.Render();
                 Arma.Render();
-                HUD.Render();
             }
         }
     }

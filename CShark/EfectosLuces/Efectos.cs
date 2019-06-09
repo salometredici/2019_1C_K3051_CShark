@@ -18,8 +18,6 @@ namespace CShark.EfectosLuces
 
         public Effect EfectoLuz { get; } = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "Iluminacion.fx");
 
-        public Effect EfectoCasco { get; } = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "Casco.fx");
-
         public Effect EfectoLuzNiebla { get; } = TGCShaders.Instance.LoadEffect(Game.Default.ShadersDirectory + "Niebla.fx");
 
         public void AgregarLuz(Luz luz) {
