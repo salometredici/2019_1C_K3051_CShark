@@ -54,7 +54,7 @@ namespace CShark.Fisica.Colisiones
 
             World = new DiscreteDynamicsWorld(Dispatcher, OverlappingPairCache, ConstraintSolver, Configuration)
             {
-                Gravity = Constants.StandardGravity
+                Gravity = new Vector3(0, -5000f, 0) //Constants.StandardGravity// No sé qué rompí que ahora no me deja usar las keys de Constants
             };
 
             FondoDelMarRB = BulletRigidBodyFactory.Instance.CreateRigidBodyFromTgcMesh(terreno);

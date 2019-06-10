@@ -76,7 +76,21 @@ namespace CShark.UI
             var texto = string.Empty;
             var lineas = new List<TgcText2D>();
             var pos = new Point((int)Fondo.Position.X, (int)Fondo.Position.Y + 165);
-            foreach(var renglon in Constants.GuideLines) {
+            IList<string> GuideLines = new List<string>()
+            {
+            "Guíar cámara - Mouse",
+            "Impulsar hacia la izquierda - A",
+            "Impulsar hacia la derecha - D",
+            "Impulsar hacia adelante - W",
+            "Impulsar hacia atrás - S",
+            "Impulsar hacia arriba/Saltar - Space",
+            "Disparar - Click derecho",
+            "Abrir/Cerrar menús - Esc",
+            "Abrir menú de crafteo - E (Sólo en mesa de crafteo)",
+            "Recoger item - E",
+            "Abrir inventario - I"
+            };
+            foreach(var renglon in GuideLines) {
                 var linea = new TgcText2D
                 {
                     Align = TgcText2D.TextAlign.CENTER,

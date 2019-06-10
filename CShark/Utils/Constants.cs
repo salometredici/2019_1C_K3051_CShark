@@ -1,7 +1,10 @@
 ﻿using BulletSharp.Math;
+using CShark.Items;
+using CShark.Items.Recolectables;
 using Microsoft.DirectX.DirectInput;
 using System;
 using System.Collections.Generic;
+using TGC.Core.Mathematica;
 
 namespace CShark.Utils
 {
@@ -18,13 +21,26 @@ namespace CShark.Utils
             "Impulsar hacia adelante - W",
             "Impulsar hacia atrás - S",
             "Impulsar hacia arriba/Saltar - Space",
-            //"Impulsar hacia abajo - X",
-            //"Frenar impulso - F",
             "Disparar - Click derecho",
             "Abrir/Cerrar menús - Esc",
             "Abrir menú de crafteo - E (Sólo en mesa de crafteo)",
             "Recoger item - E",
             "Abrir inventario - I"
+        };
+        public static IList<Recolectable> CheatItems = new List<Recolectable>()
+        {
+            new Oro(TGCVector3.Empty),
+            new Oxigeno(TGCVector3.Empty),
+            new Wumpa(TGCVector3.Empty),
+            new Plata(TGCVector3.Empty),
+            new Pez(TGCVector3.Empty),
+            new Pila(TGCVector3.Empty),
+            new Medkit(TGCVector3.Empty),
+            new Hierro(TGCVector3.Empty),
+            new Coral(TGCVector3.Empty),
+            new Burbuja(TGCVector3.Empty),
+            new Chip(TGCVector3.Empty),
+            new Arpon(TGCVector3.Empty)
         };
     }
 }

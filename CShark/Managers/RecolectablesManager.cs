@@ -53,7 +53,7 @@ namespace CShark.Managers
                 case ERecolectable.Medkit: return new Medkit(posicion);
                 case ERecolectable.Oro: return new Oro(posicion);
                 case ERecolectable.Oxigeno: return new Oxigeno(posicion);
-                case ERecolectable.Pez: return new PezRecolectable(posicion);
+                case ERecolectable.Pez: return new Pez(posicion);
                 case ERecolectable.Plata: return new Plata(posicion);
                 default: return new Pila(posicion);
             }

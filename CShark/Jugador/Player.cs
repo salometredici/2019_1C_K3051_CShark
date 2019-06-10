@@ -10,6 +10,7 @@ using BulletSharp.Math;
 using TGC.Core.Collision;
 using CShark.Jugador.Camara;
 using CShark.Items.Recolectables;
+using static CShark.Utils.EffectsPlayer;
 
 namespace CShark.Jugador
 {
@@ -79,6 +80,20 @@ namespace CShark.Jugador
         float Salto = 5f;
         float Flote = 200f;
 
+        public void AumentarOxigeno()
+        {
+            if (Oxigeno > TopeOxigeno) Oxigeno += 50;
+            TopeOxigeno += 50;
+            HUD.Instancia.BarraOxigeno.ValorMaximo += 50;
+        }
+
+        public void AumentarVida()
+        {
+            if (Vida > TopeVida) Vida += 100;
+            TopeVida += 100;
+            HUD.Instancia.BarraVida.ValorMaximo += 100;
+        }
+
         public void MoverCapsula(float x, float y, float z) {
             Capsula.LinearVelocity += Velocidad * new Vector3(x , y, z);
         }
@@ -146,6 +161,15 @@ namespace CShark.Jugador
             Ubicacion = Sumergido ? UbicacionPlayer.Sumergido : UbicacionPlayer.Superficie;
             if (ubic != Ubicacion)
                 Mapa.Instancia.CambiarEfecto(Sumergido);
+            if (Sumergido && SonidoFondo != SoundEffect.UnderWater)
+            {
+                BackgroundSound.stop();
+                Play(SoundEffect.UnderWater);
+            } else if(!Sumergido && SonidoFondo != SoundEffect.Background)
+            {
+                UnderWaterSound.stop();
+                Play(SoundEffect.Background);
+            }
         }
 
         public void Recoger(Recolectable item) {
@@ -202,6 +226,29 @@ namespace CShark.Jugador
             }
         }
 
+        public void FillAll(GameModel game)
+        {
+            Vida = HUD.Instancia.BarraVida.ValorMaximo;
+            Oxigeno = HUD.Instancia.BarraOxigeno.ValorMaximo;
+        }
+
+        public void CheatValor(GameModel game, string opcion)
+        {
+            switch (opcion)
+            {
+                case "Vida":
+                    Vida = Vida < HUD.Instancia.BarraVida.ValorMaximo ?
+                        Vida += 500f * game.ElapsedTime :
+                        Vida;
+                    break;
+                case "Oxigeno":
+                    Oxigeno = Oxigeno < HUD.Instancia.BarraOxigeno.ValorMaximo ?
+                        Oxigeno += 500f * game.ElapsedTime :
+                        Oxigeno;
+                    break;
+            }
+        }
+
         private void ActualizarOxigeno(GameModel game)
         {
             if(!Configuracion.Instancia.ModoDios.Valor)
@@ -213,6 +260,18 @@ namespace CShark.Jugador
         }
 
         private bool _murio = false;
+
+        public void CheatItems()
+        {
+            for(int i = 0; i < 10; i++)
+            {
+                foreach (var item in Constants.CheatItems)
+                {
+                    Inventario.Agregar(item);
+                }
+            }
+        }
+
         private void BloquearCamara(TgcFpsCamera camara) {
             if (!_murio)
             {

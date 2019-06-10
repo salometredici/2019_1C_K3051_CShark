@@ -14,7 +14,6 @@ namespace CShark.UI
         Cheats,
         Inventario,
         Crafteo,
-        Guia,
-        CombosCrafteo
+        Guia
     }
 }

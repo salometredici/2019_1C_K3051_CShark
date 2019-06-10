@@ -21,7 +21,7 @@ namespace CShark.Items.Crafteables
 
         public void Craftear(Player player)
         {
-            player.AgregarItem(ECrafteable.AumentoVida); // Esto tampoco va a ser así
+            player.AumentarVida();
         }
 
         public bool PuedeCraftear(Player player)

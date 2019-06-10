@@ -18,6 +18,7 @@ namespace CShark.Managers
         private MenuCrafteo MenuCrafteo;
         private GuideMenu MenuGuia;
         public Menu MenuSeleccionado;
+        public MenuCheats MenuCheats;
         private Puntero Puntero;
 
         public bool MenuAbierto = false;
@@ -30,6 +31,7 @@ namespace CShark.Managers
             MenuInventario = new MenuInventario("Menu\\Inventario\\");
             MenuCrafteo = new MenuCrafteo("MenuCrafteo\\");
             MenuGuia = new GuideMenu();
+            MenuCheats = new MenuCheats();
             Puntero = new Puntero();
 
             MenuSeleccionado = MenuPrincipal;
@@ -38,6 +40,7 @@ namespace CShark.Managers
             MenuPrincipal.AgregarBoton("Inventario", j => j.CambiarMenu(TipoMenu.Inventario));
             MenuPrincipal.AgregarBoton("Opciones", j => j.CambiarMenu(TipoMenu.Opciones));
             MenuPrincipal.AgregarBoton("Variables", j => j.CambiarMenu(TipoMenu.Variables));
+            MenuPrincipal.AgregarBoton("Cheats", j => j.CambiarMenu(TipoMenu.Cheats));
             MenuPrincipal.AgregarBoton("Salir", j => j.Salir());
             
             var config = Configuracion.Instancia;
@@ -52,6 +55,12 @@ namespace CShark.Managers
             MenuVariables.AgregarSlider(config.VelocidadRotacion, 0.05f, 0.2f);
             MenuVariables.AgregarSlider(config.VelocidadMovimiento, 200, 1000);
             MenuVariables.AgregarBoton("Volver", j => j.CambiarMenu(TipoMenu.Principal));
+
+            MenuCheats.AgregarBoton("Items +10", j => j.CheatItems());
+            MenuCheats.AgregarBoton("Vida +500", j => j.CheatValor("Vida"));
+            MenuCheats.AgregarBoton("Oxígeno +500", j => j.CheatValor("Oxigeno"));
+            MenuCheats.AgregarBoton("Fill vida/oxígeno", j => j.FillAll());
+            MenuCheats.AgregarBoton("Volver", j => j.CambiarMenu(TipoMenu.Principal));
         }
 
         public void CambiarMenu(TipoMenu tipoMenu) {
@@ -77,7 +86,8 @@ namespace CShark.Managers
                     return MenuCrafteo;
                 case TipoMenu.Guia:
                     return MenuGuia;
-                case TipoMenu.CombosCrafteo:
+                case TipoMenu.Cheats:
+                    return MenuCheats;
                 default:
                     return null;
             }

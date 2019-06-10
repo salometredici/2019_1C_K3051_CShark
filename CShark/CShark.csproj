@@ -94,6 +94,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Windows\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.DirectInput.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.DirectX.DirectSound, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="Microsoft.VisualC" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -131,7 +132,7 @@
     <Compile Include="Items\Recolectables\Medkit.cs" />
     <Compile Include="Items\Recolectables\Oro.cs" />
     <Compile Include="Items\Recolectables\Oxigeno.cs" />
-    <Compile Include="Items\Recolectables\PezRecolectable.cs" />
+    <Compile Include="Items\Recolectables\Pez.cs" />
     <Compile Include="Items\Recolectables\Plata.cs" />
     <Compile Include="Jugador\InputHandler.cs" />
     <Compile Include="Jugador\Control.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Objetos\Barco.cs" />
     <Compile Include="Terreno\Mapa.cs" />
     <Compile Include="UI\Menu\GuideMenu.cs" />
+    <Compile Include="UI\Menu\MenuCheats.cs" />
     <Compile Include="UI\Menu\MenuCrafteo.cs" />
     <Compile Include="Objetos\MesaCrafteo.cs" />
     <Compile Include="Terreno\SkyBox.cs" />
@@ -230,6 +232,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Variable.cs" />
+    <Compile Include="Utils\EffectsPlayer.cs" />
     <Compile Include="Utils\ExtensionMethods.cs" />
     <Compile Include="Utils\HeightmapMethods.cs" />
     <Compile Include="Utils\MusicPlayer.cs" />

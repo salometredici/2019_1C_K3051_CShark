@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using TGC.Core.Direct3D;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
+using TGC.Core.Sound;
 
 namespace CShark.Model
 {
@@ -25,6 +26,7 @@ namespace CShark.Model
         private LoadingScreen PantallaCarga;
         private MenuManager MenuManager;
         private MusicPlayer MusicPlayer;
+        public TgcDirectSound DirectSound;
         private FaunaManager PezManager;
         private RecolectablesManager RecolectablesManager;
 
@@ -110,10 +112,11 @@ namespace CShark.Model
             Mapa.Instancia.Optimizar();
             PantallaCarga.Progresar("Cargando paredes invisibles...");
             var paredes = loader.loadSceneFromFile(media + @"Mapa\Paredes-TgcScene.xml");
-            Mapa.Instancia.CargarParedes(paredes);
+           // Mapa.Instancia.CargarParedes(paredes);
             Mapa.Instancia.CambiarEfecto(false);
             PantallaCarga.Progresar("Cargando audio...");
             MusicPlayer = new MusicPlayer();
+            //DirectSound = new TgcDirectSound();
             ContenedorLuces.Instancia.ArmarLuces();
             PantallaCarga.Finalizar();
         }

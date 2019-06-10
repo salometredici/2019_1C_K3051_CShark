@@ -33,7 +33,7 @@ namespace CShark.Animales.Comportamiento
         {
             var direccionDespl = Objetivo.Posicion - animal.Posicion;
             var desplazam = direccionDespl * VelocidadMovimiento * 0.1f;
-            if (direccionDespl.Length() > 100f)
+            if (direccionDespl.Length() > 100f && animal.Posicion.Y < 18000f)
             {
                 animal.Posicion += desplazam;
             }

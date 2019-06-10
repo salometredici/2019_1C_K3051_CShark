@@ -21,7 +21,7 @@ namespace CShark.Items.Crafteables
 
         public void Craftear(Player player)
         {
-            player.AgregarItem(ECrafteable.AumentoOxigeno); // Esto no va a ser así
+            player.AumentarOxigeno();
         }
 
         public bool PuedeCraftear(Player player)

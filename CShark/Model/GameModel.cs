@@ -19,6 +19,9 @@ using CShark.Items;
 using TGC.Core.Interpolation;
 using Effect = Microsoft.DirectX.Direct3D.Effect;
 using Device = Microsoft.DirectX.Direct3D.Device;
+using TGC.Core.Sound;
+using CShark.Utils;
+using static CShark.Utils.EffectsPlayer;
 
 namespace CShark.Model
 {
@@ -30,10 +33,11 @@ namespace CShark.Model
         public static Point ScreenCenter = new Point(DeviceWidth / 2, DeviceHeight / 2);
         public Player Player;
         public GameManager GameManager;
+        public EffectsPlayer EffectsPlayer;
         private PantallaMuerte PantallaMuerte;
         private Mapa Mapa => Mapa.Instancia;
         private bool RenderCasco = true;
-        private Device Device => D3DDevice.Instance.Device;
+        public static Device Device => D3DDevice.Instance.Device;
         #endregion
 
         #region Constructors
@@ -115,6 +119,7 @@ namespace CShark.Model
             Cursor.Hide();
             PantallaMuerte = new PantallaMuerte();
             GameManager = new GameManager();
+    
             this.InitPostProcess();
             Start();
         }
@@ -122,6 +127,7 @@ namespace CShark.Model
         private void Start() {
             var posInicial = GameManager.SpawnPlayer;
             Player = new Player(posInicial, 500, 1000, Input);
+            EffectsPlayer = new EffectsPlayer(DirectSound);
             Camara = Player.CamaraInterna;
             CambiarMenu(TipoMenu.Guia);
             GameManager.SwitchMenu(this);
@@ -143,6 +149,24 @@ namespace CShark.Model
         {
             Player.Usar(item);
         }
+
+        public void CheatItems(){
+            Player.CheatItems();
+            Play(SoundEffect.Coin);
+        }
+
+        public void CheatValor(string opcion)
+        {
+            Player.CheatValor(this, opcion);
+            Play(SoundEffect.Coin);
+        }
+
+        public void FillAll()
+        {
+            Player.FillAll(this);
+            Play(SoundEffect.Coin);
+        }
+
 
         public void Salir()
         {

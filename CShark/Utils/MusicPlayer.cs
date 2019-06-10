@@ -25,7 +25,6 @@ namespace CShark.Utils
             {
                 FileName = currentFile
             };
-            //mp3Player.play(true); ROMPE :))))
         }
 
         public static void SwitchMusic(bool abreMenu, bool enPersecucion)

@@ -13,6 +13,8 @@ using System.Drawing;
 using TGC.Core.BoundingVolumes;
 using TGC.Core.Collision;
 using TGC.Core.Mathematica;
+using TGC.Core.Sound;
+using static CShark.Utils.EffectsPlayer;
 
 namespace CShark.NPCs.Enemigos
 {
@@ -23,10 +25,8 @@ namespace CShark.NPCs.Enemigos
         private bool Persiguiendo = false;
         private bool Mordio = false; //Para evitar que ataque cada ciclo
         private IComportamiento Aleatorio;
-        private IComportamiento Perseguidor;
 
         public Tiburon(TGCVector3 posicionInicial) : base("Tiburon", posicionInicial) {
-            //Comportamiento = new Aleatorio(Math.PI / 2, 300, 100, 300f, 1f);
             Aleatorio = new Aleatorio(Math.PI / 2, 300, 100, 300f, 1f);
             Comportamiento = Aleatorio;
             Vida = 300f;
@@ -92,6 +92,7 @@ namespace CShark.NPCs.Enemigos
         public void Atacar(Player player)
         {
             player.Atacado();
+            EffectsPlayer.Play(SoundEffect.Bite);
             Mordio = true;
         }
 
