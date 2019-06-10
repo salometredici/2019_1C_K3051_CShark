@@ -49,7 +49,7 @@ namespace CShark.Objetos
             if (EstaCerca(game.Player)) {
                 EsferaCercania.setRenderColor(Color.Yellow);
                 MostrarTexto = true;
-                if (game.Input.keyPressed(Key.E) && game.Player.EstaVivo) {
+                if (game.Input.keyPressed(Key.E) && game.Player.EstaVivo && !game.Player.onPause) {
                     game.CambiarMenu(UI.TipoMenu.Crafteo);
                     game.GameManager.SwitchMenu(game); //mira ese acoplamiento
                     MostrarTexto = false;
