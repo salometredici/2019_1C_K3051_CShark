@@ -7,7 +7,7 @@ namespace CShark.Animales
     public interface IAnimal : IDisposable
     {
         void Update(GameModel game);
-        void Render();
+        void Render(GameModel game);
         void Morir();
         TGCMatrix ArmarTransformacion();
     }

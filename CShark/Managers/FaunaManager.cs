@@ -33,7 +33,13 @@ namespace CShark.Managers
                 var posicion = SpawnPezRandom();
                 Spawnear(tipo, posicion);
             }*/
-            Spawnear("Tiburon", new TGCVector3(85195,12304,-62625));
+            Spawnear("SpawnTiburon", new TGCVector3(110000f,15000f,-80000f));// Posicion muy cerca del player es (115000.0f,20500.0f,-91000.0f));
+            Spawnear("SpawnTiburon", new TGCVector3(110000f, 10000f, -100000f));
+            Spawnear("SpawnTiburon", new TGCVector3(80000f, 7000f, -20000f));
+            Spawnear("SpawnTiburon", new TGCVector3(85000f, 15000f, -23000f));
+            Spawnear("SpawnTiburon", new TGCVector3(70000f, 12000f, -250000f));
+            Spawnear("SpawnTiburon", new TGCVector3(77000f, 1000f, -100000f));
+            Spawnear("SpawnTiburon", new TGCVector3(60000f, 3000f, -100000f));
         }
 
         private TgcBoundingAxisAlignBox AreaSpawneable1;
@@ -78,7 +84,7 @@ namespace CShark.Managers
         }
 
         public void Render(GameModel game) {
-            Animales.ForEach(animal => animal.Render());
+            Animales.ForEach(animal => animal.Render(game));
         }
 
         public void Dispose() {

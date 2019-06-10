@@ -76,7 +76,7 @@ namespace CShark.Jugador
         }
 
         float Velocidad = 5000f;
-        float Salto = 10f;
+        float Salto = 5f;
         float Flote = 200f;
 
         public void MoverCapsula(float x, float y, float z) {

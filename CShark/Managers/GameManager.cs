@@ -124,7 +124,7 @@ namespace CShark.Model
 
         public void SwitchMenu(GameModel game) {
             MenuManager.SwitchMenu();
-            MusicPlayer.SwitchMusic(MenuManager.MenuAbierto);
+            MusicPlayer.SwitchMusic(MenuManager.MenuAbierto, false);
             game.Player.onPause = !game.Player.onPause;
             game.Player.Lock(); //o unlock
         }

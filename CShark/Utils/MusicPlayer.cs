@@ -5,12 +5,13 @@ namespace CShark.Utils
 {
     public class MusicPlayer
     {
-        private TgcMp3Player mp3Player;
+        private static TgcMp3Player mp3Player;
 
         private string currentFile;
-        private readonly string musicDirectory = Environment.CurrentDirectory + "\\" + Game.Default.MusicDirectory;
-        private readonly string mainTheme = "UnderPressure_DeepTrouble.mp3";
-        private readonly string menuTheme = "Warp_Room.mp3";
+        private static readonly string musicDirectory = Environment.CurrentDirectory + "\\" + Game.Default.MusicDirectory;
+        private static readonly string mainTheme = "UnderPressure_DeepTrouble.mp3";
+        private static readonly string menuTheme = "Warp_Room.mp3";
+        private static readonly string chaseTheme = "Boulder.mp3";
 
         public MusicPlayer()
         {
@@ -27,19 +28,23 @@ namespace CShark.Utils
             //mp3Player.play(true); ROMPE :))))
         }
 
-        public void SwitchMusic(bool abreMenu)
+        public static void SwitchMusic(bool abreMenu, bool enPersecucion)
         {
-            LoadMp3(abreMenu);
+            LoadMp3(abreMenu, enPersecucion);
         }
 
         /// <summary>
         ///     Cargar un nuevo MP3 si hubo una variacion
         /// </summary>
-        private void LoadMp3(bool abreMenu)
+        private static void LoadMp3(bool abreMenu, bool enPersecucion)
         {
             if (abreMenu)
             {
                 ChangeMusic(musicDirectory + menuTheme);
+            }
+            else if (enPersecucion)
+            {
+                ChangeMusic(musicDirectory + chaseTheme);
             }
             else
             {
@@ -47,7 +52,7 @@ namespace CShark.Utils
             }
         }
 
-        private void ChangeMusic(string file)
+        private static void ChangeMusic(string file)
         {
             mp3Player.closeFile();
             mp3Player.FileName = file;

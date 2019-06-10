@@ -30,7 +30,7 @@ namespace CShark.Animales
             Comportamiento.Update(game.ElapsedTime, this);
         }
 
-        public virtual void Render() {
+        public virtual void Render(GameModel game) {
             Mesh.Transform = UsarTransformacionFisica
                 ? new TGCMatrix(Body.InterpolationWorldTransform)
                 : ArmarTransformacion();
@@ -47,9 +47,10 @@ namespace CShark.Animales
         }
 
         public TGCMatrix ArmarTransformacion() {
-            return TGCMatrix.Scaling(Escala) *
-                TGCMatrix.RotationYawPitchRoll(Rotacion.Y, Rotacion.X, Rotacion.Z) 
-                * TGCMatrix.Translation(Posicion);
+            //return TGCMatrix.Scaling(Escala) *
+            //    TGCMatrix.RotationYawPitchRoll(Rotacion.Y, Rotacion.X, Rotacion.Z) 
+            //    * TGCMatrix.Translation(Posicion);    
+            return TGCMatrix.RotationYawPitchRoll(Rotacion.Y, Rotacion.X, Rotacion.Z) * TGCMatrix.Translation(Posicion);
         }
 
         public void Dispose() {

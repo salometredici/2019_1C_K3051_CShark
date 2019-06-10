@@ -7,6 +7,7 @@ using CShark.Geometria;
 using CShark.Jugador;
 using CShark.Model;
 using CShark.Terreno;
+using CShark.Utils;
 using System;
 using System.Drawing;
 using TGC.Core.BoundingVolumes;
@@ -21,9 +22,13 @@ namespace CShark.NPCs.Enemigos
         private float TiempoInvencibilidad;
         private bool Persiguiendo = false;
         private bool Mordio = false; //Para evitar que ataque cada ciclo
+        private IComportamiento Aleatorio;
+        private IComportamiento Perseguidor;
 
         public Tiburon(TGCVector3 posicionInicial) : base("Tiburon", posicionInicial) {
-            Comportamiento = new Aleatorio(Math.PI / 2, 300, 100, 300f, 1f);
+            //Comportamiento = new Aleatorio(Math.PI / 2, 300, 100, 300f, 1f);
+            Aleatorio = new Aleatorio(Math.PI / 2, 300, 100, 300f, 1f);
+            Comportamiento = Aleatorio;
             Vida = 300f;
             TiempoInvencibilidad = 0f;
             BarraVida = new HealthBar(Vida);
@@ -37,8 +42,8 @@ namespace CShark.NPCs.Enemigos
 
         public override void Update(GameModel game) {
             base.Update(game);
-            var distanciaAlPlayer = TgcCollisionUtils.sqDistPointAABB(game.Player.Posicion, Mesh.BoundingBox);
             TiempoInvencibilidad -= game.ElapsedTime;
+            var distanciaAlPlayer = TgcCollisionUtils.sqDistPointAABB(game.Player.Posicion, Mesh.BoundingBox);
             if (Vivo)
             {
                 BarraVida.Update(Vida, Posicion, Rotacion);
@@ -48,7 +53,8 @@ namespace CShark.NPCs.Enemigos
                 if (!Persiguiendo)
                 {
                     Persiguiendo = !Persiguiendo;
-                    Comportamiento = new Perseguidor(0.2f, 1f, game.Player);
+                    MusicPlayer.SwitchMusic(false, Persiguiendo);
+                    Comportamiento = new Perseguidor(0.1f, 1f, game.Player);
                 }
                 if (EnContacto(distanciaAlPlayer))
                 {
@@ -65,19 +71,20 @@ namespace CShark.NPCs.Enemigos
                 }
             }
             else
-            {        
+            {
                 if (Persiguiendo)
                 {
                     Persiguiendo = false;
+                    MusicPlayer.SwitchMusic(false, Persiguiendo);
                     Mordio = false;
-                    Comportamiento = new Aleatorio(Math.PI / 2, 300, 100, 300f, 1f);
+                    Comportamiento = Aleatorio;
                 }
                 Mesh.BoundingBox.setRenderColor(Color.Red);
             }
         }
 
-        public override void Render() {
-            base.Render();
+        public override void Render(GameModel game) {
+            base.Render(game);
             if (Vivo) BarraVida.Render(Vida);
             Mesh.BoundingBox.Render();  //Sólo porque quería corroborar que funcionaba, se puede borrar
         }
