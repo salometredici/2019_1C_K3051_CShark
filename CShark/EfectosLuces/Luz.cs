@@ -22,5 +22,12 @@ namespace CShark.EfectosLuces
             Intensidad = intensidad;
             Atenuacion = atenuacion;
         }
+
+        public float Distancia(TGCVector3 punto) {
+            var x = Posicion.X - punto.X;
+            var y = Posicion.Y - punto.Y;
+            var z = Posicion.Z - punto.Z;
+            return FastMath.Sqrt(x * x + y * y + z * z);
+        }
     }
 }

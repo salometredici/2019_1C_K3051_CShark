@@ -50,7 +50,7 @@ namespace CShark.Terreno
             Terreno.Effect.SetValue("time", time);
             this.ActualizarLuces(game.Camara.Position);
             Terreno.Render();
-            this.DibujarWireFrame();
+            //this.DibujarWireFrame();
         }
 
         private void DibujarWireFrame() {

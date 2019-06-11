@@ -57,8 +57,8 @@ namespace CShark.Jugador
             var harpoonBody = CrearHarpoonBody(player, puntaCañon);
             var direccionDisparo = new TGCVector3(camara.LookAt.X - camara.Position.X, camara.LookAt.Y - camara.Position.Y, camara.LookAt.Z - camara.Position.Z).ToBulletVector3();
             direccionDisparo.Normalize();
-            harpoonBody.LinearVelocity = direccionDisparo * 900;
-            harpoonBody.LinearFactor = TGCVector3.One.ToBulletVector3();
+            harpoonBody.LinearVelocity = direccionDisparo * 6000;
+            //harpoonBody.LinearFactor = TGCVector3.One.ToBulletVector3();
             Municiones.Add(harpoonBody);
             Mapa.Instancia.AgregarBody(harpoonBody);
             LimitarCantidad();
@@ -76,7 +76,7 @@ namespace CShark.Jugador
             var size = MeshHarpoon.BoundingBox.calculateSize();
             var rotacionY = player.CamaraInterna.leftrightRot + (float)Math.PI;
             var rotacionZ = -player.CamaraInterna.updownRot; //un fix visual pequeño
-            return BulletRigidBodyFactory.Instance.CreateBox(size, 5f, punta, rotacionY, rotacionZ, 0, 0, false);
+            return BulletRigidBodyFactory.Instance.CreateBox(size, 0.2f, punta, rotacionY, rotacionZ, 0, 0, false);
         }
 
         private TGCVector3 CalcularPuntaCañon(Player player) {

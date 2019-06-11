@@ -139,6 +139,7 @@ namespace CShark.Terreno
             Sol.Update(elapsedTime);
             Colisiones.Update(elapsedTime);
             Mesa.Update(game);
+            ContenedorLuces.Instancia.Update(game.Player.Posicion);
             Efectos.Instancia.ActualizarNiebla();
         }
 

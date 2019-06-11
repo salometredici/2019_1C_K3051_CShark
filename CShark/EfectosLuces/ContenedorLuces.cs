@@ -13,6 +13,7 @@ namespace CShark.EfectosLuces
     public class ContenedorLuces
     {
         private List<Luz> Luces;
+        private IEnumerable<Luz> LucesPosta;
         public int Cantidad { get; private set; }
         public ColorValue[] Colores { get; private set; }
         public Vector4[] Posiciones { get; private set; }
@@ -26,30 +27,38 @@ namespace CShark.EfectosLuces
 
         private ContenedorLuces() {
             Luces = new List<Luz>();
-        }
-
-        public void AgregarLuz(Luz luz) {
-            Luces.Add(luz);
-            //this.ArmarLuces();
-        }
-
-        public void SacarLuz(Luz luz) {
-            Luces.Remove(luz);
-            //this.ArmarLuces();
-        }
-
-        public void ArmarLuces() {
+            LucesPosta = new List<Luz>();
             Colores = new ColorValue[N];
             Intensidades = new float[N];
             Posiciones = new Vector4[N];
             Atenuaciones = new float[N];
             Especulares = new float[N];
-            Cantidad = Math.Min(Luces.Count(), N);
+        }
+
+        public void AgregarLuz(Luz luz) {
+            Luces.Add(luz);
+        }
+
+        public void SacarLuz(Luz luz) {
+            Luces.Remove(luz);
+        }
+
+        float DistanciaCercania = 20000f;
+
+        public void Update(TGCVector3 player) {
+            LucesPosta = Luces
+                .Where(luz => luz.Distancia(player) < DistanciaCercania)
+                .Take(N);
+            ArmarLuces();
+        }
+
+        public void ArmarLuces() {
+            Cantidad = Math.Min(LucesPosta.Count(), N);
             for (int i = 0; i < Cantidad; i++) {
-                Colores[i] = ColorValue.FromColor(Luces[i].Color);
-                Intensidades[i] = Luces[i].Intensidad;
-                Atenuaciones[i] = Luces[i].Atenuacion;
-                Posiciones[i] = TGCVector3.Vector3ToVector4(Luces[i].Posicion);
+                Colores[i] = ColorValue.FromColor(LucesPosta.ElementAt(i).Color);
+                Intensidades[i] = LucesPosta.ElementAt(i).Intensidad;
+                Atenuaciones[i] = LucesPosta.ElementAt(i).Atenuacion;
+                Posiciones[i] = TGCVector3.Vector3ToVector4(LucesPosta.ElementAt(i).Posicion);
             }
         }
     }
