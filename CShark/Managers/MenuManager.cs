@@ -47,9 +47,9 @@ namespace CShark.Managers
 
             MenuOpciones.AgregarCheckbox(config.MostrarRayo);
             MenuOpciones.AgregarCheckbox(config.ModoDios);
-            MenuOpciones.AgregarCheckbox(config.Niebla);
+            //MenuOpciones.AgregarCheckbox(config.Niebla);
             MenuOpciones.AgregarCheckbox(config.PostProcesadoCasco);
-            MenuOpciones.AgregarCheckbox(config.MotionBlur);
+            //MenuOpciones.AgregarCheckbox(config.MotionBlur);
             MenuOpciones.AgregarBoton("Volver", j => j.CambiarMenu(TipoMenu.Principal));
 
             MenuVariables.AgregarSlider(config.VelocidadRotacion, 0.05f, 0.2f);
@@ -57,8 +57,8 @@ namespace CShark.Managers
             MenuVariables.AgregarBoton("Volver", j => j.CambiarMenu(TipoMenu.Principal));
 
             MenuCheats.AgregarBoton("Items +10", j => j.CheatItems());
-            MenuCheats.AgregarBoton("Vida +500", j => j.CheatValor("Vida"));
-            MenuCheats.AgregarBoton("Oxígeno +500", j => j.CheatValor("Oxigeno"));
+            MenuCheats.AgregarBoton("Fill Vida", j => j.CheatValor("Vida"));
+            MenuCheats.AgregarBoton("Fill Oxígeno", j => j.CheatValor("Oxigeno"));
             MenuCheats.AgregarBoton("Fill vida/oxígeno", j => j.FillAll());
             MenuCheats.AgregarBoton("Volver", j => j.CambiarMenu(TipoMenu.Principal));
         }

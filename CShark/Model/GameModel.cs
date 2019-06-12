@@ -112,6 +112,7 @@ namespace CShark.Model
             GameManager.Dispose();
             Mapa.Instancia.Dispose();
             GameManager.Dispose();
+            EffectsPlayer.Dispose();
         }
 
         #region Logic

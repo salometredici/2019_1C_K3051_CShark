@@ -77,7 +77,7 @@ namespace CShark.Jugador
         }
 
         float Velocidad = 5000f;
-        float Salto = 5f;
+        float Salto = 2.5f;
         float Flote = 200f;
 
         public void AumentarOxigeno()
@@ -237,14 +237,18 @@ namespace CShark.Jugador
             switch (opcion)
             {
                 case "Vida":
-                    Vida = Vida < HUD.Instancia.BarraVida.ValorMaximo ?
-                        Vida += 500f * game.ElapsedTime :
-                        Vida;
+                    var vidaMax = HUD.Instancia.BarraVida.ValorMaximo;
+                    Vida = vidaMax;
+                    //Vida = Vida < vidaMax ?
+                    //    Vida += (vidaMax - Vida) : //* game.ElapsedTime :
+                    //    Vida;
                     break;
                 case "Oxigeno":
-                    Oxigeno = Oxigeno < HUD.Instancia.BarraOxigeno.ValorMaximo ?
-                        Oxigeno += 500f * game.ElapsedTime :
-                        Oxigeno;
+                    var oxigenoMax = HUD.Instancia.BarraOxigeno.ValorMaximo;
+                    Oxigeno = oxigenoMax;
+                    //Oxigeno = Oxigeno < oxigenoMax ?
+                    //    Oxigeno += (Oxigeno - oxigenoMax) ://* game.ElapsedTime :
+                    //    Oxigeno;
                     break;
             }
         }
