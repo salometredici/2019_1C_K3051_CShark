@@ -104,6 +104,7 @@ namespace CShark.Model
             Managers.Add(MenuManager);
             MenuManager.Initialize();
             PantallaCarga.Progresar("Cargando recolectables...");
+            Mapa.Instancia.CargarBurbujas(SpawnPlayer);
             var recolectables = loader.loadSceneFromFile(media + @"Mapa\Recolectables-TgcScene.xml");
             RecolectablesManager = new RecolectablesManager(recolectables);
             Managers.Add(RecolectablesManager);

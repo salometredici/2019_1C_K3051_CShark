@@ -150,6 +150,8 @@
     <Compile Include="Optimizaciones\Octree.cs" />
     <Compile Include="Optimizaciones\OctreeBuilder.cs" />
     <Compile Include="Optimizaciones\OctreeNode.cs" />
+    <Compile Include="Terreno\Burbujas\BurbujaAleatoria.cs" />
+    <Compile Include="Terreno\Burbujeador.cs" />
     <Compile Include="Terreno\Sol.cs" />
     <Compile Include="Terreno\Suelo.cs" />
     <Compile Include="Terreno\TerrainExtension.cs" />
@@ -369,6 +371,7 @@
     <Content Include="Media\Animales\Tiburon-TgcScene.xml" />
     <Content Include="Media\Boxes Colision\Textures\empty.png" />
     <Content Include="Media\Boxes Colision\Tiburon-TgcScene.xml" />
+    <Content Include="Media\Textures\burbu.png" />
     <Content Include="Media\Items\arpon.png" />
     <Content Include="Media\Items\burbuja.png" />
     <Content Include="Media\Items\chip.png" />

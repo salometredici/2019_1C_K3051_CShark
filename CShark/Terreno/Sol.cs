@@ -29,7 +29,7 @@ namespace CShark.Terreno
             var sphere = Game.Default.MediaDirectory + @"Mapa\Sphere-TgcScene.xml";
             Posicion = posicion;
             Rotacion = 0;
-            Luz = new Luz(Color.White, Posicion, 3000f, 0.1f);
+            Luz = new Luz(Color.White, Posicion, 30000f, 0.1f);
             Efectos.Instancia.AgregarLuz(Luz);
             Mesh = new TgcSceneLoader().loadSceneFromFile(sphere).Meshes[0];
             Mesh.AutoTransformEnable = false;

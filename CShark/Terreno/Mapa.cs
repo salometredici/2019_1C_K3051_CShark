@@ -41,6 +41,7 @@ namespace CShark.Terreno
         private Suelo Suelo;
         private SkyBox Skybox;
         public Superficie Superficie;
+        private Burbujeador Burbujeador;
         public Sol Sol;
         public float XMin => Centro.X - Box.Size.X / 2f;
         public float XMax => Centro.X + Box.Size.X / 2f;
@@ -136,11 +137,16 @@ namespace CShark.Terreno
             Objetos.ForEach(o => o.Update(game));
             Suelo.Update(elapsedTime);
             Superficie.Update(game);
+            Burbujeador.Update(game.Player, elapsedTime);
             Sol.Update(elapsedTime);
             Colisiones.Update(elapsedTime);
             Mesa.Update(game);
             ContenedorLuces.Instancia.Update(game.Player.Posicion);
             Efectos.Instancia.ActualizarNiebla();
+        }
+
+        public void CargarBurbujas(TGCVector3 spawnPlayer) {
+            Burbujeador = new Burbujeador(spawnPlayer, AlturaMar);
         }
 
         public void CambiarEfecto(bool sumergido) {
@@ -181,6 +187,7 @@ namespace CShark.Terreno
             Skybox.Render(game);
             Octree.render(game);
             Superficie.Render();
+            Burbujeador.Render();
             Sol.Render();
         }
 
