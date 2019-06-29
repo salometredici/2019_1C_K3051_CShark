@@ -278,9 +278,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Shaders\GaussianBlur.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Shaders\PostProcesado.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -374,7 +371,6 @@
     <Content Include="Media\Animales\Tiburon-TgcScene.xml" />
     <Content Include="Media\Boxes Colision\Textures\empty.png" />
     <Content Include="Media\Boxes Colision\Tiburon-TgcScene.xml" />
-    <Content Include="Media\coral-TgcScene.xml" />
     <Content Include="Media\Textures\12960_Shark_diff_v2.jpg" />
     <Content Include="Media\Textures\bodyColor_de_la_Superficie.png" />
     <Content Include="Media\Textures\bodyOclusión_Ambiental.png" />
