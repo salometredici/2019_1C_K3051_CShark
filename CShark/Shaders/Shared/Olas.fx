@@ -1,3 +1,7 @@
+#ifndef __OLAS_FX__
+#define __OLAS_FX__
+#include <Common.fx>
+#include <Iluminacion.fx>
 struct VS_INPUT_OLAS
 {
     float4 Position : POSITION0;
@@ -26,7 +30,6 @@ VS_OUTPUT_OLAS vs_olas(VS_INPUT_OLAS Input)
 {
     VS_OUTPUT_OLAS Output;
     
-    float altura = 18000;
     float tamanioTextura = 256.0f;
     float tamanioTile = tamanioTextura / 32;
     Input.Position.x += sin(time) * 30;
@@ -34,7 +37,7 @@ VS_OUTPUT_OLAS vs_olas(VS_INPUT_OLAS Input)
     Input.Position.z += sin(time);
     float variacion = Input.Position.y > 0 ? cos(time) * 2.5 : cos(time) * 1.25;
     Input.Position.y *= variacion;
-    Input.Position.y += altura;
+    Input.Position.y += alturaSuperficie;
 
     Output.Position = mul(Input.Position, matWorldViewProj);
     Output.Texcoord = Input.Texcoord * tamanioTile;
@@ -43,3 +46,4 @@ VS_OUTPUT_OLAS vs_olas(VS_INPUT_OLAS Input)
 
     return (Output);
 }
+#endif

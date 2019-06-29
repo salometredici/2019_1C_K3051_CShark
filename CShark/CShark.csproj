@@ -278,6 +278,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Shaders\GaussianBlur.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Shaders\PostProcesado.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -371,6 +374,11 @@
     <Content Include="Media\Animales\Tiburon-TgcScene.xml" />
     <Content Include="Media\Boxes Colision\Textures\empty.png" />
     <Content Include="Media\Boxes Colision\Tiburon-TgcScene.xml" />
+    <Content Include="Media\coral-TgcScene.xml" />
+    <Content Include="Media\Textures\12960_Shark_diff_v2.jpg" />
+    <Content Include="Media\Textures\bodyColor_de_la_Superficie.png" />
+    <Content Include="Media\Textures\bodyOclusión_Ambiental.png" />
+    <Content Include="Media\Textures\body_normal.png" />
     <Content Include="Media\Textures\burbu.png" />
     <Content Include="Media\Items\arpon.png" />
     <Content Include="Media\Items\burbuja.png" />
@@ -506,7 +514,12 @@
     <Content Include="Media\Recolectables\Textures\TropicalFish12.jpg" />
     <Content Include="Media\Textures\bola.png" />
     <Content Include="Media\Textures\casco.png" />
+    <Content Include="Media\Textures\Color_helice.png" />
     <Content Include="Media\Textures\crosshair.png" />
+    <Content Include="Media\Textures\difuse_enganche.png" />
+    <Content Include="Media\Textures\float_texColor_de_la_Superficie.png" />
+    <Content Include="Media\Textures\LAMPOclusión_Ambiental.jpg" />
+    <Content Include="Media\Textures\LAMP_UVS.png" />
     <Content Include="Media\Textures\mesa.png" />
     <Content Include="Media\Music\Deep_Trouble.mp3" />
     <Content Include="Media\Music\UnderPressure_DeepTrouble.mp3" />
@@ -538,10 +551,14 @@
     <Content Include="Media\Textures\darkersea.jpg" />
     <Content Include="Media\Textures\dragonball.jpg" />
     <Content Include="Media\Textures\fish.jpg" />
+    <Content Include="Media\Textures\normal_enganche.png" />
+    <Content Include="Media\Textures\normal_float.png" />
     <Content Include="Media\Textures\Piedra3.jpg" />
     <Content Include="Media\Textures\rayoSol.jpg" />
     <Content Include="Media\Textures\rayoSol.png" />
     <Content Include="Media\Textures\red.jpg" />
+    <Content Include="Media\Textures\shell_basecolour.jpg" />
+    <Content Include="Media\Textures\shell_roughness.png" />
     <Content Include="Media\Textures\tierra.jpg" />
     <Content Include="Media\Textures\txt_001_diff.png" />
     <Content Include="Media\Textures\UnderwaterSkybox\blue-texture.png" />

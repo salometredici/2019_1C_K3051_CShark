@@ -1,4 +1,6 @@
-//Variables de las luces
+#ifndef __ILUMINACION_FX__
+#define __ILUMINACION_FX__
+#include <Common.fx>
 float3 coloresLuces[10];
 float3 posicionesLuces[10];
 float intensidadesLuces[10];
@@ -35,6 +37,8 @@ Luz getLuz(int i)
     return luz;
 };
 
+
+
 float4 calcularLuces(float3 worldNormal, float3 worldPosition, float3 texel)
 {
     float3 Nn = normalize(worldNormal);
@@ -63,5 +67,15 @@ float4 calcularLuces(float3 worldNormal, float3 worldPosition, float3 texel)
     luzAmbiente *= colorAmbiente;
     luzDifusa *= colorDifuso;
        
-    return float4(saturate(colorEmisivo + luzDifusa + luzAmbiente) * texel + luzEspecular, colorDifuso.a);
+    float4 colorFinal = float4(saturate(colorEmisivo + luzDifusa + luzAmbiente) * texel + luzEspecular, colorDifuso.a);
+
+    if (worldPosition.y < alturaSuperficie)
+    {
+        return colorFinal * calcularCoeficienteAcuatico(worldPosition.y);
+    }
+    else
+    {
+        return colorFinal;
+    }
 }
+#endif

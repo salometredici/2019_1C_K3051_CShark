@@ -1,3 +1,6 @@
+#ifndef __SUELO_FX__
+#define __SUELO_FX__
+#include <Common.fx>
 struct VS_INPUT_SUELO
 {
     float4 Position : POSITION0;
@@ -38,7 +41,6 @@ float4 calcularBlendRayos(float rayitas, float2 texcoord)
 VS_OUTPUT_SUELO vertex_suelo(VS_INPUT_SUELO Input)
 {
     VS_OUTPUT_SUELO Output;
-    float alturaSuperficie = 18000.0f;
     float proporcion = Input.Position.y / alturaSuperficie;
     float tamanioTile = 32.0f;
     Output.Position = mul(Input.Position, matWorldViewProj);
@@ -57,3 +59,4 @@ VS_OUTPUT_SUELO vertex_suelo(VS_INPUT_SUELO Input)
     Output.Distancia = mul(Input.Position, matWorldView).z;
     return Output;
 }
+#endif

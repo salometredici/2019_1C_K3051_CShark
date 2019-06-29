@@ -35,7 +35,7 @@ VS_OUTPUT_NIEBLA vertex_nublado(VS_INPUT_NIEBLA input)
 float4 pixel_nublado(VS_OUTPUT_NIEBLA input) : COLOR0
 {
     float4 texel = tex2D(diffuseMap, input.Texcoord);
-    return calcularNiebla(input.Distancia, texel);
+    return calcularNiebla(input.Distancia, input.WorldPosition.y, texel);
 }
 
 technique Nublado
@@ -63,7 +63,7 @@ float4 pixel_iluminado_nublado(VS_OUTPUT_NIEBLA input) : COLOR0
 {
     float4 texel = tex2D(diffuseMap, input.Texcoord);
     float4 color = calcularLuces(input.WorldNormal, input.WorldPosition, texel.rgb);
-    return calcularNiebla(input.Distancia, color);
+    return calcularNiebla(input.Distancia, input.WorldPosition.y, color);
 }
 
 technique NubladoIluminado
@@ -79,7 +79,7 @@ float4 ps_suelo_nublado(VS_OUTPUT_SUELO Input) : COLOR0
 {
     float4 texel = calcularBlendRayos(Input.Rayitas, Input.Texcoord);
     float4 luces = calcularLuces(Input.WorldNormal, Input.WorldPosition, texel.rgb);
-    return calcularNiebla(Input.Distancia, luces);
+    return calcularNiebla(Input.Distancia, Input.WorldPosition.y, luces);
 }
 
 technique SueloNubladoIluminado
@@ -95,7 +95,7 @@ float4 ps_olas_nublado(VS_OUTPUT_OLAS Input) : COLOR0
 {
     float4 tex = tex2D(diffuseMap, Input.Texcoord);
     float distancia = Input.Distancia;
-    float3 color = calcularNiebla(distancia, tex);
+    float3 color = calcularNiebla(distancia, alturaSuperficie, tex);
     return float4(color, Input.Alpha);
 }
 

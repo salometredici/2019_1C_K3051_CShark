@@ -1,4 +1,6 @@
-//variables niebla
+#ifndef __NIEBLA_FX__
+#define __NIEBLA_FX__
+#include <Common.fx>
 float4 colorNiebla;
 float distanciaInicio;
 float distanciaFin;
@@ -17,7 +19,7 @@ bool nublado(float distancia)
     return distancia > distanciaInicio && distanciaFin > distancia;
 }
 
-float4 calcularNiebla(float distancia, float4 color)
+float4 calcularNiebla(float distancia, float altura, float4 color)
 {
     if (nublado(distancia))
     {
@@ -26,5 +28,16 @@ float4 calcularNiebla(float distancia, float4 color)
         float niebla = 1 - resto / total;
         color = (1 - niebla) * colorNiebla + color * niebla;
     }
-    return distancia > distanciaFin ? colorNiebla : color;
+
+    float4 colorFinal = distancia > distanciaFin ? colorNiebla : color;
+
+    if (altura < alturaSuperficie)
+    {
+        return colorFinal * calcularCoeficienteAcuatico(altura);
+    }
+    else
+    {
+        return colorFinal;
+    }
 }
+#endif
