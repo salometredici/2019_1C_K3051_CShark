@@ -13,13 +13,13 @@ namespace CShark.EfectosLuces
     public class ContenedorLuces
     {
         private List<Luz> Luces;
-        private IEnumerable<Luz> LucesPosta;
+        private List<Luz> LucesPosta;
         public int Cantidad { get; private set; }
         public ColorValue[] Colores { get; private set; }
         public Vector4[] Posiciones { get; private set; }
         public float[] Intensidades { get; private set; }
         public float[] Atenuaciones { get; private set; }
-        public float[] Especulares { get; private set; }
+        private Luz LuzSolar;
 
         private const int N = 10;
 
@@ -32,7 +32,10 @@ namespace CShark.EfectosLuces
             Intensidades = new float[N];
             Posiciones = new Vector4[N];
             Atenuaciones = new float[N];
-            Especulares = new float[N];
+        }
+
+        public void SetLuzSolar(Luz luz) {
+            LuzSolar = luz;
         }
 
         public void AgregarLuz(Luz luz) {
@@ -48,17 +51,19 @@ namespace CShark.EfectosLuces
         public void Update(TGCVector3 player) {
             LucesPosta = Luces
                 .Where(luz => luz.Distancia(player) < DistanciaCercania)
-                .Take(N);
+                .Take(N)
+                .ToList();
+            LucesPosta.Add(LuzSolar);
             ArmarLuces();
         }
 
         public void ArmarLuces() {
             Cantidad = Math.Min(LucesPosta.Count(), N);
             for (int i = 0; i < Cantidad; i++) {
-                Colores[i] = ColorValue.FromColor(LucesPosta.ElementAt(i).Color);
-                Intensidades[i] = LucesPosta.ElementAt(i).Intensidad;
-                Atenuaciones[i] = LucesPosta.ElementAt(i).Atenuacion;
-                Posiciones[i] = TGCVector3.Vector3ToVector4(LucesPosta.ElementAt(i).Posicion);
+                Colores[i] = ColorValue.FromColor(LucesPosta[i].Color);
+                Intensidades[i] = LucesPosta[i].Intensidad;
+                Atenuaciones[i] = LucesPosta[i].Atenuacion;
+                Posiciones[i] = TGCVector3.Vector3ToVector4(LucesPosta[i].Posicion);
             }
         }
     }

@@ -62,6 +62,7 @@ namespace CShark.Terreno
             Skybox = new SkyBox(Centro);
             Box = TGCBox.fromSize(Skybox.Center, Skybox.Size);
             Sol = new Sol(Centro + new TGCVector3(0, 50000, 0));
+            ContenedorLuces.Instancia.SetLuzSolar(Sol.Luz);
         }
 
         public void CargarTerreno() {

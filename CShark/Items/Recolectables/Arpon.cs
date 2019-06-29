@@ -11,6 +11,6 @@ namespace CShark.Items.Recolectables
     public class Arpon : RecolectableAnimado
     {
         public override ERecolectable Tipo => ERecolectable.Arpon;
-        public Arpon(TGCVector3 posicion) : base("Arpon", 2, posicion, 50f, Color.Red) { }
+        public Arpon(TGCVector3 posicion) : base("Arpon", 4, posicion, 50f, Color.Red) { }
     }
 }
