@@ -17,7 +17,7 @@ namespace CShark.NPCs.Peces
             Comportamiento = new Giratorio(300f, posicion, 250f);
             Rotacion = new TGCVector3(0, -(float)Math.PI / 2, 0);
             Body = BulletRigidBodyFactory.Instance.CreateBall(10f, 50f, posicion);
-            Escala = new TGCVector3(4, 4, 4);
+            Escala = 4;
         }
     }
 }

@@ -2,6 +2,7 @@
 using BulletSharp.Math;
 using CShark.Managers;
 using CShark.Model;
+using CShark.NPCs.Enemigos;
 using CShark.Terreno;
 using System;
 using System.Collections.Generic;
@@ -35,9 +36,10 @@ namespace CShark.Jugador
 
         public override void Update(GameModel game) {
             base.Update(game);
+            Tiburon tibu = null;
             foreach (var bala in Municiones.ToList() /*bien villero para poder pisar la lista en el loop*/) {
-                if (Mapa.Instancia.Colisionan(bala, FaunaManager.Tiburon.Body)) {
-                    FaunaManager.Tiburon.RecibirDaño(50f);
+                if ((tibu = Mapa.Instancia.BalaColisiona(bala)) != null){
+                    tibu.RecibirDaño(50f);
                     Municiones.Remove(bala);
                 }
             }

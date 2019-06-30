@@ -14,7 +14,6 @@ namespace CShark.Animales.Enemigos
     {
         public TGCVector3 Posicion;
         public TGCVector3 Rotacion;
-        private TGCVector3 Escala;
         private float ValorMaximo;
         private float ValorAnterior = 0;
 
@@ -29,15 +28,13 @@ namespace CShark.Animales.Enemigos
             ValorMaximo = valorMaximo;
             Borde = TGCBox.fromSize(new TGCVector3(AnchoBarra, AltoBarra, 1f), Color.Black);
             Rectangulo = TGCBox.fromSize(new TGCVector3(AnchoBarra - 10, AltoBarra - 10, 3f), Color.LimeGreen);
-            OffsetAltura = new TGCVector3(0, 200f, 0);
-            Escala = new TGCVector3(1f, 1f, 1f);
+            OffsetAltura = new TGCVector3(0, 750f, 0);
         }
 
-        public void Update(float valor, TGCVector3 posicion, TGCVector3 rotacion) {
+        public void Update(float valor, float escala, TGCVector3 posicion, TGCVector3 rotacion) {
             Posicion = posicion + OffsetAltura;
             Rotacion = rotacion;
-            if (valor != ValorAnterior)
-                Escala = new TGCVector3(valor / ValorMaximo, 1, 1);
+            var Escala = new TGCVector3(valor / ValorMaximo * escala, escala, escala);
             ValorAnterior = valor;
             var transformacion = TGCMatrix.Scaling(Escala) * TGCMatrix.RotationY(Rotacion.Y) * TGCMatrix.Translation(Posicion);
             Borde.Transform = transformacion;

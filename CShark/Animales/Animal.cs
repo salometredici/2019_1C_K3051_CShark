@@ -47,10 +47,10 @@ namespace CShark.Animales
         }
 
         public TGCMatrix ArmarTransformacion() {
-            //return TGCMatrix.Scaling(Escala) *
-            //    TGCMatrix.RotationYawPitchRoll(Rotacion.Y, Rotacion.X, Rotacion.Z) 
-            //    * TGCMatrix.Translation(Posicion);    
-            return TGCMatrix.RotationYawPitchRoll(Rotacion.Y, Rotacion.X, Rotacion.Z) * TGCMatrix.Translation(Posicion);
+            return TGCMatrix.Scaling(_escala) *
+                TGCMatrix.RotationYawPitchRoll(Rotacion.Y, Rotacion.X, Rotacion.Z) 
+                * TGCMatrix.Translation(Posicion);    
+            //return TGCMatrix.RotationYawPitchRoll(Rotacion.Y, Rotacion.X, Rotacion.Z) * TGCMatrix.Translation(Posicion);
         }
 
         public void Dispose() {
@@ -68,6 +68,16 @@ namespace CShark.Animales
             set { Mesh.Rotation = value; }
         }
 
-        public TGCVector3 Escala;
+
+
+        public float Escala {
+            get { return _esc; }
+            set {
+                _esc = value;
+                _escala = new TGCVector3(_esc, _esc, _esc);
+            }
+        }
+        private float _esc;
+        private TGCVector3 _escala;
     }
 }

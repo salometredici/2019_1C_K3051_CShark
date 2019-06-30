@@ -6,6 +6,7 @@ using CShark.EfectosLuces;
 using CShark.Fisica.Colisiones;
 using CShark.Jugador;
 using CShark.Model;
+using CShark.NPCs.Enemigos;
 using CShark.Objetos;
 using CShark.Optimizaciones;
 using CShark.Utilidades;
@@ -39,6 +40,8 @@ namespace CShark.Terreno
         public List<IRenderable> Objetos;
         public List<Brillante> ObjetosGlow;
 
+        public List<Tiburon> Tiburones;
+
         private Suelo Suelo;
         private SkyBox Skybox;
         public Superficie Superficie;
@@ -46,6 +49,9 @@ namespace CShark.Terreno
         public Sol Sol;
         public float XMin => Centro.X - Box.Size.X / 2f;
         public float XMax => Centro.X + Box.Size.X / 2f;
+
+        
+
         public float YMin => Centro.Y;
         public float YMax => Centro.Y + Box.Size.Y / 2f;
         public float ZMin => Centro.Z - Box.Size.Z / 2f;
@@ -57,6 +63,7 @@ namespace CShark.Terreno
         private Mapa() {
             Objetos = new List<IRenderable>();
             ObjetosGlow = new List<Brillante>();
+            Tiburones = new List<Tiburon>();
         }
               
         public void CargarSkybox() {
@@ -182,6 +189,13 @@ namespace CShark.Terreno
 
         public bool Colisionan(CollisionObject ob1, CollisionObject ob2) {
             return Colisiones.Colisionan(ob1, ob2);
+        }
+
+        public Tiburon BalaColisiona(RigidBody bala) {
+            foreach (var tibu in Tiburones)
+                if (Colisionan(tibu.Body, bala))
+                    return tibu;
+            return null;
         }
 
         public void Render(GameModel game) {

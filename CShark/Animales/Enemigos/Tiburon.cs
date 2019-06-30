@@ -38,6 +38,7 @@ namespace CShark.NPCs.Enemigos
             Mapa.Instancia.AgregarBody(Body);
             Mesh.BoundingBox.setRenderColor(Color.Red);
             Mesh.AutoUpdateBoundingBox = true;
+            Escala = 4;
         }
 
         public override void Update(GameModel game) {
@@ -46,47 +47,40 @@ namespace CShark.NPCs.Enemigos
             var distanciaAlPlayer = TgcCollisionUtils.sqDistPointAABB(game.Player.Posicion, Mesh.BoundingBox);
             if (Vivo)
             {
-                BarraVida.Update(Vida, Posicion, Rotacion);
-            }
-            if (PlayerDetectado(distanciaAlPlayer))
-            {
-                if (!Persiguiendo)
-                {
-                    Persiguiendo = !Persiguiendo;
-                    MusicPlayer.SwitchMusic(false, Persiguiendo);
-                    Comportamiento = new Perseguidor(0.1f, 1f, game.Player);
-                }
-                if (EnContacto(distanciaAlPlayer))
-                {
-                    if (!Mordio)
-                    {
-                        Atacar(game.Player);
+                BarraVida.Update(Vida, Escala, Posicion, Rotacion);
+                if (PlayerDetectado(distanciaAlPlayer)) {
+                    if (!Persiguiendo) {
+                        Persiguiendo = !Persiguiendo;
+                        MusicPlayer.SwitchMusic(false, Persiguiendo);
+                        Comportamiento = new Perseguidor(0.1f, 1f, game.Player);
                     }
-                    Mesh.BoundingBox.setRenderColor(Color.Yellow);
+                    if (EnContacto(distanciaAlPlayer)) {
+                        if (!Mordio) {
+                            Atacar(game.Player);
+                        }
+                        Mesh.BoundingBox.setRenderColor(Color.Yellow);
+                    }
+                    else {
+                        Mordio = !Mordio;
+                        Mesh.BoundingBox.setRenderColor(Color.Green);
+                    }
                 }
-                else
-                {
-                    Mordio = !Mordio;
-                    Mesh.BoundingBox.setRenderColor(Color.Green);
+                else {
+                    if (Persiguiendo) {
+                        Persiguiendo = false;
+                        MusicPlayer.SwitchMusic(false, Persiguiendo);
+                        Mordio = false;
+                        Comportamiento = Aleatorio;
+                    }
+                    Mesh.BoundingBox.setRenderColor(Color.Red);
                 }
-            }
-            else
-            {
-                if (Persiguiendo)
-                {
-                    Persiguiendo = false;
-                    MusicPlayer.SwitchMusic(false, Persiguiendo);
-                    Mordio = false;
-                    Comportamiento = Aleatorio;
-                }
-                Mesh.BoundingBox.setRenderColor(Color.Red);
             }
         }
 
         public override void Render(GameModel game) {
             base.Render(game);
-            if (Vivo) BarraVida.Render(Vida);
-            Mesh.BoundingBox.Render();  //Sólo porque quería corroborar que funcionaba, se puede borrar
+            if (Vivo)
+                BarraVida.Render(Vida);
         }
 
         public void Atacar(Player player)
