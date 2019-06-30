@@ -37,6 +37,7 @@ namespace CShark.Terreno
         private Barco Barco;
         private MesaCrafteo Mesa;
         private List<IRenderable> Objetos;
+        public List<Brillante> ObjetosGlow;
 
         private Suelo Suelo;
         private SkyBox Skybox;
@@ -55,6 +56,7 @@ namespace CShark.Terreno
 
         private Mapa() {
             Objetos = new List<IRenderable>();
+            ObjetosGlow = new List<Brillante>();
         }
               
         public void CargarSkybox() {
@@ -124,7 +126,7 @@ namespace CShark.Terreno
 
         public void CargarCorales(TgcScene corales) {
             foreach (var coral in corales.Meshes) {
-                Objetos.Add(new Coral(coral));
+                ObjetosGlow.Add(new Coral(coral));
                 AgregarBody(CreateRBFromMesh(coral));
             }
         }

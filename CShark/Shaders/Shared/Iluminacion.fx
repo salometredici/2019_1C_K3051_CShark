@@ -37,8 +37,6 @@ Luz getLuz(int i)
     return luz;
 };
 
-
-
 float4 calcularLuces(float3 worldNormal, float3 worldPosition, float3 texel)
 {
     float3 Nn = normalize(worldNormal);

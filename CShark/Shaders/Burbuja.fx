@@ -1,14 +1,6 @@
 #include <Shared/Common.fx>
 #include <Shared/Niebla.fx>
 
-struct VS_INPUT
-{
-    float4 Position : POSITION0;
-    float3 Normal : NORMAL0;
-    float4 Color : COLOR;
-    float2 Texcoord : TEXCOORD0;
-};
-
 struct VS_OUTPUT
 {
     float4 Position : POSITION0;
@@ -16,7 +8,6 @@ struct VS_OUTPUT
     float4 Color : TEXCOORD1;
     float Distancia : TEXCOORD2;
 };
-
 
 VS_OUTPUT vs_main(VS_INPUT Input)
 {

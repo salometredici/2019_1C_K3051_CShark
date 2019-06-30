@@ -1,6 +1,7 @@
 ﻿using CShark.EfectosLuces;
 using CShark.Managers;
 using CShark.NPCs.Peces;
+using CShark.Objetos;
 using CShark.Terreno;
 using CShark.UI;
 using CShark.Utilidades;
@@ -78,6 +79,7 @@ namespace CShark.Model
             var rocas = loader.loadSceneFromFile(media + @"Mapa\Rocas-TgcScene.xml");
             Mapa.Instancia.CargarRocas(rocas);
             PantallaCarga.Progresar("Cargando extras...");
+            TexturasColor.CargarColores();
             var extras1 = loader.loadSceneFromFile(media + @"Mapa\Props 1-TgcScene.xml");
             //var extras2 = loader.loadSceneFromFile(media + @"Mapa\Props 2-TgcScene.xml");
             var extras3 = loader.loadSceneFromFile(media + @"Mapa\Props 3-TgcScene.xml");

@@ -7,6 +7,8 @@ float3x4 matInverseTransposeWorld; //Matriz Transpose(Invert(World))
 
 float time = 0;
 float alturaSuperficie = 18000;
+float screen_dx;
+float screen_dy;
 
 texture texDiffuseMap;
 sampler2D diffuseMap = sampler_state
@@ -17,6 +19,14 @@ sampler2D diffuseMap = sampler_state
     MINFILTER = LINEAR;
     MAGFILTER = LINEAR;
     MIPFILTER = LINEAR;
+};
+
+struct VS_INPUT
+{
+    float4 Position : POSITION0;
+    float3 Normal : NORMAL0;
+    float4 Color : COLOR;
+    float2 Texcoord : TEXCOORD0;
 };
 
 float calcularCoeficienteAcuatico(float altura)

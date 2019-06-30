@@ -13,7 +13,7 @@ using TGC.Core.SceneLoader;
 
 namespace CShark.Objetos
 {
-    public class Coral : Iluminable
+    public class Coral : Brillante
     {
         private RigidBody Body;
 

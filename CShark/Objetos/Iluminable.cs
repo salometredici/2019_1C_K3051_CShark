@@ -27,7 +27,7 @@ namespace CShark.Objetos
         public Iluminable(TgcMesh mesh, Material material) : this(material) {
             Tecnica = "NubladoIluminado";
             Mesh = mesh;
-            Mesh.Technique = Tecnica;
+            //Mesh.Technique = Tecnica;
         }
 
         public TgcBoundingAxisAlignBox BoundingBox => Mesh.BoundingBox;
