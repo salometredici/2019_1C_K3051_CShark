@@ -1,5 +1,6 @@
 ﻿using CShark.EfectosLuces;
 using CShark.Model;
+using CShark.Objetos;
 using Microsoft.DirectX.Direct3D;
 using System;
 using System.Collections.Generic;
@@ -14,28 +15,24 @@ using TGC.Core.Textures;
 
 namespace CShark.Terreno
 {
-    public class Sol : IRenderObject
+    public class Sol : Brillante
     {
-        private TgcMesh Mesh;
         public TGCVector3 Posicion;
         private float Rotacion;
         public bool AlphaBlendEnable { get; set; }
-        public TgcBoundingAxisAlignBox BoundingBox => Mesh.BoundingBox;
         public Luz Luz;
 
-        public Sol(TGCVector3 posicion) {
-            var path = Game.Default.MediaDirectory + @"Mapa\Textures\SunTexture.jpg";
-            var tex = TgcTexture.createTexture(D3DDevice.Instance.Device, path);
-            var sphere = Game.Default.MediaDirectory + @"Mapa\Sphere-TgcScene.xml";
+        public Sol(TgcMesh mesh, TGCVector3 posicion) : base(mesh, Materiales.Normal) {
             Posicion = posicion;
             Rotacion = 0;
-            Luz = new Luz(Color.White, Posicion, 3000f, 0.1f);
-            Efectos.Instancia.AgregarLuz(Luz);
-            Mesh = new TgcSceneLoader().loadSceneFromFile(sphere).Meshes[0];
+            Luz = new Luz(System.Drawing.Color.White, Posicion, 3000f, 0.1f);
             Mesh.AutoTransformEnable = false;
+            var path = Game.Default.MediaDirectory + @"Mapa\Textures\SunTexture.jpg";
+            var tex = TgcTexture.createTexture(D3DDevice.Instance.Device, path);
             Mesh.changeDiffuseMaps(new[] {
                 tex
             });
+            Efectos.Instancia.AgregarLuz(Luz);
         }
 
         public void Update(float elapsedTime) {

@@ -20,7 +20,7 @@ namespace CShark.Items
 {
     public abstract class RecolectableAnimado : Recolectable
     {
-        public TgcMesh Mesh;
+        private TgcMesh _mesh;
         private float rotacion;
         private TGCVector3 posicion; //estatica central
         private TGCVector3 escala;
@@ -30,22 +30,24 @@ namespace CShark.Items
         private TgcMesh LetraE2;
         private TGCVector3 escalaBox; //un poco mas grande para agarre
 
-        public override TgcBoundingAxisAlignBox Box => _box;
+        public override TgcBoundingAxisAlignBox BoundingBox => _box;
+
+        public override TgcMesh Mesh => _mesh;
         public override TGCVector3 Posicion => posicion;
         public override TGCVector3 Rotacion => new TGCVector3(0,rotacion,0);
 
         private TgcBoundingAxisAlignBox _box;
 
         private Effect Efecto;
-        private Material Material;
+        public override Material Material => Materiales.Metal;
         private Luz Luz;
 
         public RecolectableAnimado(string mesh, float _escala, TGCVector3 _posicion, float _offsetLetra, Color colorLuz) : base(_posicion) {
-            Mesh = MeshLoader.GetInstance(mesh);
+            _mesh = MeshLoader.GetInstance(mesh);
             LetraE1 = MeshLoader.GetInstance("LetraE");
             LetraE2 = MeshLoader.GetInstance("LetraE");
             LetraE1.AutoTransformEnable = false;
-            Mesh.AutoTransformEnable = false;
+            _mesh.AutoTransformEnable = false;
             LetraE2.AutoTransformEnable = false;
             escala = new TGCVector3(_escala, _escala, _escala);
             rotacion = 0f;
@@ -62,7 +64,6 @@ namespace CShark.Items
             _box.transform(TGCMatrix.Scaling(escala) * TGCMatrix.Translation(posicion));
             Efecto = Efectos.Instancia.EfectoLuzNiebla;
             Efecto.Technique = "Nublado";
-            Material = Materiales.Metal;
             Luz = new Luz(colorLuz, posicion, 10f, 0.1f);
             Efectos.Instancia.AgregarLuz(Luz);
         }
@@ -106,6 +107,7 @@ namespace CShark.Items
                 }
             }
         }
+
 
         public override void Dispose() {
             Mesh.Dispose();

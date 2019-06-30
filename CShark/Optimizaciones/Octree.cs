@@ -45,6 +45,20 @@ namespace CShark.Optimizaciones
             }
         }
 
+        public void renderOscuro(GameModel game) {
+            var pMax = sceneBounds.PMax;
+            var pMin = sceneBounds.PMin;
+            findVisibleMeshes(game.Frustum, octreeRootNode,
+                pMin.X, pMin.Y, pMin.Z,
+                pMax.X, pMax.Y, pMax.Z);
+            foreach (var mesh in Objetos) {
+                if (mesh.Enabled) {
+                    mesh.RenderOscuro();
+                    mesh.Enabled = false;
+                }
+            }
+        }
+
         private void findVisibleMeshes(TgcFrustum frustum, OctreeNode node,
             float boxLowerX, float boxLowerY, float boxLowerZ,
             float boxUpperX, float boxUpperY, float boxUpperZ) {

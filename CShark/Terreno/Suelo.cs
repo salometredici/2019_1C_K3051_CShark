@@ -53,6 +53,14 @@ namespace CShark.Terreno
             //this.DibujarWireFrame();
         }
 
+        public void RenderOscuro() {
+            Terreno.Effect.SetValue("texRayosSol", TexturaRayoSol);
+            Terreno.Effect.SetValue("time", time);
+            Terreno.Technique = "DibujarObjetosOscuros";
+            Terreno.Render();
+            Terreno.Technique = "SueloNubladoIluminado";
+        }
+
         private void DibujarWireFrame() {
             D3DDevice.Instance.Device.RenderState.FillMode = FillMode.WireFrame;
             D3DDevice.Instance.Device.RenderState.Lighting = false;

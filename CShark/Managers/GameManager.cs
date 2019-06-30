@@ -67,6 +67,7 @@ namespace CShark.Model
             var media = Game.Default.MediaDirectory;
             var mapPath = media + "Mapa";
             PantallaCarga.Progresar("Cargando terreno...");
+            TexturasColor.CargarColores();
             Mapa.Instancia.CargarTerreno();
             PantallaCarga.Progresar("Cargando skybox...");
             Mapa.Instancia.CargarSkybox();
@@ -79,7 +80,6 @@ namespace CShark.Model
             var rocas = loader.loadSceneFromFile(media + @"Mapa\Rocas-TgcScene.xml");
             Mapa.Instancia.CargarRocas(rocas);
             PantallaCarga.Progresar("Cargando extras...");
-            TexturasColor.CargarColores();
             var extras1 = loader.loadSceneFromFile(media + @"Mapa\Props 1-TgcScene.xml");
             //var extras2 = loader.loadSceneFromFile(media + @"Mapa\Props 2-TgcScene.xml");
             var extras3 = loader.loadSceneFromFile(media + @"Mapa\Props 3-TgcScene.xml");

@@ -1,4 +1,5 @@
 ﻿using CShark.Model;
+using CShark.Objetos;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,18 +9,24 @@ using System.Threading.Tasks;
 using TGC.Core.BoundingVolumes;
 using TGC.Core.Geometry;
 using TGC.Core.Mathematica;
+using TGC.Core.SceneLoader;
 using TGC.Core.Shaders;
 
 namespace CShark.Items.Recolectables
 {
     public class Burbuja : Recolectable
     {
-        public TGCSphere Esfera;
-        public override TgcBoundingAxisAlignBox Box => _box; //lo calculo una sola vez..
+        private TGCSphere Esfera;
+        public override TgcBoundingAxisAlignBox BoundingBox => _box; //lo calculo una sola vez..
         public override TGCVector3 Posicion => Esfera.Position;
         public override TGCVector3 Rotacion => Esfera.Rotation;
         public override ERecolectable Tipo => ERecolectable.Burbuja;
         float time = 0;
+        private TgcMesh _mesh;
+
+        public override TgcMesh Mesh => _mesh;
+
+        public override Material Material => Materiales.Normal;
 
         private TgcBoundingAxisAlignBox _box;
 
@@ -35,6 +42,7 @@ namespace CShark.Items.Recolectables
             Esfera.updateValues();
             Esfera.Transform = TGCMatrix.Scaling(Esfera.Radius, Esfera.Radius, Esfera.Radius) * TGCMatrix.Translation(Esfera.Position);
             _box = CalcularBox();
+            _mesh = Esfera.toMesh("b");
         }
 
         private TgcBoundingAxisAlignBox CalcularBox() {

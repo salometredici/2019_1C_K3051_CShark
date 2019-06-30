@@ -40,6 +40,12 @@ namespace CShark.Terreno
             DesactivarAlphaBlend();
         }
 
+        public void RenderOscuro() {
+            Terrain.Technique = "DibujarObjetosOscuros";
+            Terrain.Render();
+            Terrain.Technique = "OlasNubladoIluminado";
+        }
+
         public void Dispose() {
             Terrain.Dispose();
         }

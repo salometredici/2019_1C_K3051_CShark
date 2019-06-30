@@ -36,7 +36,7 @@ namespace CShark.Terreno
         //Objetos especiales
         private Barco Barco;
         private MesaCrafteo Mesa;
-        private List<IRenderable> Objetos;
+        public List<IRenderable> Objetos;
         public List<Brillante> ObjetosGlow;
 
         private Suelo Suelo;
@@ -63,7 +63,10 @@ namespace CShark.Terreno
             Centro = Suelo.Center;
             Skybox = new SkyBox(Centro);
             Box = TGCBox.fromSize(Skybox.Center, Skybox.Size);
-            Sol = new Sol(Centro + new TGCVector3(0, 50000, 0));
+            var sphere = Game.Default.MediaDirectory + @"Mapa\Sphere-TgcScene.xml";
+            var meshsol = new TgcSceneLoader().loadSceneFromFile(sphere).Meshes[0];
+            Sol = new Sol(meshsol, Centro + new TGCVector3(0, 50000, 0));
+            ObjetosGlow.Add(Sol);
             ContenedorLuces.Instancia.SetLuzSolar(Sol.Luz);
         }
 
@@ -192,6 +195,14 @@ namespace CShark.Terreno
             Superficie.Render();
             Burbujeador.Render();
             Sol.Render();
+        }
+
+        public void RenderOscuros(GameModel game) {
+            Mesa.RenderOscuro();
+            Suelo.RenderOscuro();
+            Skybox.RenderOscuro();
+            Octree.renderOscuro(game);
+            Superficie.RenderOscuro();
         }
 
         public void Dispose() {

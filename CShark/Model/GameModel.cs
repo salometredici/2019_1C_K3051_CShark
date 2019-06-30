@@ -164,8 +164,8 @@ namespace CShark.Model
             Device.DepthStencilSurface = g_pDepthStencil;
             Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, BackgroundColor, 1.0f, 0);
             Device.BeginScene();
-            Mapa.Render(this);
             Mapa.Instancia.ObjetosGlow.ForEach(o => o.Render(this));
+            Mapa.Render(this);
             Device.EndScene();
             pSurf.Dispose();
         }
@@ -177,6 +177,7 @@ namespace CShark.Model
             Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
             Device.BeginScene();
             Mapa.Instancia.ObjetosGlow.ForEach(o => o.RenderBrillo());
+            Mapa.RenderOscuros(this);
             Device.EndScene();
             pSurf.Dispose();
         }

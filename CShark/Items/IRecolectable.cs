@@ -1,5 +1,6 @@
 ﻿using CShark.Jugador;
 using CShark.Model;
+using CShark.Objetos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,10 @@ using TGC.Core.BoundingVolumes;
 
 namespace CShark.Items
 {
-    public interface IRecolectable : IDisposable
+    public interface IRecolectable : IRenderable
     {
         TgcBoundingSphere EsferaCercania { get; }
-        TgcBoundingAxisAlignBox Box { get; }
         ERecolectable Tipo { get; }
-        void Update(GameModel game);
-        void Render(GameModel game);
         bool PuedeRecoger(Player player);
     }
 

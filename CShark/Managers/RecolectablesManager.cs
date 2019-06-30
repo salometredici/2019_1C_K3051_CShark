@@ -1,6 +1,7 @@
 ﻿using CShark.Items;
 using CShark.Items.Recolectables;
 using CShark.Model;
+using CShark.Terreno;
 using CShark.Utilidades;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,7 @@ namespace CShark.Managers
         private void Spawnear(TGCVector3 posicion, Random random) {
             var item = RandomItem(posicion, random);
             Recolectables.Add(item);
+            Mapa.Instancia.Objetos.Add(item);
         }
 
         private ERecolectable RandomTipo(Random random) {
@@ -70,10 +72,6 @@ namespace CShark.Managers
             meshes.ForEach(m => MeshLoader.Instance.LoadMesh(path, m));
         }
 
-        public void Render(GameModel game) {
-            Recolectables.ForEach(r => r.Render(game));
-        }
-
         public void Update(GameModel game) {
             Recolectables.ForEach(r => r.Update(game));
         }
@@ -84,6 +82,10 @@ namespace CShark.Managers
 
         public void Dispose() {
             Recolectables.ForEach(r => r.Dispose());
+        }
+
+        public void Render(GameModel game) {
+
         }
     }
 }

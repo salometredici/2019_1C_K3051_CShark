@@ -108,3 +108,19 @@ technique OlasNubladoIluminado
         PixelShader = compile ps_3_0 ps_olas_nublado();
     }
 }
+
+// dibuja negro (tiene que ocultar lo que esta oscuro)
+float4 PSOscuros(float2 Texcoord : TEXCOORD0) : COLOR0
+{
+    float4 fvBaseColor = tex2D(diffuseMap, Texcoord);
+    return float4(0, 0, 0, fvBaseColor.a);
+}
+
+technique DibujarObjetosOscuros
+{
+    pass Pass_0
+    {
+        VertexShader = compile vs_3_0 vertex_nublado();
+        PixelShader = compile ps_3_0 PSOscuros();
+    }
+}

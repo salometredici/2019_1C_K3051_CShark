@@ -27,7 +27,6 @@ namespace CShark.Objetos
         public Iluminable(TgcMesh mesh, Material material) : this(material) {
             Tecnica = "NubladoIluminado";
             Mesh = mesh;
-            //Mesh.Technique = Tecnica;
         }
 
         public TgcBoundingAxisAlignBox BoundingBox => Mesh.BoundingBox;
@@ -56,14 +55,22 @@ namespace CShark.Objetos
         }
 
         public virtual void Dispose() {
-            //if (Mesh != null)
-            //    Mesh.Dispose();
+            if (Mesh != null)
+                Mesh.Dispose();
         }
 
         public virtual void Render(GameModel game) {
             this.ActualizarLuces(game.Camara.Position);
             if (Mesh != null)
                 Mesh.Render();
+        }
+
+        public virtual void RenderOscuro() {
+            if (Mesh != null) {
+                Mesh.Technique = "DibujarObjetosOscuros";
+                Mesh.Render();
+                Mesh.Technique = "NubladoIluminado";
+            }
         }
 
         public virtual void Update(GameModel game) {

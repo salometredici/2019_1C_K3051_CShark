@@ -296,7 +296,7 @@ namespace CShark.Jugador
         }
 
         private bool EstaMirando(IRecolectable recolectable) {
-            return RayoProximidad.Intersecta(recolectable.Box);
+            return RayoProximidad.Intersecta(recolectable.BoundingBox);
         }
 
         public bool EstaMirando(Sol sol) {

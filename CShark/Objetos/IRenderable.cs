@@ -13,6 +13,7 @@ namespace CShark.Objetos
         TgcBoundingAxisAlignBox BoundingBox { get; }
         bool Enabled { get; set; }
         void Render(GameModel game);
+        void RenderOscuro();
         void Update(GameModel game);
     }
 }

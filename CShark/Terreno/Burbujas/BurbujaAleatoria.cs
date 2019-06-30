@@ -57,6 +57,14 @@ namespace CShark.Terreno.Burbujas
             });
         }
 
+        public void RenderOscuro(float time) {
+            Burbujas.ForEach(b => {
+                b.Effect.SetValue("time", time);
+                b.Transform = TGCMatrix.Scaling(b.Scale) * TGCMatrix.Translation(b.Position);
+                b.Render();
+            });
+        }
+
         private TGCVector3 OffsetAleatorio(Random rand) {
             var x = rand.Next(150) * SR(rand);
             var y = rand.Next(300) * SR(rand);

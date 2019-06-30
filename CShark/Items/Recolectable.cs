@@ -1,8 +1,10 @@
 ﻿using CShark.Jugador;
 using CShark.Model;
+using CShark.Objetos;
 using Microsoft.DirectX.DirectInput;
 using TGC.Core.BoundingVolumes;
 using TGC.Core.Mathematica;
+using TGC.Core.SceneLoader;
 using TGC.Core.Shaders;
 using Effect = Microsoft.DirectX.Direct3D.Effect;
 
@@ -13,9 +15,11 @@ namespace CShark.Items
         public abstract TGCVector3 Posicion { get; }
         public abstract TGCVector3 Rotacion { get; }
         public abstract ERecolectable Tipo { get; }
-        public abstract TgcBoundingAxisAlignBox Box { get; }
         public TgcBoundingSphere EsferaCercania { get; }
-
+        public abstract TgcBoundingAxisAlignBox BoundingBox { get; }
+        public abstract Material Material { get; }
+        public abstract TgcMesh Mesh { get; }
+        public bool Enabled { get; set; }
         public bool Recogido = false;
 
         public abstract void Render(GameModel game);
@@ -39,5 +43,8 @@ namespace CShark.Items
             return player.PuedeRecoger(this);
         }
 
+        public void RenderOscuro() {
+
+        }
     }
 }

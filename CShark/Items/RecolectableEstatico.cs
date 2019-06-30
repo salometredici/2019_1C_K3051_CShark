@@ -14,17 +14,18 @@ namespace CShark.Items
     {
         public override TGCVector3 Posicion => Mesh.Position;
         public override TGCVector3 Rotacion => Mesh.Rotation;
-        public override TgcBoundingAxisAlignBox Box => _box;
+        public override TgcBoundingAxisAlignBox BoundingBox => _box;
+        public override TgcMesh Mesh => _mesh;
 
-        private TgcMesh Mesh;
         private TgcBoundingAxisAlignBox _box;
+        private TgcMesh _mesh;
 
         public RecolectableEstatico(TgcMesh mesh) : base(mesh.Position) {
-            Mesh = mesh;
+            _mesh = mesh;
             _box = GenerarBox();
             var trasladar = TGCMatrix.Translation(mesh.Position);
             _box.transform(trasladar);
-            Mesh.Transform = trasladar;
+            _mesh.Transform = trasladar;
         }
 
         public override void Render(GameModel game) {
