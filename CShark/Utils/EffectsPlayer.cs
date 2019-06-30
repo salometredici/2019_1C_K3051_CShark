@@ -27,10 +27,14 @@ namespace CShark.Utils
 
         private void LoadSoundEffects()
         {
-            CoinSound = new TgcStaticSound(); CoinSound.loadSound(Game.Default.MusicDirectory + "Coin.wav", DirectSound.DsDevice);
-            BiteSound = new TgcStaticSound(); BiteSound.loadSound(Game.Default.MusicDirectory + "Bite.wav", DirectSound.DsDevice);
-            UnderWaterSound = new TgcStaticSound(); UnderWaterSound.loadSound(Game.Default.MusicDirectory + "UnderWater.wav", DirectSound.DsDevice);
-            BackgroundSound = new TgcStaticSound(); BackgroundSound.loadSound(Game.Default.MusicDirectory + "Background.wav", DirectSound.DsDevice);
+            CoinSound = new TgcStaticSound();
+            CoinSound.loadSound(Game.Default.MusicDirectory + "Coin.wav", DirectSound.DsDevice);
+            BiteSound = new TgcStaticSound();
+            BiteSound.loadSound(Game.Default.MusicDirectory + "Bite.wav", DirectSound.DsDevice);
+            UnderWaterSound = new TgcStaticSound();
+            UnderWaterSound.loadSound(Game.Default.MusicDirectory + "UnderWater.wav", DirectSound.DsDevice);
+            BackgroundSound = new TgcStaticSound();
+            BackgroundSound.loadSound(Game.Default.MusicDirectory + "Background.wav", DirectSound.DsDevice);
         }
 
         public static void Play(SoundEffect sound)

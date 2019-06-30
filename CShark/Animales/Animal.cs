@@ -1,41 +1,42 @@
 ﻿using BulletSharp;
 using BulletSharp.Math;
 using CShark.Model;
+using CShark.Objetos;
 using CShark.Terreno;
+using CShark.Utilidades;
+using TGC.Core.BoundingVolumes;
 using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
+using TGC.Core.Shaders;
 
 namespace CShark.Animales
 {
-    public abstract class Animal : IAnimal
+    public abstract class Animal : Iluminable
     {
         protected IComportamiento Comportamiento;
         protected bool Vivo = true;
         protected float Vida;        
         protected bool UsarTransformacionFisica;
-        public TgcMesh Mesh;
         public RigidBody Body;
 
-        public Animal(string mesh, TGCVector3 posicionInicial) {
-            var ruta = Game.Default.MediaDirectory + @"Animales\" + mesh + "-TgcScene.xml";
-            Mesh = new TgcSceneLoader().loadSceneFromFile(ruta).Meshes[0];
+        public Animal(string mesh, TGCVector3 posicionInicial) :base(MeshLoader.GetInstance(mesh), Materiales.Normal) {
             Posicion = posicionInicial;
-            UsarTransformacionFisica = false;
-            Mesh.AutoTransformEnable = false;            
+            UsarTransformacionFisica = false;        
         }
 
-        public virtual void Update(GameModel game) {
+        public override void Update(GameModel game) {
+            base.Update(game);
             if (!UsarTransformacionFisica)
                 Body.WorldTransform = TGCMatrix.Translation(Posicion).ToBsMatrix;
             Comportamiento.Update(game.ElapsedTime, this);
         }
 
-        public virtual void Render(GameModel game) {
+        public override void Render(GameModel game) {
             Mesh.Transform = UsarTransformacionFisica
                 ? new TGCMatrix(Body.InterpolationWorldTransform)
                 : ArmarTransformacion();
-            Mesh.Render();
             Comportamiento.Render();
+            base.Render(game);
         }
 
         public void Morir() {
@@ -50,12 +51,17 @@ namespace CShark.Animales
             return TGCMatrix.Scaling(_escala) *
                 TGCMatrix.RotationYawPitchRoll(Rotacion.Y, Rotacion.X, Rotacion.Z) 
                 * TGCMatrix.Translation(Posicion);    
-            //return TGCMatrix.RotationYawPitchRoll(Rotacion.Y, Rotacion.X, Rotacion.Z) * TGCMatrix.Translation(Posicion);
         }
 
-        public void Dispose() {
-            if (Mesh != null)
-                Mesh.Dispose();
+        public override void RenderOscuro() {
+            var aux = Mesh.Technique;
+            Mesh.Technique = "DibujarObjetosOscuros";
+            Mesh.Transform = UsarTransformacionFisica
+                    ? new TGCMatrix(Body.InterpolationWorldTransform)
+                    : ArmarTransformacion();
+            Comportamiento.Render();
+            Mesh.Technique = aux;
+            base.RenderOscuro();
         }
 
         public TGCVector3 Posicion {
@@ -68,8 +74,6 @@ namespace CShark.Animales
             set { Mesh.Rotation = value; }
         }
 
-
-
         public float Escala {
             get { return _esc; }
             set {
@@ -77,6 +81,15 @@ namespace CShark.Animales
                 _escala = new TGCVector3(_esc, _esc, _esc);
             }
         }
+        /*
+        public Material Material => Materiales.Normal;
+
+        public TgcMesh Mesh => _mesh;
+
+        public TgcBoundingAxisAlignBox BoundingBox => _mesh.BoundingBox;
+
+        public bool Enabled { get; set; }
+        */
         private float _esc;
         private TGCVector3 _escala;
     }

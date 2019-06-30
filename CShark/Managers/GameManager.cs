@@ -27,7 +27,6 @@ namespace CShark.Model
         private LoadingScreen PantallaCarga;
         private MenuManager MenuManager;
         private MusicPlayer MusicPlayer;
-        public TgcDirectSound DirectSound;
         private FaunaManager PezManager;
         private RecolectablesManager RecolectablesManager;
 
@@ -66,6 +65,7 @@ namespace CShark.Model
             var loader = new TgcSceneLoader();
             var media = Game.Default.MediaDirectory;
             var mapPath = media + "Mapa";
+            //ArreglarXML(mapPath);
             PantallaCarga.Progresar("Cargando terreno...");
             TexturasColor.CargarColores();
             Mapa.Instancia.CargarTerreno();
@@ -81,20 +81,23 @@ namespace CShark.Model
             Mapa.Instancia.CargarRocas(rocas);
             PantallaCarga.Progresar("Cargando extras...");
             var extras1 = loader.loadSceneFromFile(media + @"Mapa\Props 1-TgcScene.xml");
-            //var extras2 = loader.loadSceneFromFile(media + @"Mapa\Props 2-TgcScene.xml");
+            var extras2 = loader.loadSceneFromFile(media + @"Mapa\Props 2-TgcScene.xml");
             var extras3 = loader.loadSceneFromFile(media + @"Mapa\Props 3-TgcScene.xml");
             var barco = extras1.getMeshByName("Barco");
             var mesa = extras1.getMeshByName("Mesa");
             extras1.Meshes.Remove(barco);
             extras1.Meshes.Remove(mesa);
             Mapa.Instancia.CargarExtras(extras1);
-            //Mapa.Instancia.CargarExtras(extras2);
+            Mapa.Instancia.CargarExtras(extras2);
             Mapa.Instancia.CargarExtras(extras3);
             Mapa.Instancia.CargarMesaBarco(mesa, barco);
             PantallaCarga.Progresar("Cargando corales...");
             Mapa.Instancia.CargarCorales(loader.loadSceneFromFile(media + @"Mapa\Corales 1-TgcScene.xml"));
             Mapa.Instancia.CargarCorales(loader.loadSceneFromFile(media + @"Mapa\Corales 2-TgcScene.xml"));
             Mapa.Instancia.CargarCorales(loader.loadSceneFromFile(media + @"Mapa\Corales 3-TgcScene.xml"));
+            //Mapa.Instancia.CargarCorales(loader.loadSceneFromFile(media + @"Mapa\Corales 4-TgcScene.xml"));
+            //Mapa.Instancia.CargarCorales(loader.loadSceneFromFile(media + @"Mapa\Corales 5-TgcScene.xml"));
+            //Mapa.Instancia.CargarCorales(loader.loadSceneFromFile(media + @"Mapa\Corales 6-TgcScene.xml"));
             Managers = new List<IManager>();
             PantallaCarga.Progresar("Cargando peces...");
             PezManager = new FaunaManager();
@@ -107,21 +110,32 @@ namespace CShark.Model
             MenuManager.Initialize();
             PantallaCarga.Progresar("Cargando recolectables...");
             Mapa.Instancia.CargarBurbujas(SpawnPlayer);
-            var recolectables = loader.loadSceneFromFile(media + @"Mapa\Recolectables-TgcScene.xml");
-            RecolectablesManager = new RecolectablesManager(recolectables);
+            //var recolectables = loader.loadSceneFromFile(media + @"Mapa\Recolectables-TgcScene.xml");
+            RecolectablesManager = new RecolectablesManager();
             Managers.Add(RecolectablesManager);
-            RecolectablesManager.Initialize(recolectables);
+            RecolectablesManager.Initialize();
             PantallaCarga.Progresar("Optimizando...");
             Mapa.Instancia.Optimizar();
             PantallaCarga.Progresar("Cargando paredes invisibles...");
             var paredes = loader.loadSceneFromFile(media + @"Mapa\Paredes-TgcScene.xml");
-           // Mapa.Instancia.CargarParedes(paredes);
+            //Mapa.Instancia.CargarParedes(paredes);
             Mapa.Instancia.CambiarEfecto(false);
             PantallaCarga.Progresar("Cargando audio...");
             MusicPlayer = new MusicPlayer();
-            //DirectSound = new TgcDirectSound();
             ContenedorLuces.Instancia.ArmarLuces();
             PantallaCarga.Finalizar();
+        }
+
+        private void ArreglarXML(string path) {
+            string[] filePaths = Directory.GetFiles(path, "*.xml");
+            foreach (var file in filePaths) {
+                var tempFile = Path.GetTempFileName();
+                var linesToKeep = File.ReadLines(file)
+                    .Where(l => !l.Contains("MapChannel:1"));
+                File.WriteAllLines(tempFile, linesToKeep);
+                File.Delete(file);
+                File.Move(tempFile, file);
+            }
         }
 
         public void CambiarMenu(TipoMenu tipoMenu) {

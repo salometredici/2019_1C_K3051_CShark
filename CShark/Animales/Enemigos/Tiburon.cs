@@ -100,12 +100,12 @@ namespace CShark.NPCs.Enemigos
         }
         public bool PlayerDetectado(float distanciaAlPlayer)
         {
-            return FastMath.Sqrt(distanciaAlPlayer) < 7000f;            
+            return FastMath.Sqrt(distanciaAlPlayer) < 10000f;            
         }
 
         public bool EnContacto(float distanciaAlPlayer)
         {
-            return FastMath.Sqrt(distanciaAlPlayer) < 300f;
+            return FastMath.Sqrt(distanciaAlPlayer) < 1000f;
         }
 
     }

@@ -14,7 +14,7 @@ namespace CShark.NPCs.Peces
     public class PezAzul : Animal
     {
         public PezAzul(TGCVector3 posicion) : base("Pez Azul", posicion) {
-            Comportamiento = new Giratorio(300f, posicion, 250f);
+            Comportamiento = new Giratorio(3000f, posicion, 2f);
             Rotacion = new TGCVector3(0, -(float)Math.PI / 2, 0);
             Body = BulletRigidBodyFactory.Instance.CreateBall(10f, 50f, posicion);
             Escala = 4;

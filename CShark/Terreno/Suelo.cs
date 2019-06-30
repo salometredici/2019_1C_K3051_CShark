@@ -32,7 +32,6 @@ namespace CShark.Terreno
 
         public Suelo() {
             var textura = Game.Default.MediaDirectory + @"Mapa\Textures\arena.png";
-            var heightmap = Game.Default.MediaDirectory + @"Mapa\Textures\terreno2.png";
             Terreno = new TgcSceneLoader().loadSceneFromFile(Game.Default.MediaDirectory + @"Mapa\Terreno-TgcScene.xml").Meshes[0];
             Terreno.Effect = Efectos.Instancia.EfectoLuzNiebla;
             Terreno.Technique = "SueloNubladoIluminado";

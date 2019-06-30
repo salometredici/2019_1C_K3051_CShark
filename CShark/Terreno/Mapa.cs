@@ -50,7 +50,9 @@ namespace CShark.Terreno
         public float XMin => Centro.X - Box.Size.X / 2f;
         public float XMax => Centro.X + Box.Size.X / 2f;
 
-        
+        public TGCVector3[] VerticesSuelo;
+        public List<IRenderable> Extras;
+        public List<IRenderable> Rocas;
 
         public float YMin => Centro.Y;
         public float YMax => Centro.Y + Box.Size.Y / 2f;
@@ -79,6 +81,7 @@ namespace CShark.Terreno
 
         public void CargarTerreno() {
             Suelo = new Suelo();
+            VerticesSuelo = Suelo.Terreno.getVertexPositions();
             Colisiones = new ColisionesTerreno();
             Colisiones.Init(Suelo.Terreno);
         }
@@ -112,16 +115,22 @@ namespace CShark.Terreno
         }
 
         public void CargarRocas(TgcScene rocas) {
+            Rocas = new List<IRenderable>();
             foreach (var roca in rocas.Meshes) {
-                Objetos.Add(new Roca(roca));
+                var ro = new Roca(roca);
+                Objetos.Add(ro);
+                Rocas.Add(ro);
                 AgregarBody(CreateRBFromMesh(roca));
             }
         }
 
         public void CargarExtras(TgcScene extras) {
+            Extras = new List<IRenderable>();
             foreach (var objeto in extras.Meshes)
             {
-                Objetos.Add(new Extra(objeto));
+                var ex = new Extra(objeto);
+                Objetos.Add(ex);
+                Extras.Add(ex);
                 AgregarBody(CreateRBFromMesh(objeto));
             }
         }
@@ -159,7 +168,7 @@ namespace CShark.Terreno
         }
 
         public void CargarBurbujas(TGCVector3 spawnPlayer) {
-            Burbujeador = new Burbujeador(spawnPlayer, AlturaMar);
+            Burbujeador = new Burbujeador(TGCVector3.Empty, AlturaMar);
         }
 
         public void CambiarEfecto(bool sumergido) {

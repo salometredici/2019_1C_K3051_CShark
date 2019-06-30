@@ -9,7 +9,7 @@ namespace CShark.NPCs.Peces
     public class PezBetta : Animal
     {
         public PezBetta(TGCVector3 posicion) : base("Pez Betta", posicion) {
-            Comportamiento = new Giratorio(300f, posicion, 200f);
+            Comportamiento = new Giratorio(300f, posicion, 0.5f);
             Body = BulletRigidBodyFactory.Instance.CreateBall(10f, 50f, posicion);
             Escala = 6;
         }

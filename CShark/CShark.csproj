@@ -383,6 +383,12 @@
     <Content Include="Media\Colores\7.png" />
     <Content Include="Media\Colores\8.png" />
     <Content Include="Media\Colores\9.png" />
+    <Content Include="Media\Mapa\Corales 4-TgcScene.xml" />
+    <Content Include="Media\Mapa\Corales 5-TgcScene.xml" />
+    <Content Include="Media\Mapa\Corales 6-TgcScene.xml" />
+    <Content Include="Media\Music\Bite.wav" />
+    <Content Include="Media\Music\Boulder.mp3" />
+    <Content Include="Media\Music\Coin.wav" />
     <Content Include="Media\Textures\12960_Shark_diff_v2.jpg" />
     <Content Include="Media\Textures\bodyColor_de_la_Superficie.png" />
     <Content Include="Media\Textures\bodyOclusión_Ambiental.png" />
@@ -529,7 +535,6 @@
     <Content Include="Media\Textures\LAMPOclusión_Ambiental.jpg" />
     <Content Include="Media\Textures\LAMP_UVS.png" />
     <Content Include="Media\Textures\mesa.png" />
-    <Content Include="Media\Music\Deep_Trouble.mp3" />
     <Content Include="Media\Music\UnderPressure_DeepTrouble.mp3" />
     <Content Include="Media\Music\Warp_Room.mp3" />
     <Content Include="Media\Olas-TgcScene.xml" />

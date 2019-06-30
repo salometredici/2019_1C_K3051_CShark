@@ -13,33 +13,57 @@ using TGC.Core.Mathematica;
 using CShark.Animales;
 using TGC.Core.BoundingVolumes;
 using CShark.Terreno;
+using CShark.Utilidades;
 
 namespace CShark.Managers
 {
     public class FaunaManager : IManager
     {
-        private List<Animal> Animales;
+        //private List<Animal> Animales;
 
         public FaunaManager() {
         }
 
+        private void CargarMeshes() {
+            var loader = new TgcSceneLoader();
+            var ruta = Game.Default.MediaDirectory + @"Animales\";
+            var mesh1 = loader.loadSceneFromFile(ruta + "Pez Payaso-TgcScene.xml").Meshes[0];
+            MeshLoader.Instance.LoadMesh(mesh1, "Pez Payaso");
+            var mesh2 = loader.loadSceneFromFile(ruta + "Pez Azul-TgcScene.xml").Meshes[0];
+            MeshLoader.Instance.LoadMesh(mesh2, "Pez Azul");
+            var mesh3 = loader.loadSceneFromFile(ruta + "Pez Betta-TgcScene.xml").Meshes[0];
+            MeshLoader.Instance.LoadMesh(mesh3, "Pez Betta");
+            var mesh4 = loader.loadSceneFromFile(ruta + "Pez Tropical 1-TgcScene.xml").Meshes[0];
+            MeshLoader.Instance.LoadMesh(mesh4, "Pez Tropical 1");
+            var mesh5 = loader.loadSceneFromFile(ruta + "Pez Tropical 2-TgcScene.xml").Meshes[0];
+            MeshLoader.Instance.LoadMesh(mesh5, "Pez Tropical 2");
+            var mesh6 = loader.loadSceneFromFile(ruta + "Pez Tropical 3-TgcScene.xml").Meshes[0];
+            MeshLoader.Instance.LoadMesh(mesh6, "Pez Tropical 3");
+            var mesh7 = loader.loadSceneFromFile(ruta + "Pez Tropical 4-TgcScene.xml").Meshes[0];
+            MeshLoader.Instance.LoadMesh(mesh7, "Pez Tropical 4");
+            var mesh8 = loader.loadSceneFromFile(ruta + "Pez Tropical 5-TgcScene.xml").Meshes[0];
+            MeshLoader.Instance.LoadMesh(mesh8, "Pez Tropical 5");
+            var mesh9 = loader.loadSceneFromFile(ruta + "Pez Tropical 6-TgcScene.xml").Meshes[0];
+            MeshLoader.Instance.LoadMesh(mesh9, "Pez Tropical 6");
+            var mesh10 = loader.loadSceneFromFile(ruta + "Tiburon-TgcScene.xml").Meshes[0];
+            MeshLoader.Instance.LoadMesh(mesh10, "Tiburon");
+        }
+
         public void Initialize() {
-            Animales = new List<Animal>();
+            //Animales = new List<Animal>();
+            CargarMeshes();
             CalcularAreaSpawneable();
-            var tipos = new string[] { "Payaso", "Azul", "Betta", "Tropical" };
+            var tipos = new string[] { "Payaso", "Azul", "Betta", "Tropical"};
             var rnd = new Random();
-            /*for (int i = 0; i < 50; i++) {
-                var tipo = tipos[rnd.Next(tipos.Length)];
-                var posicion = SpawnPezRandom();
+            for (int i = 0; i < 280; i++) {
+                var tipo = tipos[rnd.Next(0, tipos.Length)];
+                var posicion = SpawnPezRandom(rnd);
                 Spawnear(tipo, posicion, rnd);
-            }*/
-            Spawnear("SpawnTiburon", new TGCVector3(110000f,15000f,-80000f), rnd);// Posicion muy cerca del player es (115000.0f,20500.0f,-91000.0f));
-            Spawnear("SpawnTiburon", new TGCVector3(110000f, 10000f, -100000f), rnd);
-            Spawnear("SpawnTiburon", new TGCVector3(80000f, 7000f, -20000f), rnd);
-            Spawnear("SpawnTiburon", new TGCVector3(85000f, 15000f, -23000f), rnd);
-            Spawnear("SpawnTiburon", new TGCVector3(70000f, 12000f, -250000f), rnd);
-            Spawnear("SpawnTiburon", new TGCVector3(77000f, 1000f, -100000f), rnd);
-            Spawnear("SpawnTiburon", new TGCVector3(60000f, 3000f, -100000f), rnd);
+            }
+            for (int i = 0; i < 20; i++) {
+                var posicion = SpawnPezRandom(rnd);
+                Spawnear("Tiburon", posicion, rnd);
+            }
         }
 
         private TgcBoundingAxisAlignBox AreaSpawneable1;
@@ -53,8 +77,7 @@ namespace CShark.Managers
             AreaSpawneable2 = boxes.Meshes[1].BoundingBox;
         }
 
-        private TGCVector3 SpawnPezRandom() {
-            var random = new Random();
+        private TGCVector3 SpawnPezRandom(Random random) {
             var area = random.Next(0, 1) == 0 ? AreaSpawneable1 : AreaSpawneable2;
             var x = random.Next((int)area.PMin.X, (int)area.PMax.X);
             var y = random.Next((int)area.PMin.Y, (int)area.PMax.Y);
@@ -75,23 +98,24 @@ namespace CShark.Managers
                ani = new PezAzul(posicion);
             else if (tipo.Contains("Betta"))
                 ani = new PezBetta(posicion);
-            else /*(tipo.Contains("Tropical")) */{
+            else {
                 var tipoPez = rnd.Next(1, 6);
                ani = new PezTropical(tipoPez, posicion);
             }
-            Animales.Add(ani);
+            //Animales.Add(ani);
+            Mapa.Instancia.Objetos.Add(ani);
         }
 
         public void Update(GameModel game) {
-            Animales.ForEach(animal => animal.Update(game));
+            //Animales.ForEach(animal => animal.Update(game));
         }
 
         public void Render(GameModel game) {
-            Animales.ForEach(animal => animal.Render(game));
+
         }
 
         public void Dispose() {
-            Animales.ForEach(a => a.Dispose());
+            //Animales.ForEach(a => a.Dispose());
         }
     }
 }

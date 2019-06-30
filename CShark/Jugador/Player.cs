@@ -11,6 +11,8 @@ using TGC.Core.Collision;
 using CShark.Jugador.Camara;
 using CShark.Items.Recolectables;
 using static CShark.Utils.EffectsPlayer;
+using CShark.Animales;
+using System;
 
 namespace CShark.Jugador
 {
@@ -154,6 +156,10 @@ namespace CShark.Jugador
                     Saltando = false;
                 }
             }
+        }
+
+        internal bool EstaCerca(Animal animal) {
+            return (animal.Posicion - Posicion).Length() < 150000f;
         }
 
         private void CheckearUbicacion() {

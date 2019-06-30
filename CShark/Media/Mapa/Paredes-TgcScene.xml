@@ -2,30 +2,30 @@
 	<name>Paredes</name>
 	<texturesExport enabled='true' dir='Textures'/>
 	<lightmapExport enabled='false' dir='LightMaps'/>
-	<sceneBoundingBox min='[-150000,-4166.7,-150000]' max='[150000,85586.6,150000]'/>
+	<sceneBoundingBox min='[-165964,-8942.7,-165964]' max='[165964,90362.6,165964]'/>
 	<materials count='0'>
 	</materials>
 	<meshes count='4' >
 		<mesh name='ParedInvisible1' layer='0' type='Original' matId='-1' color='[166.0,229.0,229.0]' visibility='1.0' lightmap=''>
-			<boundingBox min='[-150000,-4166.7,-150000]' max='[150000,85586.6,-150000]'/>
+			<boundingBox min='[-165964,-8942.7,-165964]' max='[165964,90362.6,-165964]'/>
 			<coordinatesIdx count='6'>1 3 0 2 0 3 </coordinatesIdx>
 			<textCoordsIdx count='6'>5 7 4 6 4 7 </textCoordsIdx>
 			<colorsIdx count='6'>0 0 0 0 0 0 </colorsIdx>
 			<matIds count='-1'>0</matIds>
-			<vertices count='12'>-150000.0 85586.6 -150000.0 150000.0 85586.6 -150000.0 -150000.0 -4166.7 -150000.0 150000.0 -4166.7 -150000.0 </vertices>
+			<vertices count='12'>-165964.0 90362.6 -165964.0 165964.0 90362.6 -165964.0 -165964.0 -8942.7 -165964.0 165964.0 -8942.7 -165964.0 </vertices>
 			<normals count='18'>0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 </normals>
 			<texCoords count='16'>0.0 1.0 300000.0 1.0 0.0 1.0 300000.0 1.0 0.0 1.0 300000.0 1.0 0.0 -4999.0 300000.0 -4999.0 </texCoords>
 			<colors count='3'>166.0 229.0 229.0 </colors>
 			<tangents count='18'>1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 </tangents>
-			<binormals count='18'>0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 </binormals>
+			<binormals count='18'>0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 </binormals>
 		</mesh>
 		<mesh name='ParedInvisible2' layer='0' type='Original' matId='-1' color='[166.0,229.0,229.0]' visibility='1.0' lightmap=''>
-			<boundingBox min='[-150000,-4166.7,-150000]' max='[-150000,85586.6,150000]'/>
+			<boundingBox min='[-165964,-8942.7,-165964]' max='[-165964,90362.6,165964]'/>
 			<coordinatesIdx count='6'>1 3 0 2 0 3 </coordinatesIdx>
 			<textCoordsIdx count='6'>5 7 4 6 4 7 </textCoordsIdx>
 			<colorsIdx count='6'>0 0 0 0 0 0 </colorsIdx>
 			<matIds count='-1'>0</matIds>
-			<vertices count='12'>-150000.0 85586.6 150000.0 -150000.0 85586.6 -150000.0 -150000.0 -4166.7 150000.0 -150000.0 -4166.7 -150000.0 </vertices>
+			<vertices count='12'>-165964.0 90362.6 165964.0 -165964.0 90362.6 -165964.0 -165964.0 -8942.7 165964.0 -165964.0 -8942.7 -165964.0 </vertices>
 			<normals count='18'>1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 </normals>
 			<texCoords count='16'>0.0 1.0 300000.0 1.0 0.0 1.0 300000.0 1.0 0.0 1.0 300000.0 1.0 0.0 -4999.0 300000.0 -4999.0 </texCoords>
 			<colors count='3'>166.0 229.0 229.0 </colors>
@@ -33,12 +33,12 @@
 			<binormals count='18'>0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 </binormals>
 		</mesh>
 		<mesh name='ParedInvisible3' layer='0' type='Original' matId='-1' color='[166.0,229.0,229.0]' visibility='1.0' lightmap=''>
-			<boundingBox min='[150000,-4166.7,-150000]' max='[150000,85586.6,150000]'/>
+			<boundingBox min='[165964,-8942.7,-165964]' max='[165964,90362.6,165964]'/>
 			<coordinatesIdx count='6'>1 3 0 2 0 3 </coordinatesIdx>
 			<textCoordsIdx count='6'>5 7 4 6 4 7 </textCoordsIdx>
 			<colorsIdx count='6'>0 0 0 0 0 0 </colorsIdx>
 			<matIds count='-1'>0</matIds>
-			<vertices count='12'>150000.0 85586.6 -150000.0 150000.0 85586.6 150000.0 150000.0 -4166.7 -150000.0 150000.0 -4166.7 150000.0 </vertices>
+			<vertices count='12'>165964.0 90362.6 -165964.0 165964.0 90362.6 165964.0 165964.0 -8942.7 -165964.0 165964.0 -8942.7 165964.0 </vertices>
 			<normals count='18'>-1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 </normals>
 			<texCoords count='16'>0.0 1.0 300000.0 1.0 0.0 1.0 300000.0 1.0 0.0 1.0 300000.0 1.0 0.0 -4999.0 300000.0 -4999.0 </texCoords>
 			<colors count='3'>166.0 229.0 229.0 </colors>
@@ -46,17 +46,17 @@
 			<binormals count='18'>0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 </binormals>
 		</mesh>
 		<mesh name='ParedInvisible4' layer='0' type='Original' matId='-1' color='[166.0,229.0,229.0]' visibility='1.0' lightmap=''>
-			<boundingBox min='[-150000,-4166.7,150000]' max='[150000,85586.6,150000]'/>
+			<boundingBox min='[-165964,-8942.7,165964]' max='[165964,90362.6,165964]'/>
 			<coordinatesIdx count='6'>1 3 0 2 0 3 </coordinatesIdx>
 			<textCoordsIdx count='6'>5 7 4 6 4 7 </textCoordsIdx>
 			<colorsIdx count='6'>0 0 0 0 0 0 </colorsIdx>
 			<matIds count='-1'>0</matIds>
-			<vertices count='12'>-150000.0 85586.6 150000.0 150000.0 85586.6 150000.0 -150000.0 -4166.7 150000.0 150000.0 -4166.7 150000.0 </vertices>
+			<vertices count='12'>-165964.0 90362.6 165964.0 165964.0 90362.6 165964.0 -165964.0 -8942.7 165964.0 165964.0 -8942.7 165964.0 </vertices>
 			<normals count='18'>0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 </normals>
 			<texCoords count='16'>0.0 1.0 300000.0 1.0 0.0 1.0 300000.0 1.0 0.0 1.0 300000.0 1.0 0.0 -4999.0 300000.0 -4999.0 </texCoords>
 			<colors count='3'>166.0 229.0 229.0 </colors>
 			<tangents count='18'>1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 </tangents>
-			<binormals count='18'>0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 </binormals>
+			<binormals count='18'>0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 0.0 0.0 -1.0 </binormals>
 		</mesh>
 	</meshes>
 </tgcScene>
