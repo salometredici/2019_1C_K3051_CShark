@@ -50,20 +50,46 @@ namespace CShark.Managers
         }
 
         public void Initialize() {
-            //Animales = new List<Animal>();
             CargarMeshes();
-            CalcularAreaSpawneable();
-            var tipos = new string[] { "Payaso", "Azul", "Betta", "Tropical"};
-            var rnd = new Random();
-            for (int i = 0; i < 280; i++) {
-                var tipo = tipos[rnd.Next(0, tipos.Length)];
-                var posicion = SpawnPezRandom(rnd);
-                Spawnear(tipo, posicion, rnd);
+            this.SpawnearSobre(Mapa.Instancia.VerticesSuelo, 1000);
+            this.SpawnearTibus(Mapa.Instancia.VerticesSuelo, 30);
+        }
+
+        private void SpawnearSobre(TGCVector3[] vertices, int cantidad) {
+            var ingresados = new int[cantidad];
+            var random = new Random();
+            var tipos = new string[] { "Payaso", "Azul", "Betta", "Tropical" };
+            for (int i = 0; i < Math.Min(cantidad, vertices.Length - 10); i++) {
+                var indice = random.Next(vertices.Length);
+                while (contiene(ingresados, indice))
+                    indice = random.Next(vertices.Length);
+                ingresados[i] = indice;
+                var vert = vertices[indice];
+                var tipo = tipos[random.Next(0, tipos.Length)];
+                var offset = random.Next(300) * (random.Next(1, 2) == 2 ? -1 : 1);
+                Spawnear(tipo, vert + new TGCVector3(0, 800 + offset, 0), random);
             }
-            for (int i = 0; i < 20; i++) {
-                var posicion = SpawnPezRandom(rnd);
-                Spawnear("Tiburon", posicion, rnd);
+        }
+
+        private void SpawnearTibus(TGCVector3[] vertices, int cantidad) {
+            var ingresados = new int[cantidad];
+            var random = new Random();
+            for (int i = 0; i < Math.Min(cantidad, vertices.Length - 10); i++) {
+                var indice = random.Next(vertices.Length);
+                while (contiene(ingresados, indice))
+                    indice = random.Next(vertices.Length);
+                ingresados[i] = indice;
+                var vert = vertices[indice];
+                var offset = random.Next(1000) * (random.Next(1, 2) == 2 ? -1 : 1);
+                Spawnear("Tiburon", vert + new TGCVector3(0, 200 + offset, 0), random);
             }
+        }
+
+        private bool contiene(int[] array, int i) {
+            for (int j = 0; j < array.Length; j++)
+                if (array[j] == i)
+                    return true;
+            return false;
         }
 
         private TgcBoundingAxisAlignBox AreaSpawneable1;

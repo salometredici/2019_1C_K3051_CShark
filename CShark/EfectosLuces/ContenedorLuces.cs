@@ -51,7 +51,7 @@ namespace CShark.EfectosLuces
         public void Update(TGCVector3 player) {
             LucesPosta = Luces
                 .Where(luz => luz.Distancia(player) < DistanciaCercania)
-                .Take(N)
+                .Take(N - 1)
                 .ToList();
             LucesPosta.Add(LuzSolar);
             ArmarLuces();

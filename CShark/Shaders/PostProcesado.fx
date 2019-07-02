@@ -135,14 +135,14 @@ float4 ps_final(in float2 Tex : TEXCOORD0, in float2 vpos : VPOS) : COLOR0
     float4 ColorBase = tex2D(RenderTarget, Tex);
     float2 offsetGlow = float2((float) 16 / screen_dx, (float) 16 / screen_dy);
     float4 ColorGlow = tex2D(GlowMap, Tex);
-
-    float4 colorCasco = tex2D(sampler_casco, Tex);
-
     float4 colorFinal = ColorBase + ColorGlow;
     if (mostrarCasco)
-        colorFinal = colorCasco.g < 0.5f
+    {
+        float4 colorCasco = tex2D(sampler_casco, Tex);
+        colorFinal = colorCasco.a > 0.2f
         ? colorCasco
-        : float4(1, 1, 1, 1) * (1 - colorCasco.g) + colorFinal; //bordecito suave
+        : float4(colorFinal.rgb, colorCasco.a);
+    }
     return colorFinal;
 }
 
