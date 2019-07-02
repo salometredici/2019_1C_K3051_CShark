@@ -16,7 +16,7 @@ Proyecto plantilla para los trabajos prácticos de la asignatura electiva [Técn
 ## Integrantes ##
 TGC, Tgcito  |  Apellido, Nombre
 ------------ | -------------
-<img src="https://raw.githubusercontent.com/salometredici/2019_1C_K3051_CShark/master/screenshots/bruno.jpg" height="500"> | <img src="https://github.com/tgc-utn/tgc-utn.github.io/blob/master/images/trofeotp.png" height="500">
+<img src="https://raw.githubusercontent.com/salometredici/2019_1C_K3051_CShark/master/screenshots/bruno.jpg" style="width: 200px"> | Bruno Tonelli
 
 ## ScreenShot ##
 ![screenshot1](https://raw.githubusercontent.com/salometredici/2019_1C_K3051_CShark/master/screenshots/1.png)
