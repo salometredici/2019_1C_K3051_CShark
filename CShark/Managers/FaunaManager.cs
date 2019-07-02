@@ -61,13 +61,13 @@ namespace CShark.Managers
             var tipos = new string[] { "Payaso", "Azul", "Betta", "Tropical" };
             for (int i = 0; i < Math.Min(cantidad, vertices.Length - 10); i++) {
                 var indice = random.Next(vertices.Length);
-                while (contiene(ingresados, indice))
+                while (contiene(ingresados, indice) || vertices[indice].Y > 18000f) 
                     indice = random.Next(vertices.Length);
                 ingresados[i] = indice;
                 var vert = vertices[indice];
                 var tipo = tipos[random.Next(0, tipos.Length)];
                 var offset = random.Next(300) * (random.Next(1, 2) == 2 ? -1 : 1);
-                Spawnear(tipo, vert + new TGCVector3(0, 800 + offset, 0), random);
+                Spawnear(tipo, vert + new TGCVector3(0, 1000 + offset, 0), random);
             }
         }
 
@@ -76,12 +76,12 @@ namespace CShark.Managers
             var random = new Random();
             for (int i = 0; i < Math.Min(cantidad, vertices.Length - 10); i++) {
                 var indice = random.Next(vertices.Length);
-                while (contiene(ingresados, indice))
+                while (contiene(ingresados, indice) || vertices[indice].Y > 18000f)
                     indice = random.Next(vertices.Length);
                 ingresados[i] = indice;
                 var vert = vertices[indice];
-                var offset = random.Next(1000) * (random.Next(1, 2) == 2 ? -1 : 1);
-                Spawnear("Tiburon", vert + new TGCVector3(0, 200 + offset, 0), random);
+                var offset = random.Next(100) * (random.Next(1, 2) == 2 ? -1 : 1);
+                Spawnear("Tiburon", vert + new TGCVector3(0, 1000 + offset, 0), random);
             }
         }
 
