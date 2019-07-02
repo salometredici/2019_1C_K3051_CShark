@@ -16,14 +16,14 @@ Proyecto plantilla para los trabajos prácticos de la asignatura electiva [Técn
 ## Integrantes ##
 TGC, Tgcito  |  Apellido, Nombre
 ------------ | -------------
-<img src="https://github.com/tgc-utn/tgc-utn.github.io/blob/master/images/robotgc.png" height="500"> | <img src="https://github.com/tgc-utn/tgc-utn.github.io/blob/master/images/trofeotp.png" height="500">
+<img src="https://raw.githubusercontent.com/salometredici/2019_1C_K3051_CShark/master/screenshots/bruno.jpg" height="500"> | <img src="https://github.com/tgc-utn/tgc-utn.github.io/blob/master/images/trofeotp.png" height="500">
 
 ## ScreenShot ##
-![screenshot1](https://github.com/tgc-utn/tgc-group/blob/master/TGC.Group/Media/cajaMadera4.jpg)
-![screenshot2](https://github.com/tgc-utn/tgc-group/blob/master/TGC.Group/Media/cajaMadera4.jpg)
-![screenshot3](https://github.com/tgc-utn/tgc-group/blob/master/TGC.Group/Media/cajaMadera4.jpg)
-![screenshot4](https://github.com/tgc-utn/tgc-group/blob/master/TGC.Group/Media/cajaMadera4.jpg)
-![screenshot5](https://github.com/tgc-utn/tgc-group/blob/master/TGC.Group/Media/cajaMadera4.jpg)
+![screenshot1](https://raw.githubusercontent.com/salometredici/2019_1C_K3051_CShark/master/screenshots/1.png)
+![screenshot2](https://raw.githubusercontent.com/salometredici/2019_1C_K3051_CShark/master/screenshots/2.png)
+![screenshot3](https://raw.githubusercontent.com/salometredici/2019_1C_K3051_CShark/master/screenshots/3.png)
+![screenshot4](https://raw.githubusercontent.com/salometredici/2019_1C_K3051_CShark/master/screenshots/4.png)
+![screenshot5](https://raw.githubusercontent.com/salometredici/2019_1C_K3051_CShark/master/screenshots/5.png)
 
 ## Game Play ##
 [![Watch the video](https://img.youtube.com/vi/UdTJJ6-tSwM/0.jpg)](https://www.youtube.com/watch?v=UdTJJ6-tSwM)
